@@ -1,0 +1,79 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Install the Service Installer</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_gly_xmh_ts" /> <meta name="html-import-file-path" content="devplatform/2.0/installation/devplatform_install_platform.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Install the Service Installer</h1>
+
+
+  
+
+  <div class="body">
+    <div class="section"><p class="p">The installation procedure has changed significantly since the last release. The HDP Installer
+        2.0, also known as HDPI, is a plugin for the python-openstackclient (OSC). It is able to
+        leverage the authentication, configuration and command line option parsing that is already
+        part of OSC to greatly simplify the installation process.</p>
+<div class="note warning"><span class="warningtitle">Warning:</span> You must have
+            <a class="xref" href="devplatform_install_prereq.html#topic_x54_njh_ts">satisfied all
+            prerequisites</a> before beginning installation.</div>
+<div class="note important"><span class="importanttitle">Important:</span> Do not
+          source <samp class="ph codeph">service.osrc</samp>, <samp class="ph codeph">keystone.osrc</samp>, or <strong class="ph b">any</strong> other
+          file before you begin.</div>
+
+    </div>
+
+
+    <div class="section" id="topic_gly_xmh_ts__pre-installing-the-hp-helion-development-platform"><h2 class="title sectiontitle">Install the HPE Helion Development Platform Installation Client</h2>
+      
+      <ol class="ol">
+        <li class="li">Using your preferred web browser, navigate to <a class="xref" href="https://helion.hpwsportal.com/catalog.html#/Home/Show" target="_blank">HPE Helion Download Network</a> (HDN) and  create an account if you haven't done so already.</li>
+
+        <li class="li">Click the <strong class="ph b">HPE Helion Development Platform</strong> download package.<br/><img class="image" id="topic_gly_xmh_ts__image_aqj_crq_yt" src="../../../media/hdp_download.png"/><br/></li>
+
+        <li class="li">From the list of options, click <strong class="ph b">HPE Helion Development Platform 2.0</strong>. </li>
+
+        <li class="li">Click the blue <strong class="ph b">Download</strong> button in the upper right hand corner.</li>
+
+        <li class="li">The best option is to download directly to the HPE Helion OpenStack Deployer. If you can
+          not download directly to the HPE Helion OpenStack deployer, copy all the downloaded
+          packages to a USB stick or external hard drive and then copy the files onto the physical
+          machine hosting the HPE Helion OpenStack Deployer. Make sure there is enough space; the
+          file sizes can be significant.</li>
+
+        <li class="li">SSH to the HPE Helion OpenStack Deployer. </li>
+
+        
+        <li class="li">Create and source the Virtual Environment. In this example,
+            <samp class="ph codeph">&lt;dpi-venv&gt;.gz</samp> is the name of the installer. This process creates
+          a directory under /opt which is owned by root. This directory requires sudo permissions to
+          create, so the owner of that folder needs to be changed to whatever the user will log in
+          as; in this example, the value is <em class="ph i">stack</em>. <div class="note note"><span class="notetitle">Note:</span> The directory name <strong class="ph b">must</strong> match
+            the name of the installer (&lt;dpi-venv&gt;) or HDPI commands will fail. Do not rename
+            the
+          directory.</div>
+<pre class="pre codeblock">sudo mkdir -p /opt/stack/venv/&lt;dpi-venv&gt;
+sudo tar -C /opt/stack/venv/&lt;dpi-venv&gt; -xzf &lt;dpi-venv&gt;.gz
+sudo chown stack.stack /opt/stack/venv/&lt;dpi-venv&gt; 
+source /opt/stack/venv/&lt;dpi-venv&gt;/bin/activate</pre>
+</li>
+
+        <li class="li">Test the installation by retrieving a list of installable files.
+            <pre class="pre codeblock">openstack hdpi --os-cloud mycloud list</pre>
+<div class="note note"><span class="notetitle">Note:</span> If further
+            troubleshooting information is required, add the <samp class="ph codeph">--debug</samp> option to the
+            end of the previous command.</div>
+</li>
+
+      </ol>
+
+    </div>
+
+  </div>
+
+
+</body>
+</html>

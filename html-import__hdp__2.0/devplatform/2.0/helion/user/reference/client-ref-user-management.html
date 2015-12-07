@@ -1,0 +1,702 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Command Reference: User Management</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic7058" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/client-ref-user-management.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Command Reference: User Management</h1>
+
+
+
+
+
+<div class="body">
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic7058__command-add-user">helion add-user</a>: Register a new user in the current or specified target. This operation requires administrator privileges.</li>
+
+<li class="li">
+<a class="xref" href="#topic7058__command-delete-user">helion delete-user</a>: Delete the named user and the user's applications and services from the current or specified target. This operation requires administrator privileges.</li>
+
+<li class="li">
+<a class="xref" href="#topic7058__command-login-fields">helion login-fields</a>: Show the names of the credential fields needed for a login. </li>
+
+<li class="li">
+<a class="xref" href="#topic7058__command-passwd">helion passwd</a>: Change the password of the current user in the current or specified target.</li>
+
+<li class="li">
+<a class="xref" href="#topic7058__command-register">helion register</a>: Register a new user in the current or specified target. This operation requires administrator privileges</li>
+
+<li class="li">
+<a class="xref" href="#topic7058__command-token">helion token</a>: Interactively set authentication token.</li>
+
+<li class="li">
+<a class="xref" href="#topic7058__command-unregister">helion unregister</a>: Delete the named user and the user's applications and services from the current or specified target. Requires admin privileges.</li>
+
+<li class="li">
+<a class="xref" href="#topic7058__command-users">helion users</a>: Show the list of users known to the current or specified target.</li>
+
+</ul>
+
+<div class="section" id="topic7058__syntax"><h2 class="title sectiontitle">Syntax</h2> 
+<pre class="pre codeblock">helion [options] command [arguments] [command-options]</pre>
+
+<p class="p">For more information, use the <strong class="ph b">helion help</strong> or <strong class="ph b">helion help [<em class="ph i">command</em>]</strong> commands.</p>
+
+
+</div>
+
+<div class="section" id="topic7058__command-add-user"><h2 class="title sectiontitle">helion add-user &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Register a new user in the current or specified target. This operation requires administrator privileges.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--apps</td>
+
+<td class="entry" valign="top">Limit for the number of applications in the group.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--appuris</td>
+
+<td class="entry" valign="top">Limit for the number of mapped uris per application.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--auditor</td>
+
+<td class="entry" valign="top">Add the new user to the organization as auditor.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--drains</td>
+
+<td class="entry" valign="top">Limit for the number of drains in the group.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--email</td>
+
+<td class="entry" valign="top">The email of the user to create.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--family</td>
+
+<td class="entry" valign="top">The family name of the user. Left empty if not specified.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--given</td>
+
+<td class="entry" valign="top">The given name of the user. Left empty if not specified.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manager</td>
+
+<td class="entry" valign="top">Add the new user to the organization as manager.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--mem</td>
+
+<td class="entry" valign="top">Amount of memory applications can use.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-auditor</td>
+
+<td class="entry" valign="top">Adds the new user to the organization as not an auditor.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-manager</td>
+
+<td class="entry" valign="top">Adds the new user to the organization as not a manager.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-organization</td>
+
+<td class="entry" valign="top">Flag to indicate that the new user should not be placed into any organization. Cannot be used together with <var class="keyword varname">--organization</var>. When used any <var class="keyword varname">manager</var> and <var class="keyword varname">auditor</var> flags are ignored.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-sudo</td>
+
+<td class="entry" valign="top">Applications cannot use <var class="keyword varname">--sudo</var>.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization, -o</td>
+
+<td class="entry" valign="top">The organization to place the new user into. Defaults to the
+current organization.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--password, --passwd</td>
+
+<td class="entry" valign="top">The password to use.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--services</td>
+
+<td class="entry" valign="top">Limit for the number of services in the group.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--sudo</td>
+
+<td class="entry" valign="top">Applications can use <var class="keyword varname">--sudo</var> (although they don't have to).</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic7058__command-delete-user"><h2 class="title sectiontitle">helion delete-user &lt;<em class="ph i">email</em>&gt;</h2> 
+<p class="p">Delete the named user and the user's applications and services from the current or specified target. This operation requires administrator privileges.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic7058__command-login-fields"><h2 class="title sectiontitle">helion login-fields</h2> 
+<p class="p">Show the names of the credential fields needed for a login.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic7058__command-passwd"><h2 class="title sectiontitle">helion passwd</h2> 
+<p class="p">Change the password of the current user in the current or specified target.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--passwd</td>
+
+<td class="entry" valign="top">Alias of --password.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--password</td>
+
+<td class="entry" valign="top">The new password. If not present it will be interactively asked
+for.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic7058__command-register"><h2 class="title sectiontitle">helion register &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Register a new user in the current or specified target. This operation requires administrator privileges.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--apps</td>
+
+<td class="entry" valign="top">Limit for the number of applications in the group.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--appuris</td>
+
+<td class="entry" valign="top">Limit for the number of mapped uris per application.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--auditor</td>
+
+<td class="entry" valign="top">Add the new user to the organization as auditor.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--drains</td>
+
+<td class="entry" valign="top">Limit for the number of drains in the group.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--email</td>
+
+<td class="entry" valign="top">The email of the user to create. This is an Application Lifecycle Service 3 specific
+option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--family</td>
+
+<td class="entry" valign="top">The family name of the user. Left empty if not specified.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--given</td>
+
+<td class="entry" valign="top">The given name of the user. Left empty if not specified.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manager</td>
+
+<td class="entry" valign="top">Add the new user to the organization as manager.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--mem</td>
+
+<td class="entry" valign="top">Amount of memory applications can use.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-auditor</td>
+
+<td class="entry" valign="top">Adds the new user to the organization as not an auditor.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-manager</td>
+
+<td class="entry" valign="top">Adds the new user to the organization as not a manager.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-organization</td>
+
+<td class="entry" valign="top">Flag to indicate that the new user should not be placed into any organization. Cannot be used together with <var class="keyword varname">--organization</var>. When used any <var class="keyword varname">manager</var> and <var class="keyword varname">auditor</var> flags are ignored.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-sudo</td>
+
+<td class="entry" valign="top">Applications cannot use <var class="keyword varname">--sudo</var>.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization, -o</td>
+
+<td class="entry" valign="top">The organization to place the new user into. Defaults to the current organization.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--password, --passwd</td>
+
+<td class="entry" valign="top">The password to use.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--services</td>
+
+<td class="entry" valign="top">Limit for the number of services in the group.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--sudo</td>
+
+<td class="entry" valign="top">Applications can use <var class="keyword varname">--sudo</var> (although they don't have to).</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic7058__command-token"><h2 class="title sectiontitle">helion token</h2> 
+<p class="p">Interactively set the authentication token.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic7058__command-unregister"><h2 class="title sectiontitle">helion unregister &lt;<em class="ph i">email</em>&gt;</h2> 
+<p class="p">Delete the named user and the user's applications and services from the current or specified target. This operation requires administrator privileges.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic7058__command-users"><h2 class="title sectiontitle">helion users</h2> 
+<p class="p">Show the list of users known to the current or specified target.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--mode</td>
+
+<td class="entry" valign="top">Select the details to show: <var class="keyword varname">name</var> information (default); <var class="keyword varname">related</var> entities; or <var class="keyword varname">all</var>.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+    </tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

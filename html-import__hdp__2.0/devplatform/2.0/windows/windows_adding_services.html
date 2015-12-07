@@ -1,0 +1,149 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Adding Services to Windows Applications</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic3869" /> <meta name="html-import-file-path" content="devplatform/2.0/windows/windows_adding_services.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Adding Services to Windows Applications</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">
+
+ 
+ </p>
+
+<p class="p">
+  <span class="ph">
+    <em class="ph i">Windows, .NET, SQL Server, and IIS are either registered trademarks or trademarks of Microsoft Corporation in the United States and/or other countries.</em>
+  </span>
+</p>
+
+<p class="p">Windows applications can be bound to services running in your deployment environment, such as Redis or MySQL. To do so, you need to have a NuGet package that can communicate with those services.</p>
+
+<p class="p">The following tutorial demonstrates how to add a Redis service to your .NET application.</p>
+
+<p class="p">
+<strong class="ph b">Note:</strong> The NuGet packages used in this tutorial are for sample purposes only. Verify that packages are working for your application before deploying them to a production environment.</p>
+
+<div class="section" id="topic3869__adding-a-service-to-a-net-application"><h2 class="title sectiontitle">Adding a service to a .NET application</h2> 
+<ol class="ol">
+<li class="li">When deploying your application using <a class="xref" href="windows_tools_guide.html#windows_tools__cloudfoundryextensions">Cloud Foundry
+            Explorer</a>, in the deployment information window, enter the service information in
+          the <strong class="ph b">Service</strong> field in the format <samp class="ph codeph">Service Name, Service Type, Service
+            Plan</samp>:<p class="p">
+            <img class="image" src="../../../media/windows_services.png"/>
+          </p>
+</li>
+
+<li class="li">Deploy your application.</li>
+
+<li class="li">Once the application gets successfully created, your VCAP_SERVICES file will have a node such as
+          the
+          following:<pre class="pre codeblock">"redis-2.8": [
+{
+  "name": "redistest",
+  "label": "redis-2.8",
+  "plan": "free",
+  "tags": [
+
+  ],
+  "options": {
+
+  },
+  "credentials": {
+    "hostname": "0.0.0.0",
+    "host": ".0.0.0",
+    "port": 5001,
+    "password": "f4774d0b-2f8d-45da-ba3e-545f0cb9b35a",
+    "name": "01b32e35-248a-43d7-b90d-ab3f2611e644",
+    "uri": "redis:\/\/01b32e35-248a-43d7-b90d-ab3f2611e644:f4774d0b-2f8d-45da-ba3e-545f0cb9b35a@192.168.1.50:5001\/"
+  }
+}</pre>
+</li>
+
+<li class="li"> Add dependencies.<ol class="ol" type="a">
+            <li class="li"> Add a JSON package. In this case, you'll install <strong class="ph b">JSON.NET</strong>. Open the
+                <strong class="ph b">Manage NuGet Packages</strong> dialog (under <strong class="ph b">Tools-&gt;NuGet Package
+                Manager-&gt;Manage NuGet Packages for Solution...</strong>), select the <strong class="ph b">Online</strong>
+              node, and search for <strong class="ph b">JSON.NET</strong>. Click <strong class="ph b">Install</strong>.<p class="p">
+                <img class="image" src="../../../media/windows_nuget_json.png"/>
+              </p>
+</li>
+
+            <li class="li"> Add a Redis client. In this case, you'll install <strong class="ph b">StackExchange.Redis</strong>. Open
+              the <strong class="ph b">Manage NuGet Packages</strong> dialog, select the <strong class="ph b">Online</strong> node, and search for
+                <strong class="ph b">StackExchange.Redis</strong>. Click <strong class="ph b">Install</strong>.<p class="p">
+                <img class="image" src="../../../media/windows_nuget_redis.png"/>
+              </p>
+</li>
+
+          </ol>
+</li>
+
+<li class="li"> To verify that the services are working, create a new MVC5 View (CSHTML) page with the
+          following
+            contents:<pre class="pre codeblock">Text from Redis:
+@{
+   try
+    {                    
+        string vcap = Environment.GetEnvironmentVariable("VCAP_SERVICES");
+
+        JObject services = Newtonsoft.Json.Linq.JObject.Parse(vcap);
+        string host = services["redis-2.8"].First["credentials"]["host"].ToString();
+        string port = services["redis-2.8"].First["credentials"]["port"].ToString();
+        string password = services["redis-2.8"].First["credentials"]["password"].ToString();
+        string conn = String.Format("{0}:{1},password={2}", host, port, password);
+
+        ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(conn);
+        IDatabase db = redis.GetDatabase();                
+        string input = "This is an example on how to use redis in .NET";
+        db.StringSet("mykey", input);
+
+        string output = db.StringGet("mykey");
+        @output;
+
+    }
+    catch (Exception e)
+    {
+        @e.ToString();
+    }
+
+}</pre>
+<p class="p">In
+            the above code sample, the application does the following:</p>
+<ol class="ol" type="a">
+            <li class="li">Reads the Redis connection information from the VCAP_SERVICES environment
+              variable</li>
+
+            <li class="li">Creates a connection to the Redis service</li>
+
+            <li class="li">Sends a string to the Redis service</li>
+
+            <li class="li">Reads a string back from the Redis service</li>
+
+            <li class="li">Displays the returned string</li>
+
+          </ol>
+</li>
+
+<li class="li">Deploy and open the application. You will see the following result:<p class="p">
+            <img class="image" src="../../../media/windows_redis_result.png"/>
+          </p>
+</li>
+
+</ol>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

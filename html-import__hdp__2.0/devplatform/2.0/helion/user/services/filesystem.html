@@ -1,0 +1,171 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Persistent File System</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="user_filesystem" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/services/filesystem.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Persistent File System</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">The file system of application containers are ephemeral. Any application
+data or files stored locally within these containers is lost when the
+instance is stopped or restarted. To solve this, Application Lifecycle Service provides a filesystem type of service that can be shared between application instances,
+and even between applications deployed to the same space.</p>
+
+<p class="p">A persistent file system service allows apps to do the following:</p>
+
+<ul class="ul">
+<li class="li">Share files across multiple instances of an app</li>
+
+<li class="li">Store files that persist if an app is removed (providing the service is not deleted) or if the server is restarted.</li>
+
+<li class="li">Conserve space on filesystems allocated within the VM instance by referencing the persistent filesystem instead.</li>
+
+</ul>
+
+<div class="section" id="user_filesystem__creating-a-persistent-file-system"><h2 class="title sectiontitle">Creating A Persistent File System</h2> 
+<p class="p">A filesystem service can be configured in your <em class="ph i">manifest.yml</em> file:</p>
+
+<pre class="pre codeblock">services:
+    mydata: filesystem</pre>
+
+<p class="p">You can also use the <samp class="ph codeph">helion create-service</samp>
+command:</p>
+
+<pre class="pre codeblock">helion create-service filesystem mydata
+    Creating Service: OK
+
+    helion services
+
+    =========== Provisioned Services ============
+
+    +----------------+------------+
+    | Name           | Service    |
+    +----------------+------------+
+    | mydata         | filesystem |
+    +----------------+------------+</pre>
+
+</div>
+
+<div class="section" id="user_filesystem__using-a-persistent-file-system"><h2 class="title sectiontitle">Using A Persistent File System</h2> 
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span>  File system service is available during pre-staging and shouldn't need to be
+          reconfigured when the application starts.</div>
+
+      </div>
+
+<p class="p">The filesystem service creates a path which your app can use to store
+and read files.</p>
+
+<p class="p">If there is only one filesystem service, the
+<samp class="ph codeph">HELION_FILESYSTEM</samp> environment variable can be
+used to get the path.</p>
+
+<p class="p">If there is more than one filesystem service,
+<samp class="ph codeph">HELION_FILESYSTEM</samp> is not available. Instead, a
+custom environment variable <samp class="ph codeph">HELION_FILESYSTEM_*</samp>
+will be created based on the name of each filesystem service (with
+hyphens replaced by underscores).</p>
+
+<p class="p">For example, if your <em class="ph i">manifest.yml</em> file configures the following
+services:</p>
+
+<pre class="pre codeblock">services:
+    my-data: filesystem
+    plugins: filesystem</pre>
+
+<p class="p">Two environment variables would be created:
+<samp class="ph codeph">HELION_FILESYSTEM_MY_DATA</samp> and
+<samp class="ph codeph">HELION_FILESYSTEM_PLUGINS</samp>.</p>
+
+<p class="p">This naming scheme can be used in conjunction with the
+<samp class="ph codeph">HELION_APP_NAME_UPCASE</samp> environment variable. For
+example, in an app with the following filesystem service defined:</p>
+
+<pre class="pre codeblock">services:
+  ${name}-foo: filesystem
+  ${name}-bar: filesystem</pre>
+
+<p class="p">The filesystem mount point for the "foo" filesystem service can be
+accessed within the container using constructs such as:</p>
+
+<pre class="pre codeblock">FOO=HELION_FILESYSTEM_${HELION_APP_NAME_UPCASE}_FOO
+mkdir ${!FOO}/myapp</pre>
+
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span> To use declarations like these in <a class="xref" href="../deploy/manifestyml.html#topic20922__hooks">
+            <em class="ph i">hooks</em>
+          </a>, put them in a separate bash script. Brace expansion and grouping cannot be used
+          directly in YAML files.</div>
+
+      </div>
+
+<p class="p">
+
+Since the <a class="xref" href="../reference/environment.html">
+<em class="ph i">environment
+variables</em>
+</a> are
+available during the staging process, it is possible to make use of them
+in the <a class="xref" href="../deploy/manifestyml.html">
+<em class="ph i">manifest.yml</em>
+</a> file to
+configure a filesystem service and create a symlink to it for use by the
+app. (see example below)</p>
+
+</div>
+
+<div class="section" id="user_filesystem__example-of-using-a-persistent-file-system"><h2 class="title sectiontitle">Example of Using A Persistent File System</h2> 
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span>  When linking the file system service to the application, using <em class="ph i">symlinks</em> is
+          strongly recommended.</div>
+
+      </div>
+
+<p class="p">We will go through how we customized our WordPress installation to use
+the persistent file system. Before you begin, find out where all the
+user generated contents are saved. You may have to make modifications to
+this general approach if your application stores user generated content
+in more than one location. In WordPress, they are stored in wp-content
+folder.</p>
+
+<p class="p">We need to add the following to our manifest.yml:</p>
+
+<pre class="pre codeblock">services:
+    fs-wp: filesystem
+hooks:
+    post-staging:
+    # create wp-content in the shared filesystem
+    - mkdir -p "$HELION_FILESYSTEM"/wp-content
+
+    # migrate existing wp-content data into the shared filesystem
+    - mv wp-content/* "$HELION_FILESYSTEM"/wp-content
+
+    # remove unused wp-content directories
+    - rm -rf wp-content
+
+    # link to wp-content folder in the shared filesystem
+    - ln -s "$HELION_FILESYSTEM"/wp-content wp-content</pre>
+
+      <div class="note note"><span class="notetitle">Note:</span>  When moving files onto the mounted filesystem with a <samp class="ph codeph">mv</samp> hook, you may
+        see an error message similar
+          to:<pre class="pre codeblock">mv: failed to preserve ownership for... Permission denied</pre>
+<p class="p">This
+          is a misleading warning, as the files <strong class="ph b">will</strong> actually be moved with the correct
+          permissions and ownership.</p>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

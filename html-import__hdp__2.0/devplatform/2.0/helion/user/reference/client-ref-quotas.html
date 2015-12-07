@@ -1,0 +1,550 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Command Reference: Quotas</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic5727" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/client-ref-quotas.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Command Reference: Quotas</h1>
+
+
+
+
+
+<div class="body">
+<ul class="ul">
+<li class="li">
+        <a class="xref" href="#topic5727__command-quota-configure">helion quota configure</a>:
+        Reconfigure the named quota plan.</li>
+
+<li class="li">
+        <a class="xref" href="#topic5727__command-quota-create">helion quota create</a>:
+        Create a new quota plan.</li>
+
+<li class="li">
+<a class="xref" href="#topic5727__command-quota-delete">helion quota delete</a>: Delete the named quota plan</li>
+
+<li class="li">
+<a class="xref" href="#topic5727__command-quota-list">helion quota list</a>: List the available quota plans. </li>
+
+<li class="li">
+<a class="xref" href="#topic5727__command-quota-rename">helion quota rename</a>: Rename the named quota plan.</li>
+
+<li class="li">
+<a class="xref" href="#topic5727__command-quota-show">helion quota show</a>: Show the details of the named quota plan.</li>
+
+<li class="li">
+<a class="xref" href="#topic5727__command-quotas">helion quotas</a>: List the available quota plans.</li>
+
+</ul>
+
+<div class="section" id="topic5727__syntax"><h2 class="title sectiontitle">Syntax</h2> 
+<pre class="pre codeblock">helion [options] command [arguments] [command-options]</pre>
+
+<p class="p">For more information, use the <strong class="ph b">helion help</strong> or <strong class="ph b">helion help [<em class="ph i">command</em>]</strong> commands.</p>
+
+
+</div>
+
+<div class="section" id="topic5727__command-quota-configure"><h2 class="title sectiontitle">helion quota configure &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Reconfigure the named quota definition. </p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="21.50537634408602%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="78.49462365591397%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.50537634408602%">--allow-sudo</td>
+
+              <td class="entry" valign="top" width="78.49462365591397%">Applications can use sudo in their container.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.50537634408602%">--droplets</td>
+
+              <td class="entry" valign="top" width="78.49462365591397%"> Limit for the number of droplets per application that are stored (older
+                droplets that exceed this quota are removed and their associated versions can no
+                longer be restored).</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.50537634408602%">--mem</td>
+
+              <td class="entry" valign="top" width="78.49462365591397%">Amount of memory applications can use. Use the suffices 'M' and 'G' for the
+                convenient specification of mega- and gigabytes. Without a unit-suffix mega-bytes
+                are assumed. As the base-unit megabytes must specified as integers. Gigabytes can be
+                specified as fractions.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.50537634408602%">--no-allow-sudo</td>
+
+              <td class="entry" valign="top" width="78.49462365591397%">Complementary alias of --allow-sudo.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.50537634408602%">--no-paid-services-allowed</td>
+
+              <td class="entry" valign="top" width="78.49462365591397%">Complementary alias of --paid-services-allowed.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.50537634408602%">--paid-services-allowed</td>
+
+              <td class="entry" valign="top" width="78.49462365591397%">Applications can use non-free services.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.50537634408602%">--routes</td>
+
+              <td class="entry" valign="top" width="78.49462365591397%">Limit for the number of routes in the quota.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.50537634408602%">--services</td>
+
+              <td class="entry" valign="top" width="78.49462365591397%">Limit for the number of services in the quota.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.50537634408602%">--target</td>
+
+              <td class="entry" valign="top" width="78.49462365591397%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.50537634408602%">--token</td>
+
+              <td class="entry" valign="top" width="78.49462365591397%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.50537634408602%">--token-file</td>
+
+              <td class="entry" valign="top" width="78.49462365591397%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.50537634408602%">--no-trial-db-allowed, --trial-db-allowed</td>
+
+              <td class="entry" valign="top" width="78.49462365591397%">Applications can  / cannot use trial databases. Trial databases were available
+                with HPE Helion Development Platform 1.0 only.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic5727__command-quota-create"><h2 class="title sectiontitle">helion quota create &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Create a new quota definition.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--allow-sudo</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">Applications can use sudo in their container.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--droplets</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%"> Limit for the number of droplets per application that are stored (older
+                droplets that exceed this quota are removed and their associated versions can no
+                longer be restored). </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--mem</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">Amount of memory applications can use. Use the suffices 'M' and 'G' for the
+                convenient specification of mega- and gigabytes. Without a unit-suffix mega-bytes
+                are assumed. As the base-unit megabytes must specified as integers. Gigabytes can be
+                specified as fractions.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--no-allow-sudo</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">Complementary alias of --allow-sudo.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--no-paid-services-allowed</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">Complementary alias of --paid-services-allowed.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--paid-services-allowed</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">Applications can use non-free services.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--routes</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">Limit for the number of routes in the quota.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--services</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">Limit for the number of services in the quota.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--target</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--token</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--token-file</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--no-trial-db-allowed, --trial-db-allowed</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">Applications can  / cannot use trial databases. Trial databases were available
+                with HPE Helion Development Platform 1.0 only.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic5727__command-quota-delete"><h2 class="title sectiontitle">helion quota delete &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Delete the named quota definition.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--target</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--token</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--token-file</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic5727__command-quota-list"><h2 class="title sectiontitle">helion quota list</h2> 
+<p class="p">List the available quota definitions.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="14.409221902017292%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="85.5907780979827%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.409221902017292%">--json</td>
+
+              <td class="entry" valign="top" width="85.5907780979827%">Print raw json as output, not human-formatted data.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.409221902017292%">--target</td>
+
+              <td class="entry" valign="top" width="85.5907780979827%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.409221902017292%">--token</td>
+
+              <td class="entry" valign="top" width="85.5907780979827%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.409221902017292%">--token-file</td>
+
+              <td class="entry" valign="top" width="85.5907780979827%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic5727__command-quota-rename"><h2 class="title sectiontitle">helion quota rename &lt;<em class="ph i">name</em>&gt; &lt;<em class="ph i">NewName</em>&gt;</h2> 
+<p class="p">Rename the named quota definition.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="13.003901170351103%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="86.9960988296489%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.003901170351103%">--target</td>
+
+              <td class="entry" valign="top" width="86.9960988296489%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.003901170351103%">--token</td>
+
+              <td class="entry" valign="top" width="86.9960988296489%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.003901170351103%">--token-file</td>
+
+              <td class="entry" valign="top" width="86.9960988296489%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic5727__command-quota-show"><h2 class="title sectiontitle">helion quota show &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Show the details of the named quota definition. If not specified it will be asked for interactively (menu).</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--json</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Print raw json as output, not human-formatted data.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--target</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--token</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--token-file</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic5727__command-quotas"><h2 class="title sectiontitle">helion quotas</h2> 
+<p class="p">List the available quota definitions.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--json</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">Print raw json as output, not human-formatted data.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--target</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--token</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--token-file</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

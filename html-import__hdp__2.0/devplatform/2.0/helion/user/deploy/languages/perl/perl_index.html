@@ -1,0 +1,421 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Perl</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic8895" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/languages/perl/perl_index.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Perl</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">Perl applications deployed to Application Lifecycle Service using the default 'perl'
+framework are run with <a class="xref" href="http://plackperl.org/" target="_blank">PSGI</a>. Applications are
+started from a top-level script which must be called <samp class="ph codeph">app.psgi</samp>. For
+example, in the
+<a class="xref" href="https://github.com/Stackato-Apps/mojo-helloworld" target="_blank">mojo-helloworld</a>
+sample application:</p>
+
+<pre class="pre codeblock">$ENV{MOJO_MODE} = 'production';
+require 'app.pl';</pre>
+
+<div class="p">
+      <div class="note note"><span class="notetitle">Note:</span>  Both Dancer and Mojolicious scripts automatically use the PSGI protocol, so there is no
+        need to create a separate app.psgi for them.</div>
+
+    </div>
+
+<p class="p">The script is a pointer to the actual application,
+<a class="xref" href="https://github.com/Stackato-Apps/mojo-helloworld" target="_blank">app.pl</a>. You
+could rename <samp class="ph codeph">app.pl</samp> to <samp class="ph codeph">app.psgi</samp> instead, but using the approach above
+allows you to set PSGI-specific configurations in a separate file.</p>
+
+<p class="p">It is possible to <a class="xref" href="#topic8895__serving-static-files-with-uwsgi">serve
+        static files with uWSGI</a>.</p>
+
+<p class="p">The <a class="xref" href="perlcgi.html">
+<em class="ph i">perlcgi</em>
+</a> framework is also available for
+running traditional Perl CGI applications without PSGI.</p>
+
+<div class="section" id="topic8895__deploying-applications"><h2 class="title sectiontitle">Deploying Applications</h2> 
+<p class="p">The following is a list of pages with details for deploying various
+application types.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="cgiapppsgi.html">CGI:Application:PSGI</a>
+</li>
+
+<li class="li">
+<a class="xref" href="perlcgi.html">Perl CGI</a>
+</li>
+
+<li class="li">
+<a class="xref" href="catalyst.html">Catalyst</a>
+</li>
+
+<li class="li">
+<a class="xref" href="mason.html">Mason</a>
+</li>
+
+<li class="li">
+<a class="xref" href="mojo.html">Mojolicious</a>
+</li>
+
+<li class="li">
+<a class="xref" href="dancer.html">Dancer</a>
+</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic8895__database-services"><h2 class="title sectiontitle">Database Services</h2> 
+<p class="p">Authentication details for your configured database services can be
+found in the <samp class="ph codeph">$ENV</samp> variable, under
+<samp class="ph codeph">DATABASE_URL</samp> or <samp class="ph codeph">VCAP_SERVICES</samp>. Here is an example of getting the correct credentials.</p>
+
+</div>
+
+<div class="section" id="topic8895__mysql-url"><h2 class="title sectiontitle">MYSQL_URL</h2> 
+<pre class="pre codeblock">my($user,$password,$host,$port,$name) = $ENV{MYSQL_URL} =~ m{mysql://(.+?):(.+)\@(.+?):(\d+)/(.*)}
+    or die "MySQL service not configured";
+print $host;
+print $name;
+print $password;
+print $port;
+print $user;</pre>
+
+</div>
+
+<div class="section" id="topic8895__vcap-services"><h2 class="title sectiontitle">VCAP_SERVICES</h2> 
+<pre class="pre codeblock">use DBI;
+use DBD::mysql;
+use JSON "decode_json";
+
+if ($ENV{VCAP_SERVICES}) {
+    # Extract and convert the JSON string in the VCAP_SERVICES environment variable
+    my $vcap_services = decode_json ($ENV{VCAP_SERVICES});
+
+    # Get the database credentials
+    my $cred = $vcap_services-&gt;{mysql}[0]{credentials};
+
+    # Use the credentials to form whatever connection string your database interface requires
+    my $dbh = DBI-&gt;connect("DBI:mysql:database=$cred-&gt;{name};hostname=$cred-&gt;{hostname};port=$cred-&gt;{port};",
+                           $cred-&gt;{user}, $cred-&gt;{password})
+        or die "Unable to connect: $DBI::errstr\n";
+}
+else {
+    # No VCAP_SERVICES environment variable.  Use other connection.
+    my $dbh = DBI-&gt;connect("DBI:mysql:database=mydb;hostname=127.0.0.1;port=3306;",
+                           "username", "password")
+        or die "Unable to connect: $DBI::errstr\n";
+}</pre>
+
+</div>
+
+<div class="section" id="topic8895__worker-applications"><h2 class="title sectiontitle">Worker Applications</h2> 
+<p class="p">Non-HTTP apps that run as an Application Lifecycle Service application under the control of
+the Health Manager.</p>
+
+<p class="p">To deploy worker applications, you need to use the
+  <a class="xref" href="../../manifestyml.html#topic20922__command">
+<em class="ph i">command</em>
+</a> key and set the
+  <a class="xref" href="../../manifestyml.html#topic20922__web">
+<em class="ph i">processes:
+web</em>
+</a> key to
+Null ("\~").</p>
+
+</div>
+
+<div class="section" id="topic8895__example"><h2 class="title sectiontitle">Example</h2> 
+<pre class="pre codeblock">name: perl-app
+framework: perl
+command: perl worker.pl
+processes:
+  web: ~</pre>
+
+</div>
+
+<div class="section" id="topic8895__installing-module-dependencies"><h2 class="title sectiontitle">Installing module dependencies</h2> 
+<p class="p">If the modules your app needs are available via PPM or CPAN, let
+Application Lifecycle Service install them and their dependencies using one of the following
+methods rather than including them in the source tree of your
+application code.</p>
+
+</div>
+
+<div class="section" id="topic8895__cpan-modules-via-ppm"><h2 class="title sectiontitle">CPAN Modules via PPM</h2> 
+<p class="p">
+<a class="xref" href="http://code.activestate.com/ppm" target="_blank">PPM</a> is the binary package manager for
+ActivePerl. It is usually the fastest and most reliable way of
+installing CPAN modules in the Application Lifecycle Service application droplet. Current
+versions of most CPAN modules and frameworks are available.</p>
+
+<p class="p">Modules required by your app can be specified by adding a
+<samp class="ph codeph">requirements:</samp> section to the
+<a class="xref" href="../../manifestyml.html">
+<em class="ph i">manifest.yml</em>
+</a> file. For example:</p>
+
+<pre class="pre codeblock">requirements:
+  ppm:
+    - CGI::Application::PSGI
+    - Plack::Builder
+    - Data::Dumper
+    - JSON
+    - JSON::Parse
+    - DBI
+    - DBD::mysql</pre>
+
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span>  If you want to use <em class="ph i">cpan</em> to download the modules, change <samp class="ph codeph">ppm:</samp>
+          to <samp class="ph codeph">cpan:</samp>.</div>
+
+      </div>
+
+<p class="p">Alternatively, include a top-level <em class="ph i">requirements.txt</em> file. The requirements.txt for a minimal Mojolicious app would be just:</p>
+
+<pre class="pre codeblock">Mojolicious</pre>
+
+<p class="p">Prerequisite modules for the framework are installed automatically.</p>
+
+<p class="p">For a simple Dancer application:</p>
+
+<pre class="pre codeblock">Dancer
+YAML
+Plack::Request</pre>
+
+<p class="p">Custom modules that are included within the project can be used in the
+normal method:</p>
+
+<pre class="pre codeblock">use lib "lib";
+use MyCustomPM;</pre>
+
+<p class="p">Any non-core dependencies required by these custom modules should be
+specified explicitly in <em class="ph i">requirements.txt</em>, <em class="ph i">manifest.yml</em> or
+<em class="ph i">Makefile.PL</em> (see below) otherwise those dependencies will not be
+packed in the application droplet.</p>
+
+</div>
+
+<div class="section" id="topic8895__cpan-modules-via-cpanm"><h2 class="title sectiontitle">CPAN Modules via cpanm</h2> 
+<p class="p">If the module you require is not available in the HPE PPM
+repositories, or if you need a
+specific version (PPM provides only the current release), you can use
+<a class="xref" href="http://search.cpan.org/dist/App-cpanminus/bin/cpanm" target="_blank">cpanm</a> to install
+them. Any dependencies included in ActivePerl or installed by PPM will
+be reused rather than being rebuilt.</p>
+
+<p class="p">You can specify modules for installation via <samp class="ph codeph">cpanm</samp>
+by including them in one of the following files:</p>
+
+</div>
+
+<div class="section" id="topic8895__manifest-yml"><h2 class="title sectiontitle">manifest.yml</h2> 
+<p class="p">Add a <samp class="ph codeph">cpan:</samp> section to <em class="ph i">manifest.yml</em> that
+specifies version conditions, requests a module via HTTP URL, or fetches
+a branch from a git repo. For example:</p>
+
+<pre class="pre codeblock">requirements:
+  cpan:
+    - Mojolicious~"&gt;=3.0, &lt;3.50"
+    - git://github.com/doy/try-tiny.git@Try-Tiny-0.09
+    - http://www.cpan.org/authors/id/G/GA/GAAS/Data-Dump-1.20.tar.gz</pre>
+
+<p class="p">This example installs a version of Mojolicious equal or later than 3.0,
+but prior to 3.50. Since no such version exists on CPAN, it is fetched
+from the BackPAN archive. It then installs the Try-Tiny-0.09 tag from
+the try-tiny.git repository (could also be a branch or commit name), and
+finally installs Data-Dump-1.20.tar.gz from an absolute download URL.</p>
+
+</div>
+
+<div class="section" id="topic8895__makefile-pl"><h2 class="title sectiontitle">Makefile.PL</h2> 
+<p class="p">
+<a class="xref" href="https://metacpan.org/module/ExtUtils::MakeMaker::Tutorial" target="_blank">Makefile.PL</a>
+is a standard format for specifying dependencies in Perl modules.
+Application Lifecycle Service will use this if there is no <em class="ph i">cpanfile</em> or <em class="ph i">carton.lock</em> file.</p>
+
+</div>
+
+<div class="section" id="topic8895__cpanfile"><h2 class="title sectiontitle">cpanfile</h2> 
+<p class="p">The <a class="xref" href="https://metacpan.org/module/MIYAGAWA/Module-CPANfile-0.9031/lib/cpanfile.pod" target="_blank">cpanfile</a> format is preferable for Perl web applications, as <em class="ph i">Makefile.PL</em> is
+generally intended for Perl modules. It allows for more elaborate
+specification of module dependencies (see the <a class="xref" href="https://metacpan.org/module/MIYAGAWA/Module-CPANfile-0.9031/lib/cpanfile.pod#SYNOPSIS" target="_blank">cpanfile
+SYNOPSIS</a>
+for more information).</p>
+
+</div>
+
+<div class="section" id="topic8895__carton-lock"><h2 class="title sectiontitle">carton.lock</h2> 
+<p class="p">The <a class="xref" href="https://metacpan.org/module/Carton" target="_blank">carton</a> module dependency
+manager is similar in concept to Ruby's Bundler.</p>
+
+<p class="p">To use it, first install carton locally using <samp class="ph codeph">ppm</samp>
+or <samp class="ph codeph">cpanm</samp>.</p>
+
+<p class="p">Run the <samp class="ph codeph">carton install</samp> command in the base
+directory of an application with a <em class="ph i">cpanfile</em>. This installs the modules
+locally and creates a <em class="ph i">carton.lock</em> file.</p>
+
+<p class="p">If you want to include modules which are not in a public CPAN
+repository, run <samp class="ph codeph">carton bundle</samp> to add the source
+packages in a <em class="ph i">local/cache</em> sub-directory of the application. Application Lifecycle Service
+will install those modules from the cached files.</p>
+
+</div>
+
+<div class="section" id="topic8895__disable-testing"><h2 class="title sectiontitle">Disable Testing</h2> 
+<p class="p">Disabling tests in cpanm can decrease staging times for applications
+with numerous module dependencies, especially if those dependencies have
+large test suites.</p>
+
+<p class="p">To disable testing for cpanm in staging, set
+<a class="xref" href="http://search.cpan.org/dist/App-cpanminus/bin/cpanm#OPTIONS" target="_blank">PERL_CPANM_OPT</a>
+to '--notest' in <a class="xref" href="../../manifestyml.html">
+<em class="ph i">manifest.yml</em>
+</a>:</p>
+
+<pre class="pre codeblock">name: myapp
+env:
+  PERL_CPANM_OPT: --notest</pre>
+
+</div>
+
+<div class="section" id="topic8895__custom-cpan-mirror"><h2 class="title sectiontitle">Custom CPAN Mirror</h2> 
+<p class="p">To make cpanminus use a specific CPAN repository (e.g. a local mirror or
+private repo), instead of the default public ones, set the
+<samp class="ph codeph">--mirror</samp> and <samp class="ph codeph">--mirror-only</samp>
+options in PERL_CPANM_OPT:</p>
+
+<pre class="pre codeblock">env:
+  PERL_CPANM_OPT: --mirror http://cpan.example.com --mirror-only</pre>
+
+</div>
+
+<div class="section" id="topic8895__serving-static-files-with-uwsgi"><h2 class="title sectiontitle">Serving Static Files with uWSGI</h2> 
+<div class="p"><div class="note restriction"><span class="restrictiontitle">Restriction:</span> Serving static files via uWSGI is only available for Perl and Python frameworks.</div>
+It
+        is possible to serve static files with uWSGI using <samp class="ph codeph">processes: web:</samp> in the
+          <a class="xref" href="../../manifestyml.html">
+          <em class="ph i">manifest.yml</em>
+        </a> file to specify folders that will be served statically and not by the app.</div>
+
+<p class="p">To make a single folder serve statically, use <samp class="ph codeph">--check-static</samp>:</p>
+
+<pre class="pre codeblock">processes:
+    web: $HELION_UWSGI --check-static $HOME/&lt;folder&gt;</pre>
+
+<p class="p">To specify multiple folders with static files that do not share a common
+root, use <samp class="ph codeph">--static-map</samp>:</p>
+
+<pre class="pre codeblock">processes:
+    web: $HELION_UWSGI --static-map /foo=$HOME/static --static-map /bar=$HOME/sub</pre>
+
+<p class="p">In this case <em class="ph i">/foo/index.html</em> would serve <em class="ph i">\$HOME/static/index.html</em>,
+and <em class="ph i">/bar/index.html</em> would serve <em class="ph i">\$HOME/sub/index.html</em>. If the file
+doesn't exist, then uWSGI will forward the request to the app.</p>
+
+</div>
+
+<div class="section" id="topic8895__runtime"><h2 class="title sectiontitle">Runtime</h2> 
+<p class="p">Application Lifecycle Service deploys Perl applications with <a class="xref" href="http://docs.activestate.com/activeperl/5.14/" target="_blank">ActivePerl
+5.14</a>.</p>
+
+</div>
+
+<div class="section" id="topic8895__troubleshooting"><h2 class="title sectiontitle">Troubleshooting</h2> 
+</div>
+
+<div class="section" id="topic8895__general"><h2 class="title sectiontitle">General</h2> 
+<p class="p">If your application fails to stage or launch successfully, use the
+helion logs command to check the stdout and stderr logs.</p>
+
+<p class="p">If there are no helpful messages in those files, there are two
+additional log files (staging.log and ppm4.log) which can be accessed
+with the helion files command:</p>
+
+<pre class="pre codeblock">helion files myapp logs/staging.log
+helion files myapp logs/ppm4.log</pre>
+
+</div>
+
+<div class="section" id="topic8895__other-issues"><h2 class="title sectiontitle">Other Issues</h2> 
+<dl class="dl">
+
+<dt class="dt dlterm">Problem </dt>
+
+<dd class="dd">Application installs but the result is an empty window.</dd>
+
+   
+  <dt class="dt dlterm">Possible Resolutions</dt>
+
+<dd class="dd">
+<p class="p">Perl apps require the Content-Length header to be set in order for
+pages to display correctly. Some frameworks handle this already,
+while for others it needs to be done specifically.</p>
+
+
+<p class="p">If you are using CGI::Application::PSGI, add the following to your
+app.psgi file:</p>
+
+
+<pre class="pre codeblock">use Plack::Builder;
+
+...
+
+builder {
+        ...
+        enable 'Plack::Middleware::ContentLength';
+        ...
+};</pre>
+
+</dd>
+
+
+</dl>
+</div>
+
+<div class="section" id="topic8895__examples"><h2 class="title sectiontitle">Examples</h2> 
+<p class="p">Several Perl samples are available in
+<a class="xref" href="https://github.com/Stackato-Apps" target="_blank">Application Lifecycle Service-Apps</a> on GitHub.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="https://github.com/Stackato-Apps/mojo-scalingdemo" target="_blank">Mojo Scaling Demo</a>
+</li>
+
+<li class="li">
+<a class="xref" href="https://github.com/Stackato-Apps/retester" target="_blank">Retester</a>
+</li>
+
+<li class="li">
+<a class="xref" href="https://github.com/Stackato-Apps/photobooth" target="_blank">PhotoBooth</a>
+</li>
+
+<li class="li">
+<a class="xref" href="https://github.com/Stackato-Apps/perlcritic.com" target="_blank">Perl Critic</a>
+</li>
+
+<li class="li">
+<a class="xref" href="https://github.com/Stackato-Apps/bugzilla" target="_blank">Bugzilla</a>
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

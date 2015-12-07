@@ -1,0 +1,365 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Command Reference: Placement Zones</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic4565" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/client-ref-placement.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Command Reference: Placement Zones</h1>
+
+
+
+
+
+<div class="body">
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic4565__command-placement-zone">helion placement-zone</a>: Show the list of DEAs associated with the specified placement zone.</li>
+
+<li class="li">
+<a class="xref" href="#topic4565__command-placement-zones">helion placement-zones</a>: Show the available placement zones.</li>
+
+<li class="li">
+<a class="xref" href="#topic4565__command-set-placement-zone">helion set-placement-zone</a>: Associate the application with a specific placement zone.</li>
+
+<li class="li">
+<a class="xref" href="#topic4565__command-unset-placement-zone">helion unset-placement-zone</a>: Remove the association between an application and its current placement zone.</li>
+
+</ul>
+
+<div class="section" id="topic4565__syntax"><h2 class="title sectiontitle">Syntax</h2> 
+<pre class="pre codeblock">helion [options] command [arguments] [command-options]</pre>
+
+<p class="p">For more information, use the <strong class="ph b">helion help</strong> or <strong class="ph b">helion help [<em class="ph i">command</em>]</strong> commands.</p>
+
+
+</div>
+
+<div class="section" id="topic4565__command-placement-zone"><h2 class="title sectiontitle">helion placement-zone &lt;<em class="ph i">zone</em>&gt;</h2> 
+<p class="p">Show the list of DEAs associated with the specified placement zone.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+<p class="p">le containing
+        the targets and authorization tokens.</p>
+
+</div>
+
+<div class="section" id="topic4565__command-placement-zones"><h2 class="title sectiontitle">helion placement-zones</h2> 
+<p class="p">Show the available placement zones.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic4565__command-set-placement-zone"><h2 class="title sectiontitle">helion set-placement-zone &lt;<em class="ph i">application</em>&gt; &lt;<em class="ph i">zone</em>&gt;</h2> 
+<p class="p">Associate the application with a specific placement zone.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+<td class="entry" valign="top">Path of the manifest file to use. If not specified, a search is performed.</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--no-tail</td>
+
+    <td class="entry" valign="top">Complementary alias of --tail.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization, -o</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation..</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+<td class="entry" valign="top">Path of the directory holding the application files to push. Defaults to the current working directory.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space, -s</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by name. Cannot be used together with <var class="keyword varname">--space-guid</var>.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by GUID. Cannot be used together with <var class="keyword varname">--space</var>.</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--tail</td>
+
+    <td class="entry" valign="top">Request target to stream the log.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation only.</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--timeout</td>
+
+    <td class="entry" valign="top">The time the client waits for an application to start before giving up and returning, in seconds. Note that this is measured from the last entry seen in the log stream. While there is activity in the log the timeout is reset. The default is 2 minutes. Use the suffixes 'm', 'h', and 'd' for the convenient specification of minutes, hours, and days. The optional suffix 's' stands for seconds.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current operation only.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic4565__command-unset-placement-zone"><h2 class="title sectiontitle">helion unset-placement-zone  &lt;<em class="ph i">application</em>&gt; &lt;<em class="ph i">zone</em>&gt;</h2> 
+<p class="p">Remove the association between application and its current placement zone.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+<td class="entry" valign="top">Path of the manifest file to use. If not specified, a search is performed.</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--no-tail</td>
+
+    <td class="entry" valign="top">Complementary alias of --tail.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization, -o</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation..</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+<td class="entry" valign="top">Path of the directory holding the application files to push. Defaults to the current working directory.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space, -s</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by name. Cannot be used together with <var class="keyword varname">--space-guid</var>.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by GUID. Cannot be used together with <var class="keyword varname">--space</var>.</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--tail</td>
+
+    <td class="entry" valign="top">Request target to stream the log.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation only.</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--timeout</td>
+
+    <td class="entry" valign="top">The time the client waits for an application to start before giving up and returning, in seconds. Note that this is measured from the last entry seen in the log stream. While there is activity in the log the timeout is reset. The default is 2 minutes. Use the suffixes 'm', 'h', and 'd' for the convenient specification of minutes, hours, and days. The optional suffix 's' stands for seconds.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current operation only.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

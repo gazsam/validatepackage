@@ -1,0 +1,715 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: DNSaaS Installation and Configuration</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="HP2.0DNSaaS_install_config" /> <meta name="html-import-file-path" content="devplatform/2.0/installation/install_dnsaas.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: DNSaaS Installation and Configuration</h1>
+
+
+  
+
+  <div class="body">
+    <p class="p">Our managed DNS service, based on the OpenStack Designate project, is engineered to help you
+      create, publish, and manage your DNS zones and records securely and efficiently for either a
+      public or private DNS server network.</p>
+
+    <div class="section" id="HP2.0DNSaaS_install_config__Prerequisites"><h2 class="title sectiontitle">Prerequisites</h2>
+      
+      <ul class="ul">
+        <li class="li">HPE Helion OpenStack 2.0 installation must be completed. You must know the location of
+          its <samp class="ph codeph">keystone.osrc</samp> file, which contains configuration information.</li>
+
+        <li class="li">You must know the NTP server and DNS server IP addresses.</li>
+
+        <li class="li">Credentials of the User and Tenant where the service is to be deployed ("Target
+          Credentials")</li>
+
+        <li class="li">"openrc" credentials file for the Target user and project
+          </li>
+
+        <li class="li">The v2 CLI must be installed on all nodes due to client differences.</li>
+
+        <li class="li">The SVC network correctly configured within HPE Helion OpenStack. <div class="note important"><span class="importanttitle">Important:</span> The DNSaaS installation requires that the svc network be named "SVC". User defined
+            names for the SVC network are currently not supported. </div>
+</li>
+
+        <li class="li">A SSH public and private keypair.</li>
+
+        <li class="li"><div class="note important"><span class="importanttitle">Important:</span> Selecting a flavor larger than m1.medium for the Deployer or 
+          Control Plane nodes fails due to a failure to re-size LVM. The recommended flavors for the 
+          Deployer and Control Plane nodes are m1.small or m1.medium.</div>
+</li>
+
+      </ul>
+
+    </div>
+
+
+    <div class="section"><h2 class="title sectiontitle">Download Files</h2>
+      
+      <p class="p">Navigate to the <a class="xref" href="https://helion.hpwsportal.com/catalog.html#/Home/Show" target="_blank">
+        HPE Helion Download Network (HDN)</a> and log in. If necessary, create an
+        account first. Select the required package and Download the DNSaaS Installer csu file to
+        your local directory unzip the csu to extract the deployer and cloud image tar ball.</p>
+
+    </div>
+
+
+    <div class="section" id="HP2.0DNSaaS_install_config__PrerequisiteCredentials"><h2 class="title sectiontitle">Creating the Prerequisite Credentials</h2>
+      
+      <p class="p">Target credentials are the credentials of the user and project where the service is to be
+        deployed. Target credentials include a project name and a username. Service credentials can
+        only be created after the Target credentials have been successfully created. </p>
+
+      <ol class="ol">
+        <li class="li">SSH to the HPE Helion OpenStack deployer.</li>
+
+        <li class="li">Source the keystone.osrc file. <pre class="pre codeblock">$ source keystone.osrc</pre>
+</li>
+
+        <li class="li">Create the DNSaaS project. Make a note of the ID field
+          value.<pre class="pre codeblock">$ openstack project create dnsaas
++-------------+----------------------------------+
+| Field       | Value                            |
++-------------+----------------------------------+
+| description |                                  |
+| domain_id   | default                          |
+| enabled     | True                             |<strong class="ph b">
+| id          | a6c8339e816c4f4fb9118b31e2e101ad |</strong>
+
+[ OUPUT TRIMMED]</pre>
+</li>
+
+        <li class="li">Create a dnsaas user.
+          <pre class="pre codeblock">$ openstack user create dnsaas --password password --email dnsaas@example.com --project dnsaas</pre>
+</li>
+
+        <li class="li">Add roles to the dnsaas user.
+          <pre class="pre codeblock">$ openstack role add --project dnsaas --user dnsaas _member_
+$ openstack role add --project dnsaas --user dnsaas admin</pre>
+</li>
+
+        <li class="li">You can view the roles with <samp class="ph codeph">role list</samp>.
+          <pre class="pre codeblock">$ openstack role list</pre>
+</li>
+
+      </ol>
+
+    </div>
+
+
+    <div class="section" id="HP2.0DNSaaS_install_config__CredentialsFile"><h2 class="title sectiontitle">DNSaaS User and Project Credentials</h2>
+      
+      <p class="p">Prepare the credentials files for the DNSaaS user and project.</p>
+
+      <pre class="pre codeblock">$ cat &lt;&lt;EOF &gt; dnsaas.osrc
+unset OS_DOMAIN_NAME
+export OS_IDENTITY_API_VERSION=3
+export OS_AUTH_VERSION=3
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_USER_DOMAIN_NAME=Default
+export OS_ENDPOINT_TYPE=internalURL
+export OS_INTERFACE=internal
+export OS_CACERT=/etc/ssl/certs/ca-certificates.crt
+export OS_PROJECT_NAME=dnsaas
+export OS_USERNAME=dnsaas
+export OS_PASSWORD=password
+export OS_AUTH_URL=http://192.168.245.5:35357/v3
+EOF</pre>
+
+    </div>
+
+    <div class="section" id="HP2.0DNSaaS_install_config__PreparingTheDeployer"><h2 class="title sectiontitle">Prepare the Deployer VM</h2>
+      
+      <div class="sectiondiv">
+        <strong class="ph b">Preparing to boot the Deployer VM</strong>
+        <p class="p">You must publish the DNSaaS Cloud Image to the target project/tenant before proceeding to
+          the next step. </p>
+<ol class="ol">
+          <li class="li">Update your environment. <pre class="pre codeblock">$ source dnsaas.osrc</pre>
+</li>
+
+          <li class="li">Create an image. Make a note of the value of the <samp class="ph codeph">owner</samp> parameter and
+            the <samp class="ph codeph">DNS Cloud Image ID</samp>
+            value.<pre class="pre codeblock">$ glance image-create --name "dnsaas-2.0.0-b.1_cloud-1.0.20151005T152959Z" \
+--file "dnsaas-2.0.0-b.1_cloud-1.0.20151005T152959Z.qcow2" \
+--is-public False \
+--disk-format qcow2 \
+--container-format bare       </pre>
+</li>
+
+          <li class="li">Identify the SVC network ID. Make a note of the SVC ID
+            value.<pre class="pre codeblock">$ neutron net-show SVC 
++---------------------------+--------------------------------------+
+| Field                     | Value                                |
++---------------------------+--------------------------------------+
+| admin_state_up            | True                                 |
+| id                        | &lt;service ID Value&gt;                   |
+
+[ OUTPUT TRIMMED ] </pre>
+</li>
+
+          <li class="li">Upload the SSH keypair.
+            <pre class="pre codeblock">$ nova keypair-add --pub-key dns_shared.pub dns-shared</pre>
+</li>
+
+          <li class="li">You can view the keypair information with <samp class="ph codeph">keypair-show</samp>.
+            <pre class="pre codeblock">$ nova keypair-show dns-shared</pre>
+</li>
+
+          <li class="li">Ensure the default security group is correctly configured. You will need the ID value
+            from the "create the project"
+            step.<pre class="pre codeblock">$ neutron security-group-list --tenant-id &lt;value of the owner parameter&gt;</pre>
+</li>
+
+          <li class="li">Create security group rules.
+            <pre class="pre codeblock">$ neutron security-group-rule-create \
+          --tenant-id &lt;value of the owner parameter from OpenStack Project Create command&gt; \
+          --protocol TCP \
+          --remote-ip-prefix 0.0.0.0/0 \
+          --port-range-min 22 \
+          --port-range-max 22 \
+          &lt;default security group rule ID&gt;
+
+$ neutron security-group-rule-create \
+          --tenant-id &lt;value of the project ID parameter from the OpenStack Project Create command&gt; \
+          --protocol TCP \
+          --remote-ip-prefix 0.0.0.0/0 \
+          --port-range-min 79 \
+          --port-range-max 79 \
+          &lt;default security group rule ID&gt;        </pre>
+</li>
+
+          <li class="li">You can view the security groups with <samp class="ph codeph">security_group_list</samp>
+            <pre class="pre codeblock">$ neutron security-group-list --tenant-id &lt;project ID&gt;</pre>
+</li>
+
+        </ol>
+</div><div class="sectiondiv">
+        <strong class="ph b">Booting the Deployer VM and Uploading the Deployer Tarball</strong>
+        <ol class="ol">
+          <li class="li">Boot the Deployer VM.
+            <pre class="pre codeblock">$ nova boot --poll \
+          --nic net-id=&lt;SVC ID Value&gt; \   # SVC Network ID
+          --image &lt;DNS Cloud Image ID&gt;\   # DNSaaS Cloud Image ID
+          --key-name dns-shared \         # Keypair Name
+          --flavor m1.small \
+          dnsaas-deployer        </pre>
+</li>
+
+          <li class="li">Display the dnsaas-deployer. Make a note of the SVC-NET IP
+            Address.<pre class="pre codeblock">$ nova show dnsaas-deployer</pre>
+</li>
+
+          <li class="li">Copy the dnsaas image.
+            <pre class="pre codeblock">$ scp -i dns_shared dnsaas-2.0.0-b.1-20151005T183829Z.tgz stack@&lt;SVC-NET IP Address&gt;:~</pre>
+</li>
+
+        </ol>
+</div><div class="sectiondiv">
+        <strong class="ph b">Login and Initialize the Deployer VM</strong>
+        <ol class="ol">
+          <li class="li">Login to the deployer.
+            <pre class="pre codeblock">$ ssh -i dns_shared stack@&lt;SVC-NET IP Address&gt;</pre>
+ You will need
+            to extract the dnsaas tar file and execute the dns-init.bash script.
+            <pre class="pre codeblock">$ tar xf dnsaas-2.0.0-b.1-20151005T183829Z.tar
+$ cd dnsaas-2.0.0-b.1/
+$ ./dnsaas-init.bash 
+[ OUTPUT TRIMMED ]
+
++ ssh-keygen -q -t rsa -f id_rsa
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+
+[ OUTPUT TRIMMED ]
+
+# Do not continue with the installation steps that appear here
+# Ignore this next line.
+To continue installation copy your cloud layout to: /home/stack/helion/my_cloud/definition      </pre>
+</li>
+
+        </ol>
+</div></div>
+
+
+    <div class="section" id="HP2.0DNSaaS_install_config__PrepareDeployment"><h2 class="title sectiontitle">Prepare the Deployment</h2>
+      <div class="sectiondiv">
+        <strong class="ph b">Select an Example Deployment Model</strong>
+        <p class="p">HPE Helion OpenStack DNSaaS has several example models that can be deployed. In the
+          following example, the <em class="ph i">powerdns</em> example deployment model is used.</p>
+<div class="note important"><span class="importanttitle">Important:</span> The <samp class="ph codeph">cp</samp> command must be used exactly as shown - including
+          the /* on the end of the example model
+        path.</div>
+<pre class="pre codeblock">$ cd ~/helion
+$ cp -r examples/powerdns/* my_cloud/definition/
+$ git add -A
+$ git commit -a -m "Add DNSaaS Example Model" </pre>
+
+      </div><div class="sectiondiv">
+        <strong class="ph b">Customize the Example Deployment Model</strong>
+        <ol class="ol">
+          <li class="li">You will need to change directories to the my_cloud/definition directory and run nano
+            to configure your DNS and NTP servers.
+            <pre class="pre codeblock">$ cd my_cloud/definition/
+$ nano cloudConfig.yml                                           </pre>
+</li>
+
+          <li class="li">Run the ansible-playbook on the HPE Helion OpenStack
+            deployer.<pre class="pre codeblock">cd ~/scratch/ansible/next/hos/ansible
+ansible-playbook -i hosts/verb_hosts platform-pass-through.yml -e pass_through_key=""        </pre>
+</li>
+
+          <li class="li"> Copy the contents of the <samp class="ph codeph">pass-through.yml</samp> file as follows:<ul class="ul">
+              <li class="li">Copy <strong class="ph b">from</strong>: &lt;<strong class="ph b">HOS</strong> deployer&gt;:~/platform-pass-through.yml </li>
+
+              <li class="li">Copy <strong class="ph b">to</strong>: &lt;<strong class="ph b">DNSaaS</strong> deployer&gt;
+                ~/helion/my_cloud/definition/data/pass-through/platform-pass-through/hos.yml</li>
+
+            </ul>
+
+          </li>
+
+          <li class="li">Commit the changes to git.
+            <pre class="pre codeblock">$ git add -A
+$ git commit -a -m "Save DNSaaS config file changes."
+            </pre>
+</li>
+
+          <li class="li">Run the Pre-Installation Playbook <p class="p">Copy the ~/dnsaas.osrc file from the HPE Helion
+              OpenStack deployer. At the end of each playbook, ensure both "unreachable" and
+              "failed" are zero.</p>
+
+            <pre class="pre codeblock">$ source ~/dnsaas.osrc
+$ cd ~/helion/hos/ansible/
+$ ansible-playbook -i hosts/localhost hlm-pre-install.yml</pre>
+
+          </li>
+
+        </ol>
+
+      </div>
+      <div class="sectiondiv">
+        <p class="p"><strong class="ph b">Create SSL Certificates</strong></p>
+
+        <p class="p">If you want to install a self-signed certificate that meets the needs of HPE Helion
+          OpenStack and HPE Helion Development Platform, follow the steps outlined in the FQDN-based
+          Certificate section. If you want to create an IP-address Certificate follow the steps in
+          the IP-Address Certificate section.</p>
+
+        <p class="p">FQDN-based Certificate</p>
+
+        <p class="p">You will need a real or fictional domain name e.g. "your.domain.com" and it must match
+          across the next 3 steps. </p>
+
+        <ol class="ol">
+          <li class="li">Create a Certificate Signing Request (CSR) with a defined subject.
+            <pre class="pre codeblock">cd ~
+openssl req -nodes -days 365 -newkey rsa:2048 -keyout my-public-cert.key -out my-public-cert.csr -text \
+    -subj '/C=US/O=Helion Test Certificate/CN=your.domain.com/emailAddress=test@example.org/'
+            </pre>
+</li>
+
+          <li class="li">Create a file containing v3 extensions Ensure that the DNS entry matches any CN entry
+            above and provide your IP address. The IP address is what is used by HPE Helion
+            Development Platform and the DNS is used by HPE Helion OpenStack. <div class="note note"><span class="notetitle">Note:</span> Update the
+              "subjectAltName" value with the domain name subjectAltName=DNS:your.domain.com</div>
+
+            <pre class="pre codeblock">$ cat &gt; v3_ext.cnf &lt;&lt; EOF
+[ v3_req ]
+subjectAltName=DNS:your.domain.com
+EOF
+            </pre>
+</li>
+
+          <li class="li">Self-sign your certificate.
+            <pre class="pre codeblock">$ openssl x509 -extfile v3_ext.cnf -extensions v3_req -in my-public-cert.csr -signkey my-public-cert.key -req -out my-public-cert.crt -text</pre>
+</li>
+
+          <li class="li">Installing the Certificate. <div class="note note"><span class="notetitle">Note:</span> If you are using a FQDN - Create or obtain a
+              certificate to match the domain name you are going to use.</div>
+
+            <ul class="ul">
+              <li class="li">Join the private and public keys into "my-cert-file" at the required location.
+                <pre class="pre codeblock">$ cat my-public-cert.key my-public-cert.crt &gt; ~/helion/my_cloud/config/tls/certs/my-public-cert</pre>
+
+              </li>
+
+              <li class="li">Edit network_groups.yml, locate a line containing <samp class="ph codeph">name: extlb</samp>.
+                Add the following lines at the same indentation level as <samp class="ph codeph">name:
+                  extlb</samp>
+                <pre class="pre codeblock">external-name: your.domain.name
+        cert-file: my-public-cert</pre>
+</li>
+
+              <li class="li">Rename the "components" section of the extlb for a "tls-components" section,
+                activating TLS on all external components.
+                <pre class="pre codeblock">$ nano ~/helion/my_cloud/definition/data/pass-through$network_groups.yml</pre>
+</li>
+
+              <li class="li">Add changes to git.
+                <pre class="pre codeblock">$ git add hos/ansible/roles/tls-frontend/files/my-public-cert  my_cloud/definition/data/network_groups.yml
+$ git diff ^HEAD my_cloud/definition/data/network_groups.yml
+# --- Output example ---
+ - hostname: false
+   hostname-suffix: ext
+   load-balancers:
+-  - components:
++  - tls-components:
+     - default
+     external-ip: 172.31.0.2
+     name: extlb
++    cert-file: my-public-cert
++    external-name: your.domain.name
+     provider: ip-cluster
+     roles:
+     - public
+                    
+$ git commit -m "Configure SSL certificate"
+                  </pre>
+
+              </li>
+
+              <li class="li">Commit changes to git.
+                <pre class="pre codeblock">$ git commit -m "Configure SSL certificate"</pre>
+
+              </li>
+
+            </ul>
+
+          </li>
+
+        </ol>
+
+        <p class="p">IP-Address Certificate</p>
+
+        <ol class="ol">
+          <li class="li">Identify the external IP Address.
+            <pre class="pre codeblock">grep 'external-ip' ~/helion/my_cloud/definition/data/network_groups.yml</pre>
+
+          </li>
+
+          <li class="li">Create a Certificate Signing Request (CSR) with a defined subject.
+            <pre class="pre codeblock">stack@dnsaas-deployer:~$ cd ~
+stack@dnsaas-deployer:~$ openssl req -nodes -days 365 -newkey rsa:2048 -keyout my-public-cert.key -out my-public-cert.csr -text \
+  -subj '/C=US/O=Helion Test Certificate/CN=&lt;EXTERNAL_IP_ADDRESS&gt;/emailAddress=test@example.org/'</pre>
+
+          </li>
+
+          <li class="li">Create a file containing v3 extensions Ensure that the DNS entry matches any CN entr
+            above and provide your IP address. <div class="note note"><span class="notetitle">Note:</span> The IP address must be the same in DNS: and IP:
+              The IP address is what is used by HPE Helion Development Platform and the DNS is used
+              by HPE Helion OpenStack.</div>
+
+            <pre class="pre codeblock">stack@dnsaas-deployer:~$ cat &gt; v3_ext.cnf &lt;&lt; EOF
+[ v3_req ]
+subjectAltName=DNS:&lt;EXTERNAL_IP_ADDRESS&gt;, IP:&lt;EXTERNAL_IP_ADDRESS&gt;
+[ alt_names ]
+IP.1 = &lt;EXTERNAL_IP_ADDRESS&gt;
+DNS.1 = &lt;EXTERNAL_IP_ADDRESS&gt;
+EOF</pre>
+
+          </li>
+
+          <li class="li">Self-sign your certificate.
+            <pre class="pre codeblock">$ openssl x509 -extfile v3_ext.cnf -extensions v3_req -in my-public-cert.csr -signkey my-public-cert.key -req -out my-public-cert.crt -text
+            </pre>
+
+          </li>
+
+          <li class="li">Installing the Certificate. <ul class="ul">
+              <li class="li">Join the private and public keys into "my-cert-file" at the required location.
+                <pre class="pre codeblock">$ cat my-public-cert.key my-public-cert.crt &gt; ~/helion/my_cloud/config/tls/certs/my-public-cert</pre>
+
+              </li>
+
+              <li class="li">Edit network_groups.yml, locate a line containing <samp class="ph codeph">name: extlb</samp>.
+                Add the following lines at the same indentation level as <samp class="ph codeph">name:
+                  extlb</samp>
+                <pre class="pre codeblock">cert-file: my-public-cert</pre>
+
+              </li>
+
+              <li class="li">Rename the "components" section of the extlb for a "tls-components" section,
+                activating TLS on all external components.
+                <pre class="pre codeblock">$ nano ~/helion/my_cloud/definition/data/network_groups.yml</pre>
+
+              </li>
+
+              <li class="li">Add changes to git.
+                <pre class="pre codeblock">$ git add hos/ansible/roles/tls-frontend/files/my-public-cert  my_cloud/definition/data/network_groups.yml
+$ git diff ^HEAD my_cloud/definition/data/network_groups.yml
+# --- Output example ---
+ - hostname: false
+   hostname-suffix: ext
+   load-balancers:
+-  - components:
++  - tls-components:
+     - default
+     external-ip: 172.31.0.2
+     name: extlb
++    cert-file: my-public-cert
+     provider: ip-cluster
+     roles:
+     - public</pre>
+
+              </li>
+
+              <li class="li">Commit changes to git.
+                <pre class="pre codeblock">$ git commit -m "Configure SSL certificate"</pre>
+
+              </li>
+
+            </ul>
+
+          </li>
+
+        </ol>
+
+      </div>
+      <div class="sectiondiv">
+        <p class="p"><strong class="ph b">Save Configured Deployment Model</strong></p>
+
+        <ol class="ol">
+          <li class="li">Add your changes to Git. <pre class="pre codeblock">$ cd ~/helion
+$ git add -A
+$ git commit -a -m "Configured Deployment Model"      
+$ git status </pre>
+
+            <div class="note note"><span class="notetitle">Note:</span> Make sure that there are no other files which are not committed to the Git
+              repository. If there are, begin troubleshooting.</div>
+</li>
+
+        </ol>
+
+      </div>
+      <div class="sectiondiv">
+        <strong class="ph b">Run the Configuration Processor</strong>
+        <p class="p">At the end of each playbook, ensure both "unreachable" and "failed" are
+          zero.</p>
+<div class="note note"><span class="notetitle">Note:</span> When asked for a encryption key, simply leave the value blank, pressing
+          enter 4 times to
+        proceed.</div>
+<pre class="pre codeblock">$ cd ~/helion/hos/ansible
+$ ansible-playbook -i hosts/localhost config-processor-run.yml</pre>
+
+      </div><strong class="ph b">Run the Ready Deployment Playbook</strong>
+      <p class="p">At the end of each playbook, ensure both "unreachable" and "failed" are
+      zero.</p>
+<pre class="pre codeblock">$ ansible-playbook -i hosts/localhost ready-deployment.yml </pre>
+
+    </div>
+
+
+    <div class="section" id="HP2.0DNSaaS_install_config__PerformDeployment"><h2 class="title sectiontitle">Perform the Deployment</h2>
+      
+      <div class="sectiondiv">
+        <strong class="ph b">Run the Boot Infrastructure Playbook</strong>
+        <p class="p">Once this is complete, all in-cloud infrastructure (VMs, Networks, Routers, Floating IPs
+          etc) will have been created.</p>
+<div class="note note"><span class="notetitle">Note:</span> This step takes approximately 15 minutes to
+          run.</div>
+<pre class="pre codeblock">$ cd ~/scratch/ansible/next/hos/ansible
+
+# Choose between single or multiple control plane.  You only need to execute one or the other, do not run both.          
+
+# a) Multiple control plane nodes
+$ ansible-playbook -i hosts/localhost hlm-boot-infra.yml
+          
+# b) Single control plane
+$ ansible-playbook -i hosts/localhost hlm-boot-infra.yml -e neutron_router_ha=False</pre>
+
+      </div>
+      <div class="sectiondiv">
+        <p class="p" id="HP2.0DNSaaS_install_config__RunSitePlay"><strong class="ph b">Run the Site Playbook</strong></p>
+
+        <div class="cautiontitle">CAUTION:</div><div class="note caution">Unlike all the previous ansible play's, the inventory file supplied to
+          this play is <strong class="ph b">hosts/verb_hosts</strong> and not <strong class="ph b">hosts/localhost</strong>.</div>
+
+        <div class="note note"><span class="notetitle">Note:</span> This step take approximately 15 to 20 minutes to complete.</div>
+
+        <pre class="pre codeblock">$ ansible-playbook -i hosts/verb_hosts site.yml</pre>
+
+      </div>
+    </div>
+
+    
+    <div class="section" id="HP2.0DNSaaS_install_config__InitialConfiguration"><h2 class="title sectiontitle">Initial Configuration</h2>
+      
+      
+      <div class="sectiondiv">
+        <p class="p"><strong class="ph b">Identify Name Server Public IPs</strong></p>
+
+        <p class="p">To direct DNS traffic towards the DNSaaS managed nameservers, you must first 
+          identify the Floating IPs associated with each server. Each of the name servers 
+          (e.g. dnsaas-cp-ns0001-mgmt) will have two IPs listed for the DNSAAS_NET_EXT 
+          network, the second IP address (e.g. 172.31.0.10) is the Floating IP. 
+          It is recommended that you gather all IPs for the nameservers and before 
+          proceeding to the next step.</p>
+
+        <ol class="ol">
+          <li class="li">Source the dnsaas.osrc file.
+            <pre class="pre codeblock">$ source dnsaas.osrc</pre>
+</li>
+
+          <li class="li">View server list.
+            <pre class="pre codeblock">$ openstack server list
++--------------------------------------+-----------------------+--------+----------------------------------------------------------------------------------------+
+| ID                                   | Name                  | Status | Networks                                                                               |
++--------------------------------------+-----------------------+--------+----------------------------------------------------------------------------------------+
+| 1dca52f2-cc77-425b-9652-660d29dcf172 | dnsaas-cp-ns0003-mgmt | ACTIVE | DNSAAS_NET_EXT=172.16.1.15, 172.31.0.12; SVC=169.254.2.25; DNSAAS_NET_MGMT=172.16.0.15 |
+| fbda0fb9-783e-4c77-ae61-fe58b2ccf23d | dnsaas-cp-ns0002-mgmt | ACTIVE | DNSAAS_NET_EXT=172.16.1.14, 172.31.0.11; SVC=169.254.2.24; DNSAAS_NET_MGMT=172.16.0.14 |
+| c3775219-cc84-485d-a38c-423c0c3798bc | dnsaas-cp-ns0001-mgmt | ACTIVE | DNSAAS_NET_EXT=172.16.1.13, 172.31.0.10; SVC=169.254.2.23; DNSAAS_NET_MGMT=172.16.0.13 |
+| 3fd8eac2-f952-4803-96f5-9299c635e18d | dnsaas-cp-c1-m3-mgmt  | ACTIVE | DNSAAS_NET_EXT=172.16.1.12; SVC=169.254.2.22; DNSAAS_NET_MGMT=172.16.0.12              |
+| 469ebe36-de45-4335-be70-1fc329603023 | dnsaas-cp-c1-m2-mgmt  | ACTIVE | DNSAAS_NET_EXT=172.16.1.11; SVC=169.254.2.21; DNSAAS_NET_MGMT=172.16.0.11              |
+| c2b485fa-233a-44f0-a024-b5f3c486779c | dnsaas-cp-c1-m1-mgmt  | ACTIVE | DNSAAS_NET_EXT=172.16.1.10; SVC=169.254.2.20; DNSAAS_NET_MGMT=172.16.0.10              |
+| 4cea4050-b30a-4f64-b9a8-b85f3cd4856b | dnsaas-deployer       | ACTIVE | SVC=169.254.2.19                                                                       |
++--------------------------------------+-----------------------+--------+----------------------------------------------------------------------------------------+</pre>
+</li>
+
+        </ol>
+
+      </div>
+      
+      <div class="sectiondiv">
+       <p class="p"><strong class="ph b">Create Server Entries in Designate</strong></p>
+
+        <p class="p">For each nameserver, choose a public FQDN. For example "ns1.mycloud.com", 
+          and create the server entry in Designate.</p>
+
+        <ol class="ol">
+          <li class="li">Source the dnsaas.osrc file.
+            <pre class="pre codeblock">$ source dnsaas.osrc</pre>
+</li>
+
+          <li class="li">Create server 1.
+            <pre class="pre codeblock">$ designate server-create --name ns1.mycloud.com.
++------------+--------------------------------------+
+| Field      | Value                                |
++------------+--------------------------------------+
+| id         | None                                 |
+| created_at | 2015-11-02T16:56:05.000000           |
+| updated_at | e93d76df-9660-45b4-83cc-c7ddec9f0add |
+| name       | ns1.mycloud.com.                     |
++------------+--------------------------------------+</pre>
+</li>
+
+          <li class="li">Create server 2.
+            <pre class="pre codeblock">$ designate server-create --name ns2.mycloud.com.
++------------+--------------------------------------+
+| Field      | Value                                |
++------------+--------------------------------------+
+| id         | None                                 |
+| created_at | 2015-11-02T16:56:09.000000           |
+| updated_at | 7dbfd84e-bf00-4a33-ae72-24ed4c67efd4 |
+| name       | ns2.mycloud.com.                     |
++------------+--------------------------------------+</pre>
+</li>
+
+          <li class="li">Create server 3.
+            <pre class="pre codeblock">$ designate server-create --name ns3.mycloud.com.
++------------+--------------------------------------+
+| Field      | Value                                |
++------------+--------------------------------------+
+| id         | None                                 |
+| created_at | 2015-11-02T16:56:12.000000           |
+| updated_at | 9da32483-7d96-4cb5-b2f8-8a1d1a0066e3 |
+| name       | ns3.mycloud.com.                     |
++------------+--------------------------------------+</pre>
+</li>
+
+          <li class="li">List servers.
+            <pre class="pre codeblock">$ designate server-list
++--------------------------------------+------------------+
+| id                                   | name             |
++--------------------------------------+------------------+
+| e93d76df-9660-45b4-83cc-c7ddec9f0add | ns1.mycloud.com. |
+| 7dbfd84e-bf00-4a33-ae72-24ed4c67efd4 | ns2.mycloud.com. |
+| 9da32483-7d96-4cb5-b2f8-8a1d1a0066e3 | ns3.mycloud.com. |
++--------------------------------------+------------------+</pre>
+</li>
+
+        </ol>
+
+      </div>
+      
+      <div class="sectiondiv">
+        <p class="p"><strong class="ph b">Create the A records for each Name Server</strong></p>
+
+        <p class="p">The following table of data is required - the table here is based on the example outputs above.</p>
+
+
+        <div class="p">
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="HP2.0DNSaaS_install_config__NSTable" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. </span></caption>
+              
+              
+              
+              <thead class="thead" align="left">
+                <tr class="row">
+                  <th class="entry" valign="top" width="33.33333333333333%" id="d132790e643">NS Hostname</th>
+
+                  <th class="entry" valign="top" width="33.33333333333333%" id="d132790e646">NS FQDN</th>
+
+                  <th class="entry" valign="top" width="33.33333333333333%" id="d132790e649">NS Floating IP</th>
+
+                </tr>
+
+              </thead>
+
+              <tbody class="tbody">
+                <tr class="row">
+                  <td class="entry" valign="top" width="33.33333333333333%" headers="d132790e643 ">dnsaas-cp-ns0001-mgmt</td>
+
+                  <td class="entry" valign="top" width="33.33333333333333%" headers="d132790e646 ">ns1.mycloud.com</td>
+
+                  <td class="entry" valign="top" width="33.33333333333333%" headers="d132790e649 ">169.254.2.23</td>
+
+                </tr>
+
+                <tr class="row">
+                  <td class="entry" valign="top" width="33.33333333333333%" headers="d132790e643 ">dnsaas-cp-ns0002-mgmt</td>
+
+                  <td class="entry" valign="top" width="33.33333333333333%" headers="d132790e646 ">ns2.mycloud.com</td>
+
+                  <td class="entry" valign="top" width="33.33333333333333%" headers="d132790e649 ">169.254.2.24</td>
+
+                </tr>
+
+                <tr class="row">
+                  <td class="entry" valign="top" width="33.33333333333333%" headers="d132790e643 ">dnsaas-cp-ns0003-mgmt</td>
+
+                  <td class="entry" valign="top" width="33.33333333333333%" headers="d132790e646 ">ns3.mycloud.com</td>
+
+                  <td class="entry" valign="top" width="33.33333333333333%" headers="d132790e649 ">169.254.2.2</td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+</div>
+For each name chosen, provide the external service the name and Floating IP
+          address for each nameserver, or create the matching zone and records within Designate.</div>
+
+      </div>
+    </div>
+
+    
+    <div class="section" id="HP2.0DNSaaS_install_config__MoreInformation"><h2 class="title sectiontitle">More Information</h2>
+      
+      <p class="p">For more information on creating servers, domains and examples, see the 
+        <a class="xref" href="http://docs.openstack.org/developer/designate/rest.html" target="_blank">OpenStack REST API 
+      documentation</a>.</p>
+
+      
+    </div>
+
+  </div>
+
+
+</body>
+</html>

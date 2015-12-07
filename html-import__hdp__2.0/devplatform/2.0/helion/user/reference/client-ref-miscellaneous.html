@@ -1,0 +1,478 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Command Reference: Miscellaneous</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic3989" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/client-ref-miscellaneous.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Command Reference: Miscellaneous</h1>
+
+
+
+
+
+<div class="body">
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic3989__command-admin">helion admin</a>: A set of administrative tasks.</li>
+
+<li class="li">
+<a class="xref" href="#topic3989__command-alias">helion alias</a>: Create a shortcut for a command.  </li>
+
+<li class="li">
+<a class="xref" href="#topic3989__command-aliases">helion aliases</a>: List the known aliases (shortcuts).</li>
+
+<li class="li">
+<a class="xref" href="#topic3989__command-color">helion color</a>: Management of terminal colors.</li>
+
+<li class="li">
+<a class="xref" href="#topic3989__command-curl">helion curl</a>: Run a raw REST request against the chosen target.</li>
+
+<li class="li">
+        <a class="xref" href="#topic3989__command-drain">helion drain</a>: Commands for the
+        management of drains attached to applications.</li>
+
+<li class="li">
+<a class="xref" href="#topic3989__command-guid">helion guid</a>: Map the specified name into a GUID given the type.</li>
+
+<li class="li">
+<a class="xref" href="#topic3989__command-help">helion help</a>: Retrieve help for a command or command set.</li>
+
+<li class="li">
+<a class="xref" href="#topic3989__command-named-entities">helion named-entities</a>: List the entity types usable for GUID.</li>
+
+<li class="li">
+<a class="xref" href="#topic3989__command-trace">helion trace</a>: Print the saved REST trace for the last client command to stdout.</li>
+
+<li class="li">
+<a class="xref" href="#topic3989__command-unalias">helion unalias</a>: Remove a shortcut by name.</li>
+
+</ul>
+
+<div class="section" id="topic3989__syntax"><h2 class="title sectiontitle">Syntax</h2> 
+<pre class="pre codeblock">helion [options] command [arguments] [command-options]</pre>
+
+<p class="p">For more information, use the <strong class="ph b">helion help</strong> or <strong class="ph b">helion help [<em class="ph i">command</em>]</strong> commands.</p>
+
+
+</div>
+
+<div class="section" id="topic3989__command-admin"><h2 class="title sectiontitle">helion admin</h2> 
+<p class="p">A set of administrative tasks.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic3989__command-alias"><h2 class="title sectiontitle">helion alias &lt;<em class="ph i">name</em>&gt; &lt;<em class="ph i">command</em>&gt;</h2> 
+<p class="p">Create a shortcut (alias) for a command.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic3989__command-aliases"><h2 class="title sectiontitle">helion aliases</h2> 
+<p class="p">List the known aliases (shortcuts).</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic3989__command-color"><h2 class="title sectiontitle">helion color</h2> 
+<p class="p">Management of terminal colors</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic3989__command-curl"><h2 class="title sectiontitle">helion curl &lt;<em class="ph i">operation</em>&gt; &lt;<em class="ph i">path</em>&gt; &lt;<em class="ph i">header</em>&gt;</h2> 
+<p class="p">Run a raw REST request against the chosen target.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--data, -d</td>
+
+    <td class="entry" valign="top">Payload to use for PUT and POST. Cannot be used with neither GET nor DELETE. A value of "-" or "stdin" causes the client to read the data from stdin.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--form</td>
+
+    <td class="entry" valign="top">Zero or more form fields to be added to the base url. Data is in the form of "key: value".</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--output, -o</td>
+
+    <td class="entry" valign="top">Path to the file to write the returned payload to. A value of "-" or "stdin" causes the client to write the data to stdout.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--port</td>
+
+    <td class="entry" valign="top">The port to use for the request. Only relevant to websocket operation.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--reconnect</td>
+
+    <td class="entry" valign="top">Automatically reconnect when the websocket server closes the connection. Only relevant to websocket operation.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--show-extended</td>
+
+    <td class="entry" valign="top">Show additional information about the request; for example, response headers.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--web-socket, -ws</td>
+
+    <td class="entry" valign="top">Switch to WebSocket mode for GET. Cannot be used with any other operation.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic3989__command-drain"><h2 class="title sectiontitle">helion drain {command-drain}</h2> 
+<p class="p">Commands for the management of drains attached to applications.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic3989__command-guid"><h2 class="title sectiontitle">helion guid &lt;<em class="ph i">type</em>&gt; &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Map the specified name into a uuid, given the type.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic3989__command-help"><h2 class="title sectiontitle">helion help &lt;<em class="ph i">CommandName</em>&gt;</h2> 
+<p class="p">Retrieve help for a command or command set. Without an argument, help for all commands is given. The default format is <em class="ph i">--full</em>.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--full</td>
+
+<td class="entry" valign="top">Activate full form of the help.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Activate json form of the help.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--list</td>
+
+<td class="entry" valign="top">Activate list form of the help.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--short</td>
+
+<td class="entry" valign="top">Activate short form of the help.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--width, -w</td>
+
+<td class="entry" valign="top">The line width to format the help for. Defaults to the terminal
+width, or 80 when no terminal is available. </td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic3989__command-named-entities"><h2 class="title sectiontitle">helion named-entities</h2> 
+<p class="p">List the entity types usable for 'guid'. I.e. the types of the
+    named entities known to the client.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic3989__command-trace"><h2 class="title sectiontitle">helion trace</h2> 
+<p class="p">Print the saved REST trace for the last client command to stdout.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--short</td>
+
+<td class="entry" valign="top">Shows only the short list of requests without details like headers and responses.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic3989__command-unalias"><h2 class="title sectiontitle">helion unalias &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Remove a shortcut (alias) by name.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,250 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Glazier Reference Guide</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic6720" /> <meta name="html-import-file-path" content="devplatform/2.0/windows/windows_glazier_reference_guide.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Glazier Reference Guide</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">
+
+ 
+ </p>
+
+<p class="p">
+  <span class="ph">
+    <em class="ph i">Windows, .NET, SQL Server, and IIS are either registered trademarks or trademarks of Microsoft Corporation in the United States and/or other countries.</em>
+  </span>
+</p>
+
+<p class="p">Glazier is a collection of scripts used for building Windows images for deployment to a Helion OpenStack<sup>®</sup> environment. The image that the tool creates can be configured either by using command-line switches, or by using a Glazier profile.</p>
+
+<p class="p">For an example on how to use Glazier to create a Windows image, see <a class="xref" href="windows_building_and_deploying.html">Building and Deploying Windows DEA and SQL Server Express Images</a>.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic6720__downloading">Downloading the Glazier Tool</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic6720__prerequisites">Prerequisites</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic6720__usage">Usage</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic6720__commandline">Command-Line Arguments</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic6720__profile">Glazier Profiles</a>
+</li>
+
+</ul>
+
+<div class="section" id="topic6720__downloading"><h2 class="title sectiontitle">Downloading the Glazier tool</h2> 
+<p class="p">The Glazier tool can be found here: <a class="xref" href="http://clients.als.hpcloud.com/glazier-1.2.0-posix_x86_64.zip" target="_blank">Download</a>
+</p>
+
+</div>
+
+<div class="section" id="topic6720__prerequisites"><h2 class="title sectiontitle">Prerequisites</h2> 
+<p class="p">Glazier can run in either Linux (Ubuntu recommended) or OSX.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="http://download.virtualbox.org/virtualbox/4.3.26/VirtualBox-4.3.26-98988-OSX.dmg" target="_blank">Virtual box 4.3.26</a>
+</li>
+
+<li class="li">A retail or volume licensed, English Windows 2012R2 image. Images for a development or test environment can be downloaded from MSDN; for a production environment, you must obtain an image through your OEM channel.</li>
+
+<li class="li">
+<a class="xref" href="https://fedorapeople.org/groups/virt/virtio-win/deprecated-isos/stable/virtio-win-0.1-81.iso" target="_blank">Windows VirtIO Image 0.1-81</a>
+</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic6720__usage"><h2 class="title sectiontitle">Usage</h2> 
+<p class="p">To use the script, you need to have the following OpenStack environment variables set:</p>
+
+<ul class="ul">
+<li class="li">OS_TENANT_NAME</li>
+
+<li class="li">OS_USERNAME</li>
+
+<li class="li">OS_PASSWORD</li>
+
+<li class="li">OS_REGION_NAME</li>
+
+<li class="li">OS_TENANT_ID</li>
+
+<li class="li">OS_AUTH_URL</li>
+
+</ul>
+
+<p class="p">It is recommended to set these environment variables using the OpenStack RC file from the target environment. This can be obtained in Horizon, under Project-&gt;Compute-&gt;Access &amp; Security-&gt;API Access-&gt;<strong class="ph b">Download OpenStack RC File</strong>.</p>
+
+</div>
+
+<div class="section" id="topic6720__commandline"><h2 class="title sectiontitle">Command-line arguments</h2> 
+<p class="p">Syntax: <samp class="ph codeph">create-glazier</samp>
+</p>
+
+<p class="p">Available options:</p>
+
+<pre class="pre codeblock">--windows-iso /path/to/windows_iso_kit      
+    - specifies the location of the Windows iso image
+
+--sql-server-iso /path/to/sqlserver_iso_kit 
+    - specifies the location of the SQL Server iso image (Currently unused)
+
+--virtio-iso /path/to/virtio_iso_kit        
+    - specifies the path to the Virtio iso image
+
+--hypervisor {kvm|esxi|kvmforesxi}
+    - specifies which hypervisor to use. Valid options are "kvm", "esxi" or "kvmforesxi". The default is kvm
+
+--profile PATH                              
+    - (optional) path to a glazier profile. Can be used multiple times. If not supplied, 
+    - a subdirectory named profile will be searched by default, and all profiles found will be used. 
+
+--vm-path PATH                              
+    - (optional) path to a directory where VBox files will be saved. The default is ~/.glazier
+
+--with-sql-server {none|2012|2014}      
+    - if this is set, you also have to set --sql-server-iso (Currently unused)
+
+--product-key KEY               
+    - (optional) Windows product key; leave empty if you are using a VL Windows iso with a KMS server
+
+--use-volume-license
+    - (optional) Specifies that you are using a Windows volume license. If this is specified, there is no need to specify --product-key (means you are using Windows VL)
+
+--os-network-id
+    - Openstack network id used for building the Openstack image. Can be found 
+    - in Horizon interface under Project-&gt;Network-&gt;Networks-&gt;(network name)-&gt;ID
+
+--os-key-name
+    - Openstack name of the key used for building the Openstack image. Can be found
+    - in Horizon interface under Project-&gt;Compute-&gt;Access &amp; Security-&gt;Key Pairs
+
+--os-security-group
+    - Openstack security group used for building the Openstack image
+ 
+--os-flavor
+    - Openstack flavor used for building the Openstack image. Example: standard.medium
+
+--insecure
+    - (optional) create a Windows image for a Development Platform installation that does not have an HTTPS certificate
+
+--windows-update-proxy
+    - (optional) proxy used for Windows Updates on image
+  
+--dry-run                   
+    - (optional) run but do not make any changes
+
+--verbosity verbosity_level         
+    - verbosity level is an interger between 1-3, with 1 being the least verbose and 3 being the most verbose. 
+    - The default is 3.
+
+--use-colors {yes|no}               
+    - Should the script display colors or not. The default is yes.
+
+--version
+    - (optional) show the Glazier version
+
+--glazier-vm-http-proxy
+    - (optional) Sets the http proxy in the created virtual machine
+
+--glazier-vm-https-proxy
+    - (optional) Sets the https proxy in the created virtual machine
+
+--help                      
+    - shows this message</pre>
+
+</div>
+
+<div class="section" id="topic6720__profile"><h2 class="title sectiontitle">Creating a Glazier Profile</h2> 
+<p class="p">A profile can be used to configure Glazier. By default we provide the profiles you need to create the images you need to enable working with Windows. However, you can create a custom profile. Create the profile in the following format:</p>
+
+</div>
+
+<div class="section" id="topic6720__glazier-profile-directory-structure"><h2 class="title sectiontitle">Glazier profile directory structure</h2> 
+<p class="p">The directory structure of the profile should match the following:</p>
+
+<p class="p">
+                <img class="image" src="../../../media/windows_glazier_fileformat.png"/>
+            </p>
+
+</div>
+
+<div class="section" id="topic6720__sample-featurescsv-file"><h2 class="title sectiontitle">Sample features.csv file</h2> 
+<p class="p">The <samp class="ph codeph">features.csv</samp> file should have the following format:</p>
+
+<pre class="pre codeblock">  csv
+Feature,Core,Standard,Desired
+NetFx4ServerFeatures,Enabled,Enabled,Enabled
+NetFx4,Enabled,Enabled,Enabled
+NetFx4Extended-ASPNET45,Disabled,Disabled,Enabled
+MicrosoftWindowsPowerShellRoot,Enabled,Enabled,Enabled
+MicrosoftWindowsPowerShell,Enabled,Enabled,Enabled
+ServerCore-FullServer,Removed,Enabled,Removed
+IIS-LegacySnapIn,Removed,Disabled,Removed
+IIS-ManagementScriptingTools,Disabled,Disabled,Removed
+IIS-ManagementService,Disabled,Disabled,Removed
+IIS-IIS6ManagementCompatibility,Disabled,Disabled,Removed
+IIS-Metabase,Disabled,Disabled,Removed
+IIS-WMICompatibility,Disabled,Disabled,Removed
+IIS-LegacyScripts,Disabled,Disabled,Removed
+IIS-FTPServer,Disabled,Disabled,Removed</pre>
+
+</div>
+
+<div class="section" id="topic6720__sample-resourcescsv-file"><h2 class="title sectiontitle">Sample resources.csv file</h2> 
+<p class="p">The <samp class="ph codeph">resources.csv</samp> file should have the following format:</p>
+
+<pre class="pre codeblock">csv
+destination,url
+\installers\product.zip,http://download.domain.com/product.zip</pre>
+
+</div>
+
+<div class="section" id="topic6720__sample-toolscsv-file"><h2 class="title sectiontitle">Sample tools.csv file</h2> 
+<p class="p">The <samp class="ph codeph">tools.csv</samp> file should have the following format:</p>
+
+<pre class="pre codeblock">csv
+destination,url
+tool.zip,http://download.domain.com/tool.zip</pre>
+
+</div>
+
+<div class="section" id="topic6720__sample-powershell-script"><h2 class="title sectiontitle">Sample PowerShell script</h2> 
+<p class="p">The <samp class="ph codeph">specialize.ps1</samp> file is a PowerShell script that will run as one of the last steps on the <samp class="ph codeph">temp instance</samp>.</p>
+
+<p class="p">Sample <samp class="ph codeph">specialize.ps1</samp>:</p>
+
+<pre class="pre codeblock">powershell
+# Open firewall port 80
+New-NetFirewallRule -DisplayName 'Allow HTTP' -Direction Inbound -LocalPort 80 -Protocol TCP -Action Allow</pre>
+
+<p class="p">After creating the profile, use the <samp class="ph codeph">--profile</samp> command-line switch (above).</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

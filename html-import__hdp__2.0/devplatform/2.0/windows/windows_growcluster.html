@@ -1,0 +1,66 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Growing and Renaming Clusters Using Horizon</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic1858" /> <meta name="html-import-file-path" content="devplatform/2.0/windows/windows_growcluster.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Growing and Renaming Clusters Using Horizon</h1>
+
+
+    
+
+    
+    <div class="body">
+        <p class="p"/>
+
+        <p class="p">
+            <span class="ph">
+                <em class="ph i">Windows, .NET, SQL Server, and IIS are either registered trademarks or trademarks
+                    of Microsoft Corporation in the United States and/or other countries.</em>
+            </span>
+        </p>
+
+        <p class="p">Follow these instructions to use the <a class="xref" href="http://docs.hpcloud.com/helion/operations/accessing_horizon.html" target="_blank">Horizon console</a> to grow your clusters by
+            adding more DEA nodes or services. These instructions are intended for installations of
+            the Helion Development Platform running on Helion OpenStack<sup>®</sup>
+            version 1.1.1 or later.</p>
+
+        <p class="p">Note that Windows DEA nodes and SQL Server services will not appear in the Horizon
+            interface until you upload the appropriate images into Glance.</p>
+
+        <p class="p">After creating a cluster, go to the <strong class="ph b">Clusters</strong> page. [<strong class="ph b">Project</strong> tab &gt;
+            expand <strong class="ph b">Application Lifecycle Service</strong> &gt; <strong class="ph b">Clusters</strong>] Click on the
+                <strong class="ph b">Actions</strong> down arrow to display the options and select the desired
+                option.<br/><img class="image" src="../../../media/growcluster1.png"/><br/></p>
+
+        <div class="section"><h2 class="title sectiontitle"> To add DEAs</h2>
+            
+            <p class="p">Click on <strong class="ph b">Grow DEAs</strong>, fill out the details, and then click <strong class="ph b">Grow</strong>. This
+                will create the specified number of DEAs of the selected type and attach them to the
+                    cluster.<br/><img class="image" src="../../../media/growcluster2.png"/><br/></p>
+
+        </div>
+
+        <div class="section"><h2 class="title sectiontitle"> To add more services</h2>
+            
+            <p class="p">Check the check box to select the services and then click <strong class="ph b">Grow Services</strong>. This
+                will create the selected service nodes and attach them to the
+                    cluster.<br/><img class="image" src="../../../media/growcluster3.png"/><br/></p>
+
+        </div>
+
+        <div class="section">
+            <strong class="ph b">To rename a cluster </strong><p class="p">Click <strong class="ph b">Rename Cluster</strong>, enter the new name, and then click <strong class="ph b">Rename</strong>. Note that this
+                renames the cluster title, but does not affect the cluster prefix.
+                    <br/><img class="image" src="../../../media/growcluster4.png"/><br/></p>
+</div>
+
+    </div>
+
+
+
+</body>
+</html>

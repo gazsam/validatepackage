@@ -1,0 +1,97 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Organizations and Spaces</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic2729" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/orgs-spaces.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Organizations and Spaces</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">Organizations and Spaces are the main organizational units in Application Lifecycle Service.</p>
+
+<ul class="ul">
+<li class="li">Organizations have Users, Spaces, and Domains</li>
+
+<li class="li">Spaces have Users, Applications, and Service Instances</li>
+
+<li class="li">Applications have Routes (which are derived from Domains)</li>
+
+</ul>
+
+<div class="section" id="topic2729__organizations"><h2 class="title sectiontitle">Organizations</h2> 
+<p class="p">An organization is a top-level group of users, spaces, and domains. Only
+Application Lifecycle Service admins (accounts with global superuser privileges) can manage
+Organizations.</p>
+
+  <p class="p">Each organization is assigned a <a class="xref" href="../../admin/server/configuration.html#topic31232__quota-definitions">Quota
+          Definition</a>, a set of limits on memory, applications, and service instances which is
+        shares between all members of the organization.</p>
+
+</div>
+
+<div class="section" id="topic2729__spaces"><h2 class="title sectiontitle">Spaces</h2> 
+<p class="p">An organization can contain multiple spaces (e.g. <strong class="ph b">development</strong>,
+<strong class="ph b">test</strong>, and <strong class="ph b">production</strong>). A domain can be mapped to multiple spaces
+but a route can be mapped to only one space.</p>
+
+</div>
+
+<div class="section" id="topic2729__domains"><h2 class="title sectiontitle">Domains</h2> 
+<p class="p">A domain in Application Lifecycle Service is a fully-qualified, second-level or lower domain name (e.g. "example.com" or "helion.example.com").</p>
+
+<p class="p">Organizations and spaces can have custom domains, but are often able to use a system domain by default as well (e.g. "myorg.net" and "helion.example.com"). Domains belong to an organization. They are associated with one or more spaces within that organization, but are not directly bound to apps. Apps are assigned a "hostname + domain" combination called a Route.</p>
+
+</div>
+
+<div class="section" id="topic2729__routes"><h2 class="title sectiontitle">Routes</h2> 
+<p class="p">A route is a virtual hostname followed by a domain name or
+fully-qualified sub-domain (e.g. "myapp.myorg.example.com").</p>
+
+</div>
+
+<div class="section" id="topic2729__management"><h2 class="title sectiontitle">Management</h2> 
+<p class="p">You can manage spaces and organizations with the <a class="xref" href="../reference/client-ref.html">helion client</a> or the <a class="xref" href="../console/console_index.html">Management Console</a>.</p>
+
+</div>
+
+<div class="section" id="topic2729__users-roles"><h2 class="title sectiontitle">Users and Roles</h2> 
+<p class="p">Application Lifecycle Service users can take on one or more roles within Orgs and Spaces. These roles can be assigned by a Manager of the relevant scope or an Application Lifecycle Service Admin:</p>
+
+</div>
+
+<div class="section" id="topic2729__org-roles"><h2 class="title sectiontitle">Org Roles</h2> 
+<ul class="ul">
+<li class="li">Manager: Can add/remove Spaces and Domains, edit the roles of Org members, and change the name of the Org </li>
+
+<li class="li">Billing Manager: Can edit/change the billing account info, payment info</li>
+
+<li class="li">Auditor: View-only access to all org and space info, settings, and reports</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic2729__space-roles"><h2 class="title sectiontitle">Space Roles</h2> 
+<ul class="ul">
+<li class="li">Space Manager: Manager: Can add/remove Org members to the space (as managers, developers or auditors) and rename the space. The role does not automatically inherit Space Developer permissions, but Managers have permission to add that role to their own account. </li>
+
+<li class="li">Space Developer: Can create, delete, manage applications and services, full access to all usage reports and logs</li>
+
+<li class="li">Space Auditor: View-only access to all space information, settings, reports, and logs</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,609 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Command Reference: Space Quotas</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic7566" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/client-ref-spacequotas.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Command Reference: Space Quotas</h1>
+
+
+
+
+
+<div class="body">
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic7566__command-create-space-quota">helion create-space-quota</a>: Create a new space quota. </li>
+
+<li class="li">
+<a class="xref" href="#topic7566__command-delete-space-quota">helion delete-space-quota</a>: Delete the named space quota. </li>
+
+<li class="li">
+<a class="xref" href="#topic7566__command-rename-space-quota">helion rename-space-quota</a>: Rename the named space quota.</li>
+
+<li class="li">
+<a class="xref" href="#topic7566__command-set-space-quota">helion set-space-quota</a>: Assign the specified space quota to the current or specified space</li>
+
+<li class="li">
+<a class="xref" href="#topic7566__command-space-quota">helion space-quota</a>: Show the details of the named space quota. </li>
+
+<li class="li">
+<a class="xref" href="#topic7566__command-space-quotas">helion space-quotas</a>: List the space quotas owned by the current, specified, or all organizations.</li>
+
+<li class="li">
+<a class="xref" href="#topic7566__command-unset-space-quota">helion unset-space-quota</a>: Drop the space quota from the current or specified space.</li>
+
+<li class="li">
+<a class="xref" href="#topic7566__command-update-space-quota">helion update-space-quota</a>: Modify the named space quota.</li>
+
+</ul>
+
+<div class="section" id="topic7566__syntax"><h2 class="title sectiontitle">Syntax</h2> 
+<pre class="pre codeblock">helion [options] command [arguments] [command-options]</pre>
+
+<p class="p">For more information, use the <strong class="ph b">helion help</strong> or <strong class="ph b">helion help [<em class="ph i">command</em>]</strong> commands.</p>
+
+
+</div>
+
+<div class="section" id="topic7566__command-create-space-quota"><h2 class="title sectiontitle">helion create-space-quota  <em class="ph i">&lt;name&gt;</em>
+</h2> 
+<p class="p">Create a new space quota. It will be owned by the current or specified organization.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--instance-mem, -i</td>
+
+<td class="entry" valign="top">Amount of memory application instances can use. Use the suffices 'M' and 'G' for the convenient specification of mega- and gigabytes. Without a unit-suffix mega-bytes are assumed. As the base-unit megabytes must specified as integers. Gigabytes can be specified as fractions.
+Also accepts -1 and "unlimited" for unlimited memory.
+</td>
+
+   </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--mem, -m</td>
+
+<td class="entry" valign="top">Amount of memory applications can use. Use the suffices 'M' and 'G' for the convenient specification of mega- and gigabytes. Without a unit-suffix mega-bytes are assumed. As the base-unit megabytes must specified as integers. Gigabytes can be specified as fractions.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-paid-services-allowed</td>
+
+<td class="entry" valign="top">Complementary alias of --paid-services-allowed.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization, -o</td>
+
+<td class="entry" valign="top">The name of the parent organization to use as context.
+Defaults to the current organization.
+A current organization is automatically set if there is none, either by taking the one organization the user belongs to, or asking the user to choose among the possibilities.
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--routes, -r</td>
+
+<td class="entry" valign="top">Limit for the number of routes in the quota.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--services, -s</td>
+
+<td class="entry" valign="top">Limit for the number of services in the quota.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic7566__command-delete-space-quota"><h2 class="title sectiontitle">helion delete-space-quota  <em class="ph i">&lt;name&gt;</em>
+</h2> 
+<p class="p">Delete the named space quota.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic7566__command-rename-space-quota"><h2 class="title sectiontitle">helion rename-space-quota  <em class="ph i">&lt;name&gt;</em>  <em class="ph i">&lt;newname&gt;</em>
+</h2> 
+<p class="p">Rename the named space quota.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic7566__command-set-space-quota"><h2 class="title sectiontitle">helion set-space-quota  <em class="ph i">&lt;name&gt;</em>
+</h2> 
+<p class="p">Assign the specified space quota to the current or specified space.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--organization, -o</td>
+
+    <td class="entry" valign="top">The name of the parent organization to use as context.
+Defaults to the current organization.
+A current organization is automatically set if there is none, either by taking the one organization the user belongs to, or asking the user to choose among the possibilities.
+</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The name of the space to use as context.
+Defaults to the current space.
+A current space is automatically set if there is none, either by taking the one space the user has, or asking the user to choose among the possibilities.
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic7566__command-space-quota"><h2 class="title sectiontitle">helion space-quota  <em class="ph i">&lt;name&gt;</em>
+</h2> 
+<p class="p">Show the details of the named space quota. If not specified it will be asked for interactively (menu).</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--json</td>
+
+    <td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic7566__command-space-quotas"><h2 class="title sectiontitle">helion space-quotas</h2> 
+<p class="p">List the space quotas owned by the current, specified, or all organizations.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--all</td>
+
+<td class="entry" valign="top">Show all space quotas instead.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--full</td>
+
+<td class="entry" valign="top">Show all information about the space-quota.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization, -o</td>
+
+<td class="entry" valign="top">The name of the parent organization to use as context.
+Defaults to the current organization.
+A current organization is automatically set if there is none, either by taking the one organization the user belongs to, or asking the user to choose among the possibilities.
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic7566__command-unset-space-quota"><h2 class="title sectiontitle">helion unset-space-quota</h2> 
+<p class="p">Drop the space quota from the current or specified space.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--organization, -o</td>
+
+    <td class="entry" valign="top">The name of the parent organization to use as context.
+Defaults to the current organization.
+A current organization is automatically set if there is none, either by taking the one organization the user belongs to, or asking the user to choose among the possibilities.
+</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The name of the space to use as context.
+Defaults to the current space.
+A current space is automatically set if there is none, either by taking the one space the user has, or asking the user to choose among the possibilities.
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic7566__command-update-space-quota"><h2 class="title sectiontitle">helion update-space-quota  <em class="ph i">&lt;name&gt;</em>
+</h2> 
+<p class="p">Modify the named space quota.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--instance-mem, -i</td>
+
+<td class="entry" valign="top">Amount of memory application instances can use. Use the suffices 'M' and 'G' for the convenient specification of mega- and gigabytes. Without a unit-suffix mega-bytes are assumed. As the base-unit megabytes must specified as integers. Gigabytes can be specified as fractions.
+Also accepts -1 and "unlimited" for unlimited memory.
+</td>
+
+   </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--mem, -m</td>
+
+<td class="entry" valign="top">Amount of memory applications can use. Use the suffices 'M' and 'G' for the convenient specification of mega- and gigabytes. Without a unit-suffix mega-bytes are assumed. As the base-unit megabytes must specified as integers. Gigabytes can be specified as fractions.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-paid-services-allowed</td>
+
+<td class="entry" valign="top">Complementary alias of --paid-services-allowed.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--routes, -r</td>
+
+<td class="entry" valign="top">Limit for the number of routes in the quota.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--services, -s</td>
+
+<td class="entry" valign="top">Limit for the number of services in the quota.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

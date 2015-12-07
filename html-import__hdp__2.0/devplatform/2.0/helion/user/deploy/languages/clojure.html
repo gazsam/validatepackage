@@ -1,0 +1,66 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Clojure</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic1342" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/languages/clojure.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Clojure</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">Application Lifecycle Service supports deploying Clojure applications using
+<a class="xref" href="https://github.com/technomancy/leiningen" target="_blank">leiningen</a>.</p>
+
+<p class="p">To create a new Clojure web application, install leiningen and
+<a class="xref" href="http://webnoir.org/" target="_blank">Noir</a> (a Clojure web framework):</p>
+
+<pre class="pre codeblock">lein plugin install lein-noir 1.1.0</pre>
+
+<p class="p">Create a Noir project:</p>
+
+<pre class="pre codeblock">lein noir new myapp
+...
+cd myapp/</pre>
+
+<p class="p">Now deploy to Application Lifecycle Service. Accept the defaults for each prompt:</p>
+
+<pre class="pre codeblock">helion push myapp
+[...]
+Application Deployed URL: 'myapp.helion-xxxx.local'?
+[...]
+Starting Application: OK</pre>
+
+<p class="p">Open the application's URL in your browser to see the default Noir welcome
+page.</p>
+
+<div class="section" id="topic1342__clojure-database-services-example"><h2 class="title sectiontitle">Clojure Database Services Example</h2> 
+<p class="p">Taken from the <a class="xref" href="https://github.com/Stackato-Apps/4clojure/blob/stackato/src/foreclojure/config.clj#L6" target="_blank">4clojure sample
+app</a>:</p>
+
+<pre class="pre codeblock">(defn assoc-cloud-env
+  "Import Cloud Foundry / Application Lifecycle Service environment settings"
+  [config]
+  (let [port (Integer/parseInt (System/getenv "PORT"))
+        srv  (parse-string (System/getenv "VCAP_SERVICES"))
+        cred ((first (srv "mongodb-1.8")) "credentials")]
+    (assoc config
+      :jetty-port port
+      :db-host    (cred "host")
+      :db-port    (cred "port")
+      :db-user    (cred "username")
+      :db-pwd     (cred "password")
+      :db-dbname  (cred "db"))))</pre>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

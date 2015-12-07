@@ -1,0 +1,183 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Prerequisites</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic4745" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/quick-start/quickstart_index.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Prerequisites</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">This guide covers the basics of using the Application Lifecycle Service (ALS).</p>
+
+<p class="p">To follow along,
+you will need:</p>
+
+<ul class="ul">
+<li class="li">a user account</li>
+
+<li class="li">a copy of the Helion CLI client</li>
+
+<li class="li">a web browser</li>
+
+</ul>
+
+<div class="section" id="topic4745__management-console"><h2 class="title sectiontitle">Management Console</h2> 
+<p class="p">The web interface for Application Lifecycle Service is called the <a class="xref" href="../../admin/console/customize.html">Management Console</a>. You can use it to:</p>
+
+<ul class="ul">
+<li class="li">see your current usage and quota</li>
+
+<li class="li">monitor and manage applications you have deployed</li>
+
+<li class="li">see which runtimes, frameworks, and services are available</li>
+
+<li class="li">deploy applications from the Marketplace</li>
+
+</ul>
+
+<p class="p">To use it, open the API Endpoint URL (e.g. <em class="ph i">https://api.10.0.0.1.xip.io</em>) in your favorite browser. Log in with the username and password that have
+been set up for you on the system.</p>
+
+<p class="p">The interface should be mostly self-explanatory. It exposes most of the
+functionality you have access to as an end user, but to deploy your own
+applications from source code on your local machine you will need to install and use the Helion <a class="xref" href="../client/client_index.html">Application Lifestyle Service client</a>.</p>
+
+<p class="p">There is also an <a class="xref" href="../../../devplatform.eclipse.html">Eclipse plugin</a> available for the Management Console to facilitate pushing applications.</p>
+
+</div>
+
+<div class="section" id="topic4745__helion-client"><h2 class="title sectiontitle">Application Lifecycle Service Client</h2> 
+<p class="p">The Helion client pushes applications and provides access to the system from the command line.</p>
+
+<ol class="ol">
+<li class="li">
+<a class="xref" href="../../CLI/ALS_Client_Downloads.html">Download the client for your platform</a>.</li>
+
+<li class="li">Unzip the archive in a convenient directory.</li>
+
+<li class="li">Add the executable to your system/shell \$PATH by: <ul class="ul">
+            <li class="li">moving it to a directory in your \$PATH,</li>
+
+            <li class="li">creating a symlink from a directory in your \$PATH, or</li>
+
+            <li class="li">creating a shell alias for the executable.</li>
+
+          </ul>
+</li>
+
+<li class="li">Confirm that the client is installed correctly by executing
+<samp class="ph codeph">cfmgmt help</samp>.</li>
+
+</ol>
+
+<p class="p">Refer to the <a class="xref" href="../reference/client-ref.html">Application Lifecycle Service Client Command Reference</a> for a complete list of commands and options.</p>
+
+</div>
+
+<div class="section" id="topic4745__target-and-login"><h2 class="title sectiontitle">Target and Log In</h2> 
+<p class="p">To connect the helion client to the PaaS, use
+the <samp class="ph codeph">target</samp> command to specify the API Endpoint
+URL. This is normally the hostname prepended with "api." for example:</p>
+
+<pre class="pre codeblock">helion target api.example.hphelion.com
+Target:       https://api.example.hphelion.com
+Organization: &lt;none&gt;
+Space:        &lt;none&gt;
+Successfully targeted to [https://api.example.hphelion.com]</pre>
+
+<p class="p">Once you have successfully targeted Application Lifecycle Service, you must authenticate
+using <samp class="ph codeph">helion login</samp> with the credentials that
+have been created for you:</p>
+
+<pre class="pre codeblock">helion login user@example.com
+Attempting login to [https://api.example.hphelion.com]
+Password: ********
+Successfully logged into [https://api.example.hphelion.com]</pre>
+
+</div>
+
+<div class="section" id="topic4745__setting-organization-and-space"><h2 class="title sectiontitle">Setting Organization and Space</h2> 
+<p class="p">If you are logging in for the first time, your user account will not
+automatically choose an <a class="xref" href="../deploy/orgs-spaces.html">Organization and Space</a> for deployment. You will need to set these manually.</p>
+
+<p class="p">To set the Organization you belong to:</p>
+
+<pre class="pre codeblock">helion switch-org *org-name*
+Switching to organization *org-name* ... OK
+Unsetting current space ... OK
+Target:       https://api.stacka.to
+Organization: *org-name*
+Space:        &lt;none&gt;</pre>
+
+<p class="p">To set the Space you want to deploy applications to:</p>
+
+<pre class="pre codeblock">helion switch-space dev
+Switching to organization *org-name* ... OK
+Switching to space dev ... OK
+Target:       https://api.stacka.to
+Organization: test-org
+Space:        dev</pre>
+
+      <div class="note note"><span class="notetitle">Note:</span>  If your account is not a member of a Space, you will need an Organization Manager to
+        add you as a Developer. If you are an Organization Manager or Admin, you can create new
+        Spaces in the <a class="xref" href="../../admin/console/customize.html">
+          <em class="ph i">Management Console</em>
+        </a> or with the <a class="xref" href="../reference/client-ref-spaces.html">
+          <em class="ph i">helion create-space</em>
+        </a> command.</div>
+
+</div>
+
+<div class="section" id="topic4745__deploying-apps"><h2 class="title sectiontitle">Deploying Apps</h2> 
+<p class="p">The steps for deploying applications will vary slightly depending on the
+language or framework used, but the basic command is:</p>
+
+<pre class="pre codeblock">helion push --as [appname]</pre>
+
+<p class="p">By default, the client will take application code from your current
+working directory and push it to Application Lifecycle Service for further staging and configuration, prompting for additional configuration information as necessary.</p>
+
+</div>
+
+<div class="section" id="topic4745__sample-applications"><h2 class="title sectiontitle">Sample Applications</h2> 
+<p class="p">Small <a class="xref" href="../../../devplatform.appdev.html">sample applications</a> in various  programming languages are available. These applications demonstrate the basics of ALS deployment (hello world), connect to a database, and exercise the messaging service.</p>
+
+<p class="p">Additional more advanced sample applications are available from <a class="xref" href="https://github.com/Stackato-Apps" target="_blank">Application Lifecycle Service-Apps</a> on Github, each with a
+README.md file showing how to deploy it on Application Lifecycle Service.</p>
+
+<p class="p">Many of these have a <a class="xref" href="../deploy/manifestyml.html">
+<em class="ph i">manifest.yml</em>
+</a> configuration
+file, so you can skip the interactive prompts by using the
+<samp class="ph codeph">-n</samp> option.</p>
+
+<pre class="pre codeblock">helion push -n [appname]</pre>
+
+</div>
+
+<div class="section" id="topic4745__test-the-application"><h2 class="title sectiontitle">Test the Application</h2> 
+<p class="p">The output of <samp class="ph codeph">helion push</samp> will show the URL of
+the running application. Paste this URL into a web browser to try the
+application or run:</p>
+
+<pre class="pre codeblock">helion open [appname]</pre>
+
+<p class="p">Documentation on configuring applications in specific languages and
+frameworks is available in the <a class="xref" href="../deploy/deploy_index.html">
+<em class="ph i">Deploying Apps</em>
+</a> section.</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

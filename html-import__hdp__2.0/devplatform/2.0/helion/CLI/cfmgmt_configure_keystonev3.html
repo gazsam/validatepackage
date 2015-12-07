@@ -1,0 +1,87 @@
+
+
+
+<html><head><title>Configure the cf-mgmt Tool to Support Keystone v3</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_j5v_bsb_rt" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/CLI/cfmgmt_configure_keystonev3.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">Configure the cf-mgmt Tool to Support Keystone v3</h1>
+
+
+  
+
+  <div class="body"><p class="p">The configuration file needs a slight manual update to support Keystone v3.</p>
+
+    <ol class="ol"> 
+      <li class="li"><a class="xref" href="devplatform_downloadRCFile.html#topic_rmk_gnx_ft">Download</a> the RC
+        configuration file. </li>
+
+      <li class="li"><a class="xref" href="ALS_Client_Downloads.html#topic843__hp-helion-als-cluster-management-tool-cf-mgmt">Download</a> the version of the cluster management (cf-mgmt) tool appropriate for your
+        operating system.</li>
+<li class="li">Open the RC file in a text editor. It should look similar to the following (plus comments):
+        <pre class="pre codeblock">export OS_AUTH_URL=http://10.241.240.133:5000/v2.0 
+export OS_TENANT_ID=1815ea3d639f4ec89d8797a16ffcbc07 
+export OS_TENANT_NAME="admin" 
+export OS_PROJECT_NAME="admin" 
+export OS_USERNAME="admin" 
+echo "Please enter your OpenStack Password: " read -sr OS_PASSWORD_INPUT 
+export OS_PASSWORD=$OS_PASSWORD_INPUT 
+export OS_REGION_NAME="region1" if [ -z "$OS_REGION_NAME" ]; then unset OS_REGION_NAME; fi</pre>
+</li>
+
+      <li class="li">Change the following:
+        <ol class="ol" type="a">
+      <li class="li"> Copy and paste the following code block into the RC file at the top. Do not delete
+            anything.
+            <pre class="pre codeblock">Unset OS_DOMAIN_NAME 
+export OS_IDENTITY_API_VERSION=3 
+export OS_AUTH_VERSION=3 
+export OS_USER_DOMAIN_NAME=“Default" 
+export OS_PROJECT_DOMAIN_NAME=“Default" </pre>
+</li>
+
+      <li class="li">Change the variable name OS_TENANT_ID to OS_PROJECT_ID</li>
+
+      <li class="li">Determine the value of the OS_AUTH_URL variable.
+            <pre class="pre codeblock">curl http://10.241.240.133:5000</pre>
+ The results should look similar
+            to:
+            <pre class="pre codeblock">{ 
+  "versions": { 
+    "values": [ 
+    { 
+      "status": "stable", 
+      "updated": "2015-03-30T00:00:00Z", 
+      "media-types": [ 
+        { 
+          "base": "application/json",
+          "type": "application/vnd.openstack.identity-v3+json" 
+        } 
+       ], 
+       "id": "v3.4",
+       "links": [ 
+        { 
+         <strong class="ph b">"href": "http://10.241.240.133:5000/v3/",</strong>
+         "rel": "self" } ...</pre>
+</li>
+ 
+      
+ <li class="li">Replace the existing OS_AUTH_URL value with the URL located under <strong class="ph b">links</strong> &gt;
+              <strong class="ph b">href</strong></li>
+</ol>
+</li>
+
+          <li class="li">Save and close the edited RC file.</li>
+
+          <li class="li"><a class="xref" href="cf_mgmt_createcluster.html#topic_exb_b21_ct">Create clusters</a> as
+            desired.</li>
+
+</ol>
+
+  </div>
+
+
+</body>
+</html>

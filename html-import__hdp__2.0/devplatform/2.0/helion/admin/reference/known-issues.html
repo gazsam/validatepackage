@@ -1,0 +1,217 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Known Issues</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic6051" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/admin/reference/known-issues.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Known Issues</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">Please keep up to date with the latest Known Issues, FAQs and announcements in our <a class="xref" href="https://community.dev.hp.com/t5/Helion-Developer-Network/bd-p/cloud" target="_blank">Helion Developer Network forums</a>.</p>
+
+<div class="section" id="topic6051__13"><h2 class="title sectiontitle">1.3</h2>
+  <dl class="dl">
+    <dt class="dt dlterm">UTM Gateways</dt>
+
+    <dd class="dd">UTM gateways may interfere with upgrades, patches, or normal application staging if they are
+            configured to inspect all HTTP(S) traffic between ALS nodes and upstream package
+            repositories. <a class="xref" href="../cluster/cluster_index.html#admin_cluster_index__utm">See the full
+              documentation</a> for a detailed explanation and suggested solutions. </dd>
+
+  </dl>
+
+
+</div>
+
+  
+  <div class="section" id="topic6051__11"><h2 class="title sectiontitle">1.1</h2> 
+</div>
+
+<div class="section" id="topic6051__changing-the-mbus-ip-core-node"><h2 class="title sectiontitle">Changing the MBUS IP (Core node)</h2> 
+<p class="p">If the IP address of the Core node changes, you must reconfigure the cluster to use the new MBUS
+        IP address. Run <a class="xref" href="kato-ref.html#topic39432__kato-command-ref-node-migrate">kato
+          node migrate</a> or <a class="xref" href="kato-ref.html#topic39432__kato-command-ref-op-static_ip">kato op static ip</a>
+        on the Core node, then <a class="xref" href="kato-ref.html#topic39432__kato-command-ref-node-attach">kato node attach</a> on all other cluster nodes to set
+        the new MBUS IP.</p>
+
+</div>
+
+
+<div class="section" id="topic6051__php-55-repositories"><h2 class="title sectiontitle">PHPE 5.5 Repositories</h2> 
+<p class="p">PHPE 5.5 in contained in the default Docker image. This version is more recent than the one available in the standard Ubuntu repositories.</p>
+
+<p class="p">To get updates for PHPE 5.5 or add additional modules (globally or as user-defined requirements for applications), a third-party package repository must be added to the Allowed Repos list.</p>
+
+<p class="p">Administrators can add the <a class="xref" href="https://launchpad.net/~ondrej/+archive/php5" target="_blank">PPA for PHPE 5.5</a> or import from a  repository supporting compatible packages via kato:</p>
+
+<pre class="pre codeblock">kato config push cloud_controller_ng allowed_repos \
+"deb http://ppa.launchpad.net/ondrej/php5/ubuntu precise main"</pre>
+
+</div>
+
+<div class="section" id="topic6051__kato-data-users-exportimport-broken"><h2 class="title sectiontitle">Kato data users export/import broken</h2> 
+<p class="p">The <strong class="ph b">kato data users export</strong> and <strong class="ph b">kato data users import</strong> commands, which save and load
+        lists of users to and from CSV files, are non-functional in the current release. The <a class="xref" href="kato-ref.html#topic39432__kato-command-ref-data-import">kato data import</a>
+        and <a class="xref" href="kato-ref.html#topic39432__kato-command-ref-data-export">kato data export</a> commands are still available for
+        migrating users from one ALS installation to another.</p>
+
+</div>
+
+<div class="section" id="topic6051__kato-node-reset-factory-with-nopasswd"><h2 class="title sectiontitle">Kato node reset factory with NOPASSWD</h2> 
+<p class="p">The kato <strong class="ph b">node reset factory</strong> command will not work if <strong class="ph b">NOPASSWD</strong> has been set for the admin account in <em class="ph i">/etc/sudoers</em>. To work around this, revert the change to <em class="ph i">/etc/sudoers</em> before resetting or start over with a new ALS VM.</p>
+
+</div>
+
+<div class="section" id="topic6051__cloud-events-not-gathering-logs-from-some-processes"><h2 class="title sectiontitle">Cloud Events not gathering logs from some processes</h2> 
+<p class="p">Certain processes noted below use non-standard logging formats and are therefore not included in the Cloud Events log stream. So, for example, they will not appear in the Cloud Events view in the Horizon Console.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Process</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Log Location</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">router2g </td>
+
+    <td class="entry" valign="top">(ALS router). Manually inspect */s/logs/router2g.log* on Router nodes.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">stackato\_rest</td>
+
+    <td class="entry" valign="top">(ALS-specific web service); manually inspect /s/logs/stackato_rest.log on Controller nodes.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">harbor_proxy_connector</td>
+
+    <td class="entry" valign="top">(Harbor); manually inspect /s/logs/harbor_proxy_connector.log on Harbor nodes.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">cc_upload_server</td>
+
+    <td class="entry" valign="top">(CC upload server); manually inspect /s/logs/cloud_controller_upload_server.log on Controller nodes.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">stackato-tty.log</td>
+
+    <td class="entry" valign="top">(ALS TTY console); manually inspect /s/logs/stackato-tty.log on all nodes.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic6051__101-and-previous"><h2 class="title sectiontitle">1.01 and previous</h2> 
+</div>
+
+<div class="section" id="topic6051__buildpack-config-vars-deprecated"><h2 class="title sectiontitle">Buildpack config_vars Deprecated</h2> 
+<p class="p">Buildpacks used to rely on the <samp class="ph codeph">config_vars</samp> feature of <em class="ph i">bin/release</em> to set environment variables, but this has been deprecated by Heroku.</p>
+
+<p class="p">The replacement mechanism is to <a class="xref" href="https://devcenter.heroku.com/articles/profiled" target="_blank">create a shell script in \$HOME/.profile.d</a> to
+set environment variables. This mechanism is fully supported by the Application Lifecycle Service and is used by all of the built-in buildpacks.</p>
+
+</div>
+
+<div class="section" id="topic6051__legacy-buildpack-and-environment-variables"><h2 class="title sectiontitle">Legacy Buildpack and Environment Variables</h2> 
+  <p class="p">When using the <a class="xref" href="../../user/deploy/buildpack.html#topic3370__legacy-buildpack">Legacy Buildpack</a>, environment variable values defined in <em class="ph i">manifest.yml</em>
+        cannot be updated without re-pushing the application with new settings. Changes to variables
+        made in the Management Console will be overwritten by the original ones defined at push when
+        the application is restarted.</p>
+
+<p class="p">To modify custom environment variables, re-push the application after changing the values in <em class="ph i">manifest.yml</em>.</p>
+
+</div>
+
+<div class="section" id="topic6051__service-gateway-log-errors-in-maintenance-mode"><h2 class="title sectiontitle">Service Gateway Log Errors in Maintenance Mode</h2> 
+<p class="p">With Application Lifecycle Service set in <em class="ph i">Maintenance Mode</em>, all <samp class="ph codeph">_gateway</samp>
+        processes will report the following error once per minute:</p>
+
+<pre class="pre codeblock">Failed registering with cloud controller, status=503</pre>
+
+<p class="p">This is normal, and can be safely ignored. The service nodes will
+reconnect once the Controller is taken out of Maintenance Mode.</p>
+
+</div>
+
+<div class="section" id="topic6051__nodes-with-fatal-or-perpetually-starting-processes"><h2 class="title sectiontitle">Nodes with FATAL or perpetually STARTING processes</h2> 
+<p class="p">If the Core node of an Application Lifecycle Service cluster is offline for more than 90
+seconds, <samp class="ph codeph">kato status</samp> will show processes on other
+nodes (systail, apptail, router and others) in a FATAL or (hung)
+STARTING state. These processes will not automatically reconnect to the
+Core node.</p>
+
+<p class="p">To correct this, run <samp class="ph codeph">kato start</samp> (for FATAL
+processes) or <samp class="ph codeph">kato restart</samp> (for STARTING
+processes) on all affected nodes.</p>
+
+</div>
+
+<div class="section" id="topic6051__avoiding-app-reliance-on-ip-addresses"><h2 class="title sectiontitle">Avoiding App Reliance on IP Addresses</h2> 
+<p class="p">Cluster configurations make use of private IP addresses for identifying
+the various cluster nodes. Best practice is to avoid the literal use of
+these addresses wherever possible, as these addresses are subject to
+change with cluster configuration.</p>
+
+<p class="p">If the VM instance can locally resolve a hostname rather than an IP
+address, it's generally best practice to use the hostname.</p>
+
+<p class="p">If not, Application Lifecycle Service provides various <a class="xref" href="../../user/reference/environment.html#topic7631">environment</a> variables so
+        that applications do not need to hardcode them at install time. Some examples are
+          <samp class="ph codeph">VCAP_SERVICES</samp> and <samp class="ph codeph">DATABASE_URL</samp>. We strongly encourage
+        their use.</p>
+
+<p class="p">A known issue is that some applications have install procedures that
+can't be configured to make use of these variables. If the server that's
+providing the app's database (mysql_gateway/node for example) gets
+moved to another location, the only way for the app to become aware of
+the new credentials is by restaging the app as noted below. A restart
+is <strong class="ph b">not</strong> sufficient.</p>
+
+<p class="p">Choose one of the following sets of commands according to need:</p>
+
+<pre class="pre codeblock">helion delete -n
+helion push -n</pre>
+
+<p class="p">or:</p>
+
+<pre class="pre codeblock">helion delete -n
+helion update -n</pre>
+
+<p class="p">Another possible workaround in such cases is to write a script that will pull the credentials from <samp class="ph codeph">VCAP_SERVICES</samp>, update the app's configuration as needed, and then add this script to the pre-running hooks.</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

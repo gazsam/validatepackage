@@ -1,0 +1,77 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Deploying Windows Applications with the IIS Buildpack</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic2394" /> <meta name="html-import-file-path" content="devplatform/2.0/windows/windows_custom_buildpacks.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Deploying Windows Applications with the IIS Buildpack</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">
+
+ 
+ </p>
+
+<p class="p">
+  <span class="ph">
+    <em class="ph i">Windows, .NET, SQL Server, and IIS are either registered trademarks or trademarks of Microsoft Corporation in the United States and/or other countries.</em>
+  </span>
+</p>
+
+<p class="p">A <strong class="ph b">Buildpack</strong> is a collection of scripts that specify what frameworks and runtimes are to be deployed with an application.</p>
+
+<p class="p">When you build and deploy a Windows application, the following steps take place:</p>
+
+<ol class="ol">
+<li class="li"> You will be prompted for connection data (Endpoint, login, and password), and whether to ignore
+        SSL errors. You should check "Ignore SSL errors" in the dialog if your deployment
+        environment uses self-signed SSL certificates (such as HPE Helion Public Cloud).<p class="p">
+          <br/><img class="image" src="../../../media/windows_publish_credentials.png"/><br/>
+        </p>
+</li>
+
+<li class="li">Application settings are collected from <samp class="ph codeph">manifest.yml</samp>.</li>
+
+<li class="li">If a local build is requested, projects in the solution directory are deployed to a temporary folder and compiled with <strong class="ph b">MSBuild</strong>.</li>
+
+<li class="li">Projects are deployed using the <strong class="ph b">CloudFoundry MS Build Tasks</strong>.</li>
+
+</ol>
+
+<p class="p">After the project is deployed, the IIS Buildpack performs the following tasks:</p>
+
+<ol class="ol">
+<li class="li">If there is no solution or project file present, the application is simply copied to the "Build Path" directory (This is a directory determined internally by the Buildpack).</li>
+
+<li class="li">If a project file is present, but no solution file, the application is built with <strong class="ph b">MSBuild</strong> with no parameters, and the built application is copied to the "Build Path" directory.</li>
+
+<li class="li">If a solution file is present, NuGet packages listed in the solution file will be restored, and the application will be built with <strong class="ph b">MSBuild</strong>, and the application is copied to the "Build Path" directory.</li>
+
+</ol>
+
+<p class="p">This process can fail if any of the following are true:</p>
+
+<ol class="ol">
+<li class="li">There is more than one solution file present</li>
+
+<li class="li">The number of folders in the deployed site is not correct</li>
+
+<li class="li">There is no <samp class="ph codeph">Web.Config</samp> file in the root of the "Build Path" directory after deployment</li>
+
+</ol>
+
+<p class="p">For more information, please refer to the <a class="xref" href="https://github.com/hpcloud/cf-iis8-buildpack" target="_blank">Buildpack git project</a>.</p>
+
+
+</div>
+
+
+</body>
+</html>

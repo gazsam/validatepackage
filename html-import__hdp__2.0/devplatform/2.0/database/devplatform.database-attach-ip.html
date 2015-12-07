@@ -1,0 +1,47 @@
+
+
+
+<html><head><title>Attaching a floating IP to a database instance</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_database_assign_ip" /> <meta name="html-import-file-path" content="devplatform/2.0/database/devplatform.database-attach-ip.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">Attaching a floating IP to a database instance</h1>
+
+
+  
+
+  <div class="body">
+    <p class="p">It is possible to attach a floating IP address to a database instance - this will make it possible to access your instance from outside of your cloud environment.</p>
+
+    
+    <p class="p">To create a database with a floating IP address follow these steps from the command line. Note the following instructions require that you use the Trove CLI to create a database instance.</p>
+
+    <p class="p">For more information on using the Trove CLI, refer to the <a class="xref" href="devplatform.database-instance.html#DatabaseService__more">More Resources</a> section.</p>
+
+    <ol class="ol">
+      <li class="li"> Pre-provision a port on the network that the instance will be attached to using the neutron
+        CLI. Note down the port-id of the port
+        created:<pre class="pre codeblock">$ neutron port-create &lt;network-id&gt;</pre>
+</li>
+
+      <li class="li"> When creating the Trove instance, pass in the <samp class="ph codeph">port id </samp>as the
+        <samp class="ph codeph">nic</samp>
+        parameter:<pre class="pre codeblock">$ trove create &lt;name&gt; &lt;flavor-id&gt; --size &lt;size&gt; --nic port-id=&lt;port-id&gt;</pre>
+</li>
+
+      <li class="li"> Create a Floating IP using neutron and attach it to the port provisioned in step
+        1:<pre class="pre codeblock">$ neutron floatingip-create &lt;floating-network&gt;
+$ neutron floatingip-associate &lt;floating-ip-id&gt; &lt;port-id&gt;</pre>
+</li>
+
+    </ol>
+
+    
+   
+  </div>
+
+
+</body>
+</html>

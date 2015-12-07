@@ -1,0 +1,185 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Installation Prerequisites</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_x54_njh_ts" /> <meta name="html-import-file-path" content="devplatform/2.0/installation/devplatform_install_prereq.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Installation Prerequisites</h1>
+
+
+  
+
+  <div class="body">
+    <div class="section" id="topic_x54_njh_ts__prerequisites"><h2 class="title sectiontitle">General Prerequisites</h2>
+      
+      <ul class="ul" id="topic_x54_njh_ts__ul_plz_psf_xt">
+        <li class="li">
+          <p class="p">The Cinder block storage backend must be configured to use <a class="xref" href="http://docs.hpcloud.com/#helion/installation/configure_vsa.html" target="_blank">VSA</a>, <a class="xref" href="http://docs.hpcloud.com/#helion/installation/configure_3par.html" target="_blank">3Par</a>, or <a class="xref" href="http://docs.hpcloud.com/#helion/installation/configure_ceph.html" target="_blank">Ceph</a>.</p>
+
+        </li>
+
+        <li class="li">
+          <p class="p">The system running the installer needs to have Python 2.7. Most modern operating
+            systems include this as part of their base toolkit. This document is geared toward a
+            Linux operating system, but this does not preclude the installer from running on other
+            operating systems with appropriate modifications to the command-line statements.</p>
+
+        </li>
+
+        <li class="li">
+          <p class="p">If you did not <a class="xref" href="http://docs.hpcloud.com/#helion/administration/create_hdp_servicenet.html" target="_blank">create the Service Network </a>immediately after
+            installing HP Helion OpenStack<sup>®</sup>, you <strong class="ph b">must</strong> do so now.</p>
+
+        </li>
+
+        <li class="li">
+          <p class="p">For Windows and .NET support, due to licensing requirements, you must create and deploy
+            your own Windows and SQL Server images. This requires the following:</p>
+
+          <ul class="ul" id="topic_x54_njh_ts__ul_xnz_psf_xt">
+            <li class="li">Windows images must be created in a MacOS or Linux environment.</li>
+
+            <li class="li">You must have a Windows Server 2012 Enterprise (non-evaluation) image.</li>
+
+            <li class="li">A volume license for Windows Server 2012 Enterprise is strongly recommended.</li>
+
+            <li class="li">Additional tools (VirtIO and Virtual Box) are also required. See <a class="xref" href="../windows/windows_building_and_deploying.html">Building and
+                Deploying Windows DEA and SQL Server Express Images</a> for more
+              information.</li>
+
+          </ul>
+
+        </li>
+
+      </ul>
+
+    </div>
+
+    <div class="section" id="topic_x54_njh_ts__preparation"><h2 class="title sectiontitle">Gather Information</h2>
+      
+      <p class="p">You will need the following information:</p>
+
+      <dl class="dl">
+        
+          <dt class="dt dlterm">Deployer</dt>
+
+          <dd class="dd">IP address of the HPE Helion OpenStack Deployer.</dd>
+
+        
+        
+          <dt class="dt dlterm">Username </dt>
+
+          <dd class="dd">The OpenStack username of a cloud admin that has rights to perform a service update
+            for the selected service.</dd>
+
+        
+        
+          <dt class="dt dlterm">Password</dt>
+
+          <dd class="dd">The OpenStack password of a cloud admin that has rights to perform a service update
+            for the selected service.</dd>
+
+        
+      </dl>
+
+    </div>
+
+
+      <div class="note note"><span class="notetitle">Note:</span> All of the following procedures are performed on the HPE Helion OpenStack Deployer. SSH
+      to the Deployer before attempting any of these procedures.</div>
+
+    
+    <div class="section"><h2 class="title sectiontitle">Create the <samp class="ph codeph">clouds.yaml</samp> Configuration File</h2>The installer
+      retrieves configuration information from a configuration file located at
+      <a class="xref" href="install_cloudsyaml.html#id_ufp_fdn_vt">  <samp class="ph codeph">/.config/openstack/clouds.yaml</samp> </a>Each service has its own section within this
+      file where configuration information is stored.<div class="note important"><span class="importanttitle">Important:</span> This file <strong class="ph b">must</strong>
+        contain at least the<a class="xref" href="install_cloudsyaml.html#id_ufp_fdn_vt"> Platform
+          Configuration </a>information before the HDPI can be installed. </div>
+</div>
+
+    <div class="section" id="topic_x54_njh_ts__shell"><h2 class="title sectiontitle">Set Proxy Shell Variables</h2>
+      
+      <p class="p">If your network uses a proxy, it may be necessary to set the <samp class="ph codeph">https_proxy</samp>
+        and <samp class="ph codeph">http_proxy</samp> shell variables.</p>
+
+      <ol class="ol">
+        <li class="li">To set the shell variables, enter the following commands:
+          <pre class="pre codeblock">export https_proxy={ip address or url of https proxy} 
+export http_proxy={ip address or url of http proxy} </pre>
+Example:
+          <pre class="pre codeblock">export https_proxy=http://proxy.example.com
+export http_proxy=http://proxy.example.com</pre>
+</li>
+
+        <li class="li"> If your network uses a proxy, you must define the proxy exclusion list
+            (<samp class="ph codeph">no_proxy</samp>)<ol class="ol" type="a">
+            <li class="li">Source the keystone RC file.<pre class="pre codeblock">source keystone.osrc</pre>
+</li>
+
+            <li class="li">Get the Keystone <strong class="ph b">public</strong> endpoint IP
+              address<pre class="pre codeblock">KEYSTONE_IP_PUBLIC=$(openstack endpoint list | grep keystone | grep public | grep -Eo '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')
+echo 'KEYSTONE PUBLIC IP: ' $KEYSTONE_IP_PUBLIC  </pre>
+or
+              fully-qualified domain name, depending on your HPE Helion OpenStack
+              deployment.<pre class="pre codeblock">id=$(openstack endpoint list | grep identity | cut -d "|" -f2 | tr -d " ")</pre>
+<pre class="pre codeblock">openstack endpoint show $id | grep publicurl | cut -d "|" -f3 | cut -d "/" -f3 | cut -d ":" -f1 </pre>
+</li>
+
+            <li class="li">Get the Keystone <strong class="ph b">internal</strong> endpoint IP address.
+              <pre class="pre codeblock">KEYSTONE_IP_INTERNAL=$(openstack endpoint list | grep keystone | grep internal | grep -Eo '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')
+echo 'KEYSTONE INTERNAL IP: ' $KEYSTONE_IP_INTERNAL </pre>
+or
+              fully-qualified domain name, depending on your HPE Helion OpenStack
+              deployment.<pre class="pre codeblock">id=$(openstack endpoint list | grep identity | cut -d "|" -f2 | tr -d " ")</pre>
+<pre class="pre codeblock">openstack endpoint show $id | grep internalurl | cut -d "|" -f3 | cut -d "/" -f3 | cut -d ":" -f1 </pre>
+</li>
+
+            <li class="li" id="topic_x54_njh_ts__proxy">Set the IP address values for <samp class="ph codeph">no_proxy</samp>. <div class="note important"><span class="importanttitle">Important:</span> Ensure that each and every Keystone AUTH_URL IP is included in the
+                no-proxy
+              list.</div>
+<pre class="pre codeblock">export no_proxy=localhost,127.0.0.1,$KEYSTONE_IP_PUBLIC,$KEYSTONE_IP_INTERNAL </pre>
+</li>
+ </ol>
+</li>
+
+        <li class="li">If your HPE Helion OpenStack deployment is behind a firewall, verify that the <a class="xref" href="http://docs.hpcloud.com/#helion/operations/accessing_sherpa.html" target="_blank">Sherpa
+          proxy shell variables</a> have been set. If these variables have not been set, either set them
+          or follow the <a class="xref" href="install_offline.html">offline installation instructions</a>
+          to acquire the packages without using the Sherpa service.</li>
+
+         
+      </ol>
+
+    </div>
+
+    
+    <div class="section"><h2 class="title sectiontitle">Verify Connectivity</h2>
+      
+      <ol class="ol" id="topic_x54_njh_ts__ol_egn_mr1_tt">
+        <li class="li">Source the Keystone RC file. <pre class="pre codeblock">source keystone.osrc</pre>
+</li>
+
+        <li class="li">Verify access to the Keystone public endpoint:
+          <pre class="pre codeblock">KEYSTONE_URL_PUBLIC=`openstack endpoint list | grep keystone | grep public | grep -Eo '(http|https)://{1}\S+'`
+wget -t3 --timeout=5 -O/dev/null -q $KEYSTONE_URL_PUBLIC &amp;&amp; echo exists OK || echo ERROR cannot reach $KEYSTONE_URL_PUBLIC</pre>
+</li>
+
+        <li class="li">Verify access to the public Sherpa
+          endpoint. If there is no access, see the <a class="xref" href="http://docs.hpcloud.com/#helion/troubleshooting/troubleshooting_sherpa.html" target="_blank">Sherpa troubleshooting information</a>, particularly
+          how to set the <samp class="ph codeph">http_proxy</samp> shell
+          variables.<pre class="pre">SHERPA_URL_PUBLIC=`openstack endpoint list | grep sherpa | grep public | grep -Eo '(http|https)://{1}\S+' | sed -e 's/v1$//'`
+wget -t3 --timeout=5 -O/dev/null -q $SHERPA_URL_PUBLIC &amp;&amp; echo exists OK || echo ERROR cannot reach $SHERPA_URL_PUBLIC</pre>
+</li>
+
+      </ol>
+
+    </div>
+
+  </div>
+
+
+</body>
+</html>

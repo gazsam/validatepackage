@@ -1,0 +1,297 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Windows Overview</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic24073_2" /> <meta name="html-import-file-path" content="devplatform/2.0/windows/windows_overview.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Windows Overview</h1>
+
+	
+    
+
+    
+    
+    <div class="body">
+
+<div class="section" id="topic24073_2__introduction"><h2 class="title sectiontitle">HPE Helion 2.0 Development Platform: Windows Overview</h2>
+
+    <p class="p"><em class="ph i">Windows, .NET, SQL Server, and IIS are either registered trademarks or trademarks of Microsoft Corporation in the United States and/or other 
+        countries.</em></p>
+
+
+<p class="p">The Helion Development Platform includes a full end-to-end solution for creating and deploying
+                .NET Framework applications. Windows developers can now leverage their knowledge and
+                use the tools they are accustomed to in order to leverage the power of the Helion
+                Development Platform. HTTP-based .NET applications that follow the <a class="xref" href="http://docs.cloudfoundry.org/devguide/deploy-apps/prepare-to-deploy.html" target="_blank">Cloud Foundry application model</a> are a great fit for this feature
+                support. </p>
+
+<p class="p">This document contains the following sections:
+</p>
+
+    <ul class="ul">
+        <li class="li"> <a class="xref" href="#topic24073_2__overview">Overview</a> </li>
+
+        <li class="li"> <a class="xref" href="#topic24073_2__apps">Supported .NET Application Types</a> </li>
+
+        <li class="li"> <a class="xref" href="#topic24073_2__sql">SQL Server Support</a></li>
+
+        <li class="li"> <a class="xref" href="#topic24073_2__tools">Windows Tools</a></li>
+
+        <li class="li"> <a class="xref" href="#topic24073_2__process">Process</a></li>
+
+        <li class="li"> <a class="xref" href="#topic24073_2__softwarerequirements">Software Requirements</a></li>
+
+        <li class="li"> <a class="xref" href="#topic24073_2__licensing">Windows Instance Licensing</a></li>
+
+    </ul>
+
+</div>
+
+    <div class="section" id="topic24073_2__overview"><h2 class="title sectiontitle">Overview</h2>
+
+
+        <p class="p">Helion Development Platform version 1.2 adds tools for creating instances of Windows
+                Server 2012 R2 to an HPE Helion OpenStack<sup>®</sup> environment, and
+                Visual Studio components for deploying .NET HTTP-based applications to those server
+                instances. Benefits of Windows/.NET support include:</p>
+
+<ul class="ul">
+<li class="li"> Organizations can run their .NET server applications in the same HPE Helion OpenStack
+                    environment as their Linux applications.</li>
+
+    <li class="li"> A consistent tooling experience for deploying Windows and Linux applications: The same 
+        <a class="xref" href="windows_tools_guide.html#windows_tools__helion">application deployment tools</a> can be used for 
+        both Windows and Linux deployments.</li>
+
+    <li class="li"> Additional developer tools, including an SDK for programmatic access to services, and a 
+        <a class="xref" href="windows_tools_guide.html#windows_tools__cloudfoundryextensions">Visual Studio extension</a> for 
+        deploying and managing applications.</li>
+
+    <li class="li"> Feature-rich application sandboxing, including memory and CPU management, and application isolation. This allows applications to coexist within a single 
+        ALS cluster, saving the overhead of running 
+        a separate operating system for each application.</li>
+
+    <li class="li"> Support for creating Windows instances that include Microsoft SQL Server Express. </li>
+
+    <li class="li"> Integrated buildpack support for building applications with dependencies and services.</li>
+
+</ul>
+
+        
+        <p class="p">Windows and .NET support is enabled by adding this functionality to an existing Helion Development Platform 1.2 installation.</p>
+
+
+        <p class="p">For the 1.2 release, we support creating the following types of instances:</p>
+
+<ul class="ul">
+    <li class="li">Windows Server 2012 R2 with DEA (Droplet Execution Agent) role</li>
+
+    <li class="li">Windows Server 2012 R2 with SQL Server 2012 Express</li>
+
+    <li class="li">Windows Server 2012 R2 with SQL Server 2014 Express</li>
+
+</ul>
+
+        <p class="p">Helion Development Platform treats deployment of .NET applications in the same way as
+                Linux applications (such as Java or PHPE appplications). .NET applications require a
+                    buildpack to
+                specify the dependencies and <a class="xref" href="windows_adding_services.html#topic3869">services</a> that can be bound to the application. .NET applications are
+                deployed into a sandbox environment similar to Warden in Cloud Foundry. </p>
+
+        </div>
+
+    <div class="section" id="topic24073_2__apps"><h2 class="title sectiontitle">Supported .NET Application Types</h2>
+
+        <p class="p">Helion Development Platform supports HTTP-based applications, including ASP.NET and WCF. Design considerations for Windows DEA applications are the 
+            same as for 
+            <a class="xref" href="http://docs.cloudfoundry.org/devguide/deploy-apps/prepare-to-deploy.html" target="_blank">Cloud Foundry</a> 
+            applications.</p>
+ 
+
+        <p class="p">Helion Development Platform also provides an integrated IIS buildpack which supports the following technologies:</p>
+
+<ul class="ul">
+    <li class="li"> IIS 8 </li>
+
+    <li class="li"> .NET 2.0-4.5.2</li>
+
+    <li class="li"> ASP.NET Web Forms</li>
+
+    <li class="li"> ASP.NET WebAPI v1 and v2</li>
+
+    <li class="li"> ASP.NET MVC 2 through 5 with Entity Framework 6</li>
+
+    <li class="li"> ASP.NET SignalR</li>
+
+    <li class="li"> WCF services</li>
+
+</ul>
+
+        </div>
+
+    <div class="section" id="topic24073_2__sql"><h2 class="title sectiontitle">SQL Server Support</h2>
+
+
+        <p class="p">The Helion Development Platform 1.2 supports SQL Server Express 2012 and SQL Server Express 2014. SQL Server support is enabled by creating a 
+            SQL Server service using the SQL Server broker. 
+            Each application that binds to the SQL Server service will create a new database and service credentials. The service credentials get created 
+            and can be accessed either from the 
+            <samp class="ph codeph">web.config</samp> file, or programmatically through the <samp class="ph codeph">VCAP_SERVICES</samp> environment variable.</p>
+
+        </div>
+
+    <div class="section" id="topic24073_2__tools"><h2 class="title sectiontitle">Windows Tools </h2>
+
+        <p class="p">In order to run .NET framework applications, Helion Development Platform requires that Windows DEA nodes be deployed. The tools used to 
+            create and deploy Windows DEA nodes, and to deploy 
+            .NET Framework applications, include the following:</p>
+
+        </div>
+
+        <div class="section" id="topic24073_2__tools_imaging"><h2 class="title sectiontitle">Imaging tool</h2>
+
+            <ul class="ul"><li class="li"> Glazier: This tool creates Windows images for deployment to HPE Helion OpenStack. This tool is
+                    not needed for using Windows images in HPE Helion Public Cloud.</li>
+</ul>
+
+        </div>
+
+        <div class="section" id="topic24073_2__tools_management"><h2 class="title sectiontitle">Management tool set</h2>
+<ul class="ul">
+    <li class="li">ALS Cluster management (<em class="ph i">cf-mgmt</em>): This tool adds Windows DEAs and SQL Server services to your cluster.</li>
+
+    <li class="li">ALS Client (<em class="ph i">helion</em>): This tool deploys .NET applications (run with the <samp class="ph codeph">--stack win2012r2</samp> switch). The ALS client can 
+        deploy Windows applications from Windows, Linux, or 
+        MacOS X environments.</li>
+
+</ul>
+
+        </div>
+
+    <div class="section" id="topic24073_2__tools_net"><h2 class="title sectiontitle">.NET tool set</h2>
+
+        <ul class="ul">
+            <li class="li">Cloud Foundry Extensions: This Visual Studio extension performs simple management tasks such as starting or stopping an application, 
+                deleting a service, or renaming a route.</li>
+
+            <li class="li">Cloud Foundry MSBuild tasks: These MSBuild processes allow you to build and deploy .NET applications as part of the usual build process 
+                for your application.</li>
+
+            <li class="li">Cloud Foundry .NET SDK: These libraries allow you to programmatically interact with the Cloud Foundry APIs.</li>
+
+        </ul>
+
+
+            <p class="p">For more information about downloading and using these tools, see <a class="xref" href="windows_tools_guide.html">Windows and .NET Tools
+                    Guide</a>.</p>
+
+        </div>
+
+    <div class="section" id="topic24073_2__process"><h2 class="title sectiontitle">Process</h2>
+        <p class="p">At a high level, running .NET applications in Helion Development Platform involves the following process:</p>
+
+        </div>
+
+    <div class="section" id="topic24073_2__enablingwindows"><h2 class="title sectiontitle">Enabling Windows (Installation)</h2>
+<ol class="ol">
+
+    <li class="li"> Obtain a Windows 2012 R2 server license and ISO image.</li>
+
+    <li class="li"> Download the <a class="xref" href="http://clients.als.hpcloud.com/glazier-1.2.0-posix_x86_64.zip" target="_blank">Glazier</a> tool.</li>
+
+    <li class="li"> Use the Glazier tool to create and upload your Windows images.</li>
+
+    <li class="li"> Add Windows DEAs to your cluster</li>
+
+    <li class="li"> Add SQL Server services to your cluster.</li>
+
+</ol>
+
+        </div>
+
+    <div class="section" id="topic24073_2__development"><h2 class="title sectiontitle">Application development and deployment</h2>
+<ol class="ol">
+
+    <li class="li"> Download the <a class="xref" href="../helion/CLI/ALS_Client_Downloads.html"> Helion client tool</a>.</li>
+
+    <li class="li"> Install the Cloud Foundry Explorer and Cloud Foundry MSBuild tasks in Visual Studio.</li>
+
+    <li class="li"> Optionally, install the Cloud Foundry .NET SDK (for programmatic access to services.)</li>
+
+    <li class="li"> Build your application.</li>
+
+    <li class="li"> Deploy your application using either Visual Studio or the Helion client.</li>
+
+</ol>
+
+        </div>
+
+    <div class="section" id="topic24073_2__softwarerequirements"><h2 class="title sectiontitle">Software Requirements</h2>
+
+
+        <p class="p">Windows support has software requirements including the following:</p>
+
+<ul class="ul">
+    <li class="li"> A deployment of the HPE Helion Development Platform 1.2 or later or an HPE Helion Public
+                    Cloud account. To try HPE Helion Public Cloud, see <a class="xref" href="http://www.hpcloud.com/cloud-credit" target="_blank">HPE Cloud
+                        Signup</a>. </li>
+
+    <li class="li"> A licensed, retail, English-language Windows 2012 R2 ISO image. Evaluation versions and non-English versions are not supported. This image 
+        can be obtained through a MSDN subscription for development 
+        and test purposes, but images for use in a production environment must be obtained through the OEM channel. See 
+        <a class="xref" href="#topic24073_2__licensing">Windows Instance Licensing</a> for details.</li>
+
+    <li class="li"> Virtual Box version 4.3.26 or later: <a class="xref" href="https://www.virtualbox.org/wiki/Downloads" target="_blank">Download</a></li>
+
+    <li class="li"> Virtio drivers version 0.1-81: 
+        <a class="xref" href="https://fedorapeople.org/groups/virt/virtio-win/deprecated-isos/stable/virtio-win-0.1-81.iso" target="_blank">Download</a></li>
+
+    <li class="li"> The Glazier tool: <a class="xref" href="http://clients.als.hpcloud.com/glazier-1.2.0-posix_x86_64.zip" target="_blank">Download</a></li>
+
+    <li class="li"> If applications are to be deployed and managed from the development environment, any edition of Visual Studio 2013, including the Community (free) edition.</li>
+
+    <li class="li"> The <a class="xref" href="windows_tools_guide.html#windows_tools__cloudfoundryextensions">Cloud Foundry Explorer Visual Studio extension</a>. This
+                    extension can be found by searching for <strong class="ph b">Cloud Foundry Explorer</strong> in the
+                        <em class="ph i">Extensions and Updates</em> module of Visual Studio.</li>
+
+    <li class="li">Helion OpenStack supports .NET applications created with .NET versions 2.0 through 4.5.2.</li>
+
+</ul>
+
+        </div>
+
+    <div class="section" id="topic24073_2__licensing"><h2 class="title sectiontitle">Windows Instance Licensing</h2>
+        <p class="p">You will need to provide your own Windows licensing for use with Windows instances; Microsoft's licensing requires customers to create their own images using their own 
+            licensed software. During 
+            image creation, temporary instances of Windows Server are created, so a volume license is required.</p>
+ 
+
+        <p class="p">Windows Server licensing for Windows DEAs and Windows SQL Server instances consists of two components:</p>
+
+<ul class="ul">
+    <li class="li"> Licensing agreements. These are paid contracts with Microsoft, which include the legal
+                    right to run a software package and support agreements. Since HPE Helion
+                    OpenStack is a <a class="xref" href="http://www.windowsservercatalog.com/svvp.aspx" target="_blank">certified SSVP
+                        provider</a>, customers can use Microsoft support with their own
+                    licensing agreements.</li>
+ 
+        <li class="li">Activation. Your Windows instances can be activated by using your KVM server, or by connecting to the Windows instance directly using Remote Desktop, and providing 
+            product keys manually.</li>
+
+</ul>
+
+        <p class="p">For more information on licensing Windows Server, see 
+            <a class="xref" href="https://www.microsoft.com/en-us/licensing/product-licensing/windows-server-2012-r2.aspx" target="_blank">Windows Server 2012 Volume Licensing</a>, 
+            or contact your 
+            Microsoft licensing representative.</p>
+
+        </div>
+
+    </div>
+
+
+</body>
+</html>

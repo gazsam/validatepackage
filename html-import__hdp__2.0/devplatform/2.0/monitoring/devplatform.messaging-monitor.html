@@ -1,0 +1,109 @@
+
+
+
+<html><head><title>Monitoring the messaging service from the Operations Console</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_messaging_manage_horizon" /> <meta name="html-import-file-path" content="devplatform/2.0/monitoring/devplatform.messaging-monitor.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">Monitoring the messaging service from the Operations Console</h1>
+
+
+  
+
+  <div class="body">
+    <p class="p">This topic describes monitoring information available through the Operations Console. </p>
+
+    <div class="p">The monitoring console can generate the following alarms:
+      
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="topic_messaging_manage_horizon__table_cry_hwm_nt" class="table" frame="border" border="1" rules="all">
+          
+          
+          
+          
+          <thead class="thead" align="left">
+            <tr class="row">
+              <th class="entry" valign="top" width="25%" id="d137282e32">Alarm name</th>
+
+              <th class="entry" valign="top" width="25%" id="d137282e35">Description</th>
+
+              <th class="entry" valign="top" width="25%" id="d137282e38">Likely Cause</th>
+
+              <th class="entry" valign="top" width="25%" id="d137282e41">Mitigation tasks to perform</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d137282e32 ">HTTP Status</td>
+
+              <td class="entry" valign="top" width="25%" headers="d137282e35 ">component=cue-api</td>
+
+              <td class="entry" valign="top" width="25%" headers="d137282e38 ">API is unresponsive</td>
+
+              <td class="entry" valign="top" width="25%" headers="d137282e41 ">Restart Apache</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d137282e32 ">Process Check</td>
+
+              <td class="entry" valign="top" width="25%" headers="d137282e35 ">process_name=cue-worker</td>
+
+              <td class="entry" valign="top" width="25%" headers="d137282e38 ">Supervisor stopped</td>
+
+              <td class="entry" valign="top" width="25%" headers="d137282e41 ">Use supervisor to start all workers</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d137282e32 ">Process Check</td>
+
+              <td class="entry" valign="top" width="25%" headers="d137282e35 ">process_name=cue-monitor</td>
+
+              <td class="entry" valign="top" width="25%" headers="d137282e38 ">cue-monitor process crashed</td>
+
+              <td class="entry" valign="top" width="25%" headers="d137282e41 ">Restart cue-monitor service</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d137282e32 ">Process Check</td>
+
+              <td class="entry" valign="top" width="25%" headers="d137282e35 ">process_name=mysqld</td>
+
+              <td class="entry" valign="top" width="25%" headers="d137282e38 ">mysql process crashed</td>
+
+              <td class="entry" valign="top" width="25%" headers="d137282e41 ">Restart mysql service</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d137282e32 ">Process Check</td>
+
+              <td class="entry" valign="top" width="25%" headers="d137282e35 ">process_name=org.apache.zookeeper.server</td>
+
+              <td class="entry" valign="top" width="25%" headers="d137282e38 ">zookeeper process crashed</td>
+
+              <td class="entry" valign="top" width="25%" headers="d137282e41 ">Restart zookeeper service</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+</div>
+
+    <div class="note note"><span class="notetitle">Note:</span>  When looking at the Ops Console, alarms for MySQL and Zookeeper appear in the <strong class="ph b">No
+        Service Defined </strong>panel, not the<strong class="ph b"> Messaging as a Service</strong> panel. This is a known
+      issue.</div>
+
+  </div>
+
+
+</body>
+</html>

@@ -1,0 +1,229 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Application Logs</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic5165" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/app-logs.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Application Logs</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">Logs for applications running on Application Lifecycle Service are aggregated into streams so that data from multiple instances can be viewed together and filtered. Application log streams can be accessed via:</p>
+
+<ul class="ul">
+<li class="li">the <a class="xref" href="../../admin/console/customize.html">
+          <em class="ph i">Management Console</em>
+        </a> using the <strong class="ph b">View Logs</strong> button on the Application Details page, or</li>
+
+  <li class="li">the <a class="xref" href="../reference/client-ref-information.html#topic17778__command-files">
+<em class="ph i">helion logs</em>
+</a>
+command</li>
+
+  <li class="li">application log <a class="xref" href="#topic5165__helion-drain"><em class="ph i">drains</em>
+        </a></li>
+
+</ul>
+
+<p class="p">Log streams are tailed output from actual log files in each application
+container, which are generally found in the <em class="ph i">/home/helion/logs/</em> directory.
+  These files can be accessed with the <a class="xref" href="../reference/client-ref-information.html#topic17778__command-files">
+<em class="ph i">helion
+files</em>
+</a> command or from the
+Application details page of the <a class="xref" href="../../admin/console/customize.html">
+<em class="ph i">Management
+Console</em>
+</a>.</p>
+
+<div class="p">
+      <div class="note note"><span class="notetitle">Note:</span> These files are not automatically rotated. For long-running applications or verbose
+        logs, you should <a class="xref" href="#topic5165__rotating-application-log-files"><em class="ph i">rotate them</em></a> to avoid filling up the application container's filesystem.</div>
+
+    </div>
+
+<div class="section" id="topic5165__helion-logs"><h2 class="title sectiontitle">helion logs</h2>
+      
+
+      <div class="note note" id="topic5165__must_exist"><span class="notetitle">Note:</span> The file being monitored must already exist <strong class="ph b">before</strong> apptail begins
+        monitoring. Use the application code, the buildpack, a pre-staging hook or a post-staging
+        hook to create the file before the app instance is created.</div>
+ 
+      <p class="p">To view an application log stream, use the <a class="xref" href="../reference/client-ref-information.html#topic17778__command-logs">
+          <em class="ph i">helion logs</em>
+        </a> command:</p>
+
+      <pre class="pre codeblock">helion logs myapp</pre>
+
+      <p class="p">To limit the number of lines displayed, use the <samp class="ph codeph">--num</samp> option:</p>
+
+      <pre class="pre codeblock">helion logs myapp --num 50</pre>
+
+      <p class="p">To view a log stream as it is updated, use the <samp class="ph codeph">--follow</samp> option:</p>
+
+      <pre class="pre codeblock">helion logs myapp --follow</pre>
+
+      <p class="p">Log streams can be filtered on a number of parameters:</p>
+
+      <ul class="ul">
+        <li class="li">
+          <strong class="ph b">--text</strong> does a glob pattern match on the log message</li>
+
+        <li class="li">
+          <strong class="ph b">--instance</strong> shows only logs from the specified application instances (starting at
+          instance 0).</li>
+
+        <li class="li">
+          <strong class="ph b">--filename</strong> filters based on the log filename (e.g. 'stderr.log')</li>
+
+        <li class="li">
+          <strong class="ph b">--source</strong> shows only logs from the specified source ('app' or 'staging'). Without a
+          source specified, the log stream includes staging and application logs as well as cloud
+          events relevant to app.</li>
+
+      </ul>
+
+      <p class="p">The <samp class="ph codeph">--json</samp> flag can be used to return each log line as a JSON object. </p>
+
+      <div class="p">
+        <div class="note note"><span class="notetitle">Note:</span> 
+          <samp class="ph codeph">helion logs</samp> buffers only 400 lines of the log stream history (i.e. lines
+          generated prior to it being run). If you need earlier log lines, use the <a class="xref" href="../reference/client-ref-information.html#topic17778__command-files">
+            <em class="ph i">helion files</em>
+          </a> command to fetch the relevant log file from the <em class="ph i">logs/</em> directory or create a
+          log <a class="xref" href="#topic5165__helion-drain"><em class="ph i">drain</em></a> preemptively
+          (where possible).</div>
+
+      </div>
+
+    </div>
+
+<div class="section" id="topic5165__adding-files-to-the-stream"><h2 class="title sectiontitle">Adding Files to the Stream</h2> 
+      <div class="note note"><span class="notetitle">Note:</span> The file being monitored must already exist <strong class="ph b">before</strong> apptail begins
+        monitoring. Use the application code, the buildpack, a pre-staging hook or a post-staging
+        hook to create the file before the app instance is created.</div>
+ 
+<p class="p">By default, <samp class="ph codeph">helion logs</samp> streams log data from
+<em class="ph i">staging_tasks.log</em> (while staging), <em class="ph i">stdout.log</em> and <em class="ph i">stderr.log</em>
+(while running).</p>
+
+<p class="p">You can add up to five additional files to the log stream by modifying
+the <strong class="ph b">HELION_LOG_FILES</strong> environment variable in the
+<a class="xref" href="manifestyml.html">
+<em class="ph i">manifest.yml</em>
+</a> file or using <a class="xref" href="../reference/client-ref-management.html#topic50918__command-set-env">
+<em class="ph i">helion set-env</em>
+</a>.</p>
+
+<p class="p">The variable should contain a list of named files separated with ":" in
+the following format:</p>
+
+<pre class="pre codeblock">name=/path/to/file.log:name=/path/to/another.log</pre>
+
+<p class="p">The <em class="ph i">name</em> used in the value or individual variable name becomes part of
+each log line, and can be used for filtering the stream.</p>
+
+<p class="p">For example, to add a specific Tomcat log file to the default \$HELION_LOG_FILES variable, you could add the following lines to <em class="ph i">manifest.yml</em>:</p>
+
+<pre class="pre codeblock">env:
+  HELION_LOG_FILES: tomcat=/home/helion/tomcat/logs/catalina.2013-11-04.log:$HELION_LOG_FILES</pre>
+
+<p class="p">Paths can be fully specified or specified relative to \$HELION_APP_ROOT.</p>
+
+</div>
+
+<div class="section" id="topic5165__helion-drain"><h2 class="title sectiontitle">helion drain</h2> 
+  <p class="p">The <a class="xref" href="../reference/client-ref-management.html#topic50918__command-drain-add">
+<em class="ph i">helion drain add</em>
+</a> command is used to create a log drain which forwards application logs to external log aggregation services, log analysis tools, or Redis databases. For example:</p>
+
+<pre class="pre codeblock">helion drain add myapp appdrain udp://logs.papertrailapp.com:12345</pre>
+
+<p class="p">This creates a UDP drain called <strong class="ph b">appdrain</strong> for the application <strong class="ph b">myapp</strong> which forwards all log messages and events for that application to <a class="xref" href="http://papertrailapp.com/" target="_blank">Papertrail</a> on port 12345.</p>
+
+<p class="p">The log drain URL can contain only:</p>
+
+<ul class="ul">
+<li class="li">
+<strong class="ph b">scheme</strong>: <samp class="ph codeph">udp://</samp> or <samp class="ph codeph">tcp://</samp>
+</li>
+
+<li class="li">
+<strong class="ph b">host</strong>: IP address or hostname</li>
+
+<li class="li">
+<strong class="ph b">port</strong>: number</li>
+
+</ul>
+
+<p class="p">Any additional parameters are discarded.</p>
+
+<p class="p">To delete the drain:</p>
+
+<pre class="pre codeblock">helion drain delete appdrain</pre>
+
+<p class="p">Use the --json option send the log lines in JSON format:</p>
+
+<pre class="pre codeblock">helion drain add myapp jsondrain --json udp://logs.papertrailapp.com:12346</pre>
+
+<p class="p">To check the status of your application drains, use the <em class="ph i">helion drain list</em> command.</p>
+
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span> If the service at the receiving end of the drain goes offline or becomes disconnected,
+          Application Lifecycle Service will retry the connection at increasing intervals.</div>
+
+      </div>
+
+</div>
+
+<div class="section" id="topic5165__rotating-application-log-files"><h2 class="title sectiontitle">Rotating Application Log Files</h2> 
+<p class="p">Application Lifecycle Service does not automatically rotate application log files in
+<em class="ph i">/home/helion/logs/</em>. However, you can add log rotation for these
+files yourself using <samp class="ph codeph">cron</samp> and
+<samp class="ph codeph">logrotate</samp>. Programming languages, frameworks, and utilities handle logging
+operations in different ways. Check for incompatibilities with
+<samp class="ph codeph">logrotate</samp> before implementing log rotation scheme using it.</p>
+
+<ol class="ol">
+<li class="li"> Add a cron key in <em class="ph i">manifest.yml</em> to run <samp class="ph codeph">logrotate</samp>. Set
+          HELION_CRON_INSTANCES to "all" to specify that the job should be run in all application
+          instances. For
+            example:<pre class="pre codeblock">env:
+  HELION_CRON_INSTANCES: all
+cron:
+  - 0 1 * * * /usr/sbin/logrotate --state /home/helion/app/logrotate-state /home/helion/app/app-logrotate.conf</pre>
+<p class="p">The
+              <samp class="ph codeph">--state</samp> option must be set because the <samp class="ph codeph">helion</samp> user
+            does not have permission to update the default state file.</p>
+</li>
+
+<li class="li"> Add an <em class="ph i">app-logrotate.conf</em> file to the base directory of your application to specify
+          which log files to rotate, and which <samp class="ph codeph">logrotate</samp> options to use. For
+          example:<pre class="pre codeblock">/home/helion/logs/\*.log {
+  daily
+  compress
+  copytruncate
+  dateext
+  missingok
+  notifempty
+  rotate 3
+  maxage 7
+  size 3M
+}</pre>
+</li>
+
+</ol>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

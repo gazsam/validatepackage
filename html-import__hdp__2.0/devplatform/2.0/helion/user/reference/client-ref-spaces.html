@@ -1,0 +1,984 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Command Reference: Spaces</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic9898" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/client-ref-spaces.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Command Reference: Spaces</h1>
+
+
+
+
+
+<div class="body">
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic9898__command-create-space">helion create-space</a>: Create a new space.</li>
+
+<li class="li">
+<a class="xref" href="#topic9898__command-delete-space">helion delete-space</a>: Delete the named space.</li>
+
+<li class="li">
+<a class="xref" href="#topic9898__command-link-user-space">helion link-user-space</a>: Add the specified user to the named space in various roles. </li>
+
+<li class="li">
+<a class="xref" href="#topic9898__command-rename-space">helion rename-space</a>: Rename the named space.</li>
+
+<li class="li">
+<a class="xref" href="#topic9898__command-space">helion space</a>: Show the named space's information.   </li>
+
+<li class="li">
+<a class="xref" href="#topic9898__command-spaces">helion spaces</a>: List the available spaces in the specified organization.</li>
+
+<li class="li">
+<a class="xref" href="#topic9898__command-space-users">helion space-users</a>: Show the users for the space by role.</li>
+
+<li class="li">
+<a class="xref" href="#topic9898__command-switch-space">helion switch-space</a>: Switch from the current space to the named space. This may switch the <a class="xref" href="client-ref-organizations.html">organization</a> as well. </li>
+
+<li class="li">
+<a class="xref" href="#topic9898__command-unlink-user-space">helion unlink-user-space</a>: Remove the specified user from the named space in various roles.</li>
+
+<li class="li">
+<a class="xref" href="#topic9898__command-update-space">helion update-space</a>: Change one or more attributes of a space in a single call.</li>
+
+</ul>
+
+<div class="section" id="topic9898__syntax"><h2 class="title sectiontitle">Syntax</h2> 
+<pre class="pre codeblock">helion [options] command [arguments] [command-options]</pre>
+
+<p class="p">For more information, use the <strong class="ph b">helion help</strong> or <strong class="ph b">helion help [<em class="ph i">command</em>]</strong> commands.</p>
+
+
+</div>
+
+<div class="section" id="topic9898__command-create-space"><h2 class="title sectiontitle">helion create-space &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Create a new space.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--auditor</td>
+
+<td class="entry" valign="top">Add yourself to the new space, as auditor. By request.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--developer</td>
+
+<td class="entry" valign="top">Add yourself to the new space, as developer. Done by default.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manager</td>
+
+<td class="entry" valign="top">Add yourself to the new space, as manager. Done by default.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-activate</td>
+
+<td class="entry" valign="top">Complementary alias of --activate.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-auditor</td>
+
+<td class="entry" valign="top">Complementary alias of --auditor.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-developer</td>
+
+<td class="entry" valign="top">Complementary alias of --developer.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-manager</td>
+
+<td class="entry" valign="top">Complementary alias of --manager.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The name of the parent organization to use as context.
+Defaults to the current organization.
+A current organization is automatically set if there is none,
+either by taking the one organization the user belongs to, or
+asking the user to choose among the possibilities.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic9898__command-delete-space"><h2 class="title sectiontitle">helion delete-space &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Delete the named space.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The name of the parent organization to use as context.
+Defaults to the current organization.
+A current organization is automatically set if there is none,
+either by taking the one organization the user belongs to, or
+asking the user to choose among the possibilities.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--recursive</td>
+
+<td class="entry" valign="top">Remove all sub-ordinate parts, and relations.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic9898__command-link-user-space"><h2 class="title sectiontitle">helion link-user-space &lt;<em class="ph i">user</em>&gt; &lt;<em class="ph i">space</em>&gt;</h2> 
+<p class="p">Add the specified user to the named space in various roles.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--developer</td>
+
+<td class="entry" valign="top">Affect the developer role</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manager</td>
+
+<td class="entry" valign="top">Affect the manager role</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The name of the parent organization to use as context.
+Defaults to the current organization.
+A current organization is automatically set if there is none,
+either by taking the one organization the user belongs to, or
+asking the user to choose among the possibilities.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic9898__command-rename-space"><h2 class="title sectiontitle">helion rename-space &lt;<em class="ph i">name</em>&gt; &lt;<em class="ph i">NewName</em>&gt;</h2> 
+<p class="p">Rename the named space.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The name of the parent organization to use as context.
+Defaults to the current organization.
+A current organization is automatically set if there is none,
+either by taking the one organization the user belongs to, or
+asking the user to choose among the possibilities.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic9898__command-space"><h2 class="title sectiontitle">helion space &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Show the named space's information.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization, -o</td>
+
+<td class="entry" valign="top">The name of the parent organization to use as context.
+Defaults to the current organization.
+A current organization is automatically set if there is none,
+either by taking the one organization the user belongs to, or
+asking the user to choose among the possibilities.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic9898__command-spaces"><h2 class="title sectiontitle">helion spaces</h2> 
+<p class="p">List the available spaces in the specified organization.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The name of the parent organization to use as context.
+Defaults to the current organization.
+A current organization is automatically set if there is none,
+either by taking the one organization the user belongs to, or
+asking the user to choose among the possibilities.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic9898__command-space-users"><h2 class="title sectiontitle">helion space-users</h2> 
+<p class="p">Show the users for the space by role.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization, -o</td>
+
+<td class="entry" valign="top">The name of the parent organization to use as context.
+Defaults to the current organization.
+A current organization is automatically set if there is none,
+either by taking the one organization the user belongs to, or
+asking the user to choose among the possibilities.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic9898__command-switch-space"><h2 class="title sectiontitle">helion switch-space &lt;<em class="ph i">NewName</em>&gt;</h2> 
+<p class="p">Switch from the current space to the named space. If the new space is in a different <a class="xref" href="client-ref-organizations.html">organization</a>, this command may switch the organization as well.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The name of the parent organization to use as context.
+Defaults to the current organization.
+A current organization is automatically set if there is none,
+either by taking the one organization the user belongs to, or
+asking the user to choose among the possibilities.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic9898__command-unlink-user-space"><h2 class="title sectiontitle">helion unlink-user-space &lt;<em class="ph i">user</em>&gt; &lt;<em class="ph i">space</em>&gt;</h2> 
+<p class="p">Remove the specified user from the named space in various roles.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--developer</td>
+
+<td class="entry" valign="top">Affect the developer role</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manager</td>
+
+<td class="entry" valign="top">Affect the manager role</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The name of the parent organization to use as context.
+Defaults to the current organization.
+A current organization is automatically set if there is none,
+either by taking the one organization the user belongs to, or
+asking the user to choose among the possibilities.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic9898__command-update-space"><h2 class="title sectiontitle">helion update-space</h2> 
+<p class="p">Change one or more attributes of a space in a single call.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--newname</td>
+
+<td class="entry" valign="top">A new name to give to the space.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-default</td>
+
+<td class="entry" valign="top">Make the current space no longer the default for users without explicit spaces.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The name of the parent organization to use as context.
+Defaults to the current organization.
+A current organization is automatically set if there is none,
+either by taking the one organization the user belongs to, or
+asking the user to choose among the possibilities.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

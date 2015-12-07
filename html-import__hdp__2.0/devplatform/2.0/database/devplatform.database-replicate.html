@@ -1,0 +1,83 @@
+
+
+
+<html><head><title>Replicating a database</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_replicate_database" /> <meta name="html-import-file-path" content="devplatform/2.0/database/devplatform.database-replicate.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">Replicating a database</h1>
+
+
+  
+
+  <div class="body">
+    <p class="p">Replicating a database creates a slave for your instance that replicates every action on the master. Creating a database instance that is automatically replicated results in more durable data and can 
+      prevent data loss in a disaster scenario.</p>
+
+      <div class="section" id="topic_replicate_database__db-prerequisites"><h2 class="title sectiontitle">Prerequisites</h2> 
+        <p class="p">To follow this guide, you must have already <a class="xref" href="devplatform.database-create-horizon.html#topic_create_database_horizon">created</a> a database instance that will be the master database.</p>
+
+      </div>
+
+    <div class="section" id="topic_replicate_database__steps"><h2 class="title sectiontitle">Steps</h2> 
+      <ol class="ol">
+        <li class="li">Log in to the Horizon console.</li>
+
+        <li class="li">Under your project, open the <strong class="ph b">Database</strong> panel and then click the <strong class="ph b">Instances</strong>
+          tab.<br/><img class="image" src="../../../media/createDBinstance9.png"/><br/>
+        </li>
+
+        <li class="li">Click <strong class="ph b">Launch Instance</strong>.</li>
+
+        <li class="li">In the <strong class="ph b">Details</strong> tab, specify the following options:
+          
+          <ul class="ul">
+            <li class="li">
+              <strong class="ph b">Instance Name</strong> - the name of the MySQL instance that will be the slave instance.</li>
+
+            <li class="li">
+              <strong class="ph b">Flavor</strong> - the size of the instance to host the slave database on.</li>
+
+            <li class="li">
+              <strong class="ph b">Volume Size</strong>- the size of the volume to host the data on (in GB). Note: this <strong class="ph b">cannot</strong> be changed later. </li>
+
+            <li class="li">
+              <strong class="ph b">Datastore</strong> - the MySQL datastore version to create.</li>
+
+            <li class="li">
+              <strong class="ph b">Availability Zone</strong> (optional) - the availability zone that the database will be
+              created in. For replication, it is important for this to be in a different
+              availability zone than the master.<br/><img class="image" src="../../../media/createDBinstance10.png" height="462" width="600"/><br/></li>
+
+          </ul>
+
+        </li>
+
+        <li class="li">Under the <strong class="ph b">Networking</strong> tab, specify the network to associate the database instance with.
+          This is required and should be the same network that any application that accesses the
+          database is on.<br/><img class="image" src="../../../media/createDBinstance11.png" height="279" width="542"/><br/></li>
+
+        <li class="li">Click the <strong class="ph b">Advanced</strong> tab and then use the <strong class="ph b">Replicate from Instance</strong> drop-down to
+          select the master instance to
+          replicate.<br/><img class="image" src="../../../media/createDBinstance12.png" height="291" width="600"/><br/>
+        </li>
+
+        <li class="li">Click <strong class="ph b">Launch</strong> to create the replica.<br/><img class="image" src="../../../media/createDBinstance13.png"/><br/>
+        </li>
+
+      </ol>
+
+    </div>
+
+  </div>
+
+  <div class="related-links"><div class="relinfo"><strong>Related information</strong><br/>
+<div><a class="navheader_parent_path" href="devplatform.database-instance.html#DatabaseService" title="HPE Helion 2.0 Development Platform: Using the Database Service">HPE Helion 2.0 Development Platform: Using the Database Service</a></div>
+<div><a class="navheader_parent_path" href="devplatform.database-create-horizon.html#topic_create_database_horizon" title="Creating a database instance from Horizon">Creating a database instance from Horizon</a></div>
+</div>
+</div>
+
+</body>
+</html>

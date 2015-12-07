@@ -1,0 +1,170 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: HPE Helion Application Lifecycle Service Client</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic3165" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/client/client_index.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: HPE Helion Application Lifecycle Service Client</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">The Helion ALS client is the command-line interface for the Application Lifecycle Service. You can use it to push application code up to the server, start and stop applications, create data services and link them to
+applications, and a number of other application management operations.</p>
+
+  <p class="p">The <a class="xref" href="../reference/client-ref.html">Command Reference</a> has full
+descriptions of all client commands and options. These details are also
+available at the command line via the <em class="ph i">helion help</em> command.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic3165__download">Download</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic3165__installation">Installation</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic3165__configuration">Configuration</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic3165__removing-the-client">Uninstallation</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic3165__getting-help">Getting Help from Within the Client</a>
+</li>
+
+<li class="li">
+  <a class="xref" href="../reference/client-ref.html">Full Command Reference</a>
+</li>
+
+</ul>
+
+<div class="section" id="topic3165__helion-client-setup"><h2 class="title sectiontitle">Application Lifecycle Service Client Installation</h2> 
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span> Using the Windows Helion client with <a class="xref" href="http://www.cygwin.com/" target="_blank">Cygwin</a> is not supported.</div>
+
+      </div>
+
+</div>
+
+<div class="section" id="topic3165__download"><h2 class="title sectiontitle">Download</h2> 
+<p class="p">You may <a class="xref" href="../../CLI/ALS_Client_Downloads.html">download the ALS client</a> appropriate for your operating system.</p>
+
+<p class="p">Or you may download the client from within the Horizon console:</p>
+
+<ol class="ol">
+<li class="li">Click the <strong class="ph b">ALS</strong> tab to expand it.</li>
+
+<li class="li">Click <strong class="ph b">Download the Client</strong>.</li>
+
+<li class="li">Select the version appropriate for your operating system and download the file.</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic3165__installation"><h2 class="title sectiontitle">Installation</h2> 
+<ol class="ol">
+<li class="li">Unzip the archive into a convenient directory.</li>
+
+<li class="li">Add the executable to your system/shell <samp class="ph codeph">\$PATH</samp> by:<ul class="ul">
+            <li class="li">
+              <strong class="ph b">Windows</strong>: path = %path%; (where path is the path to the Helion client)</li>
+
+            <li class="li">
+              <strong class="ph b">Linux</strong>, <strong class="ph b">OS X</strong>: moving it to a directory in your
+              <samp class="ph codeph">\$PATH</samp>,</li>
+
+            <li class="li">creating a symlink from a directory in your <samp class="ph codeph">\$PATH</samp>, or</li>
+
+            <li class="li">creating a shell alias for the executable.</li>
+
+          </ul>
+</li>
+
+<li class="li"> For Linux or Mac OS X: Make sure the file is set as
+          executable<pre class="pre codeblock">chmod +x helion</pre>
+</li>
+
+<li class="li"> On some systems read access is also necessary.<pre class="pre codeblock">chmod 755 helion</pre>
+</li>
+
+<li class="li"> Confirm that the client is installed correctly by launching it and running <em class="ph i">helion
+          help</em>.</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic3165__configuration"><h2 class="title sectiontitle">Configuration</h2> 
+<p class="p">After installation, perform the following configuration steps before attempting to use the client.</p>
+
+</div>
+
+<div class="section" id="topic3165__targeting-the-api-endpoint"><h2 class="title sectiontitle">Target the API endpoint</h2> 
+<p class="p">Before you can use the client, you must <a class="xref" href="../reference/client-ref-getting-started.html#topic2439__command-target">set the
+          target URL</a>, which is also known as the API Endpoint. This tells the client the
+        location where it will push applications to. For example:</p>
+
+<pre class="pre codeblock">helion target api.helion.example.com</pre>
+
+<p class="p">For a micro-cloud VM, it might be something like:</p>
+
+<pre class="pre codeblock">helion target api.helion-xxxx.local</pre>
+
+</div>
+
+<div class="section" id="topic3165__http-proxies"><h2 class="title sectiontitle">Configure HTTP Proxies</h2> 
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span> This configuration step should not be necessary on the Windows<sup>®</sup>
+          operating system, as the client queries the Internet Settings values.</div>
+
+      </div>
+
+<p class="p">If there is an HTTP/HTTPS proxy on your network between your client and
+the Application Lifecycle Service API endpoint, set the following environment variables in your shell as appropriate for your proxy.</p>
+
+<ul class="ul">
+<li class="li">https_proxy (e.g. "<em class="ph i">https://yourproxy.example.com</em>:443/")</li>
+
+<li class="li">http_proxy (e.g. "<em class="ph i">http://yourproxy.example.com</em>:8080/")</li>
+
+<li class="li">http_proxy_user</li>
+
+<li class="li">http_proxy_pass</li>
+
+</ul>
+
+<p class="p">With these values set properly, the client will route appropriately.</p>
+
+</div>
+
+<div class="section" id="topic3165__removing-the-client"><h2 class="title sectiontitle">Uninstallation</h2> 
+<p class="p">To remove or uninstall the client, simply delete the executable and remove any aliases or <samp class="ph codeph">\$PATH</samp> modifications you have made for it.</p>
+
+</div>
+
+<div class="section" id="topic3165__getting-help"><h2 class="title sectiontitle">Getting Help</h2> 
+<p class="p">To get a list of available commands or help on a particular command, enter:</p>
+
+<pre class="pre codeblock">helion help [COMMAND]</pre>
+
+  <p class="p">See also the <a class="xref" href="../reference/client-ref.html">Command Reference</a> for a full
+list of commands.</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

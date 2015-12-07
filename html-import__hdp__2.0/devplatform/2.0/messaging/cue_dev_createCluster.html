@@ -1,0 +1,73 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Create a Cluster from the Command Line</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="cue_createCluster" /> <meta name="html-import-file-path" content="devplatform/2.0/messaging/cue_dev_createCluster.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Create a Cluster from the Command Line</h1>
+
+
+  
+
+  <div class="body">
+    <div class="section">
+      <dl class="dl">
+        
+          <dt class="dt dlterm">Syntax</dt>
+
+          <dd class="dd">
+            <pre class="pre codeblock">message-broker cluster create</pre>
+
+          </dd>
+
+        
+        
+          <dt class="dt dlterm">Required Fields</dt>
+
+          <dd class="dd">name, network-id, flavor and size
+          <div class="note note"><span class="notetitle">Note:</span> Flavor must be at least 2 (m1.small).</div>
+</dd>
+
+        
+        
+          <dt class="dt dlterm">Sample</dt>
+
+          <dd class="dd">
+            <pre class="pre codeblock language-python"><em class="hl-comment" style="color:#006400">#!/usr/bin/env python</em>
+
+<strong class="hl-keyword" style="color:#7f0055">from</strong> keystoneclient.auth.identity <strong class="hl-keyword" style="color:#7f0055">import</strong> v3 <strong class="hl-keyword" style="color:#7f0055">as</strong> keystone_v3_auth
+<strong class="hl-keyword" style="color:#7f0055">from</strong> keystoneclient <strong class="hl-keyword" style="color:#7f0055">import</strong> session <strong class="hl-keyword" style="color:#7f0055">as</strong> keystone_session
+<strong class="hl-keyword" style="color:#7f0055">from</strong> cueclient.v1 <strong class="hl-keyword" style="color:#7f0055">import</strong> client
+
+auth = keystone_v3_auth.Password(
+        auth_url=<span class="hl-string" style="color:#2a00ff">"http://example.com:5000/v3"</span>,
+        username=<span class="hl-string" style="color:#2a00ff">"admin"</span>,
+        password=<span class="hl-string" style="color:#2a00ff">"password"</span>,
+        project_name=<span class="hl-string" style="color:#2a00ff">"admin"</span>,
+        project_domain_name=<span class="hl-string" style="color:#2a00ff">"default"</span>,
+        user_domain_name=<span class="hl-string" style="color:#2a00ff">"default"</span>
+)
+
+session = keystone_session.Session(auth=auth)
+cue_client = client.Client(session=session)
+
+<em class="hl-comment" style="color:#006400"># Cluster create</em>
+create_response = cue_client.clusters.create(name=<span class="hl-string" style="color:#2a00ff">"test_binding5"</span>, nic=<span class="hl-string" style="color:#2a00ff">"55555"</span>, flavor=<span class="hl-string" style="color:#2a00ff">"2"</span>,size=<span class="hl-string" style="color:#2a00ff">"2"</span>,volume_size=<span class="hl-string" style="color:#2a00ff">"0"</span>, )</pre>
+
+          </dd>
+
+        
+      </dl>
+
+    </div>
+
+    <p class="p">For more details on working with Cue clusters from the command line, see <a class="xref" href="http://python-cueclient.readthedocs.org/en/latest/command-line.html#cluster-create" target="_blank">Cue Command Line Tool</a>.</p>
+
+  </div>
+
+
+</body>
+</html>

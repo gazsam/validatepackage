@@ -1,0 +1,156 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Change an Existing Project</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="projectEdit" /> <meta name="html-import-file-path" content="devplatform/2.0/codeEngine/engine_edit_project.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Change an Existing Project</h1>
+
+
+  
+
+  <div class="body">
+    <p class="p">Some elements of an existing project can be changed.</p>
+
+    <div class="section"><h2 class="title sectiontitle">Edit Project Specifications</h2>
+    <ol class="ol" id="projectEdit__project_edit">
+      
+      <li class="li">Click the <strong class="ph b">Projects</strong> tab.</li>
+
+      <li class="li">Click the target project and then click <strong class="ph b">Edit</strong>. <div class="note note"><span class="notetitle">Note:</span> The target Repository cannot be
+          changed. If the Repository is wrong, delete this project and create a new one.</div>
+</li>
+
+      <li class="li">Click <strong class="ph b">Save</strong>.</li>
+
+          </ol>
+
+  </div>
+
+    <div class="section" id="projectEdit__addmore"><h2 class="title sectiontitle">Add More Deployment Targets</h2>
+      
+      <ol class="ol">
+        <li class="li">Select the target build and click <strong class="ph b">Edit</strong>.</li>
+
+        <li class="li">Scroll down and click <strong class="ph b">Add Targets</strong>.</li>
+
+        <li class="li">Specify the environments this build should be deployed to.</li>
+
+        <li class="li">Click <strong class="ph b">Save</strong>.</li>
+
+      </ol>
+
+    </div>
+
+   <div class="section" id="projectEdit__changePostDeploy"><h2 class="title sectiontitle">Create a new Post-deployment Action</h2>
+    <div class="p"> 
+    <ol class="ol"><li class="li">Click the <strong class="ph b">Projects</strong> tab.</li>
+
+      <li class="li">Find the target project in the list and click <strong class="ph b">View Details</strong>.</li>
+
+      <li class="li">Scroll down to the <strong class="ph b">Post Deploy Actions</strong> section and click <strong class="ph b">New Action</strong>.</li>
+
+        <li class="li">Select the desired Post Deployment Action. <div class="note note"><span class="notetitle">Note:</span> At this time, only StormRunner actions
+            are supported.</div>
+<br/><img class="image" id="projectEdit__d22e45" src="../../../media/engine_create_postDeploy.png"/><br/></li>
+
+      <li class="li">Specify the information required for the action. <ul class="ul">
+            <li class="li">For StormRunner load testing:<ul class="ul" id="projectEdit__d22e53">
+                <li class="li">Create a new StormRunner Account.</li>
+
+                <li class="li">Note your <strong class="ph b">Username</strong>, <strong class="ph b">Password</strong> and <strong class="ph b">Tenant ID</strong>.</li>
+
+                <li class="li">Create a test and note the <strong class="ph b">Test Number</strong>.</li>
+
+                <li class="li">Provide an <strong class="ph b">Action Name</strong> to identify what this test does.</li>
+
+              </ul>
+</li>
+
+          </ul>
+</li>
+
+      <li class="li">Click <strong class="ph b">Save</strong>.</li>
+
+    </ol>
+</div>
+</div>
+
+    
+    <div class="section"><h2 class="title sectiontitle">Create New Notifications</h2>
+      <ol class="ol"><li class="li">Click the <strong class="ph b">Projects</strong> tab.</li>
+
+        <li class="li">Find the desired Project in the list and then click <strong class="ph b">View Details</strong>.</li>
+
+        <li class="li">Scroll down to <strong class="ph b">Notification Targets </strong>and then click <strong class="ph b">New Target</strong>. </li>
+
+        <li class="li">Define the <strong class="ph b">Notification Target</strong>:<br/><img class="image" id="projectEdit__image_k1l_hhs_lt" src="../../../media/engine_edit_notification.png"/><br/><ol class="ol" type="a"><li class="li">Provide a descriptive <strong class="ph b">Name</strong> for this Notification.</li>
+
+            <li class="li">Select the <strong class="ph b">Type</strong> of Notification and then
+                            provide the required credentials.<ul class="ul" id="projectEdit__d49e117">
+                                <li class="li"><strong class="ph b">HTTP Post </strong><ul class="ul" id="projectEdit__d49e122">
+                                        <li class="li">Notification Target Name: Enter the name of the person
+                                            to notify.</li>
+
+                                        <li class="li">HTTP Endpoint: Specify an endpoint where HelionCI events
+                                            should be sent. Very similar to defining a webhook.
+                                            Examples would be the URL of an internal website, a
+                                            communication tool, or an RSS feed. </li>
+
+                                        <li class="li">Token: Generate a token as required for the target
+                                            endpoint. The method will vary depending on the target. </li>
+
+                                        <li class="li">Click <strong class="ph b">Save</strong>.</li>
+
+                                    </ul>
+</li>
+
+                                <li class="li"><strong class="ph b">HipChat </strong><ul class="ul" id="projectEdit__d49e143">
+                                        <li class="li">Notification Target Name: Enter the name of the person
+                                            to notify.</li>
+
+                                        <li class="li">Hipchat Room Number: <a class="xref" href="engine_hipchat_data.html#topic_ak1_yjd_3t__roomnumber">How to Find</a></li>
+
+                                        <li class="li">Token: <a class="xref" href="engine_hipchat_data.html#topic_ak1_yjd_3t__token">How to Generate</a></li>
+
+                                        <li class="li">Click <strong class="ph b">Save</strong>.</li>
+
+                                    </ul>
+</li>
+
+                                <li class="li"><strong class="ph b">Flowdock</strong>
+                                    <ul class="ul" id="projectEdit__d49e169">
+                                        <li class="li">Notification Target Name: Enter the name of the person
+                                            to notify.</li>
+
+                                        <li class="li">API Endpoint: <a class="xref" href="https://api.flowdock.com" target="_blank">How to
+                                            Find</a></li>
+
+                                        <li class="li">Token: <a class="xref" href="https://www.flowdock.com/api/authentication#source-token" target="_blank">How to
+                                                Generate</a></li>
+
+                                        <li class="li">Click <strong class="ph b">Save</strong>.</li>
+
+                                    </ul>
+</li>
+
+                            </ul>
+</li>
+
+            <li class="li">Click <strong class="ph b">Save</strong>.</li>
+
+          </ol>
+</li>
+
+        </ol>
+</div>
+
+    
+  </div>
+
+
+</body>
+</html>

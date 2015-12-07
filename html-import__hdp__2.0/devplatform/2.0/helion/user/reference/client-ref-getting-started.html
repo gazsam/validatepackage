@@ -1,0 +1,225 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Command Reference: Getting Started</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic2439" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/client-ref-getting-started.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Command Reference: Getting Started</h1>
+
+
+
+
+
+<div class="body">
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic2439__command-login">helion login</a> Logs in to the current or specified target with the named user.</li>
+
+<li class="li">
+<a class="xref" href="#topic2439__command-logout">helion logout</a> Logs the current user out of the current, specified, or all targets.</li>
+
+<li class="li">
+<a class="xref" href="#topic2439__command-target">helion target</a> Set the target API endpoint for the client or report the current target.</li>
+
+</ul>
+
+<div class="section" id="topic2439__syntax"><h2 class="title sectiontitle">Syntax</h2> 
+<pre class="pre codeblock">helion [options] command [arguments] [command-options] </pre>
+
+<p class="p">For more information, use the <strong class="ph b">helion help</strong> or <strong class="ph b">helion help [<em class="ph i">command</em>]</strong> commands.</p>
+
+
+</div>
+
+<div class="section" id="topic2439__command-login"><h2 class="title sectiontitle">helion login &lt;<em class="ph i">username</em>&gt;</h2> 
+<p class="p">Logs the named user in to the current or specified target.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--credentials</td>
+
+<td class="entry" valign="top">The credentials to use. Each use of the option declares a single element, using the form "key: value" for the argument.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+<td class="entry" valign="top">Deprecated. Do not use.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--ignore-missing</td>
+
+<td class="entry" valign="top">Disable errors generated for missing organization and/or space.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization,  --o</td>
+
+<td class="entry" valign="top">The organization to use. If not specified programmatically, the user is prompted to choose an organization.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--password, --passwd</td>
+
+<td class="entry" valign="top">The password to use. This is a shorthand for <var class="keyword varname">--credentials 'password:</var>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The space (in the organization) to use. If not specified, the user is prompted to choose among the possible spaces in either the specified organization or all organizations that the user belongs to.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation only.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current operation only.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic2439__command-logout"><h2 class="title sectiontitle">helion logout &lt;<em class="ph i">target</em>&gt;</h2> 
+<p class="p">Logs the current user out of the current, specified, or all targets.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--all</td>
+
+<td class="entry" valign="top">When present, log out of all targets we know. Cannot be used together with a target.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic2439__command-target"><h2 class="title sectiontitle">helion target &lt;<em class="ph i">url</em>&gt;</h2> 
+<p class="p">Set the target API endpoint for the client or report the current target.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--allow-http</td>
+
+<td class="entry" valign="top">Required to prevent the client from rejecting http URLs.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization, -o</td>
+
+<td class="entry" valign="top">The organization to set as current for this target.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space, -s</td>
+
+<td class="entry" valign="top">The space to set as current for this target.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--verbose</td>
+
+<td class="entry" valign="top">More verbose operation.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

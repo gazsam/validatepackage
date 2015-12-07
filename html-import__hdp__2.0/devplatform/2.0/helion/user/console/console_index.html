@@ -1,0 +1,345 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Management Console: User View</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic8844" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/console/console_index.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Management Console: User View</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">The Management Console is a web interface for Application Lifecycle Service (ALS). Using the same API as the Helion CLI client, it provides access to a subset of features for deploying, scaling, and configuring applications as well as monitoring quota usage, and viewing logs.</p>
+
+<p class="p">The interface differs for Admin and non-Admin users. The features described below are available and visible to end users. For information on the Management Console view for Admins, see the <a class="xref" href="../../admin/console/console_index.html">Console Admin Guide</a>.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic8844__welcome">Welcome Page</a>
+</li>
+
+<li class="li">
+        <a class="xref" href="#topic8844__app-list">Applications List</a>
+      </li>
+
+      <li class="li">
+        <a class="xref" href="#topic8844__application-view">Application View</a>
+      </li>
+
+<li class="li">
+        <a class="xref" href="#topic8844__organization-list">Organizations List</a>
+        <ul class="ul">
+          <li class="li">
+            <a class="xref" href="#topic8844__organization-view">Organization View</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic8844__space-view">Spaces View</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic8844__service-instance-view">Service Instance
+              View</a>
+          </li>
+
+        </ul>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic8844__sample-apps">Sample Applications</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic8844__support">Support</a>
+</li>
+
+</ul>
+
+<div class="section" id="topic8844__welcome"><h2 class="title sectiontitle">Welcome Page</h2> 
+<p class="p">The top-level page of the Management Console displays quick links to the most commonly used resources:</p>
+
+<ul class="ul">
+<li class="li">
+<strong class="ph b">Read the Documentation</strong>: By default, this links to the documentation at <a class="xref" href="http://docs.hpcloud.com" target="_blank">docs.hpcloud.com</a>
+</li>
+
+<li class="li">
+          <strong class="ph b">Contact Support</strong>: Link to the <a class="xref" href="#topic8844__support">Support</a> page.</li>
+
+<li class="li">
+  <strong class="ph b">Download the Client</strong>: Link to the locally hosted <a class="xref" href="../../CLI/ALS_Client_Downloads.html">CLI client</a> download.</li>
+
+<li class="li">
+          <strong class="ph b">Deploy Sample Applications</strong>: Link to the <a class="xref" href="#topic8844__sample-apps">Sample Applications</a>.</li>
+
+<li class="li">
+          <strong class="ph b">Organizations Membership</strong>: Link to the end user view of the <a class="xref" href="#topic8844__welcome">Organizations</a> page.</li>
+
+<li class="li">
+<strong class="ph b">Account Details</strong>: Shows the account details of the current user. Also accessible from the drop down list at the top left.</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic8844__app-list"><h2 class="title sectiontitle">Applications List</h2> 
+<p class="p">The Applications list is accessible from the top menu. It shows all applications deployed under the current user's Organizations.</p>
+
+<p class="p">The list shows:</p>
+
+<ul class="ul">
+<li class="li">the application name</li>
+
+<li class="li">the Organization it belongs to</li>
+
+<li class="li">the Space it was deployed to</li>
+
+<li class="li">the Description field</li>
+
+<li class="li">its current state (STARTED or STOPPED)</li>
+
+<li class="li">its staging state (STAGED or FAILED)</li>
+
+<li class="li">Application Access (whether Application SSO is enabled)</li>
+
+</ul>
+
+<p class="p">The list can be sorted by name or state, and filtered by:</p>
+
+<ul class="ul">
+<li class="li">State</li>
+
+<li class="li">Staging State</li>
+
+<li class="li">Application Access</li>
+
+<li class="li">Restart Required</li>
+
+</ul>
+
+<p class="p">The list includes applications deployed to all Spaces in the current user's Organizations, even those for which the user may not have access. Applications in such Spaces are visible, but no changes can be made to them.</p>
+
+<p class="p">Clicking on the application name opens its Application View.</p>
+
+</div>
+
+<div class="section" id="topic8844__application-view"><h2 class="title sectiontitle">Application View</h2> 
+<p class="p">The top navigation of the Application view gives the name and status of the application followed by its organization / space.</p>
+
+<p class="p">This view also includes the following <strong class="ph b">Tabs</strong>:</p>
+
+<ul class="ul">
+<li class="li">
+<strong class="ph b">Summary</strong>: General information about the app including its description (optional), which buildpack it uses, when it was created, and when it was last modified. The application state will appear in parentheses beside the application name, and will be one of the following:
+
+<ul class="ul">
+<li class="li">
+<strong class="ph b">Staging</strong>: currently staging the application droplet.</li>
+
+<li class="li">
+<strong class="ph b">Staging Failed. Check Logs</strong>: staging of application droplet has failed</li>
+
+<li class="li">
+<strong class="ph b">Online</strong>: successfully staged as a droplet and application instances are running</li>
+
+<li class="li">
+<strong class="ph b">Flapping</strong>: successfully staged as a droplet and application instances are running, but 1 or more instances are flapping (see below)</li>
+
+<li class="li">
+<strong class="ph b">Down</strong>: successfully staged as a droplet and application instances have been created, but all instances are down. This state will typically not be seen as any one instance will only be down for a short period of time before starting or being removed.</li>
+
+<li class="li">
+<strong class="ph b">Offline</strong>: successfully staged the application droplet, but no application instances have been created and started.</li>
+
+</ul>
+
+</li>
+
+<li class="li">
+<strong class="ph b">Timeline</strong>: A real-time stream of events and discussions relevant to the Application. Events in the application's history appear here as notifications which can be commented on by members of the Space.</li>
+
+<li class="li">
+<strong class="ph b">App Versions</strong>: A rolling list of code and setting changes to an application. Clicking Rollback to this version for any listed version reverts the application to the selected version's state and creates a new version. </li>
+
+<li class="li">
+<strong class="ph b">Environment Variables</strong>: Environment variables that have been explicitly set in the application container (via application config, client commands, or this interface). Default variables, those set by the application framework, or those added by the system for data services are excluded from this view.</li>
+
+<li class="li">
+<strong class="ph b">Settings</strong>: The number of application instances, disk space, and memory allotment used by the application. This usage counts against the organization's quota.</li>
+
+<li class="li">
+<strong class="ph b">Instances</strong>: List of application instances showing the status and host DEA IP address of each.</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic8844__organization-list"><h2 class="title sectiontitle">Organizations List</h2> 
+  <p class="p">The Organizations list is accessible from the top menu. It shows all <a class="xref" href="../deploy/orgs-spaces.html#topic2729__organizations">Organizations</a> which the current user is a member of. The list is searchable by name.</p>
+
+<p class="p">Clicking on any Organization name opens the Organization view.</p>
+
+</div>
+
+<div class="section" id="topic8844__organization-view"><h2 class="title sectiontitle">Organization View</h2> 
+  <p class="p">The Organizations page shows a list of all <a class="xref" href="../deploy/orgs-spaces.html#topic2729__organizations">Organizations</a> that the current user is a member of. Depending on how ALS has been set up, it is possible be a member of only a single Organization.</p>
+
+<p class="p">Clicking on the Organization's name opens a view of that organization, including the following tabs:</p>
+
+<ul class="ul">
+<li class="li">
+<strong class="ph b">Spaces</strong>: A list of Spaces that belong to the Organization, showing the current number of applications and services deployed to that space. Clicking on a Space in the list opens a <a class="xref" href="#topic8844__space-view">view of that Space</a>.</li>
+
+<li class="li">
+          <strong class="ph b">Users</strong>: A list of Users who are members of the Organization, showing the Email
+          address and Organization <a class="xref" href="../deploy/orgs-spaces.html#topic2729__org-roles">Roles</a> of each. <ul class="ul">
+            <li class="li">
+              <strong class="ph b">Users</strong>: can view organization quotas, domains, spaces and users.</li>
+
+            <li class="li">
+              <strong class="ph b">Manager</strong>: can add domains and spaces to the organization, but not users.</li>
+
+          </ul>
+</li>
+
+<li class="li">
+<strong class="ph b">Space Quota Plans</strong>: A filterable list of space quota plans.</li>
+
+<li class="li">
+          <strong class="ph b">Quota Usage</strong>: <ul class="ul">
+            <li class="li">
+              <strong class="ph b">Memory</strong>: The amount of RAM (in GB) available to the Organization, and how much
+              of it is currently used by applications.</li>
+
+            <li class="li">
+              <strong class="ph b">Services</strong>: The number of deployed / allotted services.</li>
+
+          </ul>
+</li>
+
+<li class="li">
+  <strong class="ph b">Domains</strong>: Domains belonging to the Organization that can be used by applications deployed to <a class="xref" href="../deploy/orgs-spaces.html#topic2729__spaces">Spaces</a> in the Organization. Typically, these will be a subdomain of the Application Lifecycle Service system itself. For example, an Organization called <em class="ph i">acme</em> on a PaaS with the address <em class="ph i">api.example.org</em> might have the domain <em class="ph i">*.acme.example.org</em>.</li>
+
+</ul>
+
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span>  There is currently no interface in the Management Console for Managers, Auditors, or
+          Billing Managers to view or adjust billing/payment info and spending limits.</div>
+
+      </div>
+
+</div>
+
+<div class="section" id="topic8844__space-view"><h2 class="title sectiontitle">Space View</h2> 
+<ul class="ul">
+<li class="li">
+<strong class="ph b">Apps</strong>: A filterable list of applications in the Space. Clicking an app name opens an administrative view of that application.</li>
+
+<li class="li">
+<strong class="ph b">Timeline</strong>: A real-time stream of events and discussions relevant to the Space. The creation, update, and deletion of apps and services appear here as notifications which can be commented on by members of the service-instance-viewSpace. Discussions can be started by any member, tagged, and assigned to an application (which makes the item visible in the Application view).</li>
+
+<li class="li">
+          <strong class="ph b">Quota Usage</strong>: <ul class="ul">
+            <li class="li">
+              <strong class="ph b">Memory</strong>: The amount of RAM (in GB) available to the Organization, and how much
+              of it is currently used by applications.</li>
+
+            <li class="li">
+              <strong class="ph b">Services</strong>: The number of deployed / allotted services.</li>
+
+            <li class="li">
+              <strong class="ph b">Routes</strong>: The number of created / allotted routes.</li>
+
+          </ul>
+</li>
+
+<li class="li">
+          <strong class="ph b">Services</strong>: A list of services bound to applications in the Space. Clicking a service
+          name in either section opens an administrative view of that service. <ul class="ul">
+            <li class="li">
+              <strong class="ph b">Managed</strong>: A list of managed services bound to applications in the Space.</li>
+
+            <li class="li">
+              <strong class="ph b">User Provided</strong>: A list of user provided services bound to applications in the
+              Space. New user provided services can be created by clicking the <strong class="ph b">Create User
+                Provided Service</strong> button.</li>
+
+          </ul>
+</li>
+
+<li class="li">
+<strong class="ph b">Managers</strong>: Managers can invite/manage users, enable features for a given space.</li>
+
+<li class="li">
+<strong class="ph b">Developers</strong>: Developers can create, delete, manage applications and services, full access to all usage reports and logs.</li>
+
+<li class="li">
+<strong class="ph b">Auditors</strong>: Auditors have view-only access to all space information, settings, reports, and logs.</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic8844__service-instance-view"><h2 class="title sectiontitle">Service Instance View</h2> 
+<p class="p">Clicking a service instance's name anywhere in the interface brings up a view of that service instance showing the summary.</p>
+
+<p class="p">The summary of a service displays:</p>
+
+<ul class="ul">
+<li class="li">a description of the service instance type</li>
+
+<li class="li">when it was created</li>
+
+<li class="li">when it was last modified</li>
+
+<li class="li">which host it is running on</li>
+
+<li class="li">which port it is exposed on</li>
+
+<li class="li">the service instance name (not the canonical database name)</li>
+
+<li class="li">its current state</li>
+
+</ul>
+
+  <p class="p">For more information on a service instance, such as its credentials, use the <a class="xref" href="../reference/client-ref-services.html#topic3675__command-service">helion service</a> command.</p>
+
+<p class="p">
+  <strong class="ph b">Credentials</strong>
+</p>
+
+<p class="p">Lists the credentials for the service instance. If the service is a User Provided Service, new
+        credentials can be added and existing credentials may be edited.</p>
+
+<p class="p">
+  <strong class="ph b">App Bindings</strong>
+</p>
+
+  <p class="p">A list of applications that have bindings to this service instance. Clicking an app name opens an <a class="xref" href="../../admin/console/console_index.html#topic13823__applications">administrative view of that application</a>.</p>
+
+</div>
+
+<div class="section" id="topic8844__sample-apps"><h2 class="title sectiontitle">Sample Applications</h2> 
+<p class="p">The Sample Apps are collection of ready-to-run applications which can be deployed to Application Lifecycle Service by fetching the source code from the repository.</p>
+
+<p class="p">Click the <strong class="ph b">Deploy App</strong> button to start it on Application Lifecycle Service. You will be
+prompted to choose a Space and Domain for the app if there are multiple
+options available.</p>
+
+</div>
+
+<div class="section" id="topic8844__support"><h2 class="title sectiontitle">Support</h2> 
+<p class="p">A list of resources for getting support on using the Management Console.</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

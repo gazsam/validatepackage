@@ -1,0 +1,425 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Command Reference: Service Plans</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic4355" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/client-ref-serviceplans.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Command Reference: Service Plans</h1>
+
+
+
+
+
+<div class="body">
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic4355__command-hide-service-plan">helion hide-service-plan</a>: Hide the specified service-plan from the named organization.</li>
+
+<li class="li">
+<a class="xref" href="#topic4355__command-service-plan">helion service-plan</a>: Show the details of the specified service plan</li>
+
+<li class="li">
+<a class="xref" href="#topic4355__command-service-plans">helion service-plans</a>: List all available plans of the supported services</li>
+
+<li class="li">
+<a class="xref" href="#topic4355__command-show-service-plan">helion show-service-plan</a>: Make the specified service plan visible to the named organization.</li>
+
+<li class="li">
+<a class="xref" href="#topic4355__command-update-service-plan">helion update-service-plan</a>: Update the target's knowledge of the named service plan.</li>
+
+</ul>
+
+<div class="section" id="topic4355__syntax"><h2 class="title sectiontitle">Syntax</h2> 
+<pre class="pre codeblock">helion [options] command [arguments] [command-options]</pre>
+
+<p class="p">For more information, use the <strong class="ph b">helion help</strong> or <strong class="ph b">helion help [<em class="ph i">command</em>]</strong> commands.</p>
+
+
+</div>
+
+<div class="section" id="topic4355__command-hide-service-plan"><h2 class="title sectiontitle">helion hide-service-plan  &lt;<em class="ph i">name</em>&gt; &lt;<em class="ph i">organization</em>&gt;</h2> 
+<p class="p">Hide the specified service-plan from the named organization.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--provider</td>
+
+    <td class="entry" valign="top">The service provider. Use this to disambiguate between multiple providers of the same vendor/type.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--vendor</td>
+
+    <td class="entry" valign="top">Name of the service type the specified plan belongs to.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--version</td>
+
+    <td class="entry" valign="top">The service version. Use this to disambiguate between multiple versions of the same vendor/type.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic4355__command-service-plan"><h2 class="title sectiontitle">helion service-plan &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Show the details of the specified service plan.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--json</td>
+
+    <td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--provider</td>
+
+    <td class="entry" valign="top">The service provider. Use this to disambiguate between multiple providers of the same vendor/type.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--vendor</td>
+
+    <td class="entry" valign="top">Name of the service type the specified plan belongs to.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--version</td>
+
+    <td class="entry" valign="top">The service version. Use this to disambiguate between multiple versions of the same vendor/type.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic4355__command-service-plans"><h2 class="title sectiontitle">helion service-plans</h2> 
+<p class="p">List all available plans of the supported services.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--json</td>
+
+    <td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic4355__command-show-service-plan"><h2 class="title sectiontitle">helion show-service-plan &lt;<em class="ph i">name</em>&gt; &lt;<em class="ph i">organization</em>&gt;</h2> 
+<p class="p">Make the specified service plan visible to the named organization.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--provider</td>
+
+    <td class="entry" valign="top">The service provider. Use this to disambiguate between multiple providers of the same vendor/type.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--vendor</td>
+
+    <td class="entry" valign="top">Name of the service type the specified plan belongs to.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--version</td>
+
+    <td class="entry" valign="top">The service version. Use this to disambiguate between multiple versions of the same vendor/type.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic4355__command-update-service-plan"><h2 class="title sectiontitle">helion update-service-plan &lt;<em class="ph i">name</em>&gt; &lt;<em class="ph i">NewName</em>&gt;</h2> 
+<p class="p">Update the target's knowledge of the named service plan.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--description</td>
+
+    <td class="entry" valign="top">Change the plan's description.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--free</td>
+
+    <td class="entry" valign="top">Mark the plan as free.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--no-free</td>
+
+    <td class="entry" valign="top">Complementary alias of --free.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--no-public</td>
+
+    <td class="entry" valign="top">Complementary alias of --public.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--public</td>
+
+    <td class="entry" valign="top">Mark the plan as globally public.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--provider</td>
+
+    <td class="entry" valign="top">The service provider. Use this to disambiguate between multiple providers of the same vendor/type.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--vendor</td>
+
+    <td class="entry" valign="top">Name of the service type the specified plan belongs to.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--version</td>
+
+    <td class="entry" valign="top">The service version. Use this to disambiguate between multiple versions of the same vendor/type.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,246 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Server Configuration</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="server_index" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/admin/server/server_index.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Server Configuration</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">This page covers the initial setup and configuration of the Application Lifecycle Service
+Server in a virtual machine under control of a hypervisor running on a
+virtualization host.</p>
+
+<div class="section" id="server_index__accessing-server-via-the-command-line"><h2 class="title sectiontitle">Accessing Server via the Command Line</h2> 
+<p class="p">The Application Lifecycle Service server initially has one user account. The default login information is:</p>
+
+<ul class="ul">
+<li class="li">Username: stackato</li>
+
+<li class="li">Password: stackato</li>
+
+</ul>
+
+<p class="p">Unless you've already created a primary admin user in the Management Console. If so, the password of the default Helion account is changed to match that of the first user created in the Management Console, and you'll need to use that password instead.</p>
+
+<div class="p">
+        <div class="note warning"><span class="warningtitle">Warning:</span> If the Application Lifecycle Service server is running on a publicly-routable network, the password should be changed as soon as possible.</div>
+
+      </div>
+
+<div class="p">
+        <div class="note tip"><span class="tiptitle">Tip:</span> If the cluster was created using the Horizon Management Console Panel or Application
+          Lifecycle Service Installer CLI, you must log in with your SSH key you selected during
+          cluster creation.</div>
+
+      </div>
+
+<p class="p">Command access to the Application Lifecycle Service server is available in several ways:</p>
+
+<ul class="ul">
+<li class="li">
+  <p class="p">Over the hypervisor's <a class="xref" href="../../user/reference/glossary.html#topic6187__term-tty-console">tty console</a>.</p>
+
+</li>
+
+<li class="li">
+  <p class="p">The <a class="xref" href="../../user/reference/client-ref.html">Application Lifecycle Service Client</a> command, which in addition to specialized functions can provide remote shell access to the server:</p>
+
+
+<pre class="pre codeblock">helion target helion@helion-xxxx.local
+helion ssh api</pre>
+
+</li>
+
+<li class="li">
+<p class="p">The familiar <samp class="ph codeph">ssh</samp> command:</p>
+
+
+<pre class="pre codeblock">ssh helion@helion-xxxx.local</pre>
+
+</li>
+
+</ul>
+
+<p class="p">On the server, the control command for Application Lifecycle Service is called
+<samp class="ph codeph">kato</samp>. It is used for configuration and node
+management procedures such as start, stop, role specialization, and
+status checks. For a complete list of options, see the <a class="xref" href="../reference/kato-ref.html">Kato Command Reference</a>.</p>
+
+</div>
+
+<div class="section" id="server_index__common-operations"><h2 class="title sectiontitle">Common Operations</h2> 
+<p class="p">Instructions for common operations on the Application Lifecycle Service VM can be found here:</p>
+
+<ul class="ul">
+<li class="li">
+          <a class="xref" href="operations.html">Common Server Operations</a>
+          <ul class="ul">
+            <li class="li">
+              <a class="xref" href="operations.html#server_operations__server-status">Server Status</a>
+              <ul class="ul">
+                <li class="li">
+                  <a class="xref" href="operations.html#server_operations__starting-and-stopping-roles">Starting and Stopping Roles</a>
+                </li>
+
+                <li class="li">
+                  <a class="xref" href="operations.html#server_operations__system-shutdown">System Shutdown</a>
+                </li>
+
+              </ul>
+</li>
+
+            <li class="li">
+              <a class="xref" href="operations.html#server_operations__setting-the-time-zone">Setting the Time Zone</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="operations.html#server_operations__resetting-the-vm">Resetting the VM</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="operations.html#server_operations__monitoring-the-application-lifecycle-service-server">Monitoring The Application Lifecycle Service Server</a>
+              <ul class="ul">
+                <li class="li">
+                  <a class="xref" href="operations.html#server_operations__management-console">Management Console</a>
+                </li>
+
+       
+                <li class="li">
+                  <a class="xref" href="operations.html#server_operations__creating-an-admin-user">Creating an Admin User</a>
+                </li>
+
+                <li class="li">
+                  <a class="xref" href="operations.html#server_operations__system-monitoring-with-nagios">System Monitoring with Nagios</a>
+                </li>
+
+              </ul>
+</li>
+
+            <li class="li">
+              <a class="xref" href="operations.html#server_operations__server-backup-import-and-export">Server Backup, Import, and Export</a>
+            </li>
+
+          </ul>
+</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="server_index__detailed-configuration"><h2 class="title sectiontitle">Detailed Configuration</h2> 
+<p class="p">To continue configuring the Application Lifecycle Service server, see:</p>
+
+<ul class="ul">
+        <li class="li">
+          <a class="xref" href="configuration.html#topic31232__changing-the-password">Changing the Password</a>
+        </li>
+
+        <li class="li">
+          <a class="xref" href="configuration.html#topic31232__network-setup">Network Setup</a>
+          <ul class="ul" id="server_index__ul_zpp_vql_ns">
+            <li class="li">
+              <a class="xref" href="configuration.html#topic31232__server-config-hostname">Changing the Hostname</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="configuration.html#topic31232__changing-ip-addresses">Changing IP Addresses</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="configuration.html#topic31232__setting-a-static-ip">Setting a Static IP</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="configuration.html#topic31232__server-config-etc-hosts">Modifying /etc/hosts</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="configuration.html#topic31232__server-config-dns">DNS</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="configuration.html#topic31232__dynamic-dns">Dynamic DNS</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="configuration.html#topic31232__alternate-dns-techniques">Alternate DNS Techniques</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="configuration.html#topic31232__adding-dns-nameservers">Adding DNS Nameservers</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="configuration.html#topic31232__tcp-udp-port-configuration">TCP/UDP Port Configuration</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="https_and_ssl.html#topic_gwr_qgd_ws__http-proxy">HTTP Proxy</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="https_and_ssl.html#topic_gwr_qgd_ws__staging-cache-app-http-proxy">Staging Cache &amp; App HTTP Proxy</a>
+            </li>
+
+            <li class="li"><a class="xref" href="configuration.html#topic31232__vm-filesystem-setup">VM Filesystem Setup</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="configuration.html#topic31232__helion-data-services-vs-high-availability-databases">Application Lifecycle Service Data Services vs. High Availability
+                Databases</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="https_and_ssl.html">HTTPS &amp; SSL Configuration</a>
+              <ul class="ul" id="server_index__ul_hrp_vql_ns">
+                <li class="li">
+                  <a class="xref" href="https_and_ssl.html#topic_gwr_qgd_ws__using-your-own-ssl-certificate">Using your own SSL certificate</a>
+                </li>
+
+                <li class="li">
+                  <a class="xref" href="https_and_ssl.html#topic_gwr_qgd_ws__adding-custom-ssl-certs-sni">Adding Custom SSL Certs</a>
+                </li>
+
+                <li class="li">
+                  <a class="xref" href="https_and_ssl.html#topic_gwr_qgd_ws__ca-certificate-chaining">CA Certificate Chaining</a>
+                </li>
+
+                <li class="li">
+                  <a class="xref" href="https_and_ssl.html#topic_gwr_qgd_ws__generating-a-self-signed-ssl-certificate">Generating a self-signed SSL certificate</a>
+                </li>
+
+              </ul>
+
+              <a class="xref" href="configuration.html#topic31232__quota-definitions">Quota Definitions</a>
+              <ul class="ul" id="server_index__ul_nsp_vql_ns">
+                <li class="li">
+                  <a class="xref" href="configuration.html#topic31232__sudo">sudo</a>
+                </li>
+
+                <li class="li">
+                  <a class="xref" href="configuration.html#topic31232__allowed-repositories">Allowed Repositories</a>
+                </li>
+
+              </ul>
+</li>
+
+          </ul>
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

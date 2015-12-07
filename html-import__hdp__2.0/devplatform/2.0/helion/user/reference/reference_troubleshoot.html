@@ -1,0 +1,113 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Troubleshooting</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic2774" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/reference_troubleshoot.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Troubleshooting</h1>
+
+
+
+
+
+<div class="body">
+    <div class="section"><h2 class="title sectiontitle">Administrative Error Tracker</h2>If an application deployment error is caused
+      by something outside of your application code or the staging process, you may see error
+      messages such as:
+      <pre class="pre codeblock">2015-04-10T16:22:56.000Z: Error 10001: An unknown error occurred. Please contact your administrator, 
+2015-04-10T16:22:56.000Z: specifying error tracker ID 1428682976 along with this message.</pre>
+Contact
+      your administrator with the tracker ID number. The admin will be able to use this to track
+      down related error messages in various system logs, which may help diagnose the issue. </div>
+
+<div class="section" id="topic2774__ssh-to-failed-containers"><h2 class="title sectiontitle">SSH to Failed Containers</h2> 
+  <p class="p">For troubleshooting and diagnostic purposes, it is possible to use helion ssh to access a <a class="xref" href="glossary.html#topic6187__term-container">container</a> that has recently failed or did not start correctly. Containers are kept for one hour before being reclaimed. See the <a class="xref" href="client-ref.html">Command Reference</a> for details on the <samp class="ph codeph">helion ssh</samp> command.</p>
+
+</div>
+
+<div class="section" id="topic2774__checking-the-logs"><h2 class="title sectiontitle">Checking the Logs</h2> 
+<p class="p">Most Application Lifecycle Service users will not have administrative access to the server. If you need to troubleshoot an application deployment or runtime failure, you can use the helion client to view the <samp class="ph codeph">stderr</samp> and <samp class="ph codeph">stdout</samp> log files. For example, if an application called <samp class="ph codeph">myapp</samp> did not deploy correctly, run the command:</p>
+
+<pre class="pre codeblock">helion logs myapp --all</pre>
+
+<p class="p">This will generally show all errors encountered during deployment.</p>
+
+<p class="p">If you need to view another log file (e.g. one specific to your
+application), use the files command to explore the remote filesystem and
+return the contents of the files:</p>
+
+<pre class="pre codeblock">helion files myapp logs
+stderr.log                                 44B
+stdout.log                                101B
+myapp-err.log                             189B
+
+helion files myapp logs/myapp-err.log</pre>
+
+<p class="p">If that command should fail, try using the run command in combination
+with ls or cat:</p>
+
+<pre class="pre codeblock">helion run myapp cat ../logs/myapp-err.log</pre>
+
+</div>
+
+<div class="section" id="topic2774__specific-cases"><h2 class="title sectiontitle">Specific Cases</h2> 
+<p class="p">
+  <strong class="ph b">When pushing an app, the Application Lifecycle Service Client reports OK but app isn't running.</strong>
+</p>
+
+<p class="p">The final output from pushing an app should look like:</p>
+
+<pre class="pre codeblock">Staging Application: OK
+Starting Application: OK</pre>
+
+<p class="p">If the app is being pushed to multiple instances, the client waits until at least one instance is running, and exits at that point (it does not wait until all instances are active). If afterwards you run <samp class="ph codeph">helion apps</samp> and find the Health status at 0%, it is because the app crashed after starting successfully, not because the Application Lifecycle Service client reported incorrectly.</p>
+
+<p class="p">
+  <strong class="ph b">DNS queries returning "connection refused"</strong>
+</p>
+
+<p class="p">This error is reported when the Application Lifecycle Service server does not have an IP Address. To investigate and resolve, try the following:</p>
+
+<ul class="ul">
+<li class="li">
+  <p class="p">Verify the ARP tables on the hypervisor host, and on the Application Lifecycle Service server through its <a class="xref" href="glossary.html#topic6187__term-tty-console">tty console</a>:</p>
+
+
+<pre class="pre codeblock">arp -n</pre>
+
+</li>
+
+<li class="li">
+<p class="p">Check that the DHCP client is running:</p>
+
+
+<pre class="pre codeblock">pgrep dhclient
+grep dhclient /var/log/syslog</pre>
+
+</li>
+
+<li class="li">
+<p class="p">Connect to the DHCP server and verify that it is receiving client requests from the Application Lifecycle Service server.</p>
+
+</li>
+
+<li class="li">
+<p class="p">If your network is statically configured, assign an IP address on the Application Lifecycle Service server by editing the <a class="xref" href="http://manpages.ubuntu.com/manpages/utopic/en/man5/interfaces.5.html" target="_blank">interfaces</a> file:</p>
+
+
+<pre class="pre codeblock">/etc/network/interfaces</pre>
+
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

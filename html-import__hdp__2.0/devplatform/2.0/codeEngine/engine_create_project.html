@@ -1,0 +1,126 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Create a New Project</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="createProject" /> <meta name="html-import-file-path" content="devplatform/2.0/codeEngine/engine_create_project.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Create a New Project</h1>
+
+
+    
+
+    <div class="body">
+        <p class="p">The Project is a workspace where the application is built. </p>
+
+    
+        <div class="p" id="createProject__project_create">
+            
+        <ol class="ol">
+           
+                <li class="li">Click the <strong class="ph b">Projects</strong> tab and then click <strong class="ph b">New Project</strong>.<br/><img class="image" id="createProject__image_dzh_2vm_zt" src="../../../media/engine_project_create.png"/><br/></li>
+
+            
+            
+                <li class="li">Specify the source for this project:  <br/><img class="image" id="createProject__image_ux2_sqy_kt" src="../../../media/engine_project_create_source.png"/><br/><ol class="ol" type="a">
+                        <li class="li">Enter a <strong class="ph b">Project Name</strong>.</li>
+
+                        <li class="li">Select a source:<ul class="ul" id="createProject__ul_y4x_hn5_st">
+                                <li class="li"><strong class="ph b">GitHub</strong>: Click to connect to a repository hosted on GitHub
+                                    that you own or have admin rights to. Select the repository to
+                                    associate with this project and then click <strong class="ph b">Select</strong>.</li>
+
+                                <li class="li"><strong class="ph b">Git</strong>: Connect to a repository hosted locally. Enter the
+                                        <strong class="ph b">Name</strong> of the repo and the <strong class="ph b">Clone URL</strong> and click
+                                        <strong class="ph b">Select</strong>.</li>
+
+                            </ul>
+</li>
+
+                        <li class="li">Click <strong class="ph b">Next</strong>.</li>
+
+                    </ol>
+</li>
+
+                <li class="li">Define the Pipeline: <br/><img class="image" id="createProject__image_nht_xry_kt" src="../../../media/engine_project_create_pipeline.png"/><br/><ol class="ol" type="a" id="createProject__ul_i32_rlc_3t">
+                        <li class="li"><strong class="ph b">Branch</strong>: Select the target environment to deploy to. If the target
+                            environment has not yet been created, click <a class="xref" href="engine_environment_create.html">Create New
+                            Environment</a>.</li>
+
+                        <li class="li"><strong class="ph b">Project Type</strong>: Select the appropriate development language. </li>
+
+                            
+            <li class="li">Click <strong class="ph b">Next</strong>.</li>
+ </ol>
+</li>
+
+            <li class="li">Define the Environment<br/><img class="image" id="createProject__image_xq3_zzm_zt" src="../../../media/engine_project_create_environment.png"/><br/></li>
+
+                <li class="li">Team <br/><img class="image" id="createProject__image_rvp_nfn_zt" src="../../../media/engine_project_create_team.png"/><br/></li>
+
+                <li class="li">Notification.<br/><img class="image" id="createProject__image_onm_4xy_kt" src="../../../media/engine_project_create_notifications.png"/><br/><ol class="ol" type="a" id="createProject__ol_a4z_sym_zt">
+                        <li class="li" id="createProject__defineNotifications">Select the <strong class="ph b">Type</strong> of Notification and then
+                            provide the required credentials.<ul class="ul" id="createProject__ul_vpz_sym_zt">
+                                <li class="li"><strong class="ph b">HTTP Post </strong><ul class="ul" id="createProject__ul_wqz_sym_zt">
+                                        <li class="li">Notification Target Name: Enter the name of the person
+                                            to notify.</li>
+
+                                        <li class="li">HTTP Endpoint: Specify an endpoint where HelionCI events
+                                            should be sent. Very similar to defining a webhook.
+                                            Examples would be the URL of an internal website, a
+                                            communication tool, or an RSS feed. </li>
+
+                                        <li class="li">Token: Generate a token as required for the target
+                                            endpoint. The method will vary depending on the target. </li>
+
+                                        <li class="li">Click <strong class="ph b">Save</strong>.</li>
+
+                                    </ul>
+</li>
+
+                                <li class="li"><strong class="ph b">HipChat </strong><ul class="ul" id="createProject__ul_vrz_sym_zt">
+                                        <li class="li">Notification Target Name: Enter the name of the person
+                                            to notify.</li>
+
+                                        <li class="li">Hipchat Room Number: <a class="xref" href="engine_hipchat_data.html#topic_ak1_yjd_3t__roomnumber">How to Find</a></li>
+
+                                        <li class="li">Token: <a class="xref" href="engine_hipchat_data.html#topic_ak1_yjd_3t__token">How to Generate</a></li>
+
+                                        <li class="li">Click <strong class="ph b">Save</strong>.</li>
+
+                                    </ul>
+</li>
+
+                                <li class="li"><strong class="ph b">Flowdock</strong>
+                                    <ul class="ul" id="createProject__ul_rsz_sym_zt">
+                                        <li class="li">Notification Target Name: Enter the name of the person
+                                            to notify.</li>
+
+                                        <li class="li">API Endpoint: <a class="xref" href="https://api.flowdock.com" target="_blank">How to
+                                            Find</a></li>
+
+                                        <li class="li">Token: <a class="xref" href="https://www.flowdock.com/api/authentication#source-token" target="_blank">How to
+                                                Generate</a></li>
+
+                                        <li class="li">Click <strong class="ph b">Save</strong>.</li>
+
+                                    </ul>
+</li>
+
+                            </ul>
+</li>
+
+                        <li class="li">Click <strong class="ph b">Save</strong>.</li>
+
+                    </ol>
+</li>
+</ol>
+</div>
+
+        </div>
+
+
+</body>
+</html>

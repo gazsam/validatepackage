@@ -1,0 +1,22 @@
+DONE 
+The tarball is named html-import__PACKAGEKEY__PACKAGEVERSION.tgz for example: html-import__hdp__2.0.tgz
+There must be a file named html-import.xml at the root of the tarball.
+The html-import.xml document must be well-formed (parseable) XML
+The opening element is html-import.
+There must be a single metadata element (child of html-import element) with children package-key and package-version that match the tarball filename.
+
+TODO
+There must be a single topic element that is a direct child of the html-import element.
+Each topic element may contain 0 or more child topic elements.
+There should probably be a test that there exist at least N topic elements total (otherwise there was probably a problem in generating the file… let’s say N = 10 as a minimum.)
+Each topic element must have a unique, non-empty id attribute (that is, it must be unique within the html-import.xml file).
+Each topic element must have a source attribute that maps to a .html file that exists inside the tarball.
+Other than the root topic element, each topic element that is a branch element (it has topic children) must have a non-empty path attribute.
+It is permissible for leaf topic elements (topic elements that have no topic children) to have a path attribute.
+It is recommended that each topic element supply a non-empty navtitle attribute, but this is not required.
+All relative references (i.e. URLs that are not full qualified URLS starting with “http://“ etc) to files (.html, or other resource files, e.g. .png, .jpeg) must be to a path that does exist inside the tarball (that is, no references (../../up/out/of/the/tarball).
+Each HTML file must have the following <meta> tags in the <head> section of the .html file, and the value of these attributes must match the relevant value in the html-import.xml topic reference for that file:
+<meta name="html-import-package-key" content="hdp”/>
+<meta name="html-import-package-version" content="2.0”/>
+<meta name="html-import-topic-id" content="topic2457”/>
+<meta name="html-import-file-path" content="devplatform/2.0/devplatform.appdev.html”/>

@@ -1,0 +1,265 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: New Relic Monitoring</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic5392" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/newrelic.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: New Relic Monitoring</h1>
+
+
+
+
+
+<div class="body">
+        <div class="note note"><span class="notetitle">Note:</span> These instructions are for use with Application Lifecycle Service. For further
+            details, please see the <a class="xref" href="http://newrelic.com/docs/python/new-relic-for-python" target="_blank">New Relic site</a>.</div>
+
+<p class="p">New Relic can be used to track your application analytics running in
+Application Lifecycle Service as well as for server monitoring. The languages it can
+currently be used with are:</p>
+
+<ol class="ol">
+<li class="li">
+                <a class="xref" href="#topic5392__new-relic-for-ruby">Ruby</a>
+            </li>
+
+<li class="li">
+                <a class="xref" href="#topic5392__new-relic-for-python">Python</a>
+            </li>
+
+<li class="li">
+<a class="xref" href="#topic5392__new-relic-for-java">Java</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic5392__new-relic-for-php">PHP</a>
+</li>
+
+</ol>
+
+<p class="p">In order to use New Relic, you need a <a class="xref" href="http://newrelic.com/" target="_blank">New Relic
+account</a>.</p>
+
+<div class="p">
+            <div class="note warning"><span class="warningtitle">Warning:</span> For security reasons, avoid committing your license key to source control.</div>
+
+        </div>
+
+<div class="section" id="topic5392__new-relic-for-ruby"><h2 class="title sectiontitle">New Relic for Ruby</h2> 
+</div>
+
+<div class="section" id="topic5392__the-ruby-gem"><h2 class="title sectiontitle">The Ruby Gem</h2> 
+<p class="p">New Relic recommends installing the New Relic Ruby gem available on
+gemcutter as <samp class="ph codeph">newrelic_rpm</samp>:</p>
+
+<pre class="pre codeblock">sudo gem install newrelic_rpm</pre>
+
+<p class="p">Update the Ruby Gem at any time by running:</p>
+
+<pre class="pre codeblock"> sudo gem update newrelic_rpm</pre>
+
+<p class="p">Once the Ruby Gem is installed, add this line to your <em class="ph i">Gemfile</em>:</p>
+
+<pre class="pre codeblock"> gem 'newrelic_rpm'</pre>
+
+</div>
+
+<div class="section" id="topic5392__installing-the-ruby-agent-with-the-bundler-gem"><h2 class="title sectiontitle">Installing the Ruby agent with the Bundler Gem</h2> 
+<p class="p">Add the gem specification to your <em class="ph i">Gemfile</em>. It's best to place the New
+Relic gem as low in the list as possible, allowing the frameworks above
+it to be instrumented when the gem initializes:</p>
+
+<pre class="pre codeblock"> gem 'newrelic_rpm'</pre>
+
+<p class="p">In the same folder as the <em class="ph i">Gemfile</em>, run:</p>
+
+<pre class="pre codeblock"> bundle install</pre>
+
+</div>
+
+<div class="section" id="topic5392__configuration-file"><h2 class="title sectiontitle">Configuration File</h2> 
+<p class="p">After installing the agent, copy the newrelic.yml file into the config
+subdirectory of your application. You can download a fresh newrelic.yml
+that includes your license key from the Account Settings link when
+logged in to <a class="xref" href="http://rpm.newrelic.com/" target="_blank">rpm.newrelic.com</a>.</p>
+
+<p class="p">Whenever you update the agent, double-check that your Agent
+configuration file (<em class="ph i">config/newrelic.yml</em>) is up to date. To do this,
+you'll need to do a visual inspection of the default <em class="ph i">newrelic.yml</em> file
+that lives in the Agent plugin folder
+(<em class="ph i">vendor/plugins/newrelic_rpm/newrelic.yml</em>). Look for new
+configuration options that aren't in your <em class="ph i">config/newrelic.yml</em> file.</p>
+
+</div>
+
+<div class="section" id="topic5392__new-relic-for-python"><h2 class="title sectiontitle">New Relic for Python</h2> 
+<p class="p">The New Relic Python agent is pre-installed on Application Lifecycle Service.</p>
+
+<p class="p">The minimal steps required to integrate New Relic to your Python WSGI
+application:</p>
+
+<ol class="ol">
+<li class="li"> At the top of <em class="ph i">wsgi.py</em>,
+                    add:<pre class="pre codeblock">import newrelic.agent
+newrelic.agent.initialize()</pre>
+</li>
+
+<li class="li"> In <em class="ph i">wsgi.py</em>, wrap your <samp class="ph codeph">application</samp> WSGI entry point,
+                    eg:<pre class="pre codeblock">application = newrelic.agent.wsgi_application()(application)</pre>
+</li>
+
+<li class="li"> Add required newrelic environment variables to
+                    <em class="ph i">manifest.yml</em>:<pre class="pre codeblock">env:
+      NEW_RELIC_LOG: stderr
+      NEW_RELIC_LOG_LEVEL: DEBUG  # &lt;- this is optional
+      NEW_RELIC_APP_NAME: &lt;your application name&gt;
+      NEW_RELIC_LICENSE_KEY: &lt;your license key&gt;</pre>
+</li>
+
+</ol>
+
+<p class="p">An alternative to modifying your python is to wrap
+<samp class="ph codeph">$PROCESSES_WEB</samp> in <em class="ph i">manifest.yml</em> with
+<a class="xref" href="https://newrelic.com/docs/python/python-agent-admin-script" target="_blank">newrelic-admin</a>.</p>
+
+</div>
+
+<div class="section" id="topic5392__bottle-currency-example"><h2 class="title sectiontitle">Bottle Currency Example</h2> 
+<p class="p">
+<a class="xref" href="https://github.com/Stackato-Apps/bottle-currency/tree/newrelic" target="_blank">Bottle Currency with New Relic on
+GitHub</a>.</p>
+
+</div>
+
+<div class="section" id="topic5392__new-relic-for-java"><h2 class="title sectiontitle">New Relic for Java</h2> 
+<p class="p">The New Relic Java agent is <strong class="ph b">not</strong> pre-installed on the Application Lifecycle Service VM. To
+add monitoring, you must include the agent with your application.</p>
+
+<ul class="ul">
+<li class="li">
+<p class="p">Download a fresh <var class="keyword varname">newrelic_agent_&lt;version number&gt;.zip</var> file that includes
+your license key. Log in to <a class="xref" href="http://rpm.newrelic.com/" target="_blank">rpm.newrelic.com</a> and click the  <strong class="ph b">Account Settings</strong> link to find and download the file.</p>
+
+</li>
+
+<li class="li">
+<p class="p">Unpack the zip file in a convenient directory to edit the
+newrelic.yml file inside.</p>
+
+</li>
+
+<li class="li">
+<p class="p">Set the app_name in newrelic.yml to the actual name of your
+application as you would like it to appear in your New Relic
+dashboard.</p>
+
+</li>
+
+<li class="li">
+<p class="p">Save your changes and place the newrelic folder in the root
+directory of your application along with WEB-INF folder.</p>
+
+</li>
+
+<li class="li">
+<p class="p">Add the following section to a "hooks" section in *</p>
+
+</li>
+
+<li class="li">
+<p class="p">.yml*:</p>
+
+
+<pre class="pre codeblock">hooks:
+    pre-running:
+    - mv newrelic $HELION_APP_ROOT/tomcat/
+    - cd $HELION_APP_ROOT/tomcat/newrelic
+    - java -jar newrelic.jar install</pre>
+
+</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic5392__pet-catalog-example"><h2 class="title sectiontitle">Pet Catalog Example</h2> 
+<p class="p">
+<a class="xref" href="https://github.com/Stackato-Apps/pet-catalog/tree/newrelic" target="_blank">Pet Catalog (Java EE) with New Relic on
+GitHub</a>.</p>
+
+</div>
+
+<div class="section" id="topic5392__new-relic-for-php"><h2 class="title sectiontitle">New Relic for PHP</h2> 
+<p class="p">The New Relic agent PHP libraries are pre-installed on Application Lifecycle Service. To add
+monitoring, you need to add an agent configuration file to the root
+directory of the application and make some modifications to
+<em class="ph i">manifest.yml</em>.</p>
+
+<ul class="ul">
+<li class="li">
+<p class="p">Add a <samp class="ph codeph">newrelic.ini</samp> file in <a class="xref" href="../reference/environment.html#topic7631__home"><em class="ph i">HOME</em></a> directory containing the following:</p>
+
+
+<pre class="pre codeblock">extension=newrelic.so
+
+newrelic.daemon.logfile="/home/helion/logs/newrelic-daemon.log"
+newrelic.daemon.loglevel="warning"
+
+newrelic.logfile="/home/helion/logs/php_agent.log"
+newrelic.loglevel="warning"
+
+newrelic.license="XXXXXXX-your-new-relic-key-XXXXXXXXXXX"
+newrelic.appname="YourAppName"</pre>
+
+
+<p class="p">The <samp class="ph codeph">license_key</samp> can be found in your 'Account
+settings' page on New Relic.</p>
+
+
+<p class="p">Set <samp class="ph codeph">newrelic.appname</samp> to the actual name of
+your application as you would like it to appear in your New Relic
+dashboard.</p>
+
+
+<p class="p">The above settings are described in detail in the <a class="xref" href="http://newrelic.com/docs/php/php-agent-phpini-settings" target="_blank">New Relic PHP
+Agent Settings
+documentation</a>.</p>
+
+</li>
+
+<li class="li">
+<p class="p">Add the following section to a "hooks" section in <em class="ph i">manifest.yml</em>:</p>
+
+
+<pre class="pre codeblock">hooks:
+    pre-running:
+    - mv -f newrelic.ini $HELION_APP_ROOT/apache/php/newrelic.ini</pre>
+
+</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic5392__wordpress-example"><h2 class="title sectiontitle">WordPress Example</h2> 
+<p class="p">
+<a class="xref" href="https://github.com/Stackato-Apps/wordpress/tree/newrelic" target="_blank">WordPress with New Relic on
+GitHub</a>.</p>
+
+</div>
+
+<div class="section" id="topic5392__results"><h2 class="title sectiontitle">Results</h2> 
+<p class="p">Push the app to the Application Lifecycle Service server, and make a few requests to it in a
+browser. After a few minutes, check the New Relic dashboard to confirm
+the information is being logged correctly.</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

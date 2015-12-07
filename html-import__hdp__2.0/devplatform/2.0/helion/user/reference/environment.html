@@ -1,0 +1,341 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Environment Variables</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic7631" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/environment.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Environment Variables</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">Application Lifecycle Service exposes a number of predefined <a class="xref" href="http://manpages.ubuntu.com/manpages/utopic/en/man7/environ.7.html" target="_blank">environment variables</a> during runtime, including hook processing, cron jobs and ssh commands.</p>
+
+<p class="p">Some environment variables are also available during application <a class="xref" href="#topic7631__staging">staging</a>.</p>
+
+<p class="p">You can set your own environment variables:</p>
+
+<ul class="ul">
+<li class="li">in an <samp class="ph codeph">env</samp> block in <a class="xref" href="../deploy/manifestyml.html">
+          <em class="ph i">manifest.yml</em>
+        </a>,</li>
+
+<li class="li">via the application's Details page in the <a class="xref" href="../../admin/console/customize.html">Management
+Console</a>, or</li>
+
+  <li class="li">using the <a class="xref" href="client-ref-management.html#topic50918__command-env-add">env-add</a>
+command.</li>
+
+
+</ul>
+
+    <div class="note note"><span class="notetitle">Note:</span> To see a complete list of environment variables in an Application Lifecycle Service
+      application container, deploy the <a class="xref" href="https://github.com/Stackato-Apps/node-env" target="_blank">node-env</a> sample.</div>
+
+<div class="section" id="topic7631__database-url"><h2 class="title sectiontitle">DATABASE_URL</h2> 
+<p class="p">Contains an access URL for a database service. If more than one type of database is present, <samp class="ph codeph">DATABASE_URL</samp> will not be available. Instead, use the <a class="xref" href="../services/data-services.html#user_data_services__database-specific-urls">Database-Specific URL</a> variables.</p>
+
+<p class="p">Example:</p>
+
+<pre class="pre codeblock">mysql://u93Mm8XmGXQ9R:p8LwNeQXMrNzi@192.168.0.112:3306/d0a60c0be931f4982bbef153f993237bc</pre>
+
+</div>
+
+<div class="section" id="topic7631__memcache-url"><h2 class="title sectiontitle">MEMCACHED_URL</h2> 
+<p class="p">Location of and credentials for the bound <strong class="ph b">Memcached</strong> service, if there is (only) one.</p>
+
+</div>
+
+<div class="section" id="topic7631__mysql-url"><h2 class="title sectiontitle">MYSQL_URL</h2> 
+<p class="p">Location of and credentials for the bound <strong class="ph b">MySQL</strong> service, if there is (only) one.</p>
+
+</div>
+
+<div class="section" id="topic7631__postgresql-url"><h2 class="title sectiontitle">POSTGRESQL_URL</h2> 
+<p class="p">Location of and credentials for the bound <strong class="ph b">PostgreSQL</strong> service, if there is (only) one.</p>
+
+</div>
+
+<div class="section" id="topic7631__redis-url"><h2 class="title sectiontitle">REDIS_URL</h2> 
+<p class="p">Location of and credentials for the bound <strong class="ph b">Redis</strong> service, if there is (only) one.</p>
+
+</div>
+
+<div class="section" id="topic7631__rabbitmq-url"><h2 class="title sectiontitle">RABBITMQ_URL</h2> 
+<p class="p">Location of and credentials for the bound <strong class="ph b">RabbitMQ</strong> service, if there is (only) one.</p>
+
+</div>
+
+<div class="section" id="topic7631__home"><h2 class="title sectiontitle">HOME</h2> 
+<p class="p">Identifies the working directory assigned to a particular user on login. In an Application Lifecycle Service application container, this is generally set to <em class="ph i">/home/helion/app/</em> by default.</p>
+
+</div>
+
+<div class="section" id="topic7631__http-proxy"><h2 class="title sectiontitle">HTTP_PROXY</h2> 
+<p class="p">A variable recognized by many web applications to direct them to a proxy HTTP server.</p>
+
+</div>
+
+<div class="section" id="topic7631__memory-limit"><h2 class="title sectiontitle">MEMORY_LIMIT</h2> 
+<p class="p">The amount of memory allocated to the application container.</p>
+
+</div>
+
+<div class="section" id="topic7631__path"><h2 class="title sectiontitle">PATH</h2> 
+<p class="p">A list of directories, separated by ":", which are to be searched for the names of executable files to be interpreted as commands.</p>
+
+</div>
+
+<div class="section" id="topic7631__pip-opts"><h2 class="title sectiontitle">PIP_OPTS</h2> 
+  <p class="p">Custom/alternate <a class="xref" href="glossary.html#topic6187__term-pip">PIP</a> repo location.</p>
+
+<p class="p">Example:</p>
+
+<pre class="pre codeblock">env:
+      PIP_OPTS: "--extra-index-url=http://company.com/inhouse-pypi-mirror"</pre>
+
+</div>
+
+<div class="section" id="topic7631__port"><h2 class="title sectiontitle">PORT</h2> 
+<p class="p">Application Lifecycle Service alternative for VCAP_APP_PORT.</p>
+
+</div>
+
+<div class="section" id="topic7631__processes-web"><h2 class="title sectiontitle">PROCESSES_WEB</h2> 
+<p class="p">This variable contains the default start command that would be used when <a class="xref" href="../deploy/manifestyml.html">
+<em class="ph i">manifest.yml</em>
+</a> doesn't override it. It is provided so that users can specify a wrapper around the default command.
+For example:</p>
+
+<pre class="pre codeblock">processes:
+   web: newrelic\_wrapper \$PROCESSES\_WEB</pre>
+
+<p class="p">Note that <samp class="ph codeph">PROCESSES_WEB</samp> may be undefined when Application Lifecycle Service can't determine the default command. This may occur because the app uses a non-standard main application file.</p>
+
+</div>
+
+<div class="section" id="topic7631__pypm-opts"><h2 class="title sectiontitle">PYPM_OPTS</h2> 
+  <p class="p">Custom/alternate <a class="xref" href="glossary.html#topic6187__term-pypm">PyPM</a> repo location. Repo mirroring is an undocumented feature. Example:</p>
+
+  <p class="p">Custom/alternate <a class="xref" href="glossary.html#topic6187__term-pypm">PyPM</a> repo location.
+        Repo mirroring is an undocumented feature. Example:</p>
+
+<pre class="pre codeblock">env:
+    PYPM_OPTS: "-R http://pypm-free.activestate.com/2.7/linux-x86_64/"</pre>
+
+</div>
+
+<div class="section" id="topic7631__helion-app-env"><h2 class="title sectiontitle">HELION_APP_ENV</h2> 
+<div class="p"><div class="note note"><span class="notetitle">Note:</span> Subject to change.</div>
+ Contains a list of all environment variables set with <a class="xref" href="client-ref-management.html#topic50918__command-env-add">env-add</a> or through
+        the <a class="xref" href="../deploy/manifestyml.html">manifest.yml</a> file.</div>
+
+</div>
+
+<div class="section" id="topic7631__helion-app-name"><h2 class="title sectiontitle">HELION_APP_NAME</h2> 
+<p class="p">Contains the application name as specified during application push (or in <em class="ph i">manifest.yml</em>). Available during staging as well as in the application instance.</p>
+
+</div>
+
+<div class="section" id="topic7631__helion-app-name-upcase"><h2 class="title sectiontitle">HELION_APP_NAME_UPCASE</h2> 
+<p class="p">Contains the same value as HELION_APP_NAME transformed to uppercase, with dashes replaced by underscores. For example if HELION_APP_NAME is "php-info", then HELION_APP_NAME_UPCASE will be "PHP_INFO".</p>
+
+  <p class="p">This makes it possible to access the environment variables for <a class="xref" href="../services/port-service.html#topic7511__port-service-env-vars">
+<em class="ph i">harbor</em>
+  </a> and <a class="xref" href="../services/filesystem.html"><em class="ph i">filesystem</em></a> services.</p>
+
+</div>
+
+<div class="section" id="topic7631__helion-app-root"><h2 class="title sectiontitle">HELION_APP_ROOT</h2> 
+<p class="p">This is the "root" directory from the Application Lifecycle Service point of view. It contains app specific HOME directory (app/), the log file directory (logs/) and various scripts.</p>
+
+<p class="p">The <a class="xref" href="#topic7631__home">HOME</a> environment variable will actually point to the app directory, which looks mostly like the directory uploaded by the client. This is where <em class="ph i">manifest.yml</em> and all the application files live.</p>
+
+</div>
+
+<div class="section" id="topic7631__helion-document-root"><h2 class="title sectiontitle">HELION_DOCUMENT_ROOT</h2> 
+<p class="p">This contains the root directory where the user can access. The document-root must always be specified relative to \$HOME (/home/helion/app).</p>
+
+</div>
+
+<div class="section" id="topic7631__helion-filesystem"><h2 class="title sectiontitle">HELION_FILESYSTEM</h2> 
+<p class="p">If the app uses a single <samp class="ph codeph">filesystem</samp> service, then the local mount point is stored in this variable. If there is more than one <samp class="ph codeph">filesystem</samp> service, <samp class="ph codeph">HELION_FILESYSTEM</samp> is not available. Instead, a custom environment variable <samp class="ph codeph">HELION_FILESYSTEM_*</samp> will be created based on the name of each filesystem service (with hyphens replaced by underscores).</p>
+
+<p class="p">For example, if your <em class="ph i">manifest.yml</em> file configures the following services:</p>
+
+<pre class="pre codeblock">   services:
+      my-data: filesystem
+      plugins: filesystem</pre>
+
+<p class="p">Two environment variables would be created:
+    <samp class="ph codeph">HELION_FILESYSTEM_MY_DATA</samp> and
+    <samp class="ph codeph">HELION_FILESYSTEM_PLUGINS</samp>.</p>
+
+</div>
+
+<div class="section" id="topic7631__helion-target"><h2 class="title sectiontitle">HELION_TARGET</h2> 
+<p class="p">Can be set in the local shell to specify the API endpoint target for the <samp class="ph codeph">helion</samp> client. When set, the <samp class="ph codeph">helion target</samp> command is ignored until the variable is explicitly unset. Can be overridden with the <samp class="ph codeph">--target</samp> option.</p>
+
+</div>
+
+<div class="section" id="topic7631__helion-uwsgi"><h2 class="title sectiontitle">HELION_UWSGI</h2> 
+<p class="p">Set by the Perl and Python frameworks only. It contains the default uswgi start command to run the application via uwsgi. It is provided in case the user wants to add additional uwsgi options in <a class="xref" href="../deploy/manifestyml.html">
+<em class="ph i">manifest.yml</em>
+</a>:</p>
+
+<pre class="pre codeblock">   processes:
+      web: $HELION_UWSGI --another-uwsgi-option</pre>
+
+</div>
+
+<div class="section" id="topic7631__vcap-app-host"><h2 class="title sectiontitle">VCAP_APP_HOST</h2> 
+<p class="p">This variable contains the IP address of the host that the application is running on.</p>
+
+</div>
+
+<div class="section" id="topic7631__vcap-app-port"><h2 class="title sectiontitle">VCAP_APP_PORT</h2> 
+<p class="p">This variable contains the port that the application will be exposed on.</p>
+
+</div>
+
+<div class="section" id="topic7631__vcap-application"><h2 class="title sectiontitle">VCAP_APPLICATION</h2> 
+<p class="p">This variable contains all relevant application details for the Application Lifecycle Service Application. (Instance ID, App Name, App Uris, Users/Groups etc.)</p>
+
+</div>
+
+<div class="section" id="topic7631__vcap-services"><h2 class="title sectiontitle">VCAP_SERVICES</h2> 
+  <p class="p">Contains connection details, credentials, and meta data for services bound to the application. See <a class="xref" href="../services/data-services.html#user_data_services__vcap-services">VCAP_SERVICES</a>.</p>
+
+</div>
+
+<div class="section" id="topic7631__staging"><h2 class="title sectiontitle">Staging Variables</h2> 
+<div class="p"><div class="note note"><span class="notetitle">Note:</span>  Service instance variables (VCAP_SERVICES) can change between staging and running. Do not
+          save values from these variables to config files during staging as the hard-coded values
+          may no longer be applicable after staging.</div>
+The following environment variables are
+        available during application staging and can be used in buildpacks or staging hooks:</div>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">BUILDPACK_CACHE</td>
+
+    <td class="entry" valign="top">Filesystem location the buildpack uses to store assets during the build.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">http_proxy and https_proxy</td>
+
+    <td class="entry" valign="top">The proxy host:port of the DEA running the staging container.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">HOME</td>
+
+    <td class="entry" valign="top">As above, but containing a different filesystem path during staging</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">STAGING_TIMEOUT</td>
+
+    <td class="entry" valign="top">Time limit for staging to complete.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">USER</td>
+
+    <td class="entry" valign="top">Will always be <var class="keyword varname">helion</var>.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">MEMORY_LIMIT</td>
+
+    <td class="entry" valign="top">The amount of memory allocated to the application container.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">HELION_APP_NAME</td>
+
+    <td class="entry" valign="top">Contains the application name as specified during application push (or in manifest.yml).</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">HELION_APP_NAME_UPCASE</td>
+
+    <td class="entry" valign="top">Contains the same value as HELION_APP_NAME but transformed to uppercase. Dashes are replaced by underscores.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">HELION_APP_ROOT</td>
+
+    <td class="entry" valign="top">This is the "root" directory from the ALS point of view. It contains the app-specific HOME directory (app/), the log file directory (logs/) and various scripts.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">HELION_LOG_FILES</td>
+
+    <td class="entry" valign="top">A colon-separated list of log files to be included in the application log stream. You can add up to five additional files to the default list by modifying this variable.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">HELION_SERVICES</td>
+
+    <td class="entry" valign="top">Contains connection details and credentials for services bound to the application. For filesystem services, it contains the local mount point.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">VCAP_APPLICATION</td>
+
+    <td class="entry" valign="top">This variable contains all relevant application details: Instance ID, App Name, App Uris, Users/Groups, etc.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">VCAP_SERVICES</td>
+
+    <td class="entry" valign="top">Contains connection details, credentials, and meta data for services bound to the application.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

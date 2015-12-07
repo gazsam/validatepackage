@@ -1,0 +1,225 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Developing In PHP</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic5845" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/languages/php.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Developing In PHP</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">Whether you're deploying an application to the HPE Helion Development Platform, a
+Cloud Foundry based Platform as a Service (PaaS), or writing applications that take
+advantage of HPE Helion OpenStack<sup>®</sup> to manage infrastructure or software services, tools
+to enable successful development are available in PHP.</p>
+
+  <p class="p">Deployable <a class="xref" href="../../../../devplatform.appdev.html#topic2457__PHP">sample
+        applications</a> are available in this language.</p>
+
+<div class="section" id="topic5845__application-lifecycle-services"><h2 class="title sectiontitle">Application Lifecycle Services</h2> 
+<p class="p">Application Lifecycle Service (ALS) provides a means to execute PHPE applications on a managed platform, controlling application lifecycle through a PaaS tier. Deploying
+applications to this platform is as easy as adding details to a YAML configuration file and using
+a console application to push the application to ALS.
+At its simplest form, the configuration file <em class="ph i">manifest.yml</em>, which is located at the root of a project, 
+would look like:</p>
+
+<pre class="pre codeblock">name: php-web-app
+framework:
+    type: php</pre>
+
+<p class="p">This will set the ALS framework type for a PHPE web application.</p>
+
+<p class="p">To create a worker non-http application set the web process to <strong class="ph b">null</strong> (~) and specify
+the command to <strong class="ph b">run</strong>. For example:</p>
+
+<pre class="pre codeblock">name: php-app
+framework: php
+command:php worker.php
+processes: 
+   web: ~</pre>
+
+<p class="p">Management of the deployed application and its services happens through a web application or
+a console application. To learn more see the <a class="xref" href="../manifestyml.html">manifest.yml</a> reference.</p>
+
+</div>
+
+<div class="section" id="topic5845__deployment"><h2 class="title sectiontitle">Deployment</h2> 
+<p class="p">You will need at least two files to deploy a PHPE app on Application Lifecycle Service:
+<em class="ph i">index.php</em>, and <em class="ph i">manifest.yml</em>.</p>
+
+<p class="p">The <em class="ph i">manifest.yml</em> must specify <strong class="ph b">php</strong> as the framework type:</p>
+
+<pre class="pre codeblock">framework:
+type: php</pre>
+
+<p class="p">For more information, see the <a class="xref" href="../manifestyml.html">manifest.yml</a> reference.</p>
+
+</div>
+
+<div class="section" id="topic5845__application-url"><h2 class="title sectiontitle">Application URL</h2> 
+<p class="p">Some applications require the user to specify the APP_URL. Below is an
+example on how to obtain the correct urls:</p>
+
+<pre class="pre codeblock">$appinfo = getenv("VCAP_APPLICATION");
+$appinfo_json = json_decode($appinfo,true);
+$admin = $appinfo_json['uris'][0];</pre>
+
+</div>
+
+<div class="section" id="topic5845__worker-applications"><h2 class="title sectiontitle">Worker Applications</h2> 
+<p class="p">Non-HTTP apps that run as an Application Lifecycle Service application under the control of
+the Health Manager.</p>
+
+<p class="p">To deploy worker applications, you need to use the
+  <a class="xref" href="../manifestyml.html#topic20922__command">
+<em class="ph i">command</em>
+</a> key and set the
+  <a class="xref" href="../manifestyml.html#topic20922__web">
+<em class="ph i">processes: web</em>
+</a>
+key to Null ("\~").</p>
+
+</div>
+
+<div class="section" id="topic5845__example"><h2 class="title sectiontitle">Example</h2> 
+<pre class="pre codeblock">name: php-app
+framework: php
+command: php worker.php
+processes:
+  web: ~</pre>
+
+</div>
+
+<div class="section" id="topic5845__database-services"><h2 class="title sectiontitle">Database Services</h2> 
+</div>
+
+<div class="section" id="topic5845__database-url"><h2 class="title sectiontitle">
+  DATABASE_URL
+</h2> 
+<p class="p">Authentication details for your configured database services can be
+found in the <strong class="ph b">$_SERVER</strong> variable, under 
+<strong class="ph b">DATABASE_URL</strong>. Here is a sample for retrieving the correct credentials:</p>
+
+<pre class="pre codeblock">  &lt;?php
+    $url_parts = parse_url($_SERVER['DATABASE_URL']);
+    $db_name = substr( $url_parts['path'], 1 );
+    $db_connection_string = $url_parts['host'] . ':' . $url_parts['port'];
+
+    // ** MySQL settings from resource descriptor ** //
+    echo $db_name;
+    echo $url_parts['user'];
+    echo $url_parts['pass'];
+    echo $url_parts['host'];
+    echo $url_parts['port'];
+?&gt;</pre>
+
+</div>
+
+<div class="section" id="topic5845__vcap-services"><h2 class="title sectiontitle">
+  VCAP_SERVICES
+</h2> 
+<pre class="pre codeblock">  &lt;?php
+    $services = getenv("VCAP_SERVICES");
+    $services_json = json_decode($services,true);
+    $mysql_config = $services_json["mysql"][0]["credentials"];
+
+    // ** MySQL settings from resource descriptor ** //
+    echo $mysql_config["name"];
+    echo $mysql_config["user"];
+    echo $mysql_config["password"];
+    echo $mysql_config["hostname"];
+    echo $mysql_config["port"];
+    );
+?&gt;</pre>
+
+</div>
+
+<div class="section" id="topic5845__php-ini"><h2 class="title sectiontitle">PHP.ini</h2> 
+<p class="p">Additional PHPE ini files will be loaded from the <samp class="ph codeph">$HELION_APP_ROOT/apache/php/</samp> directory.</p>
+
+</div>
+
+<div class="section" id="topic5845__document-root-access"><h2 class="title sectiontitle">Document Root Access</h2> 
+<p class="p">If your document root (the location of the main <em class="ph i">index.php</em> file) is the
+main application directory, the information stored in 
+<em class="ph i">manifest.yml</em> is exposed to the browser.</p>
+
+<p class="p">To prevent exposing this information, you can use an <em class="ph i">.htaccess</em> file in
+the document root directory with the following rule:</p>
+
+<pre class="pre codeblock">&lt;filesmatch "^(manifest)\.yml$"&gt;
+  order allow,deny
+  deny from all
+&lt;/filesmatch&gt;</pre>
+
+<p class="p">Alternatively, move your application into a subdirectory (e.g. move
+<em class="ph i">index.php</em> to <em class="ph i">www/index.php</em>) and explicitly set your document-root in
+<em class="ph i">manifest.yml</em>:</p>
+
+<pre class="pre codeblock">framework:
+document-root: www</pre>
+
+<p class="p">Using the <em class="ph i">.htaccess</em> file will generate an "HTTP 403 Forbidden" error
+if a user tries to access the denied files. Changing the document-root
+will generate an "HTTP 404 Not Found" error instead.</p>
+
+<p class="p">These techniques can be use to hide other files in your application
+source tree which you do not want exposed to end users.</p>
+
+</div>
+
+<div class="section" id="topic5845__server-name-server-port"><h2 class="title sectiontitle">SERVER_NAME &amp; SERVER_PORT</h2> 
+<p class="p">Application Lifecycle Service serves web applications port 80 and/or 443 at the router, but
+within the application container Apache will be running on a different
+port. PHPE will report this internal IP address and port in the
+SERVER_ADDR and SERVER_PORT Apache environment variables respectively.</p>
+
+<p class="p">If your application makes use of these variables, you may need to adjust
+them by using an <a class="xref" href="http://httpd.apache.org/docs/current/howto/htaccess.html" target="_blank">.htaccess file</a> to set
+one or more
+<a class="xref" href="http://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewriterule">RewriteRule</a>
+directives to correct the server name or port in URLs.</p>
+
+</div>
+
+<div class="section" id="topic5845__persistent-sessions-php"><h2 class="title sectiontitle">Persistent Sessions (PHP)</h2> 
+<p class="p">One of the issues with managing a PHPE application running multiple
+instances is dealing with user sessions.</p>
+
+  <p class="p">If your application uses a <a class="xref" href="../../services/filesystem.html"><em class="ph i">shared filesystem
+            service</em></a>, you can store user sessions there. The following <em class="ph i">manifest.yml</em>
+        snippet creates a persistent filesystem service, creates a directory for sessions, and
+        writes a PHPE config file to set the path to the session directory:</p>
+
+<pre class="pre codeblock">  services:
+  ${name}-fs: filesystem
+hooks:
+  post-staging:
+  - mkdir -p "$HELION_FILESYSTEM"/sessions
+  - echo "session.save_path = $HELION_FILESYSTEM/sessions" &gt; "$HELION_APP_ROOT"/apache/php/sessions.ini</pre>
+
+<p class="p">For better performance, use a <a class="xref" href="../../services/memcached.html">
+<em class="ph i">Memcached</em>
+</a> service for
+session storage instead:</p>
+
+<pre class="pre codeblock">  services:
+  ${name}-cache: memcached
+hooks:
+  post-staging:
+  - echo "session.save_handler = memcached" &gt; "$HELION_APP_ROOT"/apache/php/sessions.ini
+  - echo "session.save_path = $MEMCACHED_URL" &gt;&gt; "HELIONO_APP_ROOT"/apache/php/sessions.ini</pre>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

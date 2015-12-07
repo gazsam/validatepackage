@@ -1,0 +1,96 @@
+
+
+
+<html><head><title>Creating a database cluster from the command line</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_database_create_cluster_cli" /> <meta name="html-import-file-path" content="devplatform/2.0/database/devplatform.database-create-cluster-cli.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">Creating a database cluster from the command line</h1>
+
+
+  
+
+  <div class="body">
+    <p class="p">This topic describes how to create a database cluster from the command line.</p>
+
+    <ol class="ol">
+      <li class="li">Log in to the installer node for your HPE Helion OpenStack environment and source the service.osrc file:
+        <pre class="pre codeblock">. service.osrc</pre>
+</li>
+
+      <li class="li">Use the <samp class="ph codeph">trove cluster-create</samp> command to create the new database. The syntax is as follows:
+      <pre class="pre codeblock">trove cluster-create &lt;name&gt; &lt;datastore&gt; &lt;datastore_version&gt; [--instance &lt;flavor=flavor_name_or_id,volume=volume&gt;]</pre>
+
+        <ul class="ul"><li class="li">To view the valid <strong class="ph b">datastore</strong> values, use <samp class="ph codeph">trove datastore-list</samp>.</li>
+
+        <li class="li">To view the valid <strong class="ph b">datastore_version</strong> values, use <samp class="ph codeph">trove datastore-version-list &lt;datastore&gt;</samp>, where <strong class="ph b">datastore</strong> is the
+          name of the datastore (e.g. <strong class="ph b">mysql</strong>.)</li>
+
+        </ul>
+
+        <div class="note note"><span class="notetitle">Note:</span> MongoDB instances require a minimum volume size of 5.</div>
+
+      </li>
+
+      <li class="li">To verify that the cluster was created, use the <samp class="ph codeph">trove cluster-list</samp> command.
+      </li>
+
+      <li class="li">To list the instances that are part of a cluster, use the <samp class="ph codeph">trove cluster-list
+          &lt;cluster name&gt;</samp> command. </li>
+
+      
+    </ol>
+
+    
+    <div class="section" id="topic_database_create_cluster_cli__examples"><h2 class="title sectiontitle">Examples</h2>
+      <ul class="ul">
+        <li class="li"><strong class="ph b">Example 1:</strong> Create a MySql cluster called MyCluster with three database instances of flavor m1.medium and volume size 3
+        <pre class="pre codeblock">trove cluster-create MyCluster mysql-cluster 5.5 --instance flavor=3,volume=3 --instance flavor=3,volume=3 --instance flavor=3,volume=3 </pre>
+</li>
+
+        <li class="li"><strong class="ph b">Example 2:</strong> Create a Redis cluster called MyRedisCluster with two database instances of flavor m1.large and volume size 4
+        <pre class="pre codeblock">trove cluster-create MyRedisCluster redis 3.0 --instance flavor=4,volume=4 --instance flavor=4,volume=4</pre>
+</li>
+
+        <li class="li"><strong class="ph b">Example 3:</strong> Create a MongoDB cluster called MyMongoDBCluster with three database instances of flavor m1.large and volume size 2 
+        <pre class="pre codeblock">trove cluster-create MyMongoDBCluster mongodb 3.0 --instance flavor=4,volume=5 --instance flavor=4,volume=5 --instance flavor=4,volume=5</pre>
+</li>
+
+        <li class="li"><strong class="ph b">Example 4:</strong> Create a Vertica Preview cluster called MyVerticaCluster with three database instances of flavor m1.large and volume size 2
+        <pre class="pre codeblock">trove cluster-create MyVerticaCluster vertica_preview 7.1 --instance flavor=4,volume=2 --instance flavor=4,volume=2 --instance flavor=4,volume=2</pre>
+</li>
+
+      </ul>
+
+      <p class="p">For High Availability (HA), it is recommended that the database instances be created on specific Availability Zones (AZ). The following example shows how to create instances on specific AZs:</p>
+
+      <ul class="ul">
+        <li class="li"><strong class="ph b">Example 5:</strong> Create a MySql cluster with instances in specific availability zones
+        <pre class="pre codeblock">trove cluster-create MyCluster mysql-cluster 5.5 --instance flavor=3,volume=10,<span class="ph codehighlight">availability_zone=AZ1</span> --instance flavor=3,volume=3,<span class="ph codehighlight">availability_zone=AZ2</span> --instance flavor=3,volume=3,<span class="ph codehighlight">availability_zone=AZ3</span></pre>
+</li>
+
+      </ul>
+
+    </div>
+
+    <div class="note note"><span class="notetitle">Note:</span> 
+      <p class="p">As part of Vertica Preview cluster creation, the Database Service generates SSH keys for instances on the vertica cluster that allow 
+        the cluster setup script to connect to all the instances and run cluster setup commands. These keys are protected on the guest 
+        instances as they are locked down by file ACLs allowing access only to the vertica processes. After the cluster create process is 
+        finished, these keys are deleted from all of the nodes. </p>
+
+      <p class="p">These auto-generated keys are different from the Administrator SSH key that will allow the
+        Database Service administrator to connect to the VM for day-to-day service management and
+        operations, and to upgrade the trove guest instances. The Adminsitrator SSH key is kept
+        intact during the Cluster Create process. These keys should be secured by ACLs, as exposure
+        of them could result in compromise of the database service and databases.</p>
+
+    </div>
+
+  </div>
+
+
+</body>
+</html>

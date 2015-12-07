@@ -1,0 +1,735 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Command Reference: Organizations</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic6634" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/client-ref-organizations.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Command Reference: Organizations</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">
+
+ 
+ </p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic6634__command-create-org">helion create-org</a>: Create a new organization.</li>
+
+<li class="li">
+<a class="xref" href="#topic6634__delete-org">helion command-delete-org</a>: Delete the named organization</li>
+
+<li class="li">
+<a class="xref" href="#topic6634__command-link-user-org">helion link-user-org</a>: Add the specified user to the named organization in various roles.</li>
+
+<li class="li">
+<a class="xref" href="#topic6634__command-org">helion org</a>: Show the named organization's information.</li>
+
+<li class="li">
+<a class="xref" href="#topic6634__command-orgs">helion orgs</a>: List the available organizations.</li>
+
+<li class="li">
+<a class="xref" href="#topic6634__command-org-users">helion org-users</a>: Show the users for the organization by role. </li>
+
+<li class="li">
+<a class="xref" href="#topic6634__command-quota-org">helion quota-org</a>: Set the quotas for the current or named organization.</li>
+
+<li class="li">
+<a class="xref" href="#topic6634__command-rename-org">helion rename-org</a>: Rename the named organization.</li>
+
+<li class="li">
+                <a class="xref" href="#topic6634__command-switch-org">helion switch-org</a>:
+                Switch the current organization to the named organization.</li>
+
+<li class="li">
+<a class="xref" href="#topic6634__command-unlink-user-org">helion unlink-user-org</a>: Remove the specified user from the named organization, in various roles.</li>
+
+<li class="li">
+<a class="xref" href="#topic6634__command-update-org">helion update-org</a>: Change one or more attributes of an organization in a single call.</li>
+
+</ul>
+
+<div class="section" id="topic6634__syntax"><h2 class="title sectiontitle">Syntax</h2> 
+<pre class="pre codeblock">helion [options] command [arguments] [command-options]</pre>
+
+<p class="p">For more information, use the <strong class="ph b">helion help</strong> or <strong class="ph b">helion help [<em class="ph i">command</em>]</strong> commands.</p>
+
+
+</div>
+
+<div class="section" id="topic6634__command-create-org"><h2 class="title sectiontitle">helion create-org &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Create a new organization.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--add-self</td>
+
+<td class="entry" valign="top">Add yourself to the new organization, as developer. Done by
+default.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--default</td>
+
+<td class="entry" valign="top">Make the organization the default for users without explicit organization. The previous default organization is automatically reset.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-activate</td>
+
+<td class="entry" valign="top">Complementary alias of --activate.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--quota</td>
+
+<td class="entry" valign="top">The named quota of the new organization. Default is the target's
+choice.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic6634__delete-org"><h2 class="title sectiontitle">helion delete-org &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Delete the named organization.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--recursive, -r</td>
+
+<td class="entry" valign="top">Remove all subordinate parts and relations.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic6634__command-link-user-org"><h2 class="title sectiontitle">helion link-user-org &lt;<em class="ph i">user</em>&gt; &lt;<em class="ph i">organization</em>&gt;</h2> 
+<p class="p">Add the specified user to the named organization in various roles.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--billing</td>
+
+    <td class="entry" valign="top">Affect the billing manager role</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manager</td>
+
+    <td class="entry" valign="top">Affect the manager role</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+    <td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+    <td class="entry" valign="top">The once-off authentication token to use for the current
+    operation.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+    <td class="entry" valign="top">Path to an existing and readable file containing the targets and
+    authorization tokens.</td>
+
+    </tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic6634__command-org"><h2 class="title sectiontitle">helion org &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Show the named organization's information.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--full</td>
+
+<td class="entry" valign="top">Show more details.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic6634__command-orgs"><h2 class="title sectiontitle">helion orgs</h2> 
+<p class="p">List the available organizations.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--full</td>
+
+<td class="entry" valign="top">Show more details.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic6634__command-org-users"><h2 class="title sectiontitle">helion org-users</h2> 
+<p class="p">Show the users for the organization by role.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic6634__command-quota-org"><h2 class="title sectiontitle">helion quota-org &lt;<em class="ph i">name</em>&gt; &lt;<em class="ph i">quota</em>&gt;</h2> 
+<p class="p">Set the quotas for the current or named organization.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic6634__command-rename-org"><h2 class="title sectiontitle">helion rename-org &lt;<em class="ph i">name</em>&gt; &lt;<em class="ph i">NewName</em>&gt;</h2> 
+<p class="p">Rename the named organization.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic6634__command-switch-org"><h2 class="title sectiontitle">helion switch-org &lt;<em class="ph i">name</em>&gt; {command-switch-org}</h2> 
+<p class="p">Switch the current organization to the named organization. This invalidates the current space.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic6634__command-unlink-user-org"><h2 class="title sectiontitle">helion unlink-user-org &lt;<em class="ph i">user</em>&gt; &lt;<em class="ph i">organization</em>&gt;</h2> 
+<p class="p">Remove the specified user from the named organization in various roles.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--billing</td>
+
+<td class="entry" valign="top">Affect the billing manager role</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manager</td>
+
+<td class="entry" valign="top">Affect the manager role</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic6634__command-update-org"><h2 class="title sectiontitle">helion update-org</h2> 
+<p class="p">Change one or more attributes of an organization in a single call.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--newname</td>
+
+<td class="entry" valign="top">A new name to give to the space.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-default</td>
+
+<td class="entry" valign="top">Make the current space no longer the default for users without explicit spaces.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The name of the parent organization to use as context.
+Defaults to the current organization.
+A current organization is automatically set if there is none,
+either by taking the one organization the user belongs to, or
+asking the user to choose among the possibilities.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

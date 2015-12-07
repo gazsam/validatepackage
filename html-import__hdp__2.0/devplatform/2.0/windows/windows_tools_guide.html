@@ -1,0 +1,392 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Windows and .NET Applications Tools Guide</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="windows_tools" /> <meta name="html-import-file-path" content="devplatform/2.0/windows/windows_tools_guide.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Windows and .NET Applications Tools Guide</h1>
+
+
+ 
+
+ 
+<div class="body">
+ <div class="section"><h2 class="title sectiontitle">HPE Helion 2.0 Development Platform: Windows<sup>®</sup> and .NET Tools
+    Guide</h2>
+   <span class="ph"><em class="ph i">Windows, .NET, SQL Server, and IIS are either registered trademarks or trademarks of
+     Microsoft Corporation in the United States and/or other countries.</em></span>
+   <p class="p">Helion Development Platform 1.2 adds tooling support for deploying Windows images and .NET
+    Framework HTTP-based applications. This document describes how to install and use these tools.
+   </p>
+ This document contains the following sections:  <p class="p"><strong class="ph b">.NET tools:</strong></p>
+<ul class="ul" id="windows_tools__ul_dmq_khw_js">
+    <li class="li"><a class="xref" href="#windows_tools__cloudfoundryextensions">Cloud Foundry Extensions</a></li>
+
+    <li class="li"><a class="xref" href="#windows_tools__msbuild">Cloud Foundry MSBuild Tasks</a></li>
+
+    <li class="li"><a class="xref" href="#windows_tools__sdk">Cloud Foundry .NET
+      SDK</a></li>
+
+   </ul>
+
+   <strong class="ph b">Setup tools</strong><ul class="ul" id="windows_tools__ul_jgl_fhw_js">
+    <li class="li"><a class="xref" href="#windows_tools__als">ALS Cluster Management (cf-mgmt)</a></li>
+
+    <li class="li"><a class="xref" href="#windows_tools__helion">Helion client
+      (helion)</a></li>
+
+   </ul>
+
+ </div>
+
+ <div class="section" id="windows_tools__cloudfoundryextensions"><h2 class="title sectiontitle">Cloud Foundry Extensions</h2> <p class="p">This Visual Studio 2013 extension
+    is used to deploy and manage .NET applications. The extension can be used in any edition of VS
+    2013, including the Community (free) edition.</p>
+</div>
+
+ <div class="section"><h2 class="title sectiontitle">Installation</h2> Follow these steps to install the Cloud Foundry Extensions: <ol class="ol">
+  <li class="li">Select <strong class="ph b">Tools-&gt;Extensions and Updates</strong> in Visual Studio 2013.</li>
+
+  <li class="li">In the <strong class="ph b">Extensions and Updates</strong> panel, search for <strong class="ph b">Cloud Foundry Extentions</strong> in the
+     **Online** section.</li>
+
+    <li class="li">Install the extension from the search results.</li>
+
+   </ol>
+ <p class="p">The Cloud Foundry Extensions page on Visual Studio Gallery can be found 
+    <a class="xref" href="https://visualstudiogallery.msdn.microsoft.com/4cad4d95-099c-449e-9d90-7d4da5c4a0c0?SRC=Home" target="_blank">here</a>. </p>
+</div>
+
+ 
+<div class="section"><h2 class="title sectiontitle">The Cloud Foundry Explorer Window</h2> 
+ <p class="p">The explorer can be opened in Visual
+  Studio under **View -&gt;Other Windows -&gt;Cloud Foundry Explorer**. </p>
+
+ <p class="p">The explorer window shows endpoints that you have successfully connected to:<br/><img class="image" id="windows_tools__image_yvb_xk4_c5" src="../../../media/windows_cf_explore.png"/><br/></p>
+
+ <p class="p">The Cloud Foundry Explorer Window displays the following types of nodes: </p>
+
+ 
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+     <tbody class="tbody">
+      <tr class="row">
+       <td class="entry" valign="top">
+        <p class="p">Node Type</p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Supported Actions</p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Description</p>
+
+       </td>
+
+      </tr>
+
+      <tr class="row">
+       <td class="entry" valign="top">
+        <p class="p"><strong class="ph b">Target</strong></p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Refresh, Remove</p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Lists version, URL, login credentials, and whether to ignore SSL errors (e.g. from using
+         self-signed certificates).</p>
+
+       </td>
+
+      </tr>
+
+      <tr class="row">
+       <td class="entry" valign="top">
+        <p class="p"><strong class="ph b">Organizations</strong></p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Refresh, Remove</p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Lists current roles in organization, organization name, and creation date</p>
+
+       </td>
+
+      </tr>
+
+      <tr class="row">
+       <td class="entry" valign="top">
+        <p class="p"><strong class="ph b">Spaces</strong></p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Refresh, Remove</p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Lists current roles in space, space name, and creation date</p>
+
+       </td>
+
+      </tr>
+
+      <tr class="row">
+       <td class="entry" valign="top">
+        <p class="p"><strong class="ph b">Applications</strong></p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Refresh, Remove</p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">The deployed applications</p>
+
+       </td>
+
+      </tr>
+
+      <tr class="row">
+       <td class="entry" valign="top">
+        <p class="p"><strong class="ph b">Application</strong></p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">View App in Browser, Start, Restart, Stop and Delete</p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Each deployed application. Shows creation date, application name, buildpack, max memory,
+         and instance count.</p>
+
+       </td>
+
+      </tr>
+
+      <tr class="row">
+       <td class="entry" valign="top">
+        <p class="p"><strong class="ph b">Services</strong></p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Refresh, Remove</p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Shows details for the service collection</p>
+
+       </td>
+
+      </tr>
+
+      <tr class="row">
+       <td class="entry" valign="top">
+        <p class="p"><strong class="ph b">Service</strong></p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Delete</p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Shows current roles in service, service name, creation date</p>
+
+       </td>
+
+      </tr>
+
+      <tr class="row">
+       <td class="entry" valign="top">
+        <p class="p"><strong class="ph b">Routes</strong></p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Refresh, Remove</p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Shows details for the route collection</p>
+
+       </td>
+
+      </tr>
+
+      <tr class="row">
+       <td class="entry" valign="top">
+        <p class="p"><strong class="ph b">Route</strong></p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Delete</p>
+
+       </td>
+
+       <td class="entry" valign="top">
+        <p class="p">Shows the domain for the route, and which applications bind to it</p>
+
+       </td>
+
+      </tr>
+
+     </tbody>
+
+    </table>
+</div>
+</div>
+
+ <div class="section"><h2 class="title sectiontitle">Deploying an application</h2>
+  <p class="p">For an example of how to deploy an application from Visual Studio, see <a class="xref" href="windows_firstapp.html">Deploying your first .NET Application</a>.</p>
+
+ </div>
+
+ 
+ <div class="section" id="windows_tools__msbuild"><h2 class="title sectiontitle">Cloud Foundry MSBuild Tasks</h2>
+
+  <p class="p">These MSBuild processes allow you to build and deploy applications to Cloud Foundry instances as part of the usual build process for your application. </p>
+
+  
+  <p class="p">The MSBuild Tasks are language and technology agnostic, and can be used to deploy Java, Node, and other applications in addition to .NET applications.</p>
+
+
+  <p class="p">The MSBuild tasks can be installed using NuGet:</p>
+
+  <ol class="ol">
+   
+ <li class="li">Right-click the project in <strong class="ph b">Solution Explorer</strong> and select <strong class="ph b">Manage NuGet Packages</strong>
+     <br/><img class="image" src="../../../media/windows_manage_packages.png"/><br/></li>
+
+   <li class="li">If a previous version of the Cloud Foundry MSBuild Tasks is already installed, select <strong class="ph b">Installed Packages</strong>, and click <strong class="ph b">Uninstall</strong>.
+    <br/><img class="image" src="../../../media/windows_nuget_uninstall.png"/><br/></li>
+
+ <li class="li">Search for <strong class="ph b">Cloud Foundry MSBuild Tasks</strong> in the <strong class="ph b">Online</strong> section</li>
+
+ <li class="li">Click <strong class="ph b">Install</strong>
+     <br/><img class="image" src="../../../media/windows_select_msbuild.png"/><br/></li>
+
+</ol>
+
+  <p class="p">The MSBuild Tasks NuGet package can be found <a class="xref" href="http://www.nuget.org/packages/cf-msbuild-tasks/" target="_blank">here</a>.</p>
+
+
+  <p class="p">For more information on MSBuild, see <a class="xref" href="https://msdn.microsoft.com/en-us/library/dd393574.aspx" target="_blank">MSBuild on MSDN </a>.</p>
+
+
+ </div>
+
+ <div class="section" id="windows_tools__sdk"><h2 class="title sectiontitle">Cloud Foundry .NET SDK</h2>
+
+  <p class="p">The SDK is used for programmatic access to controlling Windows images and .NET applications. Using the SDK, developers can create build and deployment automation and tools that interact with the ALS 
+   APIs.</p>
+
+
+  <p class="p">The Cloud Foundry .NET SDK can be installed using NuGet:</p>
+
+<ul class="ul">
+ <li class="li">Right-click the project in <strong class="ph b">Solution Explorer</strong> and select <strong class="ph b">Manage NuGet Packages</strong>.</li>
+
+ <li class="li">Search for <strong class="ph b">Cloud Foundry .NET SDK</strong></li>
+
+ <li class="li">Click <strong class="ph b">Install</strong></li>
+
+</ul>
+
+  <p class="p">The CloudFoundry NuGet package can be found <a class="xref" href="http://www.nuget.org/packages/cf-dotnet-sdk/" target="_blank">here</a>.</p>
+
+
+ </div>
+
+ 
+ <div class="section"><h2 class="title sectiontitle">Setup Tools</h2></div>
+
+
+ <div class="section" id="windows_tools__als"><h2 class="title sectiontitle">ALS Cluster Management Tool (cf-mgmt)</h2>
+
+  <p class="p">This tool is used to add services to new ALS clusters. The same tool is used for Linux and Windows instances.</p>
+
+
+  <p class="p">To add a DEA role to a Windows instance, use the following syntax:</p>
+
+
+  <pre class="pre codeblock">cf-mgmt add-role dea --load &lt;filename&gt;.yml</pre>
+
+
+  <p class="p">To add a SQL Server role to a Windows instance, use the following syntax:</p>
+
+
+  <pre class="pre codeblock">cf-mgmt add-service mssql2014 --load &lt;filename&gt;.yml</pre>
+
+
+  <p class="p">For more information on the ALS cluster management tool, see <a class="xref" href="../helion/CLI/ALS_Client_Reference.html#topic13234">Helion ALS Cluster Management Tool
+     Reference</a>.</p>
+
+
+  <p class="p">The ALS cluster management tool can be downloaded from the following location: <a class="xref" href="../helion/CLI/ALS_Client_Downloads.html#topic843">Download</a>.</p>
+
+
+ </div>
+
+ <div class="section" id="windows_tools__helion"><h2 class="title sectiontitle">Helion Client</h2>
+
+  <p class="p">This tool is used to deploy applications from the command line. The same tool is used for deploying applications to Windows and Linux instances.</p>
+
+
+  <div class="note note"><span class="notetitle">Note:</span> .NET applications are built on the server using <strong class="ph b">MSBuild</strong>. You should verify that your application builds with <strong class="ph b">MSBuild</strong> before deploying.</div>
+
+
+  <p class="p">To deploy a .NET application to a Windows instance, use the following syntax from the same folder as your <samp class="ph codeph">manifest.yml</samp> file:</p>
+
+		<pre class="pre codeblock">helion target &lt;cluster URL&gt;
+		helion login
+		helion push --stack win2012r2 </pre>
+
+
+  <p class="p">For more information on the Helion client, see <a class="xref" href="../helion/user/reference/client-ref.html#topic13355">HPE Helion 2.0 Development Platform: Application Lifecycle Service Client Command Reference</a></p>
+
+
+  <p class="p">The Helion client tool can be downloaded from the following locations: </p>
+
+
+<ul class="ul">
+ <li class="li"><a class="xref" href="http://clients.als.hpcloud.com/helion-1.2.0-win32-ix86.zip" target="_blank"> Windows<sup>®</sup></a></li>
+
+ <li class="li"><a class="xref" href="http://clients.als.hpcloud.com/helion-1.2.0-linux-glibc2.3-x86_64.zip" target="_blank"> Linux x64</a></li>
+
+ <li class="li"><a class="xref" href="http://clients.als.hpcloud.com/helion-1.2.0-macosx10.5-i386-x86_64.zip" target="_blank"> Mac OS X<sup>®</sup></a></li>
+
+</ul>
+
+
+ </div>
+
+ 
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: List Available HDN Content</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="listContent" /> <meta name="html-import-file-path" content="devplatform/2.0/installation/install_listOptions.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: List Available HDN Content</h1>
+
+
+  
+
+  <div class="body"><p class="p">There are two ways to retrieve the list the HDN content available to you. </p>
+   
+    
+  <div class="section" id="listContent__option1"><h2 class="title sectiontitle">Option 1: Quick list of recent versions only with no installation
+        state</h2><p class="p">This option lists the most recent versions that are available to you. It
+        does not list every package you could install, and it does not indicate which packages are
+        currently installed. </p>
+<p class="p">This is the fastest option if you are just looking for a
+          <samp class="ph codeph">wscatalog</samp>
+      number.</p>
+<pre class="pre codeblock">openstack hdpi list --os-cloud mycloud</pre>
+The list will look
+      similar to the
+      following:<pre class="pre codeblock">+----------------------------+----------------+-----------+-----------+
+| service                    | id             | version   | state     |
++----------------------------+----------------+-----------+-----------+
+| Helion Code Engine         | wscatalog.2776 | 1.0.0     | available |
+| Helion Code Engine 2.0     | wscatalog.2812 | 1.0.0.42  | available |
+| als                        | wscatalog.2765 | 2.0.0.539 | available |
+| als                        | wscatalog.2800 | 2.0.0.548 | available |
+| database                   | wscatalog.2762 | 2.0.0.32  | available |
+| database                   | wscatalog.2803 | 2.0.0.37  | available |
+| database                   | wscatalog.2804 | 2.0.0.38  | available |
+| messaging                  | wscatalog.2761 | 1.0.0     | available |
+| messaging                  | wscatalog.2796 | 1.0.0.165 | available |
++----------------------------+----------------+-----------+-----------+</pre>
+</div>
+
+    
+    <div class="section" id="listContent__option2"><h2 class="title sectiontitle">Option 2: Full list of all versions and installation
+        state</h2><p class="p">This options lists everything that is available to you. It lists every
+        package you could install, and it also indicates which options are currently installed.
+        </p>
+<p class="p">This is a quick way to check whether a service has already been
+      installed.</p>
+<pre class="pre codeblock">openstack hdpi list --all --os-cloud mycloud</pre>
+The list will
+      look similar to the
+      following:<pre class="pre codeblock">+-----------------------------+------------------+-----------+-----------+
+| service                     | id               | version   | state     |
++-----------------------------+------------------+-----------+-----------+
+| DNS Service 2.0             | wscatalog.2798   | 2.0.0.190 | available |
+| Helion Code Engine 2.0      | wscatalog.2812   | 1.0.0.42  | available |
+| als                         | wscatalog.2765   | 2.0.0.539 | available |
+| als                         | wscatalog.2800   | 2.0.0.548 | installed |
+| database                    | wscatalog.2762   | 2.0.0.32  | available |
+| database                    | wscatalog.2803   | 2.0.0.37  | available |
+| database                    | wscatalog.2804   | 2.0.0.38  | installed |
+| database                    | wscatalog.2678   | 2.0.0.9   | available |
+| messaging                   | wscatalog.2761   | 1.0.0     | available |
+| messaging                   | wscatalog.2796   | 1.0.0.165 | installed |
++-----------------------------+------------------+-----------+-----------+</pre>
+</div>
+
+  </div>
+
+
+</body>
+</html>

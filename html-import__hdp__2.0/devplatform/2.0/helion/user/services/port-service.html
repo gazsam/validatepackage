@@ -1,0 +1,302 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Port Service (Harbor)</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic7511" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/services/port-service.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Port Service (Harbor)</h1>
+
+
+
+
+<div class="body">
+  <p class="p">HTTP and HTTPS ports and routing are provided automatically for all web applications deployed
+      to Application Lifecycle Service (unless <a class="xref" href="../deploy/manifestyml.html#topic20922__web">processes: web:</a> is
+      set to Null "\~").</p>
+
+<p class="p">If your application requires additional TCP or UDP ports, use the Harbor service to allocate them.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic7511__requesting-a-port">Requesting a Port</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic7511__port-service-env-vars">Harbor Environment Variables</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic7511__setting-the-port-protocols">Setting the Port Protocols</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic7511__multiple-application-instances">Multiple Application Instances</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic7511__https-via-harbor">HTTPS via Harbor</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic7511__https-container-proxy">HTTPS Container Proxy</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic7511__multiple-ssl-certificates">Multiple SSL Certificates</a>
+</li>
+
+</ul>
+
+<div class="section" id="topic7511__requesting-a-port"><h2 class="title sectiontitle">Requesting a Port</h2> 
+<p class="p">Additional ports are provisioned like any other data service. To request a port with the Helion command-line client:</p>
+
+<pre class="pre codeblock">helion create-service harbor debug-port</pre>
+
+<p class="p">To request a port from Harbor in the <strong class="ph b">manifest.yml</strong> file, add it in the <a class="xref" href="../deploy/manifestyml.html#topic20922__services"><strong class="ph b">services</strong></a> block. For
+        example:</p>
+
+<pre class="pre codeblock">name: port-test
+mem: 256
+services:
+  my-port: harbor</pre>
+
+<p class="p">This creates a TCP port tunnel which the application can access on the
+host and port specified in the \$HELION_SERVICES environment
+variable.</p>
+
+<p class="p">The example above might create the following "my-port" object in
+\$HELION_SERVICES:</p>
+
+<pre class="pre codeblock">{
+  "my-port": {
+    "hostname": "192.168.68.111",
+    "host": "192.168.68.111",
+    "port": 30134,
+    "name": "cf7f868a-8b7b-4ac8-ab4d-9fd87efb7c09",
+    "node_id": "harbor_node_1",
+    "int_port": 4100,
+    "ext_hostname": "ports.example.com",
+    "ext_host": "15.185.104.122"
+  }
+}</pre>
+
+<p class="p">This provides the following information:</p>
+
+<ul class="ul">
+<li class="li">
+<strong class="ph b">hostname</strong>: The internal hostname (if configured) of the node
+providing the service (i.e. the Harbor node). If none is configured
+by the admin, this will show the internal IP address.</li>
+
+<li class="li">
+<strong class="ph b">host</strong>: The internal IP address of the Harbor node.</li>
+
+<li class="li">
+<strong class="ph b">port</strong>: The external port number exposed by the service.
+Connections from external clients and other internal applications
+(those not directly bound to the service) will connect with this
+port number.</li>
+
+<li class="li">
+<strong class="ph b">name</strong>: The service instance ID (Application Lifecycle Service internal refer).</li>
+
+<li class="li">
+<strong class="ph b">node_id</strong>: The Harbor node ID (Application Lifecycle Service internal).</li>
+
+<li class="li">
+<strong class="ph b">int_port</strong>: The port on the application container which forwards
+to Harbor (see also <a class="xref" href="#topic7511__port-service-env-vars">Harbor Environment Variables</a>). Application(s) bound to the
+service should connect to this port.</li>
+
+</ul>
+
+<p class="p">Access to the port from outside of the Application Lifecycle Service system/cluster may or
+may not be exposed, depending on how the Harbor service is configured by
+the Admin. If Harbor is set up to allow public port access, the
+following two settings will also be shown:</p>
+
+<ul class="ul">
+<li class="li">
+<strong class="ph b">ext_hostname</strong>: The public hostname (if configured) exposing the
+port.</li>
+
+<li class="li">
+<strong class="ph b">ext_host</strong>: The public IP address exposing the port.</li>
+
+</ul>
+
+<div class="p">
+        <div class="note tip"><span class="tiptitle">Tip:</span> To remotely check the settings and credentials of any Application Lifecycle Service
+          service, use the <a class="xref" href="../reference/client-ref-services.html">
+            <strong class="ph b">helion service</strong>
+          </a> command.</div>
+
+      </div>
+
+</div>
+
+<div class="section" id="topic7511__port-service-env-vars"><h2 class="title sectiontitle">Harbor Environment Variables</h2> 
+<p class="p">If there is only one Harbor service, the <strong class="ph b">HELION_HARBOR</strong> environment variable can be used to get the internal port
+number.</p>
+
+<p class="p">If there is more than one Harbor service, <strong class="ph b">HELION_HARBOR</strong> is not available. Instead, a custom
+<strong class="ph b">HELION_HARBOR_&lt;SERVICE_NAME&gt;</strong> environment
+variable will be created for each harbor service (service name
+upper-cased with hyphens replaced by underscores).</p>
+
+<p class="p">For example, if your <em class="ph i">manifest.yml</em> file configures the following
+services:</p>
+
+<pre class="pre codeblock">services:
+  udp-port: harbor
+  tcp-port: harbor</pre>
+
+<p class="p">Two environment variables would be created:
+<samp class="ph codeph">HELION_HARBOR_UDP_PORT</samp> and
+<samp class="ph codeph">HELION_HARBOR_TCP_PORT</samp>.</p>
+
+<p class="p">This naming scheme can be used in conjunction with the
+<strong class="ph b">HELION_APP_NAME_UPCASE</strong> environment variable. For
+example, in an app with the following harbor services defined:</p>
+
+<pre class="pre codeblock">services:
+  udp-${name}: harbor
+  tcp-${name}: harbor</pre>
+
+<p class="p">The Harbor port number for the UDP service could be accessed within the
+container with a construct such as:</p>
+
+<pre class="pre codeblock">UDP_SERVICE_NAME=HELION_HARBOR_UDP_${HELION_APP_NAME_UPCASE}
+UDP_SERVICE_PORT=${!UDP_SERVICE_NAME}</pre>
+
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span> To use declarations like these in <a class="xref" href="../deploy/manifestyml.html#topic20922__hooks"><em class="ph i">hooks</em></a>, put them in a
+          separate bash script. Brace expansion and grouping cannot be used directly in YAML
+          files.</div>
+
+      </div>
+
+</div>
+
+<div class="section" id="topic7511__setting-the-port-protocols"><h2 class="title sectiontitle">Setting the Port Protocols</h2> 
+<p class="p">Harbor supports both the TCP and UDP protocols. When you provision a service with Harbor it will create a TCP enabled port by default. If you want to have a UDP port provisioned instead, you simply prefix your
+service name with udp, for example:</p>
+
+<pre class="pre codeblock">helion create-service harbor udp-debug-port</pre>
+
+<p class="p">If you have an application that requires both TCP <strong class="ph b">and</strong> UDP, you can prefix your service name with either <em class="ph i">multi-</em> or <em class="ph i">both-</em> .
+For example:</p>
+
+<pre class="pre codeblock">helion create-service harbor both-debug-port</pre>
+
+<p class="p">Harbor will then create UDP and TCP proxies for your application so that applications like DNS can use both protocols on the same provisioned port.</p>
+
+</div>
+
+<div class="section" id="topic7511__multiple-application-instances"><h2 class="title sectiontitle">Multiple Application Instances</h2> 
+<p class="p">Harbor recognizes when you have multiple instances of your app running and will update the available app backends accordingly.</p>
+
+<ul class="ul">
+<li class="li">For TCP connections it will round-robin between your available
+backends on each new connection, in a similar fashion to the router
+component.</li>
+
+<li class="li">For UDP this is not the case, as it is a stateless protocol. For
+multiple UDP backends harbor will use a FIFO queue, that is the
+first app instance available becomes the primary backend, and any
+added later are queued.</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic7511__https-via-harbor"><h2 class="title sectiontitle">HTTPS via Harbor</h2> 
+<p class="p">SSL termination of HTTPS to applications hosted on Application Lifecycle Service normally
+happens at the Router.</p>
+
+<p class="p">There is currently no mechanism for users to add SSL certificates for their own applications to the Router, but you can expose an external HTTPS interface via the Harbor port service which uses your SSL certificates.</p>
+
+<p class="p">To do this, upload the SSL certificate(s) and key(s) along with your application, and expose your application server directly on the TCP port provided by Harbor.</p>
+
+<p class="p">For example, an application running through the port service might have a URL such as: <em class="ph i">https://harbor-node.helion.com:35048/</em>
+</p>
+
+<p class="p">You can set up aliases to this URL using DNS, but the explicit port
+specification must always be added.</p>
+
+      <div class="note note"><span class="notetitle">Note:</span> 
+        <ul class="ul" id="topic7511__ul_fv1_n1z_ns">
+          <li class="li">When using this approach, the hostname / IP address of the app will be the one
+            provided by the Harbor node the client will connect using the Harbor-assigned port
+            number, <strong class="ph b">not</strong> 443.</li>
+
+          <li class="li">Using Harbor in this way does <strong class="ph b">not</strong> take advantage of any load balancing set up
+            for regular web traffic through the Routers and Load Balancer.</li>
+
+          <li class="li">If you have multiple instances of your app routing through a Harbor TCP port,
+            connections will be distributed via round-robin.</li>
+
+        </ul>
+
+      </div>
+
+</div>
+
+<div class="section" id="topic7511__https-container-proxy"><h2 class="title sectiontitle">HTTPS Container Proxy</h2> 
+<p class="p">If you are using a framework such as Python or Perl which sets up uWSGI
+(or any other framework that provides its own intermediate web server)
+Harbor can provision an HTTPS server in the app container that forwards
+HTTPS requests to the framework's HTTP server. To do this, add the
+suffix <strong class="ph b">https</strong> to the name of your Harbor service. For example:</p>
+
+<pre class="pre codeblock">name: harbor-test-app
+services:
+  custom-cert-https: harbor</pre>
+
+<p class="p">Put your server certificate and key (named <em class="ph i">harbor.crt</em> and <em class="ph i">harbor.key</em>
+respectively) in a folder called <em class="ph i">certs</em> in the application's root
+directory. For example:</p>
+
+<pre class="pre codeblock">app_root
+    certs
+    harbor.crt
+    harbor.key
+    ...</pre>
+
+<p class="p">Alternatively, use a standalone or buildpack setup which provisions its
+own intermediate web server instead.</p>
+
+</div>
+
+<div class="section" id="topic7511__multiple-ssl-certificates"><h2 class="title sectiontitle">Multiple SSL Certificates</h2> 
+<p class="p">If your application uses multiple SSL certificates, use the following
+naming scheme:</p>
+
+<ul class="ul">
+<li class="li">
+<em class="ph i">harbor service name</em>.key</li>
+
+<li class="li">
+<em class="ph i">harbor service name</em>.crt</li>
+
+</ul>
+
+<p class="p">For example:</p>
+
+<pre class="pre codeblock">app_root
+    certs
+        harbor-https-custom-1.crt
+        harbor-https-custom-2.key
+    ...</pre>
+
+<p class="p">The proxy will look for these certs before reverting to <samp class="ph codeph">harbor.crt</samp> and <samp class="ph codeph">harbor.key</samp>.</p>
+
+</div>
+</div>
+
+
+</body>
+</html>

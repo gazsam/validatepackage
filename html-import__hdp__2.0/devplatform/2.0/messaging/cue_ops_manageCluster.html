@@ -1,0 +1,177 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Manage a Cluster from the Command Line</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="cue_manageCluster" /> <meta name="html-import-file-path" content="devplatform/2.0/messaging/cue_ops_manageCluster.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Manage a Cluster from the Command Line</h1>
+
+
+  
+
+  <div class="body">
+    <ul class="ul"><li class="li"><a class="xref" href="#cue_manageCluster__delete">Delete a Cluster</a></li>
+
+      <li class="li"><a class="xref" href="#cue_manageCluster__show">Show Details About a
+        Cluster</a></li>
+
+      <li class="li"><a class="xref" href="#cue_manageCluster__list">List all Clusters on a Node</a></li>
+
+     </ul>
+
+    <div class="section" id="cue_manageCluster__delete"><h2 class="title sectiontitle">Delete A Cluster</h2>
+      
+      
+      <p class="p">Deletes the specified cluster.</p>
+
+      <dl class="dl">
+        
+          <dt class="dt dlterm">Syntax</dt>
+
+          <dd class="dd"><pre class="pre codeblock">message-broker cluster delete</pre>
+</dd>
+
+        
+        
+          <dt class="dt dlterm">Required Fields</dt>
+<dd class="dd">cluster-id</dd>
+
+            <dt class="dt dlterm">Sample</dt>
+
+            <dd class="dd"><pre class="pre codeblock language-python"><em class="hl-comment" style="color:#006400">#!/usr/bin/env python</em>
+
+<strong class="hl-keyword" style="color:#7f0055">from</strong> keystoneclient.auth.identity <strong class="hl-keyword" style="color:#7f0055">import</strong> v3 <strong class="hl-keyword" style="color:#7f0055">as</strong> keystone_v3_auth
+<strong class="hl-keyword" style="color:#7f0055">from</strong> keystoneclient <strong class="hl-keyword" style="color:#7f0055">import</strong> session <strong class="hl-keyword" style="color:#7f0055">as</strong> keystone_session
+<strong class="hl-keyword" style="color:#7f0055">from</strong> cueclient.v1 <strong class="hl-keyword" style="color:#7f0055">import</strong> client
+
+auth = keystone_v3_auth.Password(
+        auth_url=<span class="hl-string" style="color:#2a00ff">"http://example.com:5000/v3"</span>,
+        username=<span class="hl-string" style="color:#2a00ff">"admin"</span>,
+        password=<span class="hl-string" style="color:#2a00ff">"password"</span>,
+        project_name=<span class="hl-string" style="color:#2a00ff">"admin"</span>,
+        project_domain_name=<span class="hl-string" style="color:#2a00ff">"default"</span>,
+        user_domain_name=<span class="hl-string" style="color:#2a00ff">"default"</span>
+)
+
+session = keystone_session.Session(auth=auth)
+cue_client = client.Client(session=session)
+
+delete_id = <span class="hl-string" style="color:#2a00ff">"dc86d96f-6b37-4e2d-9805-4542450f427d"</span>
+
+<em class="hl-comment" style="color:#006400"># Cluster Delete</em>
+delete_response = cue_client.clusters.delete(delete_id)</pre>
+</dd>
+
+          
+      </dl>
+
+    </div>
+
+    
+    
+    <div class="section" id="cue_manageCluster__show"><h2 class="title sectiontitle">Show A Cluster</h2>
+      
+      <p class="p">Displays information about the specified cluster.</p>
+
+      <dl class="dl">
+        
+          <dt class="dt dlterm">Syntax</dt>
+
+          <dd class="dd"><pre class="pre codeblock">message-broker cluster show</pre>
+</dd>
+
+        
+        
+          <dt class="dt dlterm">Required Fields</dt>
+<dd class="dd">cluster-id</dd>
+
+        
+          <dt class="dt dlterm">Sample</dt>
+
+          <dd class="dd"><pre class="pre codeblock language-python"><em class="hl-comment" style="color:#006400">#!/usr/bin/env python</em>
+
+<strong class="hl-keyword" style="color:#7f0055">from</strong> keystoneclient.auth.identity <strong class="hl-keyword" style="color:#7f0055">import</strong> v3 <strong class="hl-keyword" style="color:#7f0055">as</strong> keystone_v3_auth
+<strong class="hl-keyword" style="color:#7f0055">from</strong> keystoneclient <strong class="hl-keyword" style="color:#7f0055">import</strong> session <strong class="hl-keyword" style="color:#7f0055">as</strong> keystone_session
+<strong class="hl-keyword" style="color:#7f0055">from</strong> cueclient.v1 <strong class="hl-keyword" style="color:#7f0055">import</strong> client
+
+auth = keystone_v3_auth.Password(
+        auth_url=<span class="hl-string" style="color:#2a00ff">"http://example.com:5000/v3"</span>,
+        username=<span class="hl-string" style="color:#2a00ff">"admin"</span>,
+        password=<span class="hl-string" style="color:#2a00ff">"password"</span>,
+        project_name=<span class="hl-string" style="color:#2a00ff">"admin"</span>,
+        project_domain_name=<span class="hl-string" style="color:#2a00ff">"default"</span>,
+        user_domain_name=<span class="hl-string" style="color:#2a00ff">"default"</span>
+)
+
+session = keystone_session.Session(auth=auth)
+cue_client = client.Client(session=session)
+
+cluster_id = <span class="hl-string" style="color:#2a00ff">"0a352f9a-8aa8-411e-9d6d-4e6217d70afd"</span>
+
+<em class="hl-comment" style="color:#006400"># Cluster Show</em>
+show_response = cue_client.clusters.get(cluster_id)</pre>
+</dd>
+
+        
+      </dl>
+
+    </div>
+
+   
+    
+    <div class="section" id="cue_manageCluster__list"><h2 class="title sectiontitle">List All Clusters</h2>
+      
+      <p class="p">Lists all clusters on the current node.</p>
+
+      <dl class="dl">
+        
+          <dt class="dt dlterm">Syntax</dt>
+
+          <dd class="dd"><pre class="pre codeblock">message-broker cluster list</pre>
+</dd>
+
+        
+        
+          <dt class="dt dlterm">Required Fields</dt>
+<dd class="dd">None</dd>
+
+        
+          <dt class="dt dlterm">Sample</dt>
+
+          <dd class="dd"><pre class="pre codeblock language-python"><em class="hl-comment" style="color:#006400">#!/usr/bin/env python</em>
+
+<strong class="hl-keyword" style="color:#7f0055">from</strong> keystoneclient.auth.identity <strong class="hl-keyword" style="color:#7f0055">import</strong> v3 <strong class="hl-keyword" style="color:#7f0055">as</strong> keystone_v3_auth
+<strong class="hl-keyword" style="color:#7f0055">from</strong> keystoneclient <strong class="hl-keyword" style="color:#7f0055">import</strong> session <strong class="hl-keyword" style="color:#7f0055">as</strong> keystone_session
+<strong class="hl-keyword" style="color:#7f0055">from</strong> cueclient.v1 <strong class="hl-keyword" style="color:#7f0055">import</strong> client
+
+auth = keystone_v3_auth.Password(
+        auth_url=<span class="hl-string" style="color:#2a00ff">"http://example.com:5000/v3"</span>,
+        username=<span class="hl-string" style="color:#2a00ff">"admin"</span>,
+        password=<span class="hl-string" style="color:#2a00ff">"password"</span>,
+        project_name=<span class="hl-string" style="color:#2a00ff">"admin"</span>,
+        project_domain_name=<span class="hl-string" style="color:#2a00ff">"default"</span>,
+        user_domain_name=<span class="hl-string" style="color:#2a00ff">"default"</span>
+)
+
+session = keystone_session.Session(auth=auth)
+cue_client = client.Client(session=session)
+
+<em class="hl-comment" style="color:#006400"># Cluster List</em>
+list_response = cue_client.clusters.list()</pre>
+</dd>
+
+        
+      </dl>
+
+    </div>
+
+    <p class="p">For more details on working with Cue clusters from the command line, see <a class="xref" href="http://python-cueclient.readthedocs.org/en/latest/command-line.html#cluster-create" target="_blank">Cue Command Line Tool</a>.</p>
+
+  </div>
+
+
+</body>
+</html>

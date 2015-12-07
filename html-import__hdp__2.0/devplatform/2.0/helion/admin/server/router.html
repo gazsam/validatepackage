@@ -1,0 +1,241 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Router</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic3030" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/admin/server/router.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Router</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">The Application Lifecycle Service Router role manages HTTP and HTTPS traffic between web clients and application instances. In conjunction with the Cloud
+Controller, it maps application URLs to the corresponding application
+instances running in Linux containers on DEA nodes, distributing load
+between multiple instances (containers) as required.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic3030__settings">Settings</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic3030__websockets">WebSockets</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic3030__router-spdy">SPDY</a>
+</li>
+
+  <li class="li"><a class="xref" href="#topic3030__router">router.yml</a></li>
+
+  <li class="li"><a class="xref" href="#topic3030__ACL">Access Control List</a></li>
+
+  <li class="li"><a class="xref" href="https_and_ssl.html">Router SSL/TLS</a></li>
+ 
+</ul>
+
+<p class="p">Application Lifecycle Service's default router ('router2g') supports
+<a class="xref" href="http://www.websocket.org/aboutwebsocket.html" target="_blank">WebSocket</a> (including
+"wss://" secure web sockets) and <a class="xref" href="http://www.chromium.org/spdy" target="_blank">SPDY</a>.</p>
+
+    <p class="p">For Router SSL/TLS information, see the <a class="xref" href="https_and_ssl.html">HTTPS and SSL
+      Configuration</a> documentation.</p>
+
+<div class="section" id="topic3030__settings"><h2 class="title sectiontitle">Settings</h2> 
+ <p class="p">The Router is configured using <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-config">
+      <em class="ph i">kato config</em>
+    </a>. The following settings are configurable:</p>
+
+<dl class="dl">
+  
+    <dt class="dt dlterm">client_inactivity_timeout</dt>
+
+    <dd class="dd">time (in seconds) the router waits
+      for idle clients (default 1200 seconds). To change this:
+      <pre class="pre codeblock">kato config set router2g client_inactivity_timeout 2400</pre>
+</dd>
+
+  
+  
+    <dt class="dt dlterm">backend_inactivity_timeout</dt>
+
+    <dd class="dd">time (in seconds) the router waits
+      for applications to respond (default 1200 seconds). To change this:
+      <pre class="pre codeblock">kato config set router2g client_inactivity_timeout 2400</pre>
+</dd>
+
+  
+  
+    <dt class="dt dlterm">prevent_x_spoofing (true|false)</dt>
+
+    <dd class="dd">Enable HTTP "X-" header spoofing prevention (default 'true'). When enabled, the router
+            discards all X- headers sent by the client (e.g. X-Forwarded-For, X-Forwarded-proto,
+            X-Real-IP, etc.) and replaces them with values determined by the router itself. Set this
+            option to 'false' only if the routers are behind a load balancer which terminates SSL
+            connections; in this scenario, the router will trust the X-headers set by the load
+            balancer. To enable:
+              <pre class="pre codeblock">kato config set router2g prevent_x_spoofing true --json</pre>
+<div class="note note"><span class="notetitle">Note:</span> If
+              you have configured separate network routes to the API endpoint and user applications
+              [private network access to the API endpoint, load-balanced public access to
+              applications] this option must be set to 'true', or user applications will not have
+              access to X-headers set by the load balancer.</div>
+</dd>
+
+  
+  
+    <dt class="dt dlterm">session_affinity (true|false - disabled/unset by default)</dt>
+
+    <dd class="dd">Enable sticky session support on the router. Overrides normal
+      round-robin load balancing for clients with JSESSIONID, SESSIONID,
+      or PHPSESSID cookies set (configurable in the router's
+      <em class="ph i">config/local.json</em> file), routing those clients to specific
+      application instances. If the backend assigned on the first request
+      goes down, a new one is automatically assigned. Clients can delete
+      their sticky session assignment by removing the
+      HELION_SESSION_AFFINITY cookie.</dd>
+
+  
+  
+    <dt class="dt dlterm">x_frame_options</dt>
+
+    <dd class="dd">Prevent clickjacking on requests with <a class="xref" href="https://developer.mozilla.org/en-US/docs/HTTP/X-Frame-Options" target="_blank">X-Frame response header</a> configuration. Disabled if empty
+            (default). Valid values are: <ul class="ul">
+              <li class="li">DENY</li>
+
+              <li class="li">SAMEORIGIN</li>
+
+              <li class="li">ALLOW_FROM \&lt;uri&gt;</li>
+
+            </ul>
+ For example:
+              <pre class="pre codeblock">kato config set router2g x_frame_options SAMEORIGIN</pre>
+<div class="note note"><span class="notetitle">Note:</span> End-user
+              applications can also employ <a class="xref" href="http://en.wikipedia.org/wiki/Framekiller" target="_blank">framekiller</a> JavaScript snippets instead to
+              help prevent frame-based clickjacking.</div>
+</dd>
+
+  
+    <dt class="dt dlterm">acl</dt>
+<dd class="dd">Access Control List settings for the router. Undefined by default.</dd>
+
+        
+          <dt class="dt dlterm">cluster_endpoint_aliases</dt>
+
+          <dd class="dd">Add aliases for the API Endpoint. See the API Endpoint Alias documentation for an example.</dd>
+
+        
+          <dt class="dt dlterm">appOnlyRouter</dt>
+
+          <dd class="dd">Note that this is a file setting and not a <samp class="ph codeph">kato</samp> command. This setting
+            can be configured on router nodes in the
+              <samp class="ph codeph">/s/code/stackato-router/config/local.json</samp> file. Set
+              <samp class="ph codeph">appOnlyRouter</samp> to true and restart the router to enable. This
+            configures the router to not serve the API Endpoint, only user-deployed applications. At
+            least one router node in every cluster must expose the API Endpoint, but it does not
+            need to be internet accessible if the developers pushing applications are within the
+            same internal network where ALS is installed.</dd>
+
+        </dl>
+<div class="p">When configuration is complete, restart the router role to apply any
+          changes to the running router(s).<pre class="pre codeblock">kato restart router</pre>
+</div>
+
+</div>
+
+<div class="section" id="topic3030__websockets"><h2 class="title sectiontitle">WebSockets</h2> 
+<p class="p">Applications using web sockets must use the VCAP_APP_PORT or PORT
+<a class="xref" href="../../user/reference/environment.html"><em class="ph i">environment variables</em>
+</a>
+to set the default listener port of the WebSocket server.</p>
+
+</div>
+
+<div class="section" id="topic3030__router-spdy"><h2 class="title sectiontitle">SPDY</h2> 
+<p class="p">
+<a class="xref" href="http://dev.chromium.org/spdy/" target="_blank">SPDY</a> is a protocol developed by Google
+for reducing web page load time. The router supports SPDY versions 2 and
+3. Applications can use SPDY over any HTTPS connection, so long as the
+connection consumers (the application server and browser) support it.</p>
+
+</div>
+
+  <div class="section" id="topic3030__router"><h2 class="title sectiontitle">router.yml</h2>
+      
+      <p class="p">The default settings for the router are loaded from a <strong class="ph b">router.yml</strong> file in the
+          <samp class="ph codeph">/s/code/stackato-router/config/</samp> directory during first boot (only). You
+        can use this file to configure the router, but the changes must be manually re-imported with
+        the <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-op-import_from_yaml_file">kato-command-ref-op-import_from_yaml_file</a>command.</p>
+
+      <pre class="pre codeblock">kato op import_from_yaml_file router2g 
+kato restart router </pre>
+
+      <p class="p">This approach is often easier than manipulating the settings individually. </p>
+
+    </div>
+
+
+  <div class="section" id="topic3030__ACL"><h2 class="title sectiontitle">Access Control List</h2>
+  <p class="p">You can set the router to block specific IP addresses and ranges from connecting to ALS and the
+        applications it hosts. </p>
+
+      <div class="p">
+        <div class="note tip"><span class="tiptitle">Tip:</span> To minimalize snooping or DoS attempts, always set the
+            <samp class="ph codeph">drop_conn</samp> key to <em class="ph i">true</em> . This will terminate connections from
+          blocked IP addresses abruptly without an HTTP 403 error.
+          <pre class="pre codeblock">kato config set router2g acl/drop_conn true</pre>
+</div>
+
+      </div>
+
+      <div class="p">To enable the access control list:
+        <pre class="pre codeblock">kato config set router2g acl/enabled true</pre>
+ The rules key provides a
+        DENY list for single IP addresses and/or ranges to block. To specify a single IP address:
+        <pre class="pre codeblock">kato config set router2g acl/rules '["192.168.1.90"]'</pre>
+ To add another
+        IP address to the existing list of blocked IPs:
+        <pre class="pre codeblock">kato config push router2g acl/rules "192.168.5.10"</pre>
+ To set a range of
+        IP addresses:
+        <pre class="pre codeblock">kato config set router2g acl/rules '[["192.168.3.100","192.168.3.200"]]'</pre>
+
+        To set set individual addresses and ranges together: </div>
+
+    <div class="p">(See the <a class="xref" href="#topic3030__router">router.yml</a> section above for setting this configuration
+        using a YAML file instead.
+        )<pre class="pre codeblock">kato config set router2g acl/rules '["192.168.1.90",["192.168.3.100","192.168.3.200"]]'</pre>
+</div>
+
+      <div class="p"> If the routers are behind a load balancer that sets the 'X-Forwarded-For' header, set the
+          <samp class="ph codeph">use_x_forwarded_for </samp>to <em class="ph i">true</em> :
+        <pre class="pre codeblock">kato config set router2g acl/use_x_forwarded_for true</pre>
+ Use
+          <samp class="ph codeph">kato config get router2g acl </samp>to check your settings:
+        <pre class="pre codeblock">kato config get router2g acl
+enabled: true
+drop_conn: true
+use_x_forwarded_for: false
+rules:
+- 192.168.1.90
+- - 192.168.3.100
+- 192.168.3.200</pre>
+
+        Restart the router role to apply the configuration changes:
+        <pre class="pre codeblock">kato restart router</pre>
+</div>
+
+                
+  </div>
+
+</div>
+
+
+</body>
+</html>

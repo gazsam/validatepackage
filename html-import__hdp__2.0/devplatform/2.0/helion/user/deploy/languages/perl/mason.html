@@ -1,0 +1,104 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Mason</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic1723" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/languages/perl/mason.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Mason</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">Mason is a templating system that can handle web requests directly via
+PSGI, or act as the view layer for web frameworks such as Catalyst or
+Dancer. In the example below, it is used on its own to create a simple
+application.</p>
+
+<p class="p">A basic files needed to create an app using Mason are:</p>
+
+<ol class="ol">
+<li class="li">
+<em class="ph i">app.psgi</em>
+</li>
+
+<li class="li">
+<em class="ph i">requirements.txt</em>
+</li>
+
+<li class="li">
+<em class="ph i">manifest.yml</em>
+</li>
+
+</ol>
+
+<p class="p">Template files are also needed, which you can read about in the Mason
+documentation, or in our <a class="xref" href="https://github.com/Stackato-Apps/mason-helloworld" target="_blank">Hello World sample
+app</a>.</p>
+
+<p class="p">In the <em class="ph i">requirements.txt</em> file, list any module requirements, with at
+least:</p>
+
+<pre class="pre codeblock">Mason
+Plack::Builder
+Mason::Plugin::PSGIHandler
+Plack::Middleware::ReverseProxy</pre>
+
+<p class="p">In the <em class="ph i">app.psgi</em> file:</p>
+
+<pre class="pre codeblock">#!/usr/bin/perl
+use Cwd qw(realpath);
+use File::Basename;
+use Mason;
+use Plack::Builder;
+use warnings;
+use strict;
+
+# Include Mason plugins here
+my @plugins = ('PSGIHandler');
+
+# Create Mason object
+my $cwd = dirname( realpath(__FILE__) );
+my $interp = Mason-&gt;new(
+        comp_root =&gt; "$cwd/comps",
+        data_dir  =&gt; "$cwd/data",
+        plugins   =&gt; \@plugins,
+);
+
+# PSGI app
+my $app = sub {
+        my $env = shift;
+        $interp-&gt;handle_psgi($env);
+};
+
+builder {
+        # Include PSGI middleware required for Application Lifecycle Service
+        enable "Plack::Middleware::ContentLength";
+        enable "Plack::Middleware::ReverseProxy";
+        $app;
+};</pre>
+
+<p class="p">The <em class="ph i">manifest.yml</em> file contains deployment instructions for Application Lifecycle Service. See complete details for this file in the <a class="xref" href="../../manifestyml.html">
+<em class="ph i">Configuration With manifest.yml</em>
+</a> section.</p>
+
+<div class="section" id="topic1723__examples"><h2 class="title sectiontitle">Examples</h2> 
+<ul class="ul">
+<li class="li">
+<a class="xref" href="https://github.com/Stackato-Apps/mason-helloworld" target="_blank">Mason Hello
+World</a>: Hello
+World sample.</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

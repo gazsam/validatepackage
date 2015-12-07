@@ -1,0 +1,219 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Adding Buildpacks</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_pg2_qbl_ls" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/adding-buildpack.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Adding Buildpacks</h1>
+
+
+  
+
+  <div class="body">
+    <div class="section">
+      <p class="p"> The Application Lifecycle Service (ALS) has a number of built-in buildpacks installed by
+        default. Administrators can install additional buildpacks, making them available to
+        developers pushing applications. </p>
+</div>
+<div class="section"><h2 class="title sectiontitle">Building Packages</h2> Buildpacks are normally hosted in Git
+        repositories with a standard structure described in <a class="xref" href="https://devcenter.heroku.com/articles/buildpack-api" target="_blank">Heroku's Buildpack API documentation</a>. These repositories can be packaged into .zip
+        archives and uploaded to ALS alongside the other built-in buildpacks. Built-in buildpacks
+        come in two types: <ul class="ul" id="topic_pg2_qbl_ls__ul_lqf_vbl_ls">
+          <li class="li"><strong class="ph b">Online</strong> buildpacks fetch dependencies and artifacts from the internet during
+            application staging. </li>
+
+          <li class="li"><strong class="ph b">Offline</strong> buildpacks bundle all software dependencies the application needs.</li>
+
+        </ul>
+The buildpack .zip files are typically much larger, but can stage and run applications
+        on DEA nodes without access to the internet. Note: ALS ships with online buildpacks to keep
+        the size of the VM to a minimum. Once the system is set up, changing these to offline
+        versions can improve staging times substantially. Examples of buildpacks with offline
+        versions are: <ul class="ul" id="topic_pg2_qbl_ls__ul_k3d_xbl_ls">
+          <li class="li"><a class="xref" href="https://github.com/cloudfoundry/buildpack-ruby" target="_blank">cloudfoundry/buildpack-ruby </a></li>
+
+          <li class="li"><a class="xref" href="https://github.com/cloudfoundry/java-buildpack" target="_blank">
+            cloudfoundry/java-buildpack</a></li>
+
+        </ul>
+ When run with "offline" options, the bin/package script or package build target for
+        these buildpacks fetch the external assets and bundle them in the .zip file. See their
+        respective README files for more information. </div>
+<div class="section"><h2 class="title sectiontitle">Installing Packaged Buildpacks</h2> Use the create-buildpack command to upload
+      and install buildpack .zip archives. For example:
+      <pre class="pre codeblock">helion create-buildpack June2014CF-ruby ruby_buildpack.zip
+Creating new buildpack June2014CF-ruby ... OK
+Uploading buildpack bits ... 100% OK 
+OK</pre>
+</div>
+
+    <div class="section"><h2 class="title sectiontitle">Buildpack Order</h2> When users push applications to the system without
+      specifying an external buildpack, ALS cycles through the detect scripts of the installed
+      buildpacks looking for one to match the pushed application type. The first buildpack to match
+      the application detection heuristics will stage and run the pushed application. The order in
+      which these detect scripts are run is displayed by the <em class="ph i">buildpacks</em> command. These are
+      the default values:
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="topic_pg2_qbl_ls__table_esk_sdl_ls" class="table" frame="border" border="1" rules="all">
+          
+          
+          
+          
+          
+          <thead class="thead" align="left">
+            <tr class="row">
+              <th class="entry" valign="top" width="10.277492291880781%" id="d58340e82"># </th>
+
+              <th class="entry" valign="top" width="25.179856115107913%" id="d58340e85">Name </th>
+
+              <th class="entry" valign="top" width="27.33812949640288%" id="d58340e88">Filename </th>
+
+              <th class="entry" valign="top" width="18.602261048304214%" id="d58340e91">Enabled </th>
+
+              <th class="entry" valign="top" width="18.602261048304214%" id="d58340e94">Locked</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="10.277492291880781%" headers="d58340e82 ">1</td>
+
+              <td class="entry" valign="top" width="25.179856115107913%" headers="d58340e85 ">Java</td>
+
+              <td class="entry" valign="top" width="27.33812949640288%" headers="d58340e88 "> java.zip      </td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e91 ">Yes</td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e94 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="10.277492291880781%" headers="d58340e82 ">2</td>
+
+              <td class="entry" valign="top" width="25.179856115107913%" headers="d58340e85 ">Ruby</td>
+
+              <td class="entry" valign="top" width="27.33812949640288%" headers="d58340e88 ">ruby.zip</td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e91 ">Yes</td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e94 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="10.277492291880781%" headers="d58340e82 ">3</td>
+
+              <td class="entry" valign="top" width="25.179856115107913%" headers="d58340e85 ">Node.js</td>
+
+              <td class="entry" valign="top" width="27.33812949640288%" headers="d58340e88 ">nodejs.zip</td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e91 ">Yes</td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e94 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="10.277492291880781%" headers="d58340e82 ">4</td>
+
+              <td class="entry" valign="top" width="25.179856115107913%" headers="d58340e85 ">Python</td>
+
+              <td class="entry" valign="top" width="27.33812949640288%" headers="d58340e88 ">python.zip   </td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e91 ">Yes</td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e94 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="10.277492291880781%" headers="d58340e82 ">5</td>
+
+              <td class="entry" valign="top" width="25.179856115107913%" headers="d58340e85 ">Go</td>
+
+              <td class="entry" valign="top" width="27.33812949640288%" headers="d58340e88 ">go.zip </td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e91 ">Yes</td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e94 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="10.277492291880781%" headers="d58340e82 ">6</td>
+
+              <td class="entry" valign="top" width="25.179856115107913%" headers="d58340e85 ">Clojure</td>
+
+              <td class="entry" valign="top" width="27.33812949640288%" headers="d58340e88 ">clojure.zip   </td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e91 ">Yes</td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e94 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="10.277492291880781%" headers="d58340e82 ">7</td>
+
+              <td class="entry" valign="top" width="25.179856115107913%" headers="d58340e85 ">Scala</td>
+
+              <td class="entry" valign="top" width="27.33812949640288%" headers="d58340e88 ">scala.zip</td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e91 ">Yes</td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e94 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="10.277492291880781%" headers="d58340e82 ">8</td>
+
+              <td class="entry" valign="top" width="25.179856115107913%" headers="d58340e85 ">Perl</td>
+
+              <td class="entry" valign="top" width="27.33812949640288%" headers="d58340e88 ">perl.zip  </td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e91 ">Yes</td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e94 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="10.277492291880781%" headers="d58340e82 ">9</td>
+
+              <td class="entry" valign="top" width="25.179856115107913%" headers="d58340e85 ">June2014CF-ruby</td>
+
+              <td class="entry" valign="top" width="27.33812949640288%" headers="d58340e88 ">ruby_buildpack.zip</td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e91 ">Yes</td>
+
+              <td class="entry" valign="top" width="18.602261048304214%" headers="d58340e94 ">No</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+To change the order, use the <em class="ph i">update-buildpack</em> command to set the
+        <samp class="ph codeph">--position</samp> of the specified buildpack in this
+      queue:<pre class="pre codeblock">helion update-buildpack --position 1 python
+Updating buildpack [python] ... 
+   Position ... Changed to 1
+   Enabled ... Unchanged 
+   Locked ... Unchanged 
+OK</pre>
+
+      Built-in buildpacks can be enabled or disabled using the <samp class="ph codeph">--enable</samp> and
+        <samp class="ph codeph">--disable</samp> options for this command.</div>
+
+  </div>
+
+
+</body>
+</html>

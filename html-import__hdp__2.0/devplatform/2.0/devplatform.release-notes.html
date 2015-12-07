@@ -1,0 +1,302 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Release Notes</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic2502" /> <meta name="html-import-file-path" content="devplatform/2.0/devplatform.release-notes.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Release Notes</h1>
+
+
+  
+
+  <div class="body">
+    <p class="p">The following release notes are for the HPE Helion Development Platform 2.0 released in
+      November, 2015. We hope you enjoy the release!</p>
+
+    <div class="section"><h2 class="title sectiontitle">In This Release:</h2>
+      
+      <p class="p">HPE Helion Development Platform is comprised of the following services:</p>
+
+      <ul class="ul">
+        <li class="li">Development Platform Installer version 2.0.0.2</li>
+
+        <li class="li">Application Lifecycle Service version 2.0.0.548 </li>
+
+        <li class="li">Database Service version 2.0.0.38 </li>
+
+        <li class="li">Messaging Broker Service version 1.0.0.165 </li>
+
+        <li class="li">Helion Code Engine version 1.0.0.42 </li>
+
+        <li class="li">DNS as a Service version 2.0.0.190</li>
+
+      </ul>
+
+    </div>
+
+    <div class="section"><h2 class="title sectiontitle">What's New</h2>
+      
+      <p class="p">This release contains key functionality to make building and deploying cloud native apps
+        easier and faster for our customers.</p>
+
+      <ul class="ul">
+        <li class="li">Enterprises can deploy microservices packaged as Docker containers into a managed Cloud
+          Foundry-based Platform-as-a-Service (PaaS). </li>
+
+        <li class="li">This release includes the new HPE Helion Code Engine - a continuous
+          integration/continuous delivery (CI/CD) toolchain for automating the build/test/deploy
+          workflow to help modernize the development experience.</li>
+
+        <li class="li">Further integrating IaaS + PaaS, this release provides support for clustered MySQL,
+          MongoDB, and Redis. </li>
+
+        <li class="li">It also includes a technical preview of Vertica in our Database as a Service offering. </li>
+
+        <li class="li">The Messaging Broker Service supports RabbitMQ cluster provisioning.</li>
+
+        <li class="li">Monitoring alerts available through Monasca for the Messaging Broker service and the
+          Database Service.</li>
+
+        <li class="li">Improved documentation with targeted search and new user feedback link.</li>
+
+      </ul>
+
+    </div>
+
+    <div class="section">
+      <div class="p">MSGaaS now based on OpenStack Cue, and has the following enhancements: <ul class="ul" id="topic2502__ul_vtk_yzc_b5">
+          <li class="li">Managed message-brokers, specifically RabbitMQ.</li>
+
+          <li class="li">The Messaging Service is exposed to the user via the Trove Python CLI, REST APIs, and
+            the Horizon web interface.</li>
+
+          <li class="li">Active monitoring of RabbitMQ Clusters: the health of Cue managed clusters reported
+            via the Cue API.</li>
+
+          <li class="li">The Messaging Service Installation now leverages Helion Lifecycle Manager.</li>
+
+          <li class="li">Monasca Integration to alarm based on health of Cue Control Plane nodes</li>
+
+          <li class="li">Ops Console visibility into health of Cue Control Plane nodes</li>
+
+        </ul>
+</div>
+
+    </div>
+
+    <div class="section"><h2 class="title sectiontitle">2.0 General Notes</h2>
+      
+      <dl class="dl">
+        
+          <dt class="dt dlterm">Enable Monasca Monitoring for the Database Service</dt>
+
+          <dd class="dd"> The following instructions will enable the Monasca agent on the DBaaS control plane.
+              <div class="note note"><span class="notetitle">Note:</span> These instructions assume that you have permission to SSH into the control
+              plane.</div>
+<ol class="ol">
+              <li class="li"> Secure copy the following packages onto <strong class="ph b">each</strong> control plane
+                instance:<pre class="pre codeblock">Six-1.9.0
+Python-keystoneclient-0.10.1
+Oslo.i18n-1.5.0
+Pbr-0.11.0
+Oslo.utils-1.4.0
+Oslo.serialization-1.4.0
+Stevedore-1.3.0
+Oslo.config-1.3.0</pre>
+</li>
+
+              <li class="li">Use <samp class="ph codeph">pip install</samp> to install the packages <strong class="ph b">in the order
+                  listed</strong>.</li>
+
+              <li class="li"> Run <samp class="ph codeph">bash /etc/monasca/start-monasca</samp> to set up the Monasca agent
+                on that machine.</li>
+
+            </ol>
+</dd>
+
+        
+        
+          <dt class="dt dlterm">Manual Creation of the Database Endpoint</dt>
+
+          <dd class="dd"> If the installer fails to create the database endpoint at the end of the
+            installation, run the following commands to manually create one. You will need to supply
+            the IP address of the
+            VIP.<pre class="pre codeblock">$ openstack service create --name database database
+$ openstack endpoint create database admin 'http://<em class="ph i">&lt;public-VIP-IP-address&gt;</em>:8779/v1.0/$(tenant_id)s'
+$ openstack endpoint create database internal 'http://<em class="ph i">&lt;public-VIP-IP-address&gt;</em>:8779/v1.0/$(tenant_id)s'
+$ openstack endpoint create database public 'http://<em class="ph i">&lt;public-VIP-IP-address&gt;</em>:8779/v1.0/$(tenant_id)s'</pre>
+</dd>
+
+        
+        
+          <dt class="dt dlterm">Multiple Syntax Errors in Python pip Install Output</dt>
+
+          <dd class="dd">Installing a Python package also installs any required dependencies. This may generate
+            several syntax warnings inline as the install occurs. This is expected behavior, and
+            unless the output of the pip install reflects a fatal error, the install is still
+            considered "clean".</dd>
+
+        
+      </dl>
+
+    </div>
+
+ <div class="section"><h2 class="title sectiontitle">Database Service</h2>  
+      
+      <dl class="dl">  
+          
+          <dt class="dt dlterm">No option to reset password on Vertica Preview instance on Horizon</dt>
+  
+          <dd class="dd">Vertica clusters can be accessed via credentials obtained by enabling root, either Horizon or the Trove CLI. Single node   
+            Vertica instances must have root enabled through the Trove CLI, as this action is not  in Horizon. </dd>
+  
+          <dd class="dd">Example:  
+            <pre class="pre codeblock">trove root-enable &lt;instance&gt; </pre>
+</dd>
+  
+          
+        <dt class="dt dlterm">Searching for log entries returns API KEY ERROR: Missing</dt>
+  
+          <dd class="dd">The current Vertica Management Console release has a known issue where ng to search  
+            for Vertica log entries may result in an API key being requested. As a workaround, it is  
+            suggested to access Vertica event data directly through the database's ACTIVE_EVENTS,  
+            QUERY_EVENTS and QUERY_REQUESTS tables, as described in<a class="xref" href="database/devplatform.database-vertica.html"> Managing a Vertica Cluster from the Management Console</a>.</dd>
+  
+          
+        <dt class="dt dlterm">"Stack trove in status ROLLBACK_COMPLETE" message when DBaaS on fails</dt>
+  
+          <dd class="dd">The installation process may display a <samp class="ph codeph">ROLLBACK_COMPLETE</samp>  when installation fails. This may look like the following:  <pre class="pre codeblock">.devplatform)stack@redwood:~$ openstack --os-cloud mycloud hdpi database install --path cow2_2.0.0.31.csu  
+            dbaas-qcow2_2.0.0.31.csu is already downloaded  
+            dbaas-qcow2_2.0.0.31.csu is already (installed)  
+            Disabling SSL Features for databaseervice  
+            aunching stack...  
+            tack trove creating  
+            tack trove in status ROLLBACK_COMPLETE  
+            UI installed for database  
+            Create service endpoint for service database  
+            Completed installing database  
+            .devplatform)stack@redwood:~$</pre>
+</dd>
+  
+        <dt class="dt dlterm">“mysql cluster 5.5” listed as option in Launch Instance dialog</dt>
+  
+          <dd class="dd">When <strong class="ph b">Launch Instance</strong> is selected in the <strong class="ph b">Project-&gt;Database-&gt;Instances</strong> panel in Horizon, a <strong class="ph b">Datastore</strong> option of <strong class="ph b">mysql-cluster</strong> version <strong class="ph b">5.5</strong> is displayed. Selecting this option  
+            creates a standard <strong class="ph b">mysql</strong> cluster.</dd>
+  
+      </dl>
+</div>
+  
+      <div class="section"><h2 class="title sectiontitle">Known Issues</h2>
+      
+      <dl class="dl">
+        
+          <dt class="dt dlterm">Alarms appear in "No Service Defined" Panel</dt>
+
+          <dd class="dd">If the Message Broker sends alarms for MySQL or Zookeeper, they appear in the "No
+            Service Defined" panel of the Opsconsole, not the Messaging as a Service panel. This is
+            a known issue.</dd>
+
+        
+        
+          <dt class="dt dlterm">Creating an ALS cluster results in error: 413 Request Entity Too Large</dt>
+
+          <dd class="dd">When using the <samp class="ph codeph">cf-mgmt</samp> tool, cluster creation fails because the
+            payload sent to OpenStack to boot a new instance was too large. This is caused by
+            including certificates in the payload. To fix this, skip SSL validation or use Horizon
+            to create the cluster instead.<ol class="ol">
+              <li class="li">Launch the <samp class="ph codeph">cf-mgmt</samp> tool.</li>
+
+              <li class="li">Add the <samp class="ph codeph">--skip-ssl-validation</samp> parameter prior to the cluster
+                creation command.
+                <pre class="pre codeblock">cf-mgmt --skip-ssl-validation create-cluster <em class="ph i">[command options]</em> <em class="ph i">[arguments...]</em></pre>
+</li>
+
+            </ol>
+</dd>
+
+        
+        
+          <dt class="dt dlterm">UTM or Gateway Firewalls</dt>
+
+          <dd class="dd">UTM (Unified Threat Management) or Gateway firewalls may interfere with upgrades,
+            patches, or normal application staging if they are configured to inspect all HTTP(S)
+            traffic between ALS nodes and upstream package repositories. <a class="xref" href="helion/admin/cluster/cluster_index.html#admin_cluster_index__utm">See the full
+              documentation</a> for a detailed explanation and suggested solutions.</dd>
+
+        
+        
+          <dt class="dt dlterm">Harbor (Port Service) Node Configuration </dt>
+
+          <dd class="dd">The optional <a class="xref" href="helion/admin/cluster/harbor.html">Harbor TCP/UDP port
+              service</a> must be set up on a node with a public network interface if you wish to
+            enable port forwarding for user applications. The security group or firewall settings
+            for this node should make the configured port range accessible publicly.</dd>
+
+        
+        
+          <dt class="dt dlterm">Create Clusters with Horizon or <em class="ph i">cf-mgmt </em>Tool Only</dt>
+
+          <dd class="dd">Use only the Horizon UI or the <em class="ph i">cf-mgmt</em> command line tool to create ALS
+            clusters. Using <samp class="ph codeph">kato node attach</samp> or other methods are unsupported and
+            will not function properly.</dd>
+
+        
+        
+          <dt class="dt dlterm">Multiple Admin Password Prompts During Patch</dt>
+
+          <dd class="dd">When patching, the admin will be prompted for the password at least once and usually
+            multiple times. This is a known issue.</dd>
+
+        
+        
+          <dt class="dt dlterm">Disk Allocation Min/Max for <samp class="ph codeph">helion push --disk</samp></dt>
+
+          <dd class="dd">The application disk reservation setting has a minimum value of 512 MB and a maximum
+            of 2 GB. This is a per-instance limit.</dd>
+
+        
+        
+          <dt class="dt dlterm">Cluster Creation Fails, Log File Contains EOF Error</dt>
+
+          <dd class="dd">When creating a new ALS cluster, the creation fails. The
+              <samp class="ph codeph">/tmp/als_installer.txt</samp> logfile, located on the constructor VM,
+            contains EOF errors. To fix this error, open the configuration management tool and enter
+              <samp class="ph codeph">cf-mgmt --disable-connection-reuse true</samp>. This setting ensures a new
+            HTTP connection every time a request is made.</dd>
+
+        
+        
+          <dt class="dt dlterm">Cluster Creation Fails with "Disambiguate Network" Error</dt>
+
+          <dd class="dd">Creating a cluster fails and the following error message is received:
+            <pre class="pre codeblock">validating 'Network' failed, reason: More than one external network, disambiguate with external-network-name or external-network-id</pre>
+
+            If an environment has multiple external networks, cluster creation may require a
+            specific identifier to determine which to use. <ol class="ol" id="topic2502__ol_bcl_b31_vt">
+              <li class="li">Determine which network you wish to use. Either use Horizon to view the entire
+                list or use a command line argument such as
+                <pre class="pre codeblock">neutron net-list</pre>
+</li>
+
+              <li class="li">Then pass that external network's name or id using the configuration management
+                tool as follows:
+                <pre class="pre codeblock">cf-mgmt cc --external​-network-n​ame &lt;mynetworkName&gt;</pre>
+<pre class="pre codeblock">cf-mgmt cc --external​-network-id &lt;mynetworkID&gt;</pre>
+</li>
+
+            </ol>
+</dd>
+
+        
+      </dl>
+
+      </div>
+
+  </div>
+
+
+</body>
+</html>

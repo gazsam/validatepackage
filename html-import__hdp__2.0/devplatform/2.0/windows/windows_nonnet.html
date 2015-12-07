@@ -1,0 +1,168 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Deploying a Node.js Application</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="windows_nonnet" /> <meta name="html-import-file-path" content="devplatform/2.0/windows/windows_nonnet.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Deploying a Node.js Application</h1>
+
+
+  
+
+  
+  <div class="body">
+    <div class="section"><h2 class="title sectiontitle">HPE Helion 2.0 Development Platform: Deploying a Node.js Application</h2>
+      <span class="ph"><em class="ph i">Windows, .NET, SQL Server, and IIS are either registered trademarks or trademarks of
+          Microsoft Corporation in the United States and/or other countries.</em></span>
+      <p class="p">This tutorial demonstrates how to deploy a Node.js Application application. For the
+        purposes of this tutorial, you'll deploy the Hello World application created with the
+        Node.js Web Application template.</p>
+</div>
+
+    <div class="section"><h2 class="title sectiontitle">Contents</h2>
+    <p class="p">This tutorial contains the following sections:</p>
+
+    <ul class="ul">
+      <li class="li"><a class="xref" href="#windows_nonnet__prerequisites">Prerequisites</a></li>
+
+      <li class="li"><a class="xref" href="#windows_nonnet__create">Creating the Hello World application</a></li>
+
+      <li class="li"><a class="xref" href="#windows_nonnet__deploy">Deploying the application</a></li>
+
+    </ul>
+</div>
+
+    <div class="section" id="windows_nonnet__prerequisites"><h2 class="title sectiontitle">Prerequisites</h2>
+      <p class="p">This tutorial requires the following:</p>
+
+      <ol class="ol">
+        <li class="li">Any edition of Visual Studio 2013, including the Community (free) edition. Visual Studio 2013 Community Edition can be downloaded 
+          <a class="xref" href="http://go.microsoft.com/fwlink/?LinkId=517284" target="_blank">here</a>.</li>
+
+        <li class="li">An ALS cluster on an HPE Helion OpenStack or Public Cloud environment. See the <a class="xref" href="http://docs.hpcloud.com/devplatform/1.2/1.2devplatform.ALS-developer-trial-quick-start.html" target="_blank">Developer QuickStart</a> for information on setting up an ALS cluster on Helion
+          Public Cloud. </li>
+
+        <li class="li"><strong class="ph b">Node.js tools for Visual Studio 2013</strong>: These tools can be installed by doing the following:
+          <ol class="ol" type="a">
+            <li class="li">Select <strong class="ph b">Tools</strong>, <strong class="ph b">Extensions and Updates</strong></li>
+
+            <li class="li">In the <strong class="ph b">Online</strong> panel, select <strong class="ph b">Visual Studio Gallery</strong>. Use the search box in the upper right to search for <strong class="ph b">node.js tools</strong>.</li>
+
+            <li class="li">In the <strong class="ph b">Node Tools 1.1 RC</strong> item, click <strong class="ph b">Install</strong>.
+              <br/><img class="image" src="../../../media/windows_nonnet_installnode.png"/><br/></li>
+
+            <li class="li">The tools will download and install. Click <strong class="ph b">I accept the terms in the License Agreement</strong>, and click <strong class="ph b">Install</strong>.</li>
+
+            <li class="li">Click <strong class="ph b">Finish</strong> when the install completes.</li>
+
+          </ol>
+
+        </li>
+
+        <li class="li"><strong class="ph b">Cloud Foundry Extensions for Visual Studio</strong>: These extensions can be installed by doing the following:
+        <ol class="ol" type="a">
+          <li class="li">Select <strong class="ph b">Tools</strong>, <strong class="ph b">Extensions and Updates</strong></li>
+
+          <li class="li">In the <strong class="ph b">Online</strong> panel, select <strong class="ph b">Visual Studio Gallery</strong>, use the box in the upper right to search for <strong class="ph b">cloud foundry extensions</strong>.
+            </li>
+
+          <li class="li">In the <strong class="ph b">Cloud Foundry Extensions for Visual Studio</strong> item, click <strong class="ph b">Install</strong>.
+            <br/><img class="image" src="../../../media/windows_nonnet_installcfe.png"/><br/></li>
+
+          <li class="li">In the <strong class="ph b">Download and Install</strong> window, click <strong class="ph b">Install</strong>.
+            <br/><img class="image" src="../../../media/windows_nonnet_installcfe_1.png"/><br/></li>
+
+        </ol>
+</li>
+
+        <li class="li"><strong class="ph b">MSBuild Tasks</strong>: This package can be installed through NuGet Package Manager after the project is created (see below).</li>
+
+    </ol>
+</div>
+
+    <div class="section" id="windows_nonnet__create"><h2 class="title sectiontitle">Creating the Hello World Node.js application</h2>
+      <p class="p">To create the sample application, do the following:</p>
+
+      <ol class="ol">
+          <li class="li">In Visual Studio 2013, select <strong class="ph b">File</strong>, <strong class="ph b">New</strong>, <strong class="ph b">Project</strong>. In the <strong class="ph b">Templates</strong> pane, select <strong class="ph b">Other Languages</strong>, <strong class="ph b">JavaScript</strong>, <strong class="ph b">Node.js</strong>. Select <strong class="ph b">Blank Node.js Web Application</strong>, name the
+            project <strong class="ph b">NodeJSOnHelion</strong>, and click <strong class="ph b">OK</strong>.
+            <br/><img class="image" src="../../../media/windows_nonnet_newproject.png"/><br/></li>
+
+        <li class="li">Deploying the project requires <strong class="ph b">MSBuild Tasks for Cloud Foundry</strong>. To install this package, do the following:
+        <ol class="ol" type="a">
+          <li class="li">Right-click the solution in <strong class="ph b">Solution Explorer</strong> and select <strong class="ph b">Manage NuGet Packages for Solution</strong></li>
+
+          <li class="li">Select <strong class="ph b">Online</strong>, and use the upper right box to search for <strong class="ph b">msbuild cloud foundry</strong>.</li>
+
+          <li class="li">In the <strong class="ph b">Cloud Foundry MSBuild Tasks</strong> item, select <strong class="ph b">Install</strong>.
+            <br/><img class="image" src="../../../media/windows_nonnet_installcfmsb.png"/><br/></li>
+
+        </ol>
+</li>
+
+        <li class="li">Open <strong class="ph b">server.js</strong> from <strong class="ph b">Solution Explorer</strong>. Change the following line:
+        <pre class="pre codeblock">var port = process.env.port || 1337;</pre>
+
+        to:
+        <pre class="pre codeblock">var port = process.env.PORT || 3000;</pre>
+</li>
+
+      </ol>
+
+    </div>
+
+    <div class="section" id="windows_nonnet__deploy"><h2 class="title sectiontitle">Deploying the application</h2>
+      <p class="p">To deploy the sample application, do the following:</p>
+
+      <ol class="ol">
+        <li class="li">Right-click the project and select <strong class="ph b">Publish to Cloud Foundry</strong>. If this option does not appear, see <strong class="ph b">Cloud Foundry Extensions</strong> under 
+          <a class="xref" href="windows_nonnet.html#windows_nonnet__prerequisites">Prerequisites</a> above.</li>
+
+        <li class="li">In the first <strong class="ph b">Publish to Cloud Foundry</strong> dialog, click the <strong class="ph b">...</strong> button in the <strong class="ph b">Target</strong> line.
+          <br/><img class="image" src="../../../media/windows_nonnet_pub_1.png"/><br/></li>
+
+        <li class="li">In the <strong class="ph b">Cloud Foundry target login</strong> window, enter the following:
+          <ol class="ol" type="a"><li class="li">In the Description field, enter a description for your target environment (e.g. <strong class="ph b">Public Cloud</strong>).</li>
+
+              <li class="li">In the Target URL field, enter the address of your ALS cluster, in the format <strong class="ph b">http://api.xx.xx.xx.xx.xip.io</strong>.</li>
+
+              <li class="li">In the Username and Password fields, provide the credentials for your cluster.</li>
+
+              <li class="li">Select <strong class="ph b">Skip SSL Validation</strong> if your target environment does not use SSL (e.g. Public Cloud).</li>
+
+          </ol>
+
+          <br/><img class="image" src="../../../media/windows_nonnet_pub_2.png"/><br/>
+        </li>
+
+        <li class="li">In the <strong class="ph b">Pulish to Cloud Foundry</strong> window, click <strong class="ph b">Next&gt;</strong>.
+          <br/><img class="image" src="../../../media/windows_nonnet_pub_3.png"/><br/></li>
+
+        <li class="li">In the next <strong class="ph b">Publish to Cloud Foundry</strong> window, select <strong class="ph b">nodejs</strong> from the <strong class="ph b">Buildpack</strong> dropdown, and verify that the <strong class="ph b">Stack</strong> pulldown is set to <strong class="ph b">lucid64</strong>. Click <strong class="ph b">Next&gt;</strong>.
+          <br/><img class="image" src="../../../media/windows_nonnet_pub_4.png"/><br/></li>
+
+        <li class="li">In the next <strong class="ph b">Publish to Cloud Foundry</strong> window, select the target URL in the <strong class="ph b">Shared Domains</strong> section and click <strong class="ph b">Next</strong>.
+          <br/><img class="image" src="../../../media/windows_nonnet_pub_5.png"/><br/></li>
+
+        <li class="li">This sample application does not use any services, so click <strong class="ph b">Next</strong> in the next <strong class="ph b">Publish to Cloud Foundry</strong> window.
+          <br/><img class="image" src="../../../media/windows_nonnet_pub_6.png"/><br/></li>
+
+        <li class="li">This sample application does not use any environment variables, so click <strong class="ph b">Finish</strong> in the next <strong class="ph b">Publish to Cloud Foundry</strong> window.
+          <br/><img class="image" src="../../../media/windows_nonnet_pub_7.png"/><br/></li>
+
+        <li class="li">You can monitor progress of the deployment in the <strong class="ph b">Output</strong> pane (select <strong class="ph b">View</strong>, <strong class="ph b">Output</strong>.)</li>
+
+        <li class="li">When the deployment is complete, navigate to the application URL (e.g. <strong class="ph b">http://nodeonhelion.15.126.140.115.xip.io/</strong>) to verify that the deployment succeeded:
+          <br/><img class="image" src="../../../media/windows_nonnet_pub_8.png"/><br/></li>
+
+      </ol>
+</div>
+
+  </div>
+
+
+</body>
+</html>

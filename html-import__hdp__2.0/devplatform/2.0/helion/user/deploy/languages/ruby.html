@@ -1,0 +1,268 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Developing In Ruby</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic5273" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/languages/ruby.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Developing In Ruby</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">Whether you're deploying an application to the HPE Helion Development Platform, a
+Cloud Foundry based Platform as a Service (PaaS), or writing applications that take
+advantage of HPE Helion OpenStack<sup>®</sup> to manage infrastructure or software services, tools
+to enable successful development are available in Ruby.</p>
+
+<div class="section" id="topic5273__application-lifecycle-services"><h2 class="title sectiontitle">Application Lifecycle Services</h2> 
+<p class="p">Application Lifecycle Services (ALS), a cloud foundry based Platform as a Service,
+provides a means to execute ruby applications on a managed platform. Deploying applications to the platform is as simple as adding configuration to a YAML configuration file and using a console application to push the application to ALS.
+At its simplest form the configuration file, <em class="ph i">manifest.yml</em>, at the root of a project would look like:</p>
+
+<pre class="pre codeblock">name: ruby-web-app
+framework:
+    type: ruby20&lt;/pre&gt;</pre>
+
+<p class="p">This will tell ALS to have a Ruby web application.
+To create a worker non-http application set the web process to null (~) and specify
+the command to run. For example,</p>
+
+<pre class="pre codeblock">name: ruby-app
+framework:
+  type: rails3
+  runtime: ruby19
+command: ruby worker.rb
+processes:
+  web: ~</pre>
+
+<p class="p">Management of the deployed application and its services happens through a web application or a console application.
+To learn more see:</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="ruby.html">Working with applications in Ruby</a>
+</li>
+
+<li class="li">The <a class="xref" href="../manifestyml.html">manifest.yml</a> reference.</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic5273__hp-helion-sdk"><h2 class="title sectiontitle">HPE Helion SDK</h2> 
+  <p class="p">Ruby applications can communicate directly with the <a class="xref" href="http://docs.hpcloud.com/#publiccloud/api.html">Helion APIs</a> through a REST client or use the SDK. The SDK is designed to have a simple well documented API to simplify working with the services.
+To understand how it works, here is an example of writing and reading from object storage:</p>
+
+<pre class="pre codeblock">def credentials_hash
+  {
+    :provider =&gt; :openstack,
+    :openstack_auth_url =&gt; ENV['OS_AUTH_URL'],
+    :openstack_username =&gt; ENV['OS_USER'],
+    :openstack_api_key =&gt; ENV['OS_API_KEY'],
+    :openstack_tenant =&gt;  ENV['OS_TENANT'],
+    :openstack_region =&gt; ENV['OS_REGION']
+  }
+end
+
+storage = Fog::Storage.new(credentials_hash)
+
+#list directories
+storage.directories
+
+#create a directory
+storage.directories.create(:key =&gt; "Example")
+
+#create an object
+dir = storage.directories.get("Example")
+dir.files.create(:key =&gt; "sample.txt", :body =&gt; File.open("/path/to/sample.txt"))
+
+#get the same object out
+dir = conn.directories.get("Example")
+file = dir.files.get("sample.txt")
+file.key   # =&gt; sample.txt
+file.content_type # =&gt; text/plain</pre>
+
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span>  See <a class="xref" href="../buildpack.html">Buildpacks</a> for an alternative way to
+          deploy Ruby on Rails applications.</div>
+
+      </div>
+
+</div>
+
+<div class="section" id="topic5273__using-ruby-2-0"><h2 class="title sectiontitle">Using Ruby 2.0</h2> 
+<p class="p">The <em class="ph i">manifest.yml</em> file must specify the Ruby runtime version and Rails as the
+framework type:</p>
+
+<pre class="pre codeblock">framework:
+  runtime: ruby20</pre>
+
+<p class="p">Default Ruby version is Ruby 1.9</p>
+
+</div>
+
+<div class="section" id="topic5273__known-issues"><h2 class="title sectiontitle">Known Issues</h2> 
+<ul class="ul">
+<li class="li">
+<p class="p">Rmagick gem currently not supported.</p>
+
+</li>
+
+<li class="li">
+<p class="p">PostgreSQL Gem (pg) version must be pinned to 0.12.2 (if used):</p>
+
+
+<pre class="pre codeblock">gem 'pg', '0.12.2'</pre>
+
+</li>
+
+<li class="li">
+<p class="p">Must specify Rake Gem immediately before the line loading rails.
+This happens because when Rails loads, it finds version 0.9.2 of
+Rake, and that becomes the only version of Rake in the process.
+Later code wants version 0.9.2.2, and fails:</p>
+
+
+<pre class="pre codeblock">gem 'rake', '0.9.2.2'
+gem 'rails'</pre>
+
+</li>
+
+<li class="li">
+<p class="p">For Ruby 1.9, Cloud Foundry requires a tweak to the jquery-rails gem.</p>
+
+
+<pre class="pre codeblock">gem 'cloudfoundry-jquery-rails'</pre>
+
+</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic5273__ruby-on-rails-3-1"><h2 class="title sectiontitle">Ruby on Rails 3.1+</h2> 
+<p class="p">To get the asset pipeline working on Application Lifecycle Service, precompile your assets in
+your development environment, which compiles them into public/assets:</p>
+
+<pre class="pre codeblock">bundle exec rake assets:precompile</pre>
+
+</div>
+
+<div class="section" id="topic5273__gems-and-libraries"><h2 class="title sectiontitle">Gems and Libraries</h2> 
+<p class="p">A <em class="ph i">Gemfile</em> must be included in your app that lists all required gems.
+Run:</p>
+
+<pre class="pre codeblock">bundle install
+bundle package</pre>
+
+<p class="p">any time you modify the <em class="ph i">Gemfile</em> and prior to pushing an app to
+Application Lifecycle Service.</p>
+
+<p class="p">If VCAP sees a Gemfile.lock in the application, it will ensure the
+needed gems are packaged, and set the BUNDLE_PATH environment variable
+to point at them.</p>
+
+</div>
+
+<div class="section" id="topic5273__unsupported-gemfile-features"><h2 class="title sectiontitle">Unsupported <em class="ph i">Gemfile</em> features</h2> 
+<ol class="ol">
+<li class="li">git urls or branch dependencies</li>
+
+<li class="li">gem :path =&gt; "some/path"</li>
+
+<li class="li">platform-conditional gems</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic5273__database-services"><h2 class="title sectiontitle">Database Services</h2> 
+<p class="p">Cloud Foundry supports database auto-reconfiguration for Rails
+applications.</p>
+
+</div>
+
+<div class="section" id="topic5273__worker-applications"><h2 class="title sectiontitle">Worker Applications</h2> 
+<p class="p">Non-HTTP apps that run as an Application Lifecycle Service application under the control of
+the Health Manager.</p>
+
+<p class="p">To deploy worker applications, you need to use the
+  <a class="xref" href="../manifestyml.html#topic20922__command">
+<em class="ph i">command</em>
+</a> key and set the
+  <a class="xref" href="../manifestyml.html#topic20922__web">
+<em class="ph i">processes: web</em>
+</a>
+key to Null ("\~").</p>
+
+</div>
+
+<div class="section" id="topic5273__example"><h2 class="title sectiontitle">Example</h2> 
+<pre class="pre codeblock">name: ruby-app
+framework:
+  type: rails3
+  runtime: ruby19
+command: ruby worker.rb
+processes:
+  web: ~</pre>
+
+</div>
+
+<div class="section" id="topic5273__general-guidelines"><h2 class="title sectiontitle">General Guidelines</h2> 
+</div>
+
+<div class="section" id="topic5273__app-web-servers"><h2 class="title sectiontitle">App/Web Servers</h2> 
+<p class="p">For the best performance, <a class="xref" href="https://devcenter.heroku.com/articles/ruby#webserver">using the Thin Ruby webserver</a> is recommended.
+Include <samp class="ph codeph">gem 'thin'</samp> in your <em class="ph i">Gemfile</em>.</p>
+
+</div>
+
+<div class="section" id="topic5273__bundler"><h2 class="title sectiontitle">Bundler</h2> 
+<p class="p">You need Bundler and Rails installed locally. This can be done via:</p>
+
+<pre class="pre codeblock">sudo gem install rails bundler --no-ri --no-rdoc</pre>
+
+</div>
+
+<div class="section" id="topic5273__running-rake-commands"><h2 class="title sectiontitle">Running rake commands</h2> 
+<p class="p">Generally, <samp class="ph codeph">bundle exec</samp> must be used when running any commands that are installed through Gemfile/bundler.</p>
+
+<p class="p">To run <samp class="ph codeph">rake stats</samp>, for instance, use the <samp class="ph codeph">helion run</samp> command:</p>
+
+<pre class="pre codeblock">helion run *appname* bundle exec rake stats</pre>
+
+  <p class="p">See the <a class="xref" href="../../reference/client-ref.html">ALS Command Reference</a> for details on the use of <samp class="ph codeph">helion run</samp>.</p>
+
+</div>
+
+<div class="section" id="topic5273__references"><h2 class="title sectiontitle">References</h2> 
+<ul class="ul">
+<li class="li">
+<a class="xref" href="http://blog.cloudfoundry.com/2012/03/12/using-cloud-foundry-services-with-ruby-part-1-auto-reconfiguration/" target="_blank">Auto-Reconfiguration Part
+I</a>:
+Cloud Foundry Blog.</li>
+
+<li class="li">
+<a class="xref" href="http://blog.cloudfoundry.com/2012/03/15/using-cloud-foundry-services-with-ruby-part-2-run-time-support-for-ruby-applications" target="_blank">Auto-Reconfiguration Part
+II</a>:
+Cloud Foundry Blog.</li>
+
+<li class="li">
+<a class="xref" href="http://docs.cloudfoundry.org/buildpacks/ruby/ruby-tips.html" target="_blank">Working with Ruby, Rails and Sinatra: Things to
+know</a>:
+Cloud Foundry Documentation.</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

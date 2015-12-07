@@ -1,0 +1,263 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Sample Applications</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic5271" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/admin/console/app-store.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Sample Applications</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">The Sample Applications are a collection of ready-to-run applications which can be
+deployed with a couple of clicks. This interface uses the same API as the CLI client to pull the source code from a Git repository rather than push an archive from the user's local
+filesystem.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic5271__creating-an-app-store">Creating Sample Applications</a>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic5271__app-store-definition">Sample Applications Definition File</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic5271__hosting-the-store-definition-files">Hosting Definition Files</a>
+</li>
+
+</ul>
+
+</li>
+
+<li class="li">
+<a class="xref" href="#topic5271__adding-the-app-store-to-helion">Adding the Sample Applications to the Application Lifecycle Service</a>
+</li>
+
+</ul>
+
+<p class="p">Users have access to the main Sample Applications interface (see the <a class="xref" href="../../user/helion_user_index.html">Application Lifecycle Service User Guide</a>, but do not have access to add new applications or add/modify the definition file.</p>
+
+<div class="section" id="topic5271__creating-an-app-store"><h2 class="title sectiontitle">Creating Sample Applications</h2> 
+<p class="p">The Sample Applications interface exposes multiple "stores" which specify the
+available applications. These stores are sourced from definition files
+specified in the main <a class="xref" href="console_settings.html">Console Settings</a> page of
+  the Management Console or set using <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-config">kato
+config</a>.</p>
+
+</div>
+
+<div class="section" id="topic5271__app-store-definition"><h2 class="title sectiontitle">Sample Applications Definition File</h2> 
+<p class="p">
+  <a class="xref" href="../../user/reference/glossary.html#topic6187__term-YAML">YAML</a> files describe the settings for each set of apps, including the container and a link to the source  repository for
+each app. For example:</p>
+
+<pre class="pre codeblock">store:
+  title: Third Party Apps for Application Lifecycle Service Development Platform
+  contact: Application Lifecycle Service Development Platform Support 
+  icon: http://static.als.hpcloud.com/hp.ico
+
+apps:
+- name: Bugzilla
+  id: bugzilla
+  desc: A bug tracking system for individuals or groups of developers
+  framework: perl
+  runtime: perl514
+  services: mysql
+  license: MPL
+  commit: master
+  src: https://github.com/Helion-Apps/bugzilla.git
+  info: https://github.com/Helion-Apps/bugzilla.git#readme
+  icon: https://get.helion.com/store/icon/bugzilla.png
+  mem: 256
+
+- name: Django CMS
+  id: django-cms
+  desc: A content management system platform for publishing content on the internet.
+  framework: python
+  runtime: python27
+  services: postgresql
+  license: BSD
+  commit: helion
+  src: https://github.com/Helion-Apps/django-cms.git
+  info: https://github.com/Helion-Apps/django-cms.git#readme
+  icon: https://get.helion.com/store/icon/django-cms.png
+  mem: 128
+
+- name: Node Chat
+  id: node-chat
+  desc: A simple chat application in Node.js with no other dependencies. Originally written by Ryan Dahl, the creator of Node.js.
+  framework: node
+  runtime: node
+  commit: master
+  icon: https://get.helion.com/store/icon/chat.png
+  mem: 64
+  license: MIT
+  src: https://github.com/Helion-Apps/node-chat.git
+  info: https://github.com/Helion-Apps/node-chat.git#readme</pre>
+
+<p class="p">The YAML string requires two top-level keys: <strong class="ph b">store</strong>
+and <strong class="ph b">apps</strong>.</p>
+
+</div>
+
+<div class="section" id="topic5271__store"><h2 class="title sectiontitle">store</h2> 
+<p class="p">Contains entries that define the container for each set of Sample Applications.</p>
+
+<p class="p">
+<strong class="ph b">title</strong>:Text used as a display name for the Sample Applications in the Management Console.</p>
+
+<p class="p">
+<strong class="ph b">contact</strong>: The name and email address of the party responsible for maintaining these sample applications.</p>
+
+<p class="p">
+<strong class="ph b">icon</strong>: An image used for the Sample Applications icon. Specified as a full URL.</p>
+
+</div>
+
+<div class="section" id="topic5271__apps"><h2 class="title sectiontitle">apps</h2> 
+<p class="p">This is an array of items (see YAML format above), one for each app in the container. Each app is defined by the following fields:</p>
+
+<p class="p">
+<strong class="ph b">name</strong>:   The name of the app as displayed in the Sample Applications list.</p>
+
+<p class="p">
+<strong class="ph b">desc</strong>:   A short description of the app, displayed below the name.</p>
+
+<p class="p">
+<strong class="ph b">id</strong>: A short, lowercase, unique string associated with the app. Apps are sorted alphabetically in the list based on this field.</p>
+
+<dl class="dl">
+
+<dt class="dt dlterm">
+<strong class="ph b">repo</strong>
+</dt>
+
+<dd class="dd">URL of the Git repository where the app code resides.</dd>
+
+
+
+
+
+<dt class="dt dlterm">
+<strong class="ph b">commit</strong>
+</dt>
+
+<dd class="dd">Branch name, tag name, or exact commit hash to use. If unspecified, the HEAD commit of <em class="ph i">master</em> branch is used.</dd>
+
+
+
+
+
+<dt class="dt dlterm">
+<strong class="ph b">framework</strong>
+</dt>
+
+  <dd class="dd">The framework the app uses, if the app is deployed using the <a class="xref" href="../../user/deploy/buildpack.html#topic3370__built-in-buildpacks">Legacy Buildpack</a>(e.g. perl, python, node, rails3).</dd>
+
+
+
+
+
+<dt class="dt dlterm">
+<strong class="ph b">icon</strong>
+</dt>
+
+<dd class="dd">An image used for the app icon specified either as a full URL, a file relative to the <strong class="ph b">store</strong> key <strong class="ph b">icon-url</strong>
+URL, <strong class="ph b">default</strong>, or other variable value.</dd>
+
+
+
+
+
+<dt class="dt dlterm">
+<strong class="ph b">info</strong>
+</dt>
+
+<dd class="dd">A URL pointing to documentation for the app.</dd>
+
+
+
+
+
+<dt class="dt dlterm">
+<strong class="ph b">license</strong>
+</dt>
+
+<dd class="dd">Optional string indicating the software license of the app (e.g.
+ <samp class="ph codeph">MIT</samp>, <samp class="ph codeph">MPL</samp>,
+ <samp class="ph codeph">BSD</samp>).</dd>
+
+
+
+
+
+<dt class="dt dlterm">
+<strong class="ph b">mem</strong>
+</dt>
+
+<dd class="dd">Memory requirements of the app (integer, in MB).</dd>
+
+
+
+
+
+<dt class="dt dlterm">
+<strong class="ph b">runtime</strong>
+</dt>
+
+  <dd class="dd">The runtime, if the app is deployed using the <a class="xref" href="../../user/deploy/buildpack.html#topic3370__built-in-buildpacks">Legacy Buildpack</a> (e.g. java, python32, ruby19, php, perl518).
+<strong class="ph b">services</strong>
+</dd>
+
+<dd class="dd">Data services required by the app.</dd>
+
+
+
+
+
+</dl>
+
+      <div class="note note"><span class="notetitle">Note:</span>  The store definition settings do <strong class="ph b">not</strong> override settings in the application's
+          <em class="ph i">manifest.yml</em> file.</div>
+
+</div>
+
+<div class="section" id="topic5271__hosting-the-store-definition-files"><h2 class="title sectiontitle">Hosting the Definition Files</h2> 
+<p class="p">The YAML files defining the stores can be served via HTTP or HTTPS by
+any web server at a URL accessible from the Cloud Controller.</p>
+
+</div>
+
+<div class="section" id="topic5271__adding-the-app-store-to-helion"><h2 class="title sectiontitle">Adding the Sample Applications to Application Lifecycle Service</h2> 
+<ol class="ol">
+<li class="li">Log into the <a class="xref" href="console_index.html">Management
+Console</a>,</li>
+
+<li class="li">Select <strong class="ph b">Settings &gt; Cloud Controller</strong> from the menu.</li>
+
+<li class="li">In the <strong class="ph b">Sample Applications URLs</strong> section, enter a name and content URL for
+your store definition YAML file then click <strong class="ph b">Add Sample Applications URL</strong>.</li>
+
+</ol>
+
+<p class="p">To confirm the Sample Applications are loading correctly, select <strong class="ph b">Sample Applications</strong> in the menu and view the list of applications displayed. A <strong class="ph b">CC Catalog Manager</strong> error appears in the Event Log if a Sample Applications URL fails to load.</p>
+
+<p class="p">Sample Applications URLs can also be viewed, added, deleted, enabled, and disabled
+  with <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-config">kato config</a>. For
+example:</p>
+
+<pre class="pre codeblock">kato config get cloud_controller_ng app_store</pre>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

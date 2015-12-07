@@ -1,0 +1,4428 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Command Reference: Management</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic50918" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/client-ref-management.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Command Reference: Management</h1>
+
+
+
+
+<div class="body">
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic50918__command-create-app">helion create-app</a>: Create an empty application with the specified configuration.</li>
+
+<li class="li">
+        <a class="xref" href="#topic50918__command-dbshell">helion dbshell</a>: Invoke
+        interactive db shell for a bound service.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-delete">helion delete</a>: Delete the specified application(s).</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-drain-add">helion drain add</a>: Attach a new named drain to the application.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-drain-delete">helion drain delete</a>: Remove the named drain from the application.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-env-add">helion env-add</a>: Add the specified environment variable to the named application.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-env-del">helion env-del</a>: Remove the specified environment variable from the named application.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-map">helion map</a>: Make the application accessible through the specified URL (a route consisting of host and domain).</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-open">helion open</a>: Open the url of the specified application in the default web browser.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-push">helion push</a>: Configure, create, push, map, and start a new application.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-rename">helion rename</a>: Rename the specified application.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-restart">helion restart</a>: Stop and restart a deployed application.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-rollback">helion rollback</a>: Switch to a different version of the application.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-run">helion run</a>: Run a specified command on a running instance.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-scale">helion scale</a>: Update the number of instances, memory and/or disk reservation for a deployed application.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-scp">helion scp</a>: Copy source files and directories to the destination.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-set-env">helion set-env</a>: Add the specified environment variable to the named application.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-ssh">helion ssh</a>: SSH to a running instance (or target), or run a specific command.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-start">helion start</a>: Start a deployed application.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-stop">helion stop</a>: Stop a deployed application.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-switch-version">helion switch-version</a>: Switch to a different version of the application.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-unmap">helion unmap</a>: Unregister the application from a URL.</li>
+
+<li class="li">
+<a class="xref" href="#topic50918__command-unset-env">helion unset-env</a>: Remove the specified environment variable from the named application.</li>
+
+</ul>
+
+<div class="section" id="topic50918__syntax"><h2 class="title sectiontitle">Syntax</h2> 
+<pre class="pre codeblock">helion [options] command [arguments] [command-options]</pre>
+
+<p class="p">For more information, use the <strong class="ph b">helion help</strong> or <strong class="ph b">helion help [<em class="ph i">command</em>]</strong> commands.</p>
+
+</div>
+
+<div class="section" id="topic50918__command-create-app"><h2 class="title sectiontitle">helion create-app &lt;<em class="ph i">application</em>&gt;</h2> 
+<p class="p">Create an empty application with the specified configuration.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--buildpack</td>
+
+<td class="entry" valign="top">Url of a custom buildpack. This is an Application Lifecycle Service 3 specific option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--command</td>
+
+<td class="entry" valign="top">The application's start command. Defaults to a framework-specific
+value if required and not specified by manifest.yml.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--disk</td>
+
+<td class="entry" valign="top">The application's per-instance disk allocation. Defaults to a
+framework-specific value if not specified by manifest.yml.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--env</td>
+
+<td class="entry" valign="top">Environment variable overrides. These are always applied
+regardless of --env-mode. The mode is restricted to the variable
+declarations found in the manifest.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--env-mode</td>
+
+<td class="entry" valign="top">Environment replacement mode. One of preserve, or replace. The
+default is "preserve". Using mode "replace" implies --reset as
+well, for push. Note that new variables are always set. Preserve
+only prevents update of existing variables. This setting applies
+only to the variable declarations found in the manifest. Overrides
+made with --env are always applied.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--framework</td>
+
+<td class="entry" valign="top">Specify the framework to use. Cannot be used together with --no-framework. Defaults to a heuristically chosen value if not
+specified, and none for --no-framework. This is an Application Lifecycle Service 2
+specific option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+<td class="entry" valign="top">The once-off group to use for the current operation. This is a
+Application Lifecycle Service 2 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--instances</td>
+
+<td class="entry" valign="top">The number of application instances to create. Defaults to 1, if
+not specified by a manifest.yml.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+<td class="entry" valign="top">Path of the manifest file to use. If not specified a search is
+done.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--mem</td>
+
+<td class="entry" valign="top">The application's per-instance memory allocation. Defaults to a
+framework-specific value if not specified by manifest.yml.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-framework</td>
+
+<td class="entry" valign="top">Create application without any framework. Cannot be used together
+with --framework. This is an Application Lifecycle Service 2 specific option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-tail</td>
+
+<td class="entry" valign="top">Complementary alias of --tail.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation. This
+is an Application Lifecycle Service 3 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+<td class="entry" valign="top">Path of the directory holding the application files to push.
+Defaults to the current working directory.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--reset</td>
+
+<td class="entry" valign="top">Analogue of --env-mode, for the regular settings.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--runtime</td>
+
+<td class="entry" valign="top">The name of the runtime to use. Default is framework specific, if
+not specified by a manifest.yml. This is an Application Lifecycle Service 2 specific
+option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+name. This is an Application Lifecycle Service 3 option. Cannot be used together with --space-guid.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+guid. This is an Application Lifecycle Service 3 option. Cannot be used together with --space.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--stack</td>
+
+<td class="entry" valign="top">The operating system foundation the application will run on. This is an Application Lifecycle
+                Service 3 specific option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--helion-debug</td>
+
+<td class="entry" valign="top">host:port of the Komodo debugger listener to inject into the
+application as environment variables.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--tail</td>
+
+<td class="entry" valign="top">Request target to stream the log.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--url</td>
+
+<td class="entry" valign="top">The urls to map the application to. I.e. can be specified multiple
+times.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-d</td>
+
+<td class="entry" valign="top">Set up debugging through an application-specific harbor (port)
+service. Target version 2.8+ only.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-o</td>
+
+<td class="entry" valign="top">Alias of --organization.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-dbshell"><h2 class="title sectiontitle">helion dbshell &lt;<em class="ph i">application</em>&gt; &lt;<em class="ph i">service</em>&gt;</h2> 
+<p class="p">Invoke interactive db shell for a bound service.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--dry</td>
+
+<td class="entry" valign="top">Print the low-level ssh command to stdout instead of executing it.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--dry-run</td>
+
+<td class="entry" valign="top">Alias of --dry.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+<td class="entry" valign="top">The once-off group to use for the current operation. This is a
+Application Lifecycle Service 2 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+<td class="entry" valign="top">Path of the manifest file to use. If not specified a search is
+done.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-tail</td>
+
+<td class="entry" valign="top">Complementary alias of --tail.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation. This
+is an Application Lifecycle Service 3 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+<td class="entry" valign="top">Path of the directory holding the application files to push.
+Defaults to the current working directory.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+name. This is an Application Lifecycle Service 3 option. Cannot be used together with --space-guid.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+guid. This is an Application Lifecycle Service 3 option. Cannot be used together with --space.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--tail</td>
+
+<td class="entry" valign="top">Request target to stream the log.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-o</td>
+
+<td class="entry" valign="top">Alias of --organization.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+ </tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-delete"><h2 class="title sectiontitle">helion delete &lt;<em class="ph i">application</em>&gt;</h2> 
+<p class="p">Delete the specified application(s).</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">--all</td>
+
+    <td class="entry" valign="top">Delete all applications. Cannot be used together with application
+    names.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--force</td>
+
+    <td class="entry" valign="top">Force deletion.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+    <td class="entry" valign="top">The once-off group to use for the current operation. This is a
+    Application Lifecycle Service 2 option.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+    <td class="entry" valign="top">Path of the manifest file to use. If not specified a search is
+    done.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+    <td class="entry" valign="top">Disable interactive queries.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-tail</td>
+
+    <td class="entry" valign="top">Complementary alias of --tail.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+    <td class="entry" valign="top">Complementary alias of --trace.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+    <td class="entry" valign="top">Alias of --no-prompt.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+    <td class="entry" valign="top">Alias of --no-prompt.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+    <td class="entry" valign="top">The once-off organization to use for the current operation. This
+    is an Application Lifecycle Service 3 option.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+    <td class="entry" valign="top">Path of the directory holding the application files to push.
+    Defaults to the current working directory.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+    <td class="entry" valign="top">The once-off space to use for the current operation, specified by
+    name. This is an Application Lifecycle Service 3 option. Cannot be used together with --space-guid.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+    <td class="entry" valign="top">The once-off space to use for the current operation, specified by
+    guid. This is an Application Lifecycle Service 3 option. Cannot be used together with --space.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--tail</td>
+
+    <td class="entry" valign="top">Request target to stream the log.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+    <td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+    <td class="entry" valign="top">The once-off authentication token to use for the current
+    operation.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+    <td class="entry" valign="top">Path to an existing and readable file containing the targets and
+    authorization tokens.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+    <td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+    option is a no-op now. Tracing is always active. See the 'trace'
+    command to print the saved trace to stdout.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+    <td class="entry" valign="top">Alias of --no-prompt.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">-o</td>
+
+    <td class="entry" valign="top">Alias of --organization.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+    <td class="entry" valign="top">Alias of --trace.</td>
+
+    </tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-drain-add"><h2 class="title sectiontitle">helion drain add &lt;<em class="ph i">application</em>&gt; &lt;<em class="ph i">drain</em>&gt; &lt;<em class="ph i">uri</em>&gt;</h2> 
+<p class="p">Attach a new named drain to the application.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+    <td class="entry" valign="top">The once-off group to use for the current operation. This is a
+    Application Lifecycle Service 2 option.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+    <td class="entry" valign="top">The drain target takes raw json log entries.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+    <td class="entry" valign="top">Path of the manifest file to use. If not specified a search is
+    done.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+    <td class="entry" valign="top">Disable interactive queries.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-tail</td>
+
+    <td class="entry" valign="top">Complementary alias of --tail.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+    <td class="entry" valign="top">Complementary alias of --trace.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+    <td class="entry" valign="top">Alias of --no-prompt.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+    <td class="entry" valign="top">Alias of --no-prompt.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+    <td class="entry" valign="top">The once-off organization to use for the current operation. This
+    is an Application Lifecycle Service 3 option.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+    <td class="entry" valign="top">Path of the directory holding the application files to push.
+    Defaults to the current working directory.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+    <td class="entry" valign="top">The once-off space to use for the current operation, specified by
+    name. This is an Application Lifecycle Service 3 option. Cannot be used together with --space-guid.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+    <td class="entry" valign="top">The once-off space to use for the current operation, specified by
+    guid. This is an Application Lifecycle Service 3 option. Cannot be used together with --space.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--tail</td>
+
+    <td class="entry" valign="top">Request target to stream the log.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+    <td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+    <td class="entry" valign="top">The once-off authentication token to use for the current
+    operation.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+    <td class="entry" valign="top">Path to an existing and readable file containing the targets and
+    authorization tokens.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+    <td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+    option is a no-op now. Tracing is always active. See the 'trace'
+    command to print the saved trace to stdout.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+    <td class="entry" valign="top">Alias of --no-prompt.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">-o</td>
+
+    <td class="entry" valign="top">Alias of --organization.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+    <td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-drain-delete"><h2 class="title sectiontitle">helion drain delete &lt;<em class="ph i">application</em>&gt; &lt;<em class="ph i">drain</em>&gt;</h2> 
+<p class="p">Remove the named drain from the application.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+    <td class="entry" valign="top">The once-off group to use for the current operation. This is a
+    Application Lifecycle Service 2 option.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+    <td class="entry" valign="top">Path of the manifest file to use. If not specified a search is
+    done.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+    <td class="entry" valign="top">Disable interactive queries.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-tail</td>
+
+    <td class="entry" valign="top">Complementary alias of --tail.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+    <td class="entry" valign="top">Complementary alias of --trace.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+    <td class="entry" valign="top">Alias of --no-prompt.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+    <td class="entry" valign="top">Alias of --no-prompt.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+    <td class="entry" valign="top">The once-off organization to use for the current operation. This
+    is an Application Lifecycle Service 3 option.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+    <td class="entry" valign="top">Path of the directory holding the application files to push.
+    Defaults to the current working directory.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+    <td class="entry" valign="top">The once-off space to use for the current operation, specified by
+    name. This is an Application Lifecycle Service 3 option. Cannot be used together with --space-guid.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+    <td class="entry" valign="top">The once-off space to use for the current operation, specified by
+    guid. This is an Application Lifecycle Service 3 option. Cannot be used together with --space.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--tail</td>
+
+    <td class="entry" valign="top">Request target to stream the log.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+    <td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+    <td class="entry" valign="top">The once-off authentication token to use for the current
+    operation.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+    <td class="entry" valign="top">Path to an existing and readable file containing the targets and
+    authorization tokens.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+    <td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+    option is a no-op now. Tracing is always active. See the 'trace'
+    command to print the saved trace to stdout.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+    <td class="entry" valign="top">Alias of --no-prompt.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">-o</td>
+
+    <td class="entry" valign="top">Alias of --organization.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+    <td class="entry" valign="top">Alias of --trace.</td>
+ </tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-env-add"><h2 class="title sectiontitle">helion env-add &lt;<em class="ph i">application</em>&gt; &lt;<em class="ph i">varname</em>&gt; &lt;<em class="ph i">value</em>&gt;</h2> 
+<p class="p">Add the specified environment variable to the named application.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+    <td class="entry" valign="top">The once-off group to use for the current operation. This is a
+    Application Lifecycle Service 2 option.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+    <td class="entry" valign="top">Path of the manifest file to use. If not specified a search is
+    done.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+    <td class="entry" valign="top">Disable interactive queries.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-tail</td>
+
+    <td class="entry" valign="top">Complementary alias of --tail.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+    <td class="entry" valign="top">Complementary alias of --trace.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+    <td class="entry" valign="top">Alias of --no-prompt.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+    <td class="entry" valign="top">Alias of --no-prompt.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+    <td class="entry" valign="top">The once-off organization to use for the current operation. This
+    is an Application Lifecycle Service 3 option.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+    <td class="entry" valign="top">Path of the directory holding the application files to push.
+    Defaults to the current working directory.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+    <td class="entry" valign="top">The once-off space to use for the current operation, specified by
+    name. This is an Application Lifecycle Service 3 option. Cannot be used together with --space-guid.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+    <td class="entry" valign="top">The once-off space to use for the current operation, specified by
+    guid. This is an Application Lifecycle Service 3 option. Cannot be used together with --space.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--tail</td>
+
+    <td class="entry" valign="top">Request target to stream the log.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+    <td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--timeout</td>
+
+    <td class="entry" valign="top">The time the client waits for an application to start before
+    giving up and returning, in seconds. Note that this is measured
+    from the last entry seen in the log stream. While there is
+    activity in the log the timeout is reset.
+    The default is 2 minutes.
+    Use the suffixes 'm', 'h', and 'd' for the convenient
+    specification of minutes, hours, and days. The optional suffix 's'
+    stands for seconds.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+    <td class="entry" valign="top">The once-off authentication token to use for the current
+    operation.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+    <td class="entry" valign="top">Path to an existing and readable file containing the targets and
+    authorization tokens.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+    <td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+    option is a no-op now. Tracing is always active. See the 'trace'
+    command to print the saved trace to stdout.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+    <td class="entry" valign="top">Alias of --no-prompt.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">-o</td>
+
+    <td class="entry" valign="top">Alias of --organization.</td>
+
+    </tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+    <td class="entry" valign="top">Alias of --trace.</td>
+
+    </tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-env-del"><h2 class="title sectiontitle">helion env-del &lt;<em class="ph i">application</em>&gt; &lt;<em class="ph i">varname</em>&gt;</h2> 
+<p class="p">Remove the specified environment variable from the named application.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+<td class="entry" valign="top">The once-off group to use for the current operation. This is a
+Application Lifecycle Service 2 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+<td class="entry" valign="top">Path of the manifest file to use. If not specified a search is
+done.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-tail</td>
+
+<td class="entry" valign="top">Complementary alias of --tail.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation. This
+is an Application Lifecycle Service 3 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+<td class="entry" valign="top">Path of the directory holding the application files to push.
+Defaults to the current working directory.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+name. This is an Application Lifecycle Service 3 option. Cannot be used together with --space-guid.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+guid. This is an Application Lifecycle Service 3 option. Cannot be used together with --space.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--tail</td>
+
+<td class="entry" valign="top">Request target to stream the log.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--timeout</td>
+
+<td class="entry" valign="top">The time the client waits for an application to start before
+giving up and returning, in seconds. Note that this is measured
+from the last entry seen in the log stream. While there is
+activity in the log the timeout is reset.
+The default is 2 minutes.
+Use the suffixes 'm', 'h', and 'd' for the convenient
+specification of minutes, hours, and days. The optional suffix 's'
+stands for seconds.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-o</td>
+
+<td class="entry" valign="top">Alias of --organization.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-map"><h2 class="title sectiontitle">helion map &lt;<em class="ph i">application</em>&gt; &lt;<em class="ph i">url</em>&gt;</h2> 
+<p class="p">Make the application accessible through the specified URL (a route consisting of host and domain)</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+<td class="entry" valign="top">The once-off group to use for the current operation. This is a
+Application Lifecycle Service 2 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+<td class="entry" valign="top">Path of the manifest file to use. If not specified a search is
+done.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-tail</td>
+
+<td class="entry" valign="top">Complementary alias of --tail.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation. This
+is an Application Lifecycle Service 3 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+<td class="entry" valign="top">Path of the directory holding the application files to push.
+Defaults to the current working directory.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+name. This is an Application Lifecycle Service 3 option. Cannot be used together with --space-guid.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+guid. This is an Application Lifecycle Service 3 option. Cannot be used together with --space.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--tail</td>
+
+<td class="entry" valign="top">Request target to stream the log.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-o</td>
+
+<td class="entry" valign="top">Alias of --organization.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-open"><h2 class="title sectiontitle">helion open &lt;<em class="ph i">application</em>&gt;</h2> 
+<p class="p">Open the url of the specified application in the default web browser. If 'api' is specified as the app name, the Management Console is opened. With no arguments, the 'name' value from the manifest.yml in the current directory is used (if            present).</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+<td class="entry" valign="top">The once-off group to use for the current operation. This is a
+Application Lifecycle Service 2 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+<td class="entry" valign="top">Path of the manifest file to use. If not specified a search is
+done.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation. This
+is an Application Lifecycle Service 3 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+<td class="entry" valign="top">Path of the directory holding the application files to push.
+Defaults to the current working directory.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+name. This is an Application Lifecycle Service 3 option. Cannot be used together with --space-guid.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+guid. This is an Application Lifecycle Service 3 option. Cannot be used together with --space.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-o</td>
+
+<td class="entry" valign="top">Alias of --organization.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-push"><h2 class="title sectiontitle">helion push &lt;<em class="ph i">application</em>&gt;</h2> 
+<p class="p">Configure, create, push, map, and start a new application.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--as</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">The name of the application to push/update the selected application as.
+                Possible only if a single application is pushed or updated.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--buildpack</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Url of a custom buildpack. This is an Application Lifecycle Service 3 specific
+                option.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--command</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">The application's start command. Defaults to a framework-specific value if
+                required and not specified by manifest.yml.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--copy-unsafe-links</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Links pointing outside of the application directory are copied into the
+                application.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--disk</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">The application's per-instance disk allocation. Defaults to a
+                framework-specific value if not specified by manifest.yml.<div class="note warning"><span class="warningtitle">Warning:</span> The
+                  minimum value is 512 MB; the maximum is 2 GB. This is a per-instance
+                limit.</div>
+</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--docker-image</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Specifies that the app being pushed is a Docker image. See the <a class="xref" href="../deploy/languages/docker_apps.html#topic_l4n_y3n_xs__pushingDockerApps">Docker deployment </a>documentation for details.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--env</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Environment variable overrides. These are always applied regardless of
+                --env-mode. The mode is restricted to the variable declarations found in the
+                manifest.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--env-mode</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Environment replacement mode. One of preserve, or replace. The default is
+                "preserve". Using mode "replace" implies --reset as well, for push. Note that new
+                variables are always set. Preserve only prevents update of existing variables. This
+                setting applies only to the variable declarations found in the manifest. Overrides
+                made with --env are always applied.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--force-start</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Push, and start the application, even when stopped.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--framework</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Specify the framework to use. Cannot be used together with --no-framework.
+                Defaults to a heuristically chosen value if not specified, and none for
+                --no-framework. This is an Application Lifecycle Service 2 specific option.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--group</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">The once-off group to use for the current operation. This is a Application
+                Lifecycle Service 2 option.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--instances</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">The number of application instances to create. Defaults to 1, if not specified
+                by a manifest.yml.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--manifest</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Path of the manifest file to use. If not specified a search is done.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--mem</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">The application's per-instance memory allocation. Defaults to a
+                framework-specific value if not specified by manifest.yml.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--no-framework</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Create application without any framework. Cannot be used together with
+                --framework. This is an Application Lifecycle Service 2 specific option.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--no-prompt</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Disable interactive queries.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--no-resources</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Do not optimize upload by checking for existing file resources.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--no-start</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Push, but do not start the application.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--no-tail</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Complementary alias of --tail.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--no-trace</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Complementary alias of --trace.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--non-interactive</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Alias of --no-prompt.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--noprompt</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Alias of --no-prompt.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--noresources</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Alias of --no-resources.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--nostart</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Alias of --no-start.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--organization</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">The once-off organization to use for the current operation. This is an
+                Application Lifecycle Service 3 option.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--path</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Path of the directory holding the application files to push. Defaults to the
+                current working directory.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--reset</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Analogue of --env-mode, for the regular settings.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--runtime</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">The name of the runtime to use. Default is framework specific, if not specified
+                by a manifest.yml. This is an Application Lifecycle Service 2 specific
+                option.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--space</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">The once-off space to use for the current operation, specified by name. This is
+                an Application Lifecycle Service 3 option. Cannot be used together with
+                --space-guid.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--space-guid</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">The once-off space to use for the current operation, specified by guid. This is
+                an Application Lifecycle Service 3 option. Cannot be used together with
+                --space.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--stack</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">The operating system foundation the application will run on. This is an
+                Application Lifecycle Service 3 specific option.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--helion-debug</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">host:port of the Komodo debugger listener to inject into the application as
+                environment variables.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--tail</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Request target to stream the log.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--target</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--timeout</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">The time the client waits for an application to start before giving up and
+                returning, in seconds. Note that this is measured from the last entry seen in the
+                log stream. While there is activity in the log the timeout is reset. The default is
+                2 minutes. Use the suffixes 'm', 'h', and 'd' for the convenient specification of
+                minutes, hours, and days. The optional suffix 's' stands for seconds.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--token</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--token-file</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--trace</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Activate tracing of the issued REST requests and responses. This option is a
+                no-op now. Tracing is always active. See the 'trace' command to print the saved
+                trace to stdout.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">--url</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">The urls to map the application to. I.e. can be specified multiple
+                times.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">-d</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Set up debugging through an application-specific harbor (port) service. Target
+                version 2.8+ only.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">-n</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Alias of --no-prompt.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">-o</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Alias of --organization.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="18.484288354898336%">-t</td>
+
+              <td class="entry" valign="top" width="81.51571164510166%">Alias of --trace.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-rename"><h2 class="title sectiontitle">helion rename &lt;<em class="ph i">application</em>&gt; &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Rename the specified application.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+<td class="entry" valign="top">The once-off group to use for the current operation. This is a
+Application Lifecycle Service 2 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+<td class="entry" valign="top">Path of the manifest file to use. If not specified a search is
+done.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-tail</td>
+
+<td class="entry" valign="top">Complementary alias of --tail.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation. This
+is an Application Lifecycle Service 3 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+<td class="entry" valign="top">Path of the directory holding the application files to push.
+Defaults to the current working directory.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+name. This is an Application Lifecycle Service 3 option. Cannot be used together with --space-guid.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+guid. This is an Application Lifecycle Service 3 option. Cannot be used together with --space.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--tail</td>
+
+<td class="entry" valign="top">Request target to stream the log.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-o</td>
+
+<td class="entry" valign="top">Alias of --organization.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-restart"><h2 class="title sectiontitle">helion restart &lt;<em class="ph i">application</em>&gt;</h2> 
+<p class="p">Stop and restart a deployed application.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+<td class="entry" valign="top">The once-off group to use for the current operation. This is a
+Application Lifecycle Service 2 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+<td class="entry" valign="top">Path of the manifest file to use. If not specified a search is
+done.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-tail</td>
+
+<td class="entry" valign="top">Complementary alias of --tail.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation. This
+is an Application Lifecycle Service 3 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+<td class="entry" valign="top">Path of the directory holding the application files to push.
+Defaults to the current working directory.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+name. This is an Application Lifecycle Service 3 option. Cannot be used together with --space-guid.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+guid. This is an Application Lifecycle Service 3 option. Cannot be used together with --space.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--tail</td>
+
+<td class="entry" valign="top">Request target to stream the log.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--timeout</td>
+
+<td class="entry" valign="top">The time the client waits for an application to start before
+giving up and returning, in seconds. Note that this is measured
+from the last entry seen in the log stream. While there is
+activity in the log the timeout is reset.
+The default is 2 minutes.
+Use the suffixes 'm', 'h', and 'd' for the convenient
+specification of minutes, hours, and days. The optional suffix 's'
+stands for seconds.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-o</td>
+
+<td class="entry" valign="top">Alias of --organization.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-rollback"><h2 class="title sectiontitle">helion rollback  &lt;<em class="ph i">application</em>&gt; &lt;<em class="ph i">appversion</em>&gt;</h2> 
+<p class="p">Switch to a different version of the application. </p>
+
+<p class="p">--code-only</p>
+
+<p class="p">hen specified the rollback reactivates only the old
+roplet of the specified version while retaining the
+urrent configuration.</p>
+
+<p class="p">--group</p>
+
+<p class="p">The once-off group to use for the current operation.
+This is a Stackato 2 option.</p>
+
+<p class="p">--manifest</p>
+
+<p class="p">Path of the manifest file to use.
+If not specified a search is done.</p>
+
+<p class="p">--organization</p>
+
+<p class="p">The once-off organization to use for the current operation.
+This is a Stackato 3 option.</p>
+
+<p class="p">--path</p>
+
+<p class="p">Path of the directory or file holding the application files to push.
+Defaults to the current working directory.</p>
+
+<p class="p">--space</p>
+
+<p class="p">The once-off space to use for the current operation, specified
+by name. This is a Stackato 3 option.
+Cannot be used together with --space-guid.</p>
+
+<p class="p">--space-guid</p>
+
+<p class="p">The once-off space to use for the current operation, specified
+by guid. This is a Stackato 3 option.
+Cannot be used together with --space.</p>
+
+<p class="p">--target</p>
+
+<p class="p">The once-off target to use for the current operation.</p>
+
+<p class="p">--token</p>
+
+<p class="p">The once-off authentication token to use for the
+current operation.</p>
+
+<p class="p">--token-file</p>
+
+<p class="p">Path to an existing and readable file containing
+the targets and authorization tokens.</p>
+
+<p class="p">-o
+  Alias of --organization.</p>
+
+</div>
+
+<div class="section" id="topic50918__command-run"><h2 class="title sectiontitle">helion run &lt;<em class="ph i">command</em>&gt;</h2> 
+<p class="p">Run a specified command on a running instance.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--all</td>
+
+<td class="entry" valign="top">Run the command on all instances. Cannot be used together with --instance.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--application</td>
+
+<td class="entry" valign="top">Name of the application to operate on.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--banner</td>
+
+<td class="entry" valign="top">Show the leading and trailing banner to separate instance data.
+Applies only when --all is used. Defaults to on.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--dry</td>
+
+<td class="entry" valign="top">Print the low-level ssh command to stdout instead of executing it.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--dry-run</td>
+
+<td class="entry" valign="top">Alias of --dry.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+<td class="entry" valign="top">The once-off group to use for the current operation. This is a
+Application Lifecycle Service 2 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--instance</td>
+
+<td class="entry" valign="top">The instance to access with the command. Defaults to 0. Cannot be
+used together with --all.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+<td class="entry" valign="top">Path of the manifest file to use. If not specified a search is
+done.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-banner</td>
+
+<td class="entry" valign="top">Complementary alias of --banner.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-tail</td>
+
+<td class="entry" valign="top">Complementary alias of --tail.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation. This
+is an Application Lifecycle Service 3 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+<td class="entry" valign="top">Path of the directory holding the application files to push.
+Defaults to the current working directory.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+name. This is an Application Lifecycle Service 3 option. Cannot be used together with --space-guid.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+guid. This is an Application Lifecycle Service 3 option. Cannot be used together with --space.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--tail</td>
+
+<td class="entry" valign="top">Request target to stream the log.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-a</td>
+
+<td class="entry" valign="top">Alias of --application.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-o</td>
+
+<td class="entry" valign="top">Alias of --organization.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-scale"><h2 class="title sectiontitle">helion scale &lt;<em class="ph i">application</em>&gt;</h2> 
+<p class="p">Update the number of instances, memory and/or disk reservation for a deployed application.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--disk</td>
+
+<td class="entry" valign="top">The new disk reservation to use.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+<td class="entry" valign="top">The once-off group to use for the current operation. This is a
+Application Lifecycle Service 2 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--instances</td>
+
+<td class="entry" valign="top">Absolute number of instances to scale to, or relative change.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+<td class="entry" valign="top">Path of the manifest file to use. If not specified a search is
+done.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--mem</td>
+
+<td class="entry" valign="top">The new memory reservation to use.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-tail</td>
+
+<td class="entry" valign="top">Complementary alias of --tail.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation. This
+is an Application Lifecycle Service 3 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+<td class="entry" valign="top">Path of the directory holding the application files to push.
+Defaults to the current working directory.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+name. This is an Application Lifecycle Service 3 option. Cannot be used together with --space-guid.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+guid. This is an Application Lifecycle Service 3 option. Cannot be used together with --space.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--tail</td>
+
+<td class="entry" valign="top">Request target to stream the log.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--timeout</td>
+
+<td class="entry" valign="top">The time the client waits for an application to start before
+giving up and returning, in seconds. Note that this is measured
+from the last entry seen in the log stream. While there is
+activity in the log the timeout is reset.
+The default is 2 minutes.
+Use the suffixes 'm', 'h', and 'd' for the convenient
+specification of minutes, hours, and days. The optional suffix 's'
+stands for seconds.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-d</td>
+
+<td class="entry" valign="top">Alias of --disk.</td>
+ </tr>
+
+<tr class="row">
+<td class="entry" valign="top">-i</td>
+
+<td class="entry" valign="top">Alias of --instances.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-m</td>
+
+<td class="entry" valign="top">Alias of --mem.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-o</td>
+
+<td class="entry" valign="top">Alias of --organization.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-scp"><h2 class="title sectiontitle">helion scp &lt;<em class="ph i">paths</em>&gt;</h2> 
+<p class="p">Copy source files and directories to the destination.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--application</td>
+
+<td class="entry" valign="top">Name of the application to operate on.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+<td class="entry" valign="top">The once-off group to use for the current operation. This is a
+Application Lifecycle Service 2 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--instance</td>
+
+<td class="entry" valign="top">The instance to access with the command. Defaults to 0.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+<td class="entry" valign="top">Path of the manifest file to use. If not specified a search is
+done.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-tail</td>
+
+<td class="entry" valign="top">Complementary alias of --tail.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation. This
+is an Application Lifecycle Service 3 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+<td class="entry" valign="top">Path of the directory holding the application files to push.
+Defaults to the current working directory.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+name. This is an Application Lifecycle Service 3 option. Cannot be used together with --space-guid.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+guid. This is an Application Lifecycle Service 3 option. Cannot be used together with --space.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--tail</td>
+
+<td class="entry" valign="top">Request target to stream the log.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-a</td>
+
+<td class="entry" valign="top">Alias of --application.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-o</td>
+
+<td class="entry" valign="top">Alias of --organization.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-set-env"><h2 class="title sectiontitle">helion set-env &lt;<em class="ph i">application</em>&gt; &lt;<em class="ph i">varname</em>&gt; &lt;<em class="ph i">value</em>&gt;</h2> 
+<p class="p">Add the specified environment variable to the named application.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+<td class="entry" valign="top">The once-off group to use for the current operation. This is a
+Application Lifecycle Service 2 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+<td class="entry" valign="top">Path of the manifest file to use. If not specified a search is
+done.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-tail</td>
+
+<td class="entry" valign="top">Complementary alias of --tail.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation. This
+is an Application Lifecycle Service 3 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+<td class="entry" valign="top">Path of the directory holding the application files to push.
+Defaults to the current working directory.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+name. This is an Application Lifecycle Service 3 option. Cannot be used together with --space-guid.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+guid. This is an Application Lifecycle Service 3 option. Cannot be used together with --space.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--tail</td>
+
+<td class="entry" valign="top">Request target to stream the log.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--timeout</td>
+
+<td class="entry" valign="top">The time the client waits for an application to start before
+giving up and returning, in seconds. Note that this is measured
+from the last entry seen in the log stream. While there is
+activity in the log the timeout is reset.
+The default is 2 minutes.
+Use the suffixes 'm', 'h', and 'd' for the convenient
+specification of minutes, hours, and days. The optional suffix 's'
+stands for seconds.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-o</td>
+
+<td class="entry" valign="top">Alias of --organization.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-ssh"><h2 class="title sectiontitle">helion ssh &lt;<em class="ph i">command</em>&gt;</h2> 
+<p class="p">SSH to a running instance (or target), or run a specific command.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--all</td>
+
+<td class="entry" valign="top">Run the command on all instances. Cannot be used together with --instance.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--application</td>
+
+<td class="entry" valign="top">Name of the application to operate on, or "api" to talk to the
+cloud controller node.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--banner</td>
+
+<td class="entry" valign="top">Show the leading and trailing banner to separate instance data.
+Applies only when --all is used. Defaults to on.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--dry</td>
+
+<td class="entry" valign="top">Print the low-level ssh command to stdout instead of executing it.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--dry-run</td>
+
+<td class="entry" valign="top">Alias of --dry.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+<td class="entry" valign="top">The once-off group to use for the current operation. This is a
+Application Lifecycle Service 2 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--instance</td>
+
+<td class="entry" valign="top">The instance to access with the command. Defaults to 0. Cannot be
+used together with --all.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--manifest</td>
+
+<td class="entry" valign="top">Path of the manifest file to use. If not specified a search is
+done.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-banner</td>
+
+<td class="entry" valign="top">Complementary alias of --banner.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-tail</td>
+
+<td class="entry" valign="top">Complementary alias of --tail.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation. This
+is an Application Lifecycle Service 3 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--path</td>
+
+<td class="entry" valign="top">Path of the directory holding the application files to push.
+Defaults to the current working directory.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+name. This is an Application Lifecycle Service 3 option. Cannot be used together with --space-guid.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+guid. This is an Application Lifecycle Service 3 option. Cannot be used together with --space.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--tail</td>
+
+<td class="entry" valign="top">Request target to stream the log.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-a</td>
+
+<td class="entry" valign="top">Alias of --application.</td>
+ </tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-o</td>
+
+<td class="entry" valign="top">Alias of --organization.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-start"><h2 class="title sectiontitle">helion start &lt;<em class="ph i">application</em>&gt;</h2> 
+<p class="p">Start a deployed application.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--group</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off group to use for the current operation. This is a Application
+                Lifecycle Service 2 option.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--manifest</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Path of the manifest file to use. If not specified a search is done.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--no-prompt</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Disable interactive queries.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--no-tail</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Complementary alias of --tail.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--no-trace</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Complementary alias of --trace.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--non-interactive</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Alias of --no-prompt.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--noprompt</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Alias of --no-prompt.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--organization</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off organization to use for the current operation. This is an
+                Application Lifecycle Service 3 option.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--path</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Path of the directory holding the application files to push. Defaults to the
+                current working directory.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--space</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off space to use for the current operation, specified by name. Cannot
+                be used together with --space-guid.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--space-guid</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off space to use for the current operation, specified by guid. Cannot
+                be used together with --space.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--tail</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Request target to stream the log.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--target</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--timeout</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The time the client waits for an application to start before giving up and
+                returning, in seconds. Note that this is measured from the last entry seen in the
+                log stream. While there is activity in the log the timeout is reset. The default is
+                2 minutes. Use the suffixes 'm', 'h', and 'd' for the convenient specification of
+                minutes, hours, and days. The optional suffix 's' stands for seconds.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--token</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--token-file</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--trace</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Activate tracing of the issued REST requests and responses. This option is a
+                no-op now. Tracing is always active. See the 'trace' command to print the saved
+                trace to stdout.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">-n</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Alias of --no-prompt.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">-o</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Alias of --organization.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">-t</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Alias of --trace.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-stop"><h2 class="title sectiontitle">helion stop &lt;<em class="ph i">application</em>&gt;</h2> 
+<p class="p">Stop a deployed application.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--group</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">The once-off group to use for the current operation. This is a Application
+                Lifecycle Service 2 option.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--manifest</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Path of the manifest file to use. If not specified a search is done.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--no-prompt</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Disable interactive queries.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--no-tail</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Complementary alias of --tail.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--no-trace</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Complementary alias of --trace.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--non-interactive</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Alias of --no-prompt.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--noprompt</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Alias of --no-prompt.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--organization</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">The once-off organization to use for the current operation. This is an
+                Application Lifecycle Service 3 option.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--path</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Path of the directory holding the application files to push. Defaults to the
+                current working directory.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--space</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">The once-off space to use for the current operation, specified by name. Cannot
+                be used together with --space-guid.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--space-guid</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">The once-off space to use for the current operation, specified by guid. Cannot
+                be used together with --space.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--tail</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Request target to stream the log.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--target</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--token</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--token-file</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--trace</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Activate tracing of the issued REST requests and responses. This option is a
+                no-op now. Tracing is always active. See the 'trace' command to print the saved
+                trace to stdout.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">-n</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Alias of --no-prompt.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">-o</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Alias of --organization.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">-t</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Alias of --trace.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-switch-version"><h2 class="title sectiontitle">helion switch-version &lt;<em class="ph i">application</em>&gt; </h2>
+      
+      <div class="p">
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="topic50918__table_ptt_lxk_pt" class="table" frame="border" border="1" rules="all">
+            
+            
+            <thead class="thead" align="left">
+              <tr class="row">
+                <th class="entry" valign="top" width="16.5016501650165%" id="d85452e5071">Option</th>
+
+                <th class="entry" valign="top" width="83.4983498349835%" id="d85452e5074">Description</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody class="tbody">
+              <tr class="row">
+                <td class="entry" valign="top" width="16.5016501650165%" headers="d85452e5071 ">appversion</td>
+
+                <td class="entry" valign="top" width="83.4983498349835%" headers="d85452e5074 ">Switch to a different version of the application. </td>
+
+              </tr>
+
+              <tr class="row">
+                <td class="entry" valign="top" width="16.5016501650165%" headers="d85452e5071 ">
+                  <p class="p">--code-only</p>
+
+                </td>
+
+                <td class="entry" valign="top" width="83.4983498349835%" headers="d85452e5074 ">When specified, the rollback reactivates only the old droplet of the
+                  specified version while retaining the current configuration.</td>
+
+              </tr>
+
+              <tr class="row">
+                <td class="entry" valign="top" width="16.5016501650165%" headers="d85452e5071 ">
+                  <p class="p">--manifest</p>
+
+                </td>
+
+                <td class="entry" valign="top" width="83.4983498349835%" headers="d85452e5074 ">Path of the manifest file to use. If not specified a search is done.</td>
+
+              </tr>
+
+              <tr class="row">
+                <td class="entry" valign="top" width="16.5016501650165%" headers="d85452e5071 ">
+                  <p class="p">--organization, -o</p>
+
+                </td>
+
+                <td class="entry" valign="top" width="83.4983498349835%" headers="d85452e5074 ">The once-off organization to use for the current operation.</td>
+
+              </tr>
+
+              <tr class="row">
+                <td class="entry" valign="top" width="16.5016501650165%" headers="d85452e5071 ">
+                  <p class="p">--path</p>
+
+                </td>
+
+                <td class="entry" valign="top" width="83.4983498349835%" headers="d85452e5074 ">Path of the directory or file holding the application files to push. Defaults
+                  to the current working directory.</td>
+
+              </tr>
+
+              <tr class="row">
+                <td class="entry" valign="top" width="16.5016501650165%" headers="d85452e5071 ">--space</td>
+
+                <td class="entry" valign="top" width="83.4983498349835%" headers="d85452e5074 ">The once-off space to use for the current operation, specified by name.
+                  Cannot be used together with --space-guid.</td>
+
+              </tr>
+
+              <tr class="row">
+                <td class="entry" valign="top" width="16.5016501650165%" headers="d85452e5071 ">--space-guid</td>
+
+                <td class="entry" valign="top" width="83.4983498349835%" headers="d85452e5074 ">The once-off space to use for the current operation, specified by guid.
+                  Cannot be used together with --space.</td>
+
+              </tr>
+
+              <tr class="row">
+                <td class="entry" valign="top" width="16.5016501650165%" headers="d85452e5071 ">
+                  <p class="p">--target</p>
+
+                </td>
+
+                <td class="entry" valign="top" width="83.4983498349835%" headers="d85452e5074 ">The once-off target to use for the current operation.</td>
+
+              </tr>
+
+              <tr class="row">
+                <td class="entry" valign="top" width="16.5016501650165%" headers="d85452e5071 ">--token</td>
+
+                <td class="entry" valign="top" width="83.4983498349835%" headers="d85452e5074 ">The once-off authentication token to use for the current operation.</td>
+
+              </tr>
+
+              <tr class="row">
+                <td class="entry" valign="top" width="16.5016501650165%" headers="d85452e5071 ">
+                  <p class="p">--token-file</p>
+
+                </td>
+
+                <td class="entry" valign="top" width="83.4983498349835%" headers="d85452e5074 ">Path to an existing and readable file containing the targets and
+                  authorization tokens.</td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+</div>
+
+      </div>
+
+    </div>
+
+<div class="section" id="topic50918__command-unmap"><h2 class="title sectiontitle">helion unmap &lt;<em class="ph i">application</em>&gt; &lt;<em class="ph i">URL</em>&gt;</h2> 
+<p class="p">Unregister the application from a URL.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--group</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">The once-off group to use for the current operation. This is a Application
+                Lifecycle Service 2 option.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--manifest</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">Path of the manifest file to use. If not specified a search is done.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--no-prompt</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">Disable interactive queries.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--no-tail</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">Complementary alias of --tail.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--no-trace</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">Complementary alias of --trace.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--non-interactive</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">Alias of --no-prompt.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--noprompt</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">Alias of --no-prompt.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--organization</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">The once-off organization to use for the current operation. This is an
+                Application Lifecycle Service 3 option.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--path</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">Path of the directory holding the application files to push. Defaults to the
+                current working directory.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--space</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">The once-off space to use for the current operation, specified by name. Cannot
+                be used together with --space-guid.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--space-guid</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">The once-off space to use for the current operation, specified by guid. Cannot
+                be used together with --space.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--tail</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">Request target to stream the log.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--target</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--token</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--token-file</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">--trace</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">Activate tracing of the issued REST requests and responses. This option is a
+                no-op now. Tracing is always active. See the 'trace' command to print the saved
+                trace to stdout.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">-n</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">Alias of --no-prompt.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">-o</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">Alias of --organization.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.492753623188406%">-t</td>
+
+              <td class="entry" valign="top" width="85.5072463768116%">Alias of --trace.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic50918__command-unset-env"><h2 class="title sectiontitle">helion unset-env &lt;<em class="ph i">application</em>&gt; &lt;<em class="ph i">varname</em>&gt;</h2> 
+<p class="p">Remove the specified environment variable from the named application.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--group</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off group to use for the current operation. Deprecated.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--manifest</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Path of the manifest file to use. If not specified a search is done.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--no-prompt</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Disable interactive queries.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--no-tail</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Complementary alias of --tail.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--no-trace</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Complementary alias of --trace.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--non-interactive</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Alias of --no-prompt.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--noprompt</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Alias of --no-prompt.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--organization</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off organization to use for the current operation. This is an
+                Application Lifecycle Service 3 option.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--path</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Path of the directory holding the application files to push. Defaults to the
+                current working directory.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--space</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off space to use for the current operation, specified by name. Cannot
+                be used together with --space-guid.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--space-guid</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off space to use for the current operation, specified by guid. Cannot
+                be used together with --space.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--tail</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Request target to stream the log.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--target</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--timeout</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The time the client waits for an application to start before giving up and
+                returning, in seconds. Note that this is measured from the last entry seen in the
+                log stream. While there is activity in the log the timeout is reset. The default is
+                2 minutes. Use the suffixes 'm', 'h', and 'd' for the convenient specification of
+                minutes, hours, and days. The optional suffix 's' stands for seconds.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--token</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--token-file</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--trace</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Activate tracing of the issued REST requests and responses. This option is a
+                no-op now. Tracing is always active. See the 'trace' command to print the saved
+                trace to stdout.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">-n</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Alias of --no-prompt.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">-o</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Alias of --organization.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">-t</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Alias of --trace.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

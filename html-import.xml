@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html-import>
+	<metadata>
+		<package-key>hdp</package-key>
+		<package-version>2.0</package-version>
+	</metadata>
+
+<topic id="topic5490" source="devplatform/2.0/devplatform.index.html" navtitle="HPE Helion Development Platform 2.0"  >
+<topic id="topic2502" source="devplatform/2.0/devplatform.release-notes.html"  navtitle="Release Notes"/>
+<topic id="topic596" source="devplatform/2.0/devplatform.thirdparty.licensing.html" navtitle="Open Source and Third-Party Software License Agreements" />
+<topic id="topic16601" source="devplatform/2.0/devplatform.eula.html" navtitle="Software License Terms" />
+<topic id="topic_qbx_tfq_15" source="devplatform/2.0/installation/installation.html" navtitle="Installation" path="install">
+<topic id="topic_w25_hqp_xt" source="devplatform/2.0/installation/install_offline.html" navtitle="Downloading for Offline Installation" />
+<topic id="topic_x54_njh_ts" source="devplatform/2.0/installation/devplatform_install_prereq.html" navtitle="Installation Prerequisites" />
+<topic id="topic_wzw_r4w_rt" source="devplatform/2.0/installation/install_cloudsyaml.html" navtitle="Create the clouds.yaml Configuration File" />
+<topic id="topic_gly_xmh_ts" source="devplatform/2.0/installation/devplatform_install_platform.html" navtitle="Install the HPE Helion Development Platform Service Installer" />
+<topic id="topic_txg_cnh_ts" source="devplatform/2.0/installation/devplatform_install_ALS.html" navtitle="Install the Application Lifecycle Service (ALS)" />
+<topic id="topic_vsf_hnh_ts" source="devplatform/2.0/installation/devplatform_install_database.html" navtitle="Install the Database Service" />
+<topic id="topic_gkq_fqy_rt" source="devplatform/2.0/installation/install_engine.html" navtitle="Install the HPE Helion Code Engine" />
+<topic id="topic_t3w_fnh_ts" source="devplatform/2.0/installation/devplatform_install_messaging.html" navtitle="Install the Messaging Service" />
+<topic id="topic_mhg_f2n_vt" source="devplatform/2.0/installation/cloud/fullFile.html" toc="no"/>
+<topic id="cloudCodeEngine" source="devplatform/2.0/installation/cloud/cloud_codeengine.html" toc="no"/>
+<topic id="cloudDatabase" source="devplatform/2.0/installation/cloud/cloud_database.html" toc="no"/>
+<topic id="cloudMessaging" source="devplatform/2.0/installation/cloud/cloud_messaging.html" toc="no"/>
+<topic id="cloudPlatform" source="devplatform/2.0/installation/cloud/cloud_platform.html" toc="no"/>
+<topic id="listContent" source="devplatform/2.0/installation/install_listOptions.html" toc="no"/>
+<topic id="topic_gxm_4xw_yt" source="devplatform/2.0/installation/install_dbaasNoTLS.html" toc="no"/>
+<topic id="topic24073" source="devplatform/2.0/installation/devplatform_commercial_install.html" toc="no"/>
+<topic id="topic4855" source="devplatform/2.0/devplatform.troubleshooting.html" navtitle="Troubleshooting" />
+</topic>
+<topic id="topic_qsz_2gq_15" source="devplatform/2.0/monitoring/service_monitoring.html" navtitle="Service Monitoring" path="service-monitor">
+<topic id="topic_messaging_manage_horizon" source="devplatform/2.0/monitoring/devplatform.messaging-monitor.html"/>
+<topic id="topic_database_manage_horizon" source="devplatform/2.0/monitoring/devplatform.database-monitor.html"/>
+<topic id="topic_database_monitor_cli" source="devplatform/2.0/monitoring/devplatform.database-monitor-cli.html"/>
+</topic>
+<topic id="topic_kjd_3gq_15" source="devplatform/2.0/helion/CLI/cli.html" navtitle="Command Line Clients" path="cli">
+<topic id="topic843" source="devplatform/2.0/helion/CLI/ALS_Client_Downloads.html" navtitle="Command Line Client Downloads" />
+<topic id="topic39432" source="devplatform/2.0/helion/admin/reference/kato-ref.html"  navtitle="Kato Command Reference"/>
+<topic id="topic_jsx_jgq_15" source="devplatform/2.0/helion/CLI/als_helion_client.html" navtitle="ALS Helion Client" path="als">
+<topic id="topic3165" source="devplatform/2.0/helion/user/client/client_index.html"  navtitle="ALS Client Installation"/>
+<topic id="topic13355" source="devplatform/2.0/helion/user/reference/client-ref.html"  navtitle="ALS Client Command Reference" path="cli-ref">
+<topic id="topic11202" source="devplatform/2.0/helion/user/reference/client-ref-administration.html"  navtitle="Administration"/>
+<topic id="topic5470" source="devplatform/2.0/helion/user/reference/client-ref-applications.html"  navtitle="Applications"/>
+<topic id="topic3572" source="devplatform/2.0/helion/user/reference/client-ref-buildpacks.html"  navtitle="Buildpacks"/>
+<topic id="topic3247" source="devplatform/2.0/helion/user/reference/client-ref-control.html"  navtitle="Control"/>
+<topic id="topic2161" source="devplatform/2.0/helion/user/reference/client-ref-domains.html"  navtitle="Domains"/>
+<topic id="topic2298" source="devplatform/2.0/helion/user/reference/client-ref-flags.html"  navtitle="Feature Flags"/>
+<topic id="topic2439" source="devplatform/2.0/helion/user/reference/client-ref-getting-started.html"  navtitle="Getting Started"/>
+<topic id="topic958" source="devplatform/2.0/helion/user/reference/client-ref-history.html"  navtitle="History"/>
+<topic id="topic17778" source="devplatform/2.0/helion/user/reference/client-ref-information.html"  navtitle="Information "/>
+<topic id="topic50918" source="devplatform/2.0/helion/user/reference/client-ref-management.html"  navtitle="Management "/>
+<topic id="topic3989" source="devplatform/2.0/helion/user/reference/client-ref-miscellaneous.html"  navtitle="Miscellaneous "/>
+<topic id="topic6634" source="devplatform/2.0/helion/user/reference/client-ref-organizations.html"  navtitle="Organizations "/>
+<topic id="topic4565" source="devplatform/2.0/helion/user/reference/client-ref-placement.html"  navtitle="Placement Zones "/>
+<topic id="topic5727" source="devplatform/2.0/helion/user/reference/client-ref-quotas.html"  navtitle="Quotas "/>
+<topic id="topic2750" source="devplatform/2.0/helion/user/reference/client-ref-routes.html"  navtitle="Routes "/>
+<topic id="topic5620" source="devplatform/2.0/helion/user/reference/client-ref-securitygroups.html"  navtitle="Security Groups "/>
+<topic id="topic5507" source="devplatform/2.0/helion/user/reference/client-ref-brokers.html"  navtitle="Service Brokers "/>
+<topic id="topic10567" source="devplatform/2.0/helion/user/reference/client-ref-service-management.html"  navtitle="Service Management "/>
+<topic id="topic4355" source="devplatform/2.0/helion/user/reference/client-ref-serviceplans.html"  navtitle="Service Plans "/>
+<topic id="topic3675" source="devplatform/2.0/helion/user/reference/client-ref-services.html"  navtitle="Services "/>
+<topic id="topic7566" source="devplatform/2.0/helion/user/reference/client-ref-spacequotas.html"  navtitle="Space Quotas "/>
+<topic id="topic9898" source="devplatform/2.0/helion/user/reference/client-ref-spaces.html"  navtitle="Spaces "/>
+<topic id="topic3706" source="devplatform/2.0/helion/user/reference/client-ref-tokens.html"  navtitle="Authentication Tokens "/>
+<topic id="topic7058" source="devplatform/2.0/helion/user/reference/client-ref-user-management.html"  navtitle="User Management "/>
+</topic>
+</topic>
+<topic id="topic_zqs_lgq_15" source="devplatform/2.0/helion/CLI/cluster_management_tool.html" navtitle="Cluster Management Tool" path="cluster-man">
+<topic id="topic13234" source="devplatform/2.0/helion/CLI/ALS_Client_Reference.html"  navtitle="Cluster Management Tool Installation and Reference"/>
+<topic id="topic_exb_b21_ct" source="devplatform/2.0/helion/CLI/cf_mgmt_createcluster.html" navtitle="Create Clusters and Services from the Command Line"  path="create">
+<topic id="topic_a4c_11b_dt" source="devplatform/2.0/helion/CLI/cfmgmt_createcluster_starter.html" navtitle="Example: Create a Starter Cluster" />
+<topic id="cfmgmt_growcluster_add_dea" source="devplatform/2.0/helion/CLI/cfmgmt_growcluster_addDEANode.html" navtitle="Example: Add a DEA Node" />
+<topic id="cfmgmt_growcluster_add_service" source="devplatform/2.0/helion/CLI/cfmgmt_growcluster_addservice.html" navtitle="Example: Add a Service" />
+</topic>
+<topic id="topic_j5v_bsb_rt" source="devplatform/2.0/helion/CLI/cfmgmt_configure_keystonev3.html" toc="no"/>
+</topic>
+<topic id="topic_zbp_ngq_15" source="devplatform/2.0/helion/CLI/als_management_console.html" navtitle="ALS Management Console" path="als-console">
+<topic id="topic_zqb_nk4_xs" source="devplatform/2.0/helion/admin/console/console_intro.html" navtitle="Introduction and First Use" />
+<topic id="topic13823" source="devplatform/2.0/helion/admin/console/console_index.html"  navtitle="Management Console (Admin View)"/>
+<topic id="topic8844" source="devplatform/2.0/helion/user/console/console_index.html" navtitle="Management Console (User View)" />
+<topic id="topic_od4_byj_rs" source="devplatform/2.0/helion/admin/console/console_settings.html" navtitle="Management Console Settings" />
+<topic id="topic5029" source="devplatform/2.0/helion/admin/console/customize.html"  navtitle="Management Console Customization"/>
+<topic id="topic5271" source="devplatform/2.0/helion/admin/console/app-store.html"  navtitle="Sample Applications"/>
+</topic>
+</topic>
+<topic id="topic_lhg_c3q_15" source="devplatform/2.0/windows_reference.html" navtitle="Windows Reference" path="windows-ref">
+<topic id="topic24073_2" source="devplatform/2.0/windows/windows_overview.html"  navtitle="Windows Overview"/>
+<topic id="topic_a2c_whq_15" source="devplatform/2.0/administrator_reference.html" path="admin-ref">
+<topic id="topic7321" source="devplatform/2.0/windows/windows_building_and_deploying.html"  navtitle="Building and Deploying Windows DEA and SQL Server Express Images"/>
+<topic id="topic3869" source="devplatform/2.0/windows/windows_adding_services.html"  navtitle="Adding Services to Windows Applications"/>
+<topic id="windows_password" source="devplatform/2.0/windows/windows_password.html" navtitle="Retrieving the Admin Password for Windows Instances" />
+<topic id="windows_remoting" source="devplatform/2.0/windows/windows_remoting.html" navtitle="Remote Desktop Access" />
+<topic id="topic6720" source="devplatform/2.0/windows/windows_glazier_reference_guide.html"  navtitle="Glazier Reference Guide"/>
+<topic id="topic1858" source="devplatform/2.0/windows/windows_growcluster.html" navtitle="Growing and Renaming Clusters using Horizon" />
+</topic>
+<topic id="topic_v5z_xhq_15" source="devplatform/2.0/developer_reference.html" path="dev-ref">
+<topic id="windows_firstapp" source="devplatform/2.0/windows/windows_firstapp.html"  navtitle="Deploying your first .NET Application"/>
+<topic id="windows_tools" source="devplatform/2.0/windows/windows_tools_guide.html"  navtitle="Windows and .NET Applications Tools Guide"/>
+<topic id="topic_u2d_gxj_bt" source="devplatform/2.0/windows/windows_wcf.html" navtitle=" Deploying a WCF service" />
+<topic id="topic_rbs_ysb_bt" source="devplatform/2.0/windows/windows_creating_sql.html"/>
+<topic id="windows_nonnet" source="devplatform/2.0/windows/windows_nonnet.html" navtitle="Deploying a Node.js Application with Visual Studio" />
+</topic>
+<topic id="windows_troubleshooting" source="devplatform/2.0/windows/windows_troubleshooting.html" navtitle="Troubleshooting" />
+<topic id="topic2394" source="devplatform/2.0/windows/windows_custom_buildpacks.html" navtitle="Custom Buildpacks"  toc="no"/>
+</topic>
+<topic id="topic2457" source="devplatform/2.0/devplatform.appdev.html"  navtitle="Resources for Application Developers " path="resource">
+<topic id="topic_cfn_lvq_dt" source="devplatform/2.0/codeEngine/engine_overview.html" navtitle="Continuous Integration and Deployment"  path="continuous">
+<topic id="task_sw4_1zq_dt" source="devplatform/2.0/codeEngine/engine_walkthrough.html" navtitle="Create an Automated Build-Test-Deploy Cycle" />
+<topic id="topic_zcl_r5c_dt" source="devplatform/2.0/codeEngine/engine_initial_configuration.html" toc="no"/>
+<topic id="topic_lt4_cvc_dt" source="devplatform/2.0/codeEngine/engine_troubleshooting.html" navtitle="Troubleshooting" />
+<topic id="topic_kdx_zqv_4t" source="devplatform/2.0/codeEngine/engine_logging.html" navtitle="Log Files" />
+<topic id="topic_rkg_vlg_tt" source="devplatform/2.0/codeEngine/engine_testing.html" navtitle="Test Frameworks" />
+<topic id="topic_op3_g5c_dt" source="devplatform/2.0/codeEngine/engine_users_guide.html" navtitle="User's Guide"  path="user">
+<topic id="mf4_fh4_ht" source="devplatform/2.0/codeEngine/engine_environment_create.html" navtitle="Create a New Environment" />
+<topic id="topic_ib5_v5b_3t" source="devplatform/2.0/codeEngine/engine_edit_environment.html" navtitle="Change an Existing Environment"  toc="no"/>
+<topic id="createProject" source="devplatform/2.0/codeEngine/engine_create_project.html" navtitle="Create a New Project"  path="create">
+<topic id="topic_ak1_yjd_3t" source="devplatform/2.0/codeEngine/engine_hipchat_data.html" navtitle="Where to Find HipChat Notification Data" />
+</topic>
+<topic id="projectEdit" source="devplatform/2.0/codeEngine/engine_edit_project.html" navtitle="Change an Existing Project"  path="change">
+<topic id="topic_o4x_zhs_lt" source="devplatform/2.0/codeEngine/engine_project_delete.html" navtitle="Delete a Project" />
+<topic id="inviteUser" source="devplatform/2.0/codeEngine/engine_project_invite.html" navtitle="Invite Users to a Project" />
+<topic id="createPostDeploy" source="devplatform/2.0/codeEngine/engine_create_postdeploy.html" navtitle="Add or Edit Post Deployment Actions" />
+</topic>
+<topic id="topic_a34_wqb_3t" source="devplatform/2.0/codeEngine/engine_create_build.html" navtitle="Create a New Build" />
+</topic>
+</topic>
+<topic id="user_deploy_index" source="devplatform/2.0/helion/user/deploy/deploy_index.html"  navtitle="General Deployment" path="deploy">
+<topic id="topic1398" source="devplatform/2.0/helion/user/deploy/app-debug.html"  navtitle="Remote Debugging"/>
+<topic id="topic2413" source="devplatform/2.0/helion/user/deploy/other-frameworks.html"  navtitle="Generic and Standalone Frameworks"/>
+<topic id="topic3370" source="devplatform/2.0/helion/user/deploy/buildpack.html"  navtitle="Buildpacks"/>
+<topic id="topic20922" source="devplatform/2.0/helion/user/deploy/manifestyml.html"  navtitle="Manifest.yml Options"/>
+<topic id="topic5392" source="devplatform/2.0/helion/user/deploy/newrelic.html"  navtitle="New Relic Monitoring"/>
+<topic id="topic2729" source="devplatform/2.0/helion/user/deploy/orgs-spaces.html"  navtitle="Organizations and Spaces"/>
+</topic>
+<topic id="topic_ucl_xkq_15" source="devplatform/2.0/language_specific.html" path="lang-deploy">
+<topic id="topic_gdx_nkq_15" source="devplatform/2.0/docker.html" path="docker">
+<topic id="topic_yw1_w3r_dt" source="devplatform/2.0/helion/user/deploy/docker_firstapp.html" navtitle="Creating and Deploying Your First Docker App" />
+<topic id="topic_l4n_y3n_xs" source="devplatform/2.0/helion/user/deploy/languages/docker_apps.html" navtitle="Docker Apps" />
+<topic id="topic_qs2_sgy_kt" source="devplatform/2.0/helion/user/deploy/container_enable_deployment.html" toc="no" navtitle="Enable Container Deployment" />
+</topic>
+<topic id="topic1342" source="devplatform/2.0/helion/user/deploy/languages/clojure.html"  navtitle="Clojure"/>
+<topic id="topic1938" source="devplatform/2.0/helion/user/deploy/languages/go.html"  navtitle="Go"/>
+<topic id="topic2811" source="devplatform/2.0/helion/user/deploy/languages/java.html"  navtitle="Java"/>
+<topic id="topic3629" source="devplatform/2.0/helion/user/deploy/languages/node.html"  navtitle="Node"/>
+<topic id="topic8895" source="devplatform/2.0/helion/user/deploy/languages/perl/perl_index.html"  navtitle="Perl" path="perl">
+<topic id="topic1184" source="devplatform/2.0/helion/user/deploy/languages/perl/catalyst.html"  navtitle="Catalyst"/>
+<topic id="topic1236" source="devplatform/2.0/helion/user/deploy/languages/perl/cgiapppsgi.html"  navtitle="CGI Application"/>
+<topic id="topic560" source="devplatform/2.0/helion/user/deploy/languages/perl/dancer.html"  navtitle="Dancer"/>
+<topic id="topic1723" source="devplatform/2.0/helion/user/deploy/languages/perl/mason.html"  navtitle="Mason"/>
+<topic id="topic1228" source="devplatform/2.0/helion/user/deploy/languages/perl/mojo.html"  navtitle="Mojolicious"/>
+<topic id="topic751" source="devplatform/2.0/helion/user/deploy/languages/perl/perlcgi.html"  navtitle="Perl CGI"/>
+</topic>
+<topic id="topic5845" source="devplatform/2.0/helion/user/deploy/languages/php.html"  navtitle=" PHP"/>
+<topic id="topic11550" source="devplatform/2.0/helion/user/deploy/languages/python/python_index.html"  navtitle="Python" path="python">
+<topic id="topic3654" source="devplatform/2.0/helion/user/deploy/languages/python/django.html"  navtitle="Deploying Django Apps"/>
+</topic>
+<topic id="topic5273" source="devplatform/2.0/helion/user/deploy/languages/ruby.html"  navtitle="Ruby" />
+</topic>
+<topic id="topic7631" source="devplatform/2.0/helion/user/reference/environment.html"  navtitle="Environment Variables "/>
+<topic id="topic5712" source="devplatform/2.0/devplatform.eclipse.html"  navtitle="Eclipse Deployment Plugin"/>
+<topic id="topic_fmy_ckq_15" source="devplatform/2.0/java_code_samples.html" path="java-code">
+<topic id="topic5076" source="devplatform/2.0/workbook/helloworld/helloworld.java.html"  navtitle="Java Hello World Sample"/>
+<topic id="topic6838" source="devplatform/2.0/workbook/database/database.java.html"  navtitle="Java MySQL Database Sample"/>
+<topic id="topic8312" source="devplatform/2.0/workbook/messaging/messaging.java.html"  navtitle="Java RabbitMQ Messaging Sample"/>
+</topic>
+<topic id="topic_o3w_2kq_15" source="devplatform/2.0/node_code_samples.html" path="node-samples">
+<topic id="topic4388" source="devplatform/2.0/workbook/helloworld/helloworld.node.html"  navtitle="Node Hello World Sample"/>
+<topic id="topic5933" source="devplatform/2.0/workbook/database/database.node.html"  navtitle="Node MySQL Database Sample"/>
+<topic id="topic5325" source="devplatform/2.0/workbook/messaging/messaging.node.html"  navtitle="Node RabbitMQ Messaging Sample"/>
+</topic>
+<topic id="topic_xl2_mkq_15" source="devplatform/2.0/php_code_samples.html" path="php-samples">
+<topic id="topic3770" source="devplatform/2.0/workbook/helloworld/helloworld.php.html" navtitle="PHP HelloWorld Sample"/>
+<topic id="topic6918" source="devplatform/2.0/workbook/database/database.php.html"  navtitle="PHP MySQL Database Sample"/>
+<topic id="topic6641" source="devplatform/2.0/workbook/messaging/messaging.php.html"  navtitle="PHP RabbitMQ Messaging Sample"/>
+</topic>
+</topic>
+<topic id="topic_n3w_s3q_15" source="devplatform/2.0/database/database_service_reference.html" path="db-ref">
+<topic id="DatabaseService" source="devplatform/2.0/database/devplatform.database-instance.html"  navtitle="Using the Database Service"/>
+<topic id="topic_database_release_notes" source="devplatform/2.0/database/devplatform.database-releasenotes.html"/>
+<topic id="DatabaseArchitecture " source="devplatform/2.0/database/devplatform.database-architecture.html"/>
+<topic id="topic_hotpools" source="devplatform/2.0/database/devplatform.database-hotpools.html"/>
+<topic id="topic_create_database_horizon" source="devplatform/2.0/database/devplatform.database-create-horizon.html" navtitle="Creating a database from Horizon"/>
+<topic id="topic_create_database_cli" source="devplatform/2.0/database/devplatform.database-create-cli.html" navtitle="Create a database instance from the command line"/>
+<topic id="topic_database_create_cluster_horizon" source="devplatform/2.0/database/devplatform.database-create-cluster-horizon.html" navtitle="Creating a database cluster from Horizon" />
+<topic id="topic_database_create_cluster_cli" source="devplatform/2.0/database/devplatform.database-create-cluster-cli.html" navtitle="Creating a database cluster from the command line"/>
+<topic id="topic_database_manage_cli" source="devplatform/2.0/database/devplatform.manage-cli.html"/>
+<topic id="topic_q1p_nnp_tt" source="devplatform/2.0/database/devplatform.database-vertica.html"/>
+<topic id="topic_database_assign_ip" source="devplatform/2.0/database/devplatform.database-attach-ip.html" navtitle="Attach a floating IP to a database instance"/>
+<topic id="topic_replicate_database" source="devplatform/2.0/database/devplatform.database-replicate.html"/>
+<topic id="topic_backup_database" source="devplatform/2.0/database/devplatform.database-backup.html" navtitle="Back up a database"/>
+<topic id="create_database_loadbalancer" source="devplatform/2.0/database/devplatform.database-create-loadbalancer.html"/>
+<topic id="topic2065" source="devplatform/2.0/database/devplatform.database-ALS.html"  navtitle="Connecting the Database Service with the Application Lifecycle Service"/>
+<topic id="topic_hhh_lm4_xt" source="devplatform/2.0/installation/install_dbaas_configureAvailabilityZones.html" toc="no"/>
+<topic id="topic_sjz_wm4_xt" source="devplatform/2.0/installation/install_dbaas_checkQuotas.html" toc="no"/>
+</topic>
+<topic id="topic_myz_l3q_15" source="devplatform/2.0/messaging/messaging_service_ref.html" path="message-service-ref">
+<topic id="using_messaging" source="devplatform/2.0/messaging/devplatform.using-the-messaging-service.html" navtitle="Using Messaging as a Service"/>
+<topic id="using_messaging_als" source="devplatform/2.0/messaging/devplatform.using-messaging-service-with-ALS.html" navtitle="Using the Messaging Service with ALS"/>
+<topic id="cue_createCluster" source="devplatform/2.0/messaging/cue_dev_createCluster.html" navtitle="Create a Cluster from the Command Line"/>
+<topic id="cue_manageCluster" source="devplatform/2.0/messaging/cue_ops_manageCluster.html" navtitle="Manage a Cluster from the Command Line"/>
+<topic id="cue_ops_loadbalancer" source="devplatform/2.0/messaging/cue_ops_loadBalancer.html" navtitle="Accessing RabbitMQ via a Load Balancer"/>
+<topic id="topic_pqg_nyd_lt" source="devplatform/2.0/messaging/cue_ops_referenceArchitecture.html" navtitle="Cue Reference Architecture"/>
+<topic id="topic_a3s_ryd_lt" source="devplatform/2.0/messaging/cue_ops_bestPractices.html" navtitle="Cue Best Practices"/>
+</topic>
+<topic id="topic853" source="devplatform/2.0/devplatform.sysadmin.html"  navtitle="Resources for IT Ops" path="it-ops">
+<topic id="HP2.0DNSaaS_install_config" source="devplatform/2.0/installation/install_dnsaas.html" navtitle="DNS Configuration" />
+<topic id="topic_l51_22v_xs" source="devplatform/2.0/helion/admin/server/network_port_configuration.html"/>
+<topic id="user_filesystem" source="devplatform/2.0/helion/user/services/filesystem.html"  navtitle="Persistent File System"/>
+<topic id="topic_rmk_gnx_ft" source="devplatform/2.0/helion/CLI/devplatform_downloadRCFile.html" toc="no"/>
+<topic id="topic1388" source="devplatform/2.0/helion/helion_index.html"  navtitle="Application Lifecycle Service" path="als">
+<topic id="user_data_services" source="devplatform/2.0/helion/user/services/data-services.html"  navtitle="Application Lifecycle Service Data Services"/>
+<topic id="topic11989" source="devplatform/2.0/helion/CLI/constructor_vm.html" navtitle="ALS Constructor VM" />
+<topic id="topic2276" source="devplatform/2.0/helion/admin/helion_admin_index.html"  navtitle="ALS Admin Guide" path="admin-guide">
+<topic id="topic_pg2_qbl_ls" source="devplatform/2.0/helion/user/deploy/adding-buildpack.html" navtitle="Adding Buildpacks" />
+<topic id="topic16169" source="devplatform/2.0/helion/admin/best-practices/best_practices_index.html"  navtitle="Best Practices"/>
+<topic id="admin_cluster_index" source="devplatform/2.0/helion/admin/cluster/cluster_index.html"  navtitle="Cluster Setup"/>
+<topic id="topic2870" source="devplatform/2.0/devplatform.deploy-ALS.html"  navtitle="Create a Cluster using the Horizon UI"/>
+<topic id="topic_u3c_rtd_5s" source="devplatform/2.0/helion/admin/cluster/zones.html" navtitle="Configure Availability and Placement Zones" />
+<topic id="server_index" source="devplatform/2.0/helion/admin/server/server_index.html"  navtitle="Server Configuration" path="server-config">
+<topic id="server_operations" source="devplatform/2.0/helion/admin/server/operations.html"  navtitle="Common Server Operations"/>
+<topic id="topic31232" source="devplatform/2.0/helion/admin/server/configuration.html"  navtitle="Detailed Configuration"/>
+<topic id="topic_gwr_qgd_ws" source="devplatform/2.0/helion/admin/server/https_and_ssl.html" navtitle="HTTP and SSL Configuration" />
+<topic id="topic8359" source="devplatform/2.0/helion/admin/server/aok.html"  navtitle="AOK Authentication Server"/>
+<topic id="topic7767" source="devplatform/2.0/helion/admin/server/docker.html"  navtitle="Docker and Fence"/>
+<topic id="topic2651" source="devplatform/2.0/helion/admin/best-practices/logging-examples.html"  navtitle="Log Drain Examples"/>
+<topic id="topic11928" source="devplatform/2.0/helion/admin/server/logging.html"  navtitle="Log Streams"/>
+<topic id="topic3030" source="devplatform/2.0/helion/admin/server/router.html"  navtitle="ALS Router"/>
+</topic>
+<topic id="topic_kbd_tkq_15" source="devplatform/2.0/helion/admin/reference.html" path="ref">
+<topic id="topic395" source="devplatform/2.0/helion/admin/reference/groups.html"  navtitle="Managing Groups, Users and Limits (DEPRECATED)"/>
+<topic id="topic6051" source="devplatform/2.0/helion/admin/reference/known-issues.html"  navtitle="Known Issues"/>
+<topic id="topic4407" source="devplatform/2.0/helion/admin/reference/architecture.html"  navtitle="Architectural Design"/>
+<topic id="topic4486" source="devplatform/2.0/helion/admin/reference/add-service.html"  navtitle="Adding System Services"/>
+<topic id="topic4317" source="devplatform/2.0/helion/admin/reference/reference_troubleshoot.html"  navtitle="Troubleshooting"/>
+</topic>
+</topic>
+<topic id="topic1693" source="devplatform/2.0/helion/user/helion_user_index.html"  navtitle="ALS User Guide" path="als-user-guide">
+<topic id="topic4745" source="devplatform/2.0/helion/user/quick-start/quickstart_index.html" navtitle="ALS Quick Start" />
+<topic id="topic455" source="devplatform/2.0/helion/user/reference/api.html"  navtitle="Application Lifecycle Service API"/>
+<topic id="topic6187" source="devplatform/2.0/helion/user/reference/glossary.html"  navtitle="Glossary"/>
+<topic id="topic2774" source="devplatform/2.0/helion/user/reference/reference_troubleshoot.html"  navtitle="Troubleshooting "/>
+<topic id="topic5165" source="devplatform/2.0/helion/user/deploy/app-logs.html"  navtitle="Application Logs "/>
+</topic>
+</topic>
+<topic id="topic_qxj_cjq_15" source="devplatform/2.0/other_services.html" path="other">
+<topic id="topic4533" source="devplatform/2.0/helion/admin/cluster/external-db.html"  navtitle="External Data Services"/>
+<topic id="topic4009" source="devplatform/2.0/helion/admin/cluster/harbor.html"  navtitle="Harbor TCP/UDP Port Service "/>
+<topic id="topic2514" source="devplatform/2.0/helion/user/services/memcached.html"  navtitle="Memcached Service"/>
+<topic id="topic7511" source="devplatform/2.0/helion/user/services/port-service.html"  navtitle="Port Service (Harbor)"/>
+<topic id="topic4060" source="devplatform/2.0/helion/user/services/user-provided.html"  navtitle="User-Provided Services"/>
+</topic>
+</topic>
+</topic>
+</html-import>

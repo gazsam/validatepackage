@@ -1,0 +1,93 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Developing in Java</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic2811" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/languages/java.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Developing in Java</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">Whether you're deploying an application to the HPE Helion Development Platform, a Cloud Foundry-based Platform as a Service (PaaS), or writing applications that take advantage of HPE Helion OpenStack<sup>®</sup> to manage infrastructure or software services, tools to enable successful development are available in Java.</p>
+
+  <p class="p">Deployable <a class="xref" href="../../../../devplatform.appdev.html#topic2457__java">sample applications</a> are available in this language.</p>
+
+<div class="section" id="topic2811__using-jdbc"><h2 class="title sectiontitle">Using JDBC</h2> 
+<p class="p">It is possible to access the database services using the standard JDBC
+API:</p>
+
+<pre class="pre codeblock">String helion_services = System.getenv("VCAP_SERVICES");
+String hostname = NULL_STRING;
+String dbname = NULL_STRING;
+String user = NULL_STRING;
+String password = NULL_STRING;
+String port = NULL_STRING;
+
+if (helion_services != null &amp;&amp; helion_services.length() &gt; 0) {
+  try
+  {
+    JsonRootNode root = new JdomParser().parse(helion_services);
+
+    JsonNode credentials = root.getNode("mysql");
+
+    dbname = credentials.getStringValue("name");
+    hostname = credentials.getStringValue("hostname");
+    user = credentials.getStringValue("user");
+    password = credentials.getStringValue("password");
+    port = credentials.getNumberValue("port");
+
+    String dbUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbname;
+
+    Class.forName("com.mysql.jdbc.Driver");
+    Connection connection = DriverManager.getConnection(dbUrl, user, password);
+    return connection;
+
+  }
+  catch (Exception e)
+  {
+    throw new SQLException(e);
+  }
+}</pre>
+
+</div>
+
+<div class="section" id="topic2811__example"><h2 class="title sectiontitle">Example</h2> 
+<p class="p">The <a class="xref" href="../../../../workbook/database/database.java.html">Java database sample</a> sample
+demonstrates a simple Java application using a MySQL service.</p>
+
+</div>
+
+<div class="section" id="topic2811__catalina-opts"><h2 class="title sectiontitle">CATALINA_OPTS</h2> 
+<p class="p">The CATALINA_OPTS environment variable can be set in the
+<samp class="ph codeph">env:</samp> block of manifest.yml (or set via the
+Management Console) to override Application Lifecycle Service defaults.</p>
+
+      <div class="note restriction"><span class="restrictiontitle">Restriction:</span>  CATALINA_OPTS settings cannot be modified without restaging. Applications must be
+        re-pushed with new settings to apply changes.</div>
+
+<p class="p">Application Lifecycle Service sets the CATALINA_OPTS environment variable for applications
+using Tomcat automatically, based on the <samp class="ph codeph">mem:</samp>
+value specified for application instances. Application Lifecycle Service will always leave at
+least 64MB for the heap, but will otherwise reserves up to 96MB for
+overhead, that is for the code of the JVM itself, for additional
+libraries loaded via JNI, for additional processes to run in the
+background, and for the JVM permanent pool.</p>
+
+<p class="p">This means, for example, a 128MB application will end up with 64MB for
+the heap and 64MB for overhead, a 160MB application will still have 64MB
+for the heap but 96MB for overhead, and a 512MB application will get a
+416MB heap and allow 96MB for overhead.</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

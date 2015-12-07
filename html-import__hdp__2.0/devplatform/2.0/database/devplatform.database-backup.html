@@ -1,0 +1,135 @@
+
+
+
+<html><head><title>Backing up a database</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_backup_database" /> <meta name="html-import-file-path" content="devplatform/2.0/database/devplatform.database-backup.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">Backing up a database</h1>
+
+
+  
+
+  <div class="body">
+    <p class="p">This document describes how to back up an existing database instance. This will take a backup of the entire database instance. If necessary, the backup can be restored to a new instance at a later time.</p>
+
+    <ul class="ul">
+      <li class="li"><a class="xref" href="#topic_backup_database__horizon">Backing up a database from
+          Horizon</a></li>
+
+      <li class="li"><a class="xref" href="#topic_backup_database__cli">Backing up a database from the
+          command line</a></li>
+
+    </ul>
+
+    <div class="note note"><span class="notetitle">Note:</span> Backing up a MongoDB database is not supported.</div>
+
+    <div class="section" id="topic_backup_database__horizon"><h2 class="title sectiontitle">Backing up a database from Horizon</h2>
+    <ol class="ol">
+      <li class="li">Log in to the Horizon console.</li>
+
+      <li class="li">Under your project, open the <strong class="ph b">Database</strong> panel and then click the <strong class="ph b">Instances</strong> tab.</li>
+
+      <li class="li">A list of active database instances will be displayed. Identify the database instance to back up
+        and click <strong class="ph b">Create Backup</strong> next to that
+        instance.<br/><img class="image" src="../../../media/createDBinstance6.png"/><br/></li>
+
+      <li class="li">In the <strong class="ph b">Backup Database</strong> dialog, specify the following information:
+        
+        <ul class="ul">
+          <li class="li">
+            <strong class="ph b">Name</strong> - the name of the backup to create. This name will help you identify the backup in the future.</li>
+
+          <li class="li">
+            <strong class="ph b">Database Instance</strong> - The database instance that will be backed up.</li>
+
+          <li class="li">
+            <strong class="ph b">Description</strong> - a text description of the backup (optional).</li>
+
+          <li class="li">
+            <strong class="ph b">Parent Backup</strong> - if a previous backup of this database instance exists. it is
+            possible to take an incremental backup. An incremental backup will process faster
+            because it only stores the differences between the two. Select the previous backup if
+            an incremental backup is desired.<br/><img class="image" src="../../../media/createDBinstance7.png" height="364" width="537"/><br/></li>
+
+        </ul>
+
+      </li>
+
+      <li class="li">Click <strong class="ph b">Backup</strong>.</li>
+
+      <li class="li">In the <strong class="ph b">Database</strong> panel, click the <strong class="ph b">Backups</strong> tab to view all existing backups,
+        including the newly-created
+        backup.<br/><img class="image" src="../../../media/createDBinstance8.png"/><br/></li>
+
+    </ol>
+
+    </div>
+
+    <div class="section" id="topic_backup_database__cli"><h2 class="title sectiontitle">Backing up a database from the command line</h2>
+      <ol class="ol">
+        <li class="li">To work with backups from the command line, log in to the installer node for your HPE Helion OpenStack environment and source the service.osrc file:
+          <pre class="pre codeblock">. service.osrc</pre>
+</li>
+
+        <li class="li"><strong class="ph b">Back up a database:</strong> To back up a database, use the <samp class="ph codeph">trove backup-create</samp> command, passing in the database instance (by name or ID) to back up, and the name of the backup to be created.</li>
+
+        <li class="li">
+          <dl class="dl">
+            
+              <dt class="dt dlterm">Example: Creating a backup by name</dt>
+
+              <dd class="dd"><pre class="pre codeblock">trove backup-create myRedisInstance myBackup</pre>
+</dd>
+
+            
+            
+              <dt class="dt dlterm">Example: Creating a backup by ID</dt>
+
+              <dd class="dd"><pre class="pre codeblock">trove backup-create 0043b7e3-7376-44e6-8239-06156e03c5cd myBackup</pre>
+</dd>
+
+            
+          </dl>
+
+        </li>
+
+        <li class="li"><strong class="ph b">List created backups: </strong>To view the created backups, use the <samp class="ph codeph">trove backup-list</samp> command</li>
+
+        <li class="li"><strong class="ph b">Restore a database from a backup: </strong>To restore a backup (that is, create a new instance from a backup), use the <samp class="ph codeph">trove create --backup &lt;backup ID&gt;</samp> command</li>
+
+      </ol>
+
+    </div>
+
+    <div class="section" id="topic_backup_database__vertica"><h2 class="title sectiontitle">Backing up a Vertica Preview database</h2>
+      <p class="p">Vertica backups can be performed by taking advantage of Vertica's export and import capabilities via the VSQL interface. 
+        The Vertica documentation provides details on exporting data. Data can also be exported to an external file via SELECT 
+        and imported via COPY LOCAL.</p>
+
+      <p class="p">For more information on these procedures, see the following topics:</p>
+
+      <ul class="ul">
+        <li class="li"><a class="xref" href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/AdministratorsGuide/CopyExportData/CopyingAndExportingData.htm" target="_blank">
+            Copying and Exporting Data
+        </a></li>
+
+        <li class="li"><a class="xref" href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/SQLReferenceManual/Statements/SELECT/SELECT.htm" target="_blank">
+          SELECT
+        </a></li>
+
+        <li class="li"><a class="xref" href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/SQLReferenceManual/Statements/COPY/COPYLOCAL.htm" target="_blank">
+          COPY LOCAL
+        </a></li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+</body>
+</html>

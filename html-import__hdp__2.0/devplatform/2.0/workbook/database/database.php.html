@@ -1,0 +1,214 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: PHP MySQL Database Sample</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic6918" /> <meta name="html-import-file-path" content="devplatform/2.0/workbook/database/database.php.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: PHP MySQL Database Sample</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">This very simple PHP web app displays the text "Executed query "SELECT "Hello World!"".", and then the result of that query "Hello World!" This is a demonstration of the minimum requirements to build an application that can connect to a MySQL database provided by ALS and run queries against it. Use this sample to ensure that you have set up your environment for connecting to and working with MySQL on the Helion Development Platform.</p>
+
+<div class="section" id="topic6918__prerequisites"><h2 class="title sectiontitle">Prerequisites</h2> 
+<ul class="ul">
+<li class="li">An installation of the <a class="xref" href="../../installation/devplatform_install_platform.html">HPE Helion Development Platform</a>.</li>
+
+<li class="li">Access to an Application Lifecycle Service (ALS) <a class="xref" href="../../helion/admin/cluster/cluster_index.html">Cluster</a>
+</li>
+
+<li class="li">Access to the <a class="xref" href="../../helion/user/client/client_index.html">Helion command-line client (CLI)</a>.</li>
+
+<li class="li">Access to the web-based <a class="xref" href="../../helion/user/console/console_index.html">ALS Management Console</a>.</li>
+
+<li class="li">The MySQL service is not enabled by default. Check and <a class="xref" href="#topic6918__enablemysql">make sure it is enabled</a>.</li>
+
+<li class="li">Register for access to the <a class="xref" href="https://helion.hpwsportal.com/catalog.html#/Home/Show" target="_blank">HPE Helion Development Platform</a> (HDN).</li>
+
+</ul>
+
+
+</div>
+
+<div class="section" id="topic6918__deployment-instructions"><h2 class="title sectiontitle">Deployment Instructions</h2> 
+</div>
+
+<div class="section" id="topic6918__enablemysql"><h2 class="title sectiontitle">Enable the MySQL Service</h2> 
+<p class="p">If the MySQL service is not enabled on your cluster, or if you are not sure, follow these steps:</p>
+
+<ol class="ol">
+<li class="li">Go to the Administrative console for your ALS cluster. For example: <em class="ph i">https://api.xx.xx.xx.xx.xip.io</em>, substitute your own cluster's link.</li>
+
+<li class="li">On the <strong class="ph b">Admin</strong> tab, click <strong class="ph b">Cluster</strong>.</li>
+
+<li class="li">Click <strong class="ph b">Cluster Nodes</strong> on the left side of the page.</li>
+
+<li class="li">Click the <strong class="ph b">Settings</strong> icon (a gear icon in the upper right corner)</li>
+
+<li class="li">The <strong class="ph b">MySQL</strong> check box should be checked. If it is not, check it.</li>
+
+<li class="li">Click <strong class="ph b">Save</strong>.</li>
+
+</ol>
+
+<p class="p">
+<strong class="ph b">Note</strong>: If a more durable or scalable MySQL database service is needed, configure your ALS cluster to use a database instance or master/slave pair provided by the Database Service. For more information, refer 
+    to <a class="xref" href="../../database/devplatform.database-instance.html">Using the Database Service</a> and <a class="xref" href="../../database/devplatform.database-ALS.html">Connecting the Database Service with ALS</a>.</p>
+
+</div>
+
+<div class="section" id="topic6918__download-the-application-files"><h2 class="title sectiontitle">Download the Application Files</h2> 
+<p class="p">
+<a class="xref" href="https://github.com/HelionDevPlatform/helion-mysql-php/" target="_blank">Click here to access the code repository</a>.</p>
+
+<p class="p">
+<em class="ph i">Manifest.yml</em> is a configuration file used to specify settings. For PHP only the <strong class="ph b">name</strong> and <strong class="ph b">buildpack</strong> fields are required. The <strong class="ph b">buildpack</strong> field is a URL for the buildpack that supports the necessary language and/or framework.</p>
+
+<p class="p">This app uses the <a class="xref" href="https://github.com/cloudfoundry/php-buildpack" target="_blank">Cloud Foundry PHP buildpack</a>. For more technical details about buildpacks and the <em class="ph i">composer.json</em> file, please see the README included in the <a class="xref" href="https://github.com/HelionDevPlatform/helion-mysql-php/" target="_blank">download package</a>.</p>
+
+</div>
+
+<div class="section" id="topic6918__deploy-the-application"><h2 class="title sectiontitle">Deploy the Application</h2> 
+<p class="p">Application Lifecycle Service clusters that require an upstream HTTP proxy to access the internet
+                will need to be <a class="xref" href="../../helion/admin/server/https_and_ssl.html#topic_gwr_qgd_ws__staging-cache-app-http-proxy">made aware of the proxy</a>. The sample applications require access to the
+                Internet in order to download dependent packages.</p>
+
+<p class="p">Use the Helion client to deploy your app to Helion Development Platform.  If you have Eclipse installed, you have the option to use the <a class="xref" href="../../devplatform.eclipse.html">plugin</a>.</p>
+
+<ol class="ol">
+<li class="li">Open the <a class="xref" href="../../helion/user/reference/client-ref.html">Helion command-line interface (CLI)</a>
+</li>
+
+<li class="li"> Ensure that you are targeting your desired environment.
+                     If you are not,
+                    execute<pre class="pre codeblock">helion target https://api.xx.xx.xx.xx.xip.io    </pre>
+</li>
+
+<li class="li"> Ensure that you are logged in to your desired environment.
+                    If you are not,
+                    execute<pre class="pre codeblock">helion login</pre>
+</li>
+
+<li class="li"> If you are not already there, <samp class="ph codeph">cd</samp> to the root directory of the sample.</li>
+
+<li class="li"> Deploy the application by using the command:<pre class="pre codeblock">helion push</pre>
+</li>
+
+<li class="li"> Accept any default values that you may be prompted for. <div class="note note"><span class="notetitle">Note:</span> By default ALS clusters are
+                        configured with two domains (private and public). In some situations the
+                        Helion CLI may prompt you to select a target domain. If prompted, select the
+                        public domain from the given list (i.e.
+                            <em class="ph i">&lt;app-name&gt;.xxx.xxx.xxx.xxx.xip.io</em>)</div>
+</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic6918__view-and-run-the-application"><h2 class="title sectiontitle">View and Run the Application</h2> 
+<ol class="ol">
+<li class="li">Open the Helion Management Console. This is the web-based administrative interface. </li>
+
+<li class="li">Click <strong class="ph b">Applications</strong>. </li>
+
+<li class="li">If the file push was successful, you should see <strong class="ph b">mysql-php</strong> in the list of available applications.</li>
+
+<li class="li">In the upper right-hand corner, click <strong class="ph b">View App</strong> to see your app in action. <ul class="ul">
+                        <li class="li">This app connects to the MySQL service, executes a query, and displays a
+                            page showing the retrieved text. </li>
+
+                    </ul>
+</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic6918__key-code-snippets"><h2 class="title sectiontitle">Key Code Snippets</h2> 
+<p class="p">This first line in this section of the index.php file shows how to retrieve the connection information for the MySQL instance from the application's environment variables. The connection information is represented using JSON.</p>
+
+<p class="p">The rest of the code shown here parses the JSON string that was retrieved and builds the appropriate connection string. Once the connection has been made, the code executes a query, reads the results, and closes the connection.</p>
+
+<pre class="pre codeblock">$services = getenv('VCAP_SERVICES');
+
+$json = json_decode($services, TRUE);
+
+// Parse the json string that we got from VCAP_SERVICES
+// The only top-level node will be mysql since it's the only service bound to
+// this sample app.
+// Note that some of the fields are optional but are included for reference
+$dbname = $json['mysql'][0]['credentials']['name'];
+$hostname = $json['mysql'][0]['credentials']['hostname'];
+$user = $json['mysql'][0]['credentials']['user'];
+$password = $json['mysql'][0]['credentials']['password'];
+$port = $json['mysql'][0]['credentials']['port'];
+
+// Create a connection to MySQL
+echo "\n &lt;br /&gt; Connecting to MySQL...";
+$connection = mysqli_connect($hostname, $user, $password, $dbname, $port);
+
+// Check connection 
+if (mysqli_connect_errno()) { 
+echo "\n &lt;br /&gt; Failed to connect to MySQL: " . mysqli_connect_error(); 
+echo "\n &lt;br /&gt;Connected to MySQL!"; } 
+
+// Execute a simple query to grab a string 
+    $queryString = "SELECT \"Hello World!\" AS result"; 
+    $result = mysqli_query($connection, $queryString); 
+    echo "\n &lt;br /&gt; Executed $queryString"; 
+
+// Get the result 
+$row = mysqli_fetch_assoc($result); 
+echo "\n &lt;br /&gt; Result: " . $row['result']; 
+echo "\n &lt;br /&gt; Error: Result of query is NULL!"; 
+
+// Free up the memory that was allocated to the result 
+mysqli_free_result($result); 
+
+// Finally, close the MySQL connection. 
+mysqli_close($con); 
+</pre>
+
+<p class="p">The <em class="ph i">manifest.yml</em> file contains the configuration information used by ALS to set up the environment. The <strong class="ph b">services</strong> element informs ALS on how to bind to the MySQL service provided by the ALS cluster to the application. The file also uses the <strong class="ph b">buildpack</strong> element that is used by ALS to configure the application environment for using PHP.</p>
+
+<pre class="pre codeblock">--- 
+applications: 
+    - name: mysql-php
+    buildpack: https://github.com/cloudfoundry/php-buildpack.git 
+    services: 
+        ${name}-db: 
+            type: mysql 
+
+</pre>
+
+</div>
+
+<div class="section" id="topic6918__key-learnings"><h2 class="title sectiontitle">Key Learnings</h2> 
+<ul class="ul">
+<li class="li">ALS requires configuration information so that it can bind to a MySQL service. Configuration information is contained in the <em class="ph i">manifest.yml</em> file.</li>
+
+<li class="li">You will need to provide information about which build pack to use for PHP so that ALS can create an environment for your app. Configuration information is contained in the <em class="ph i">manifest.yml</em> file.</li>
+
+<li class="li">You will need to retrieve connection information for MySQL from the application's environment variables and then parse that information into a connection string that can be used by PHP.</li>
+
+<li class="li">You interact with and deploy your app using the <a class="xref" href="../../helion/user/reference/client-ref.html">ALS command line client</a> or the web-based <a class="xref" href="../../helion/user/console/console_index.html">ALS Management Console</a>.</li>
+
+</ul>
+
+<p class="p">
+<a class="xref" href="../../devplatform.appdev.html">Exit Samples</a> | <a class="xref" href="../helloworld/helloworld.php.html">Previous Sample</a> | <a class="xref" href="../messaging/messaging.php.html">Next Sample</a>
+</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

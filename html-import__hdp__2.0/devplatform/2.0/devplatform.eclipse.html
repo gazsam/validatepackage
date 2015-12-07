@@ -1,0 +1,163 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Eclipse Deployment Plugin</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic5712" /> <meta name="html-import-file-path" content="devplatform/2.0/devplatform.eclipse.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Eclipse Deployment Plugin</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">If you're building apps in Eclipse, use this plugin to configure, package, and deploy your app directly to HPE Helion Development Platform.</p>
+
+<p class="p">Follow the steps outlined in this document to get the plugin up and running and to deploy one of the sample apps.</p>
+
+<div class="section" id="topic5712__prerequisites"><h2 class="title sectiontitle">Prerequisites</h2> 
+<p class="p">If you'd like to deploy the provided <a class="xref" href="devplatform.appdev.html#topic2457__java">Java
+                    samples</a>, you will need to install the following prerequisites. If
+                necessary, locate the version appropriate for your environment and install it before
+                continuing.</p>
+
+<ul class="ul">
+<li class="li">The Java <a class="xref" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">Runtime Environment</a> </li>
+
+<li class="li">The <a class="xref" href="https://www.eclipse.org/downloads/packages" target="_blank">Eclipse IDE for Java EE developers</a> </li>
+
+<li class="li">The Java Developer Kit (<a class="xref" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">JDK</a>)</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic5712__installation"><h2 class="title sectiontitle">Installation</h2> 
+<ol class="ol">
+<li class="li">Open the Eclipse IDE and install the plugin through the <strong class="ph b">Eclipse Marketplace</strong> dialog. You
+                    can find this dialog by clicking on <strong class="ph b">Help</strong> and then <strong class="ph b">Eclipse
+                        Marketplace</strong>.<br/><img class="image" src="../../media/eclipseA.png" height="342" width="330"/><br/>
+                </li>
+
+<li class="li">Type in the text <strong class="ph b">Helion</strong> and hit <strong class="ph b">go</strong> to find the Helion Eclipse plugin in the marketplace.</li>
+
+<li class="li">Click on <strong class="ph b">Install</strong> and follow the prompts to install the <strong class="ph b">HPE Helion Development Platform Eclipse Plugin</strong>.<br/><img class="image" src="../../media/eclipse2.png"/><br/>
+</li>
+
+<li class="li">Once the packages are discovered, ensure <strong class="ph b">HPE Helion Development Platform</strong> is checked and click <strong class="ph b">Confirm</strong>.<br/><img class="image" src="../../media/eclipse3.png"/><br/>
+</li>
+
+<li class="li">Accept the license agreement and Finish the wizard.</li>
+
+<li class="li">You will be prompted to restart Eclipse.  </li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic5712__setupconfiguration"><h2 class="title sectiontitle">Setup/Configuration</h2> 
+<ol class="ol">
+<li class="li">Once Eclipse has reloaded, open the Servers window by navigating to Window-&gt; Show View-&gt; Servers. Note that if you have a different version of Eclipse, you might need to go to Window -&gt; Show View -&gt; Other -&gt; Servers.<br/><img class="image" src="../../media/eclipse4.png"/><br/>
+</li>
+
+<li class="li">Launch the HPE Helion Development Platform plugin by clicking on the <strong class="ph b">Add New Server</strong> link in the Servers window.  </li>
+
+<li class="li">Select <strong class="ph b">HPE Helion Development Platform</strong> from the tree view and click <strong class="ph b">Next</strong>.<br/><img class="image" src="../../media/eclipse5.png"/><br/>
+<br/><img class="image" src="../../media/eclipse6.png"/><br/>
+</li>
+
+<li class="li">Add a new Cloud URL by hitting the Manage Cloud button. Enter the URL of your ALS cluster and
+                    give it a name. <br/><img class="image" src="../../media/eclipse7.png"/><br/>
+                    <strong class="ph b">Note</strong>: You may receive a warning that the peer is not authenticated, this
+                    is expected behavior as ALS images use a self-signed certificate. Select Yes
+                    when prompted with this error message. <br/><img class="image" id="topic5712__image_oww_d1d_ks" src="../../media/eclipse8.png"/><br/></li>
+
+<li class="li">Enter the credentials used to access your ALS cluster in the resulting dialog and then click
+                        <strong class="ph b">Validate Account</strong> to ensure that the plugin can access the URL.
+                        <div class="note note"><span class="notetitle">Note:</span> If you encounter issues validating the connection, ensure that your
+                        proxy settings are configured correctly, and that you have access to the ALS
+                        cluster endpoint. Contact your IT Administrator for more help regarding
+                        network settings and trouble shooting. Note that you might get a warning
+                        about the site using a <em class="ph i">self-signed certificate</em>. This warning can be
+                        safely ignored.</div>
+
+                    <br/><img class="image" id="topic5712__image_nyw_d1d_ks" src="../../media/eclipse8.png"/><br/>
+                </li>
+<li class="li">Click <strong class="ph b">Next</strong> to list your organizations
+                and spaces. Pick an organization and space to work with in this connection and click
+                    <strong class="ph b">Yes</strong> to import them into the IDE. Click <strong class="ph b">Finish</strong>. If you do not have
+                an organization or space set up, please create those through your ALS console by
+                visiting the endpoint URL in a browser window. </li>
+<li class="li">Now you should see <strong class="ph b">Helion
+                    Development Platform</strong> as a configured Server in your IDE. You can explore the
+                apps that have been deployed already, or continue reading to learn how to deploy a
+                sample app.</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic5712__usage"><h2 class="title sectiontitle">Usage</h2> 
+<p class="p">In order to demonstrate how the plugin works, we'll use a simple Java sample app that connects to a MySQL service.  If you'd like to follow along, <a class="xref" href="https://github.com/HelionDevPlatform/helion-mysql-java" target="_blank">download and install</a> the sample on your development machine.  If not, please skip the following 5 steps.</p>
+
+<ol class="ol">
+<li class="li">Start by adding a new project. Right-click on Project Explorer and select <strong class="ph b">New</strong> &gt; <strong class="ph b">Dynamic Web Project</strong>. Name the project <strong class="ph b">MySQLSample</strong> and then click <strong class="ph b">Finish</strong>.<br/><img class="image" src="../../media/eclipse9.png"/><br/>
+</li>
+
+<li class="li">Right-click the new MySQLSample project and import the sample app by clicking on <strong class="ph b">Import</strong> &gt; <strong class="ph b">Import</strong>.<br/><img class="image" src="../../media/eclipse10.png"/><br/>
+</li>
+
+<li class="li">Then import the sample app through your preferred method.  In this case we'll import from a directory on the file system.  Make sure that you click on the checkbox to import all files in the directory. Then click <strong class="ph b">Finish</strong>.<br/><img class="image" src="../../media/eclipse11.png"/><br/>
+</li>
+
+<li class="li">If you'd like to modify the sample and build it locally, ensure that all references can be resolved.  This sample uses javax.servlet and net.sourceforge.argo.  Note that they are declared in the POM.xml file.  To resolve these references, navigate to the files with reference warnings and click on the red squiggle.  Alternatively, if you have <a class="xref" href="http://www.eclipse.org/m2e" target="_blank">Maven installed</a> in Eclipse, you can build with Maven to resolve the references.<br/><img class="image" src="../../media/eclipse12.png"/><br/>
+</li>
+
+<li class="li">For this sample, you also need to import two external jar files. You can find the
+                    javax.servlet.* modules in the Java EE SDK under the Glassfish directory. The
+                    Argo modules can be downloaded <a class="xref" href="http://argo.sourceforge.net/downloads.html" target="_blank">here</a>.<br/><img class="image" src="../../media/eclipse13.png"/><br/></li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic5712__deploy-sample"><h2 class="title sectiontitle">Deploy sample</h2> 
+<p class="p">Now that our Sample app is set up, let's deploy it using the Helion Development Platform plugin.</p>
+
+<ol class="ol">
+<li class="li">Right-click the project in Project Explorer and select Configure &gt; Enable as Cloud Foundry App.<br/><img class="image" src="../../media/eclipse14.png"/><br/>
+</li>
+
+<li class="li">We'll deploy this app to the Helion Development Platform by right-clicking on the project and selecting <strong class="ph b">Run As</strong> &gt; <strong class="ph b">Run on Server</strong>.<br/><img class="image" src="../../media/eclipse15.png"/><br/>
+</li>
+
+<li class="li">Select <strong class="ph b">Helion Development Platform</strong> and click <strong class="ph b">Next</strong>.  You can check the box to skip this step in future deployments.<br/><img class="image" src="../../media/eclipse16.png"/><br/>
+</li>
+
+<li class="li">Next specify a name for your app and optionally pick a specific custom buildpack. You can save
+                    these settings to your manifest if you'd deploy using the command-line tools in
+                    the future. Since this is a standard Java applet, we'll stick with the default
+                    buildpack that is built into Helion Development Platform.<br/><img class="image" src="../../media/eclipse17.png" height="382" width="450"/><br/>
+                </li>
+
+<li class="li">You can see the deployment progressing in the console.<br/><img class="image" src="../../media/eclipse18.png"/><br/>
+</li>
+
+</ol>
+
+<p class="p">Once your app is deployed, you can use the plugin to interact with it directly from Eclipse. You
+                can select <strong class="ph b">Show Console</strong> to bring up the ALS console. You can view the app in
+                the browser by selecting <strong class="ph b">Open Home Page</strong> and you can also stop/restart/remove
+                    it.<br/><img class="image" src="../../media/eclipse19.png"/><br/>
+            </p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

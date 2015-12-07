@@ -1,0 +1,985 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Detailed Configuration</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic31232" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/admin/server/configuration.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Detailed Configuration</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">After booting the VM, run <em class="ph i">kato process ready all</em> before starting the following configuration steps. This command returns <strong class="ph b">READY</strong> when all configured system processes have started, and is particularly important when using <em class="ph i">kato</em> commands in automated configuration scripts which run immediately after boot (the
+<a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-process-ready">
+<em class="ph i">--block</em>
+</a>
+option is useful in this scenario).</p>
+
+<div class="p">
+      <div class="note important"><span class="importanttitle">Important:</span>  All <em class="ph i">kato</em> commands should be run as the 'helion' system user, <strong class="ph b">not as root</strong>.
+        Kato will prompt for the 'helion' user password if sudo permissions are required for a
+        specific operation.</div>
+
+    </div>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic31232__changing-the-password">Changing the Password</a>
+</li>
+
+      <li class="li"><a class="xref" href="https_and_ssl.html">HTTP and SSL Configuration</a></li>
+
+<li class="li">
+        <a class="xref" href="#topic31232__network-setup">Network Setup</a>
+        <ul class="ul">
+          <li class="li">
+            <a class="xref" href="#topic31232__server-config-hostname">Changing the
+              Hostname</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic31232__changing-ip-addresses">Changing IP
+              Addresses</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic31232__setting-a-static-ip">Setting a Static IP</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic31232__server-config-etc-hosts">Modifying the hosts
+              file</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic31232__server-config-dns">DNS</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic31232__dynamic-dns">Dynamic DNS</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic31232__alternate-dns-techniques">Alternate DNS
+              Techniques</a>
+            <ul class="ul">
+              <li class="li">
+                <a class="xref" href="#topic31232__xip-io">xip.io</a>
+              </li>
+
+              <li class="li">
+                <a class="xref" href="#topic31232__dnsmasq">dnsmasq</a>
+              </li>
+
+            </ul>
+</li>
+
+          <li class="li">
+            <a class="xref" href="#topic31232__adding-dns-nameservers">Adding DNS
+              Nameservers</a>
+          </li>
+
+          <li class="li"><a class="xref" href="#topic31232__tcp-udp-port-configuration">TCP/UDP Port
+              Configuration</a>
+          </li>
+
+          <li class="li"><a class="xref" href="#topic31232__service_nodes">Service Nodes</a></li>
+
+          <li class="li">Container-Allowed Hosts and Ports</li>
+
+          <li class="li">
+            <a class="xref" href="#topic31232__vm-filesystem-setup">VM Filesystem Setup</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic31232__helion-data-services-vs-high-availability-databases">Application
+              Lifecycle Service Data Services vs. High Availability Databases</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic31232__quota-definitions">Quota Definitions</a>
+            <ul class="ul">
+              <li class="li">
+                <a class="xref" href="#topic31232__sudo">sudo</a>
+              </li>
+
+              <li class="li">
+                <a class="xref" href="#topic31232__allowed-repositories">Allowed
+                  Repositories</a>
+              </li>
+
+            </ul>
+</li>
+
+        </ul>
+</li>
+
+</ul>
+
+<div class="section" id="topic31232__changing-the-password"><h2 class="title sectiontitle">Changing the Password</h2> 
+<p class="p">The default password for the Helion system user is <em class="ph i">stackato</em>. In clusters created by Helion
+        Orchestration tools (the Horizon Management Console and Installer CLI VM), access after
+        cluster setup is only available by SSH key pair.</p>
+
+<p class="p">This password is changed to match the one set for the first administrative user created in the Management Console. Once you've set up the primary Application Lifecycle Service admin account, use that account's password when logging in to the VM at the command line.</p>
+
+  <p class="p">In an Application Lifecycle Service cluster, this change only happens on the node serving the Management Console pages (which could be one of <a class="xref" href="../cluster/cluster_index.html#admin_cluster_index__multiple-controllers">multiple Controller nodes</a>). In this case, it's best to log in to each node in the cluster to change the password
+manually with the <em class="ph i">passwd</em> command.</p>
+
+</div>
+
+<div class="section" id="topic31232__network-setup"><h2 class="title sectiontitle">Network Setup</h2> 
+</div>
+
+<div class="section" id="topic31232__server-config-hostname"><h2 class="title sectiontitle">Changing the Hostname</h2> 
+  <p class="p">You may want or need to change the hostname of the Application Lifecycle Service system, either to match a DNS record you've created or just to make the system URLs more convenient. This can be done using the <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-node-rename">kato node rename</a> command:</p>
+
+<pre class="pre codeblock">kato node rename mynewname.example.com</pre>
+
+  <p class="p">This command will change the system hostname in <em class="ph i">/etc/hostname</em> and <em class="ph i">/etc/hosts,</em> as well as performing some internal configuration for Application Lifecycle Service such as generating a new server certificate for the <a class="xref" href="../../user/console/console_index.html#topic8844">Management Console</a>.</p>
+
+<p class="p">mDNS is only supported with ".local" hostnames. If you want to give the
+VM a canonical hostname on an existing network, <a class="xref" href="#topic31232__server-config-dns">configure DNS</a> and disable the <strong class="ph b">mdns</strong> role:</p>
+
+<pre class="pre codeblock">kato role remove mdns</pre>
+
+      <div class="note note"><span class="notetitle">Note:</span>  Application Lifecycle Service takes a while to configure itself at boot (longer at
+        first boot). Check <em class="ph i">kato status</em> to see that core services are running before executing
+          <em class="ph i">kato node rename</em>.<p class="p">In a <a class="xref" href="../../user/reference/glossary.html#topic6187__term-cluster">cluster</a>, you may also need to manually <a class="xref" href="#topic31232__server-config-etc-hosts">modify the <em class="ph i">/etc/hosts
+              file</em>
+          </a>.</p>
+</div>
+
+</div>
+
+<div class="section" id="topic31232__changing-ip-addresses"><h2 class="title sectiontitle">Changing IP Addresses</h2> 
+  <p class="p">The Application Lifecycle Service <em class="ph i">micro cloud</em> server is initially set up for <a class="xref" href="../../user/reference/glossary.html#topic6187__term-DHCP">DHCP</a> and <a class="xref" href="../../user/reference/glossary.html#topic6187__term-multicast-dns">multicast DNS</a>. This is often sufficient for local testing, but in this
+        configuration has only a single node and can only be privately routed.</p>
+
+<p class="p">As you move toward production use of the server, further configuration
+of IP addresses and hostnames will therefore be required. A production
+Application Lifecycle Service server will most likely be a
+  <a class="xref" href="../../user/reference/glossary.html#topic6187__term-cluster">cluster</a> consisting
+of several nodes and some of them will require IP addresses and corresponding hostnames.</p>
+
+<p class="p">If your server is to be exposed to the Internet, these addresses must be
+routable and the hostnames must appear in the global DNS. Even if your
+server is to be part of a <a class="xref" href="../../user/reference/glossary.html#topic6187__term-privatePaaS">
+<em class="ph i">private
+PaaS</em>
+</a> for
+organizational use only, it must still integrate fully with your network
+services, DHCP and DNS in particular. Finally, in the rare case that
+such services are not available, the Application Lifecycle Service can be configured with static IP addresses and hostnames.</p>
+
+<p class="p">Before we examine these scenarios in detail, let's review the separation
+  of roles in a <a class="xref" href="../cluster/cluster_index.html">cluster</a>:</p>
+
+<ul class="ul">
+<li class="li">The <strong class="ph b">core</strong> node which we conventionally call <samp class="ph codeph">api.helion-xxxx.local</samp> in a micro cloud will be given its own hostname and IP address in a cluster so that you can reach it from both the <a class="xref" href="../../user/console/console_index.html#topic8844">Management Console</a> and the command line.</li>
+
+<li class="li">At the same time, the other nodes in the cluster will also need to reach the core node, so whatever address is configured on its network interface will have to be known to the network, the primary node, and all the other nodes. This can be the same as the primary address assigned to the core, or a secondary address used purely within the cluster.</li>
+
+<li class="li">The <strong class="ph b">router</strong> nodes, if separate from the primary, will each require IP addresses of their own, reachable from any load balancer and through any firewall that you put in front of them.</li>
+
+</ul>
+
+<p class="p">Where you configure these hostnames and IP addresses will depend on how
+you operate your data center network. You will want to confer with your
+network administrator about this, starting with the MAC address
+configured for each VM in the hypervisor. If your site supports a
+significant number of VMs, DHCP may be set up to map MAC addresses to IP
+addresses in a particular way. For example, a certain range of MAC
+addresses may be used for servers in the DMZ, and another range for
+internal servers. If you follow this convention, your Application Lifecycle Service server
+will obtain an appropriate IP address automatically. DNS at your site
+may establish a similar convention, which you will want to follow when
+making any name or address changes within the cluster.</p>
+
+<p class="p">Having determined the hostnames of cluster nodes to be managed by <a class="xref" href="#topic31232__server-config-dns">
+          <em class="ph i">DNS</em>
+        </a>, the hostname on the primary node should be set using <a class="xref" href="#topic31232__server-config-hostname"><em class="ph i">kato node rename</em></a>
+        .</p>
+
+<p class="p">Finally, if you must set a static IP on any cluster node, be sure to
+test it before making the change permanent, otherwise you may not be
+able to reach the node once it reboots. Assuming that the primary
+address is on interface <samp class="ph codeph">eth0</samp>, a secondary address
+<samp class="ph codeph">10.0.0.1/24</samp> could be set up temporarily as
+follows:</p>
+
+<pre class="pre codeblock">ipcalc -nb 10.0.0.1/24
+Address:   10.0.0.1
+Netmask:   255.255.255.0 = 24
+Wildcard:  0.0.0.255
+=&gt;
+Network:   10.0.0.0/24
+HostMin:   10.0.0.1
+HostMax:   10.0.0.254
+Broadcast: 10.0.0.255
+Hosts/Net: 254                   Class A, Private Internet
+sudo ifconfig eth0:1 10.0.0.1 netmask 255.255.255.0 broadcast 10.0.0.255 up</pre>
+
+<p class="p">Configure another cluster node using a different address on the same
+subnet, and be sure that <samp class="ph codeph">ping</samp> works correctly on
+the new addresses. You should also use this opportunity to ping the
+router and DNS server for this subnet. Check with your network
+administrator for their addresses.</p>
+
+</div>
+
+<div class="section" id="topic31232__setting-a-static-ip"><h2 class="title sectiontitle">Setting a Static IP</h2> 
+  <p class="p">The easiest way to configure an Application Lifecycle Service VM with a static IP address is to use the <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-op-static_ip">kato op static_ip</a> command.</p>
+
+<p class="p">This command will prompt for the following inputs:</p>
+
+<ul class="ul">
+<li class="li">static IP address (e.g. 10.0.0.1)</li>
+
+<li class="li">netmask (e.g. 255.255.255.0)</li>
+
+<li class="li">network gateway (e.g. 10.0.0.254)</li>
+
+<li class="li">(optional) comma-separated list of DNS names servers (e.g.
+10.0.0.252, 10.0.0.253)</li>
+
+<li class="li">(optional) comma-separated list of DNS search domains (e.g.
+example.com, example.org)</li>
+
+</ul>
+
+<p class="p">
+<samp class="ph codeph">kato</samp> will verify the IP addresses given are within legal ranges,
+automatically calculate the network / broadcast addresses for you, and
+prompt for the <em class="ph i">sudo</em> password to write the changes.</p>
+
+<p class="p">The command can be run non-interactively with the following arguments:</p>
+
+<ul class="ul">
+<li class="li">--interface</li>
+
+<li class="li">--ip</li>
+
+<li class="li">--netmask</li>
+
+<li class="li">--gateway</li>
+
+<li class="li">--dns-nameservers (set empty "" to skip)</li>
+
+<li class="li">--dns-search-domains (set empty "" to skip)</li>
+
+<li class="li">--restart-network</li>
+
+</ul>
+
+<p class="p">If the IP address provided differs from the previous one, and the node isn't configured as a micro cloud, <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-node-migrate">kato node migrate</a> is run automatically.</p>
+
+<p class="p">As a precaution, the command does not automatically restart networking
+services. To do so, run the following commands:</p>
+
+<pre class="pre codeblock">sudo /etc/init.d/networking restart</pre>
+
+<p class="p">You will see a deprecation warning about the <samp class="ph codeph">restart</samp> option, which can safely be ignored in this context.</p>
+
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span> If you are setting a new static IP <em class="ph i">after</em> having configured a cluster, you must
+          reconfigure all other nodes in the cluster to use the new MBUS IP address. Run <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-node-attach">kato node attach</a> on all non-Core nodes.</div>
+
+      </div>
+
+<p class="p">Alternatively, these changes could be made by editing the <em class="ph i">/etc/network/interfaces</em> file manually. For example:</p>
+
+<pre class="pre codeblock">auto eth0
+iface eth0 inet static
+    address 10.0.0.1
+    netmask 255.255.255.0
+    network 10.0.0.0
+    broadcast 10.0.0.255
+    gateway 10.0.0.254
+    dns-nameservers 10.0.0.252, 10.0.0.253
+    dns-search example.com, example.org</pre>
+
+<p class="p">When DHCP is not used, DNS server IP addresses must be set explicitly
+using the <samp class="ph codeph">dns-nameservers</samp> directive as shown
+above. Multiple DNS servers can be specified in a comma separated list.</p>
+
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span> 
+          <samp class="ph codeph">dnsmasq</samp> does not necessarily reinitialize on <samp class="ph codeph">SIGHUP</samp>.
+          Therefore, perform the following to reinitialize:</div>
+
+      </div>
+
+<pre class="pre codeblock">sudo /etc/init.d/dnsmasq restart
+sudo /etc/init.d/networking restart</pre>
+
+<p class="p">Or use <samp class="ph codeph">sudo shutdown -r</samp> to exercise a complete
+restart. Then use <samp class="ph codeph">ifconfig</samp> to check that the
+interface has been configured, and <samp class="ph codeph">ping</samp> to check
+routing to other hosts on the subnet and out in the world. Finally, use
+<samp class="ph codeph">dig @&lt;DNS SERVER IP&gt; &lt;HOSTNAME&gt;</samp> to check that DNS
+is resolving correctly.</p>
+
+<p class="p">In the event of troubleshooting, you can confirm which DNS servers are
+being used by dnsmasq by checking the file
+<em class="ph i">/var/run/dnsmasq/resolv.conf</em>.</p>
+
+      <div class="note note"><span class="notetitle">Note:</span>  There may be a performance advantage in locally defining a private secondary IP address
+          (<a class="xref" href="http://tools.ietf.org/html/rfc1918" target="_blank">RFC
+          1918</a>) for the controller so that the other nodes can be assured of routing directly
+        to it. See your network administrator for advice on which addresses and subnets are
+        permissible. Once you have this secondary address set up, see the <a class="xref" href="#topic31232__server-config-etc-hosts"><em class="ph i">/etc/hosts</em></a> section
+        for final configuration of the server.</div>
+
+</div>
+
+<div class="section" id="topic31232__server-config-etc-hosts"><h2 class="title sectiontitle">Modifying /etc/hosts</h2> 
+<p class="p">The <samp class="ph codeph">/etc/hosts</samp> file is used to resolve certain
+essential or local hostnames without calling upon the DNS. Unless you
+need to <a class="xref" href="#topic31232__server-config-hostname">change the local hostname</a>, you will
+in general <em class="ph i">not</em> have to edit <samp class="ph codeph">/etc/hosts</samp> manually,
+but when troubleshooting network issues it never hurts to verify that
+the file is configured correctly.</p>
+
+<p class="p">As well, various components in a
+<a class="xref" href="../cluster/cluster_index.html">Cluster</a> rely on finding the
+cluster nodes in <samp class="ph codeph">/etc/hosts</samp>: the Cloud Controller
+and the RabbitMQ service in particular.</p>
+
+<p class="p">Application Lifecycle Service will automatically configure <samp class="ph codeph">/etc/hosts</samp>
+  on the virtual machine with one entry for the <samp class="ph codeph">localhost</samp> loopback address and another for the <a class="xref" href="http://tools.ietf.org/html/rfc1918" target="_blank">RFC 1918</a> private IP address of
+the cluster's Primary node, for example "10.0.0.1" or "192.168.0.1". All
+communication between cluster nodes should be strictly through their
+private IP addresses and not on routable addresses provided by the DNS.</p>
+
+<p class="p">Remember that <samp class="ph codeph">/etc/hosts</samp> does not support
+wildcards. You must use some form of <a class="xref" href="#topic31232__server-config-dns">DNS</a> for
+that.</p>
+
+<p class="p">Consider an Application Lifecycle Service instance called <samp class="ph codeph">helion-test</samp>
+in domain <samp class="ph codeph">example.com</samp>. The following example is
+  what you should expect to see on a <a class="xref" href="../../user/reference/glossary.html#topic6187__term-micro-cloud">micro cloud</a>
+installation, where all roles are running on the same node:</p>
+
+<pre class="pre codeblock">hostname
+helion-test
+ifconfig eth0
+eth0      Link encap:Ethernet  HWaddr 08:00:27:fc:1c:f6
+  inet addr:10.0.0.1  Bcast:10.0.0.255  Mask:255.255.255.0
+  inet6 addr: fe80::a00:27ff:fefc:1cf6/64 Scope:Link
+  UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+  RX packets:875142 errors:0 dropped:0 overruns:0 frame:0
+  TX packets:106777 errors:0 dropped:0 overruns:0 carrier:0
+  collisions:0 txqueuelen:1000
+  RX bytes:191340039 (191.3 MB)  TX bytes:23737389 (23.7 MB)
+cat /etc/hosts
+127.0.0.1       localhost helion-test
+10.0.0.1        helion-test.example.com api.helion-test.example.com</pre>
+
+  <p class="p">On a <a class="xref" href="../../user/reference/glossary.html#topic6187__term-cluster">cluster</a>
+installation, the IP address in /etc/hosts will identify the node
+hosting the MBUS, usually the same as the Cloud Controller. On this
+node, you will see a correspondence between the network interface
+<samp class="ph codeph">eth0</samp> address and <samp class="ph codeph">/etc/hosts</samp>
+for example DEA nodes, <samp class="ph codeph">eth0</samp> will be configured
+with its own address on the same subnet, but <samp class="ph codeph">/etc/hosts</samp> will remain the same..</p>
+
+<p class="p">If modifying <samp class="ph codeph">/etc/hosts</samp> becomes necessary because
+of a hostname change, you can simply edit it as in the following
+example:</p>
+
+<pre class="pre codeblock">sudo vi /etc/hosts</pre>
+
+</div>
+
+<div class="section" id="topic31232__server-config-dns"><h2 class="title sectiontitle">DNS</h2> 
+  <p class="p">The Application Lifecycle Service micro cloud uses <a class="xref" href="../../user/reference/glossary.html#topic6187__term-multicast-dns">multicast DNS</a> to broadcast its generated hostname (e.g. <samp class="ph codeph">helion-xxxx.local</samp>). This mechanism is intended for VMs running on a local machine or subnet.</p>
+
+<p class="p">For production use, the server will need:</p>
+
+<ul class="ul">
+<li class="li">a public DNS record,</li>
+
+<li class="li">a wildcard CNAME record, and</li>
+
+<li class="li">a fixed IP address.</li>
+
+</ul>
+
+<p class="p">For example, a DNS zone file for "helion.example.com" might contain:</p>
+
+<pre class="pre codeblock">helion.example.com        IN    A        10.3.30.200
+*.helion.example.com      IN    CNAME    helion.example.com</pre>
+
+<p class="p">The wildcard CNAME record enables routing for the hostnames created for
+each application pushed to Application Lifecycle Service. If your networking policy forbids
+the use of wildcard records, you will need to add DNS records for each
+application pushed to Application Lifecycle Service as well as the following two hostnames:</p>
+
+<ul class="ul">
+<li class="li">
+<strong class="ph b">api.</strong> - API endpoint for clients and the URL of the Management
+Console (e.g. api.helion.example.com)</li>
+
+<li class="li">
+<strong class="ph b">aok.</strong> - AOK authentication endpoint (e.g.
+aok.helion.example.com)</li>
+
+</ul>
+
+<p class="p">If you intend to expose your applications at URLs on other domains (e.g.
+  using <a class="xref" href="../../user/reference/client-ref-management.html#topic50918__command-map">helion map</a> add these names
+to the DNS zone file as well. For example:</p>
+
+<pre class="pre codeblock">app.domain.com              IN    CNAME    helion.example.com</pre>
+
+<p class="p">Firewalls and load balancers may require corresponding adjustments.</p>
+
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span> If your site uses DHCP, configure a static binding to the MAC address of the
+          Application Lifecycle Service VM (and be careful not to change the MAC address
+          accidentally through the hypervisor). If Application Lifecycle Service is hosted on a
+          cloud provider, assign a fixed IP address using the platform's tools (e.g. Floating IP on
+            OpenStack<sup>®</sup></div>
+
+      </div>
+
+<p class="p">With DNS records in place, the multicast DNS broadcast is no longer
+necessary. To turn it off on the Application Lifecycle Service server, use the command:</p>
+
+<pre class="pre codeblock">kato role remove mdns</pre>
+
+</div>
+
+<div class="section" id="topic31232__dynamic-dns"><h2 class="title sectiontitle">Dynamic DNS</h2> 
+<p class="p">If you don't have access to a DNS server, you can use a dynamic DNS
+provider, such as <a class="xref" href="http://www.changeip.com/" target="_blank">ChangeIP</a>
+and
+<a class="xref" href="https://help.ubuntu.com/community/DynamicDNS#Registering_with_a_Dynamic_DNS_provider" target="_blank">others</a>,
+to provide DNS records. You will need one that provides wildcard
+subdomain assignment.</p>
+
+<p class="p">Before registering your domain, be sure that your mail server will
+accept email from the provider (for example
+<samp class="ph codeph">support@changeip.com</samp>).</p>
+
+<p class="p">Create an account, choose a subdomain, and ensure that a wildcard
+assignment is made on the subdomain to handle <samp class="ph codeph">api</samp>
+and related application subdomains. Then wait to receive the
+authorization email, and verify the zone transfer before proceeding.</p>
+
+</div>
+
+<div class="section" id="topic31232__alternate-dns-techniques"><h2 class="title sectiontitle">Alternate DNS Techniques</h2> 
+<p class="p">For situations where mDNS will not work (e.g. running in a cloud hosting
+environment or connecting from a Windows system without mDNS support)
+but which do not merit the effort of manually configuring a DNS record
+(e.g. a test server) alternative methods are available.</p>
+
+</div>
+
+<div class="section" id="topic31232__xip-io"><h2 class="title sectiontitle">xip.io</h2> 
+<p class="p">The quickest way to get wildcard DNS resolution is to use the
+<a class="xref" href="http://xip.io/" target="_blank">xip.io</a> service.  This is the approach taken on clusters created with the Horizon Management Console panel or Application Lifecycle Service Installer CLI, and is done as part of the setup process.</p>
+
+<p class="p">
+        <a class="xref" href="#topic31232__server-config-hostname">Change your hostname</a>
+        using <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-node-attach">kato node rename</a> to match the external IP address with the 'xip.io'
+        domain appended. For example:</p>
+
+<pre class="pre codeblock">kato node rename 10.9.8.7.xip.io</pre>
+
+<p class="p">This will change the system hostname and reconfigure some internal
+Application Lifecycle Service settings. The xip.io DNS servers will resolve the domain
+'10.9.8.7.xip.io' and all sub-domains to '10.9.8.7'. This works for
+private subnets as well as public IP addresses.</p>
+
+</div>
+
+<div class="section" id="topic31232__dnsmasq"><h2 class="title sectiontitle">dnsmasq</h2> 
+<p class="p">Locally, you can run
+  <a class="xref" href="../../user/reference/glossary.html#topic6187__term-dnsmasq">dnsmasq</a> as a simple
+DNS proxy which resolves wildcards for
+<samp class="ph codeph">*.helion-test.example.com</samp> to
+<samp class="ph codeph">10.9.8.7</samp> when line such as the following is
+present in any of its configuration files:</p>
+
+<pre class="pre codeblock">address = /.helion-test.example.com/ 10.9.8.7</pre>
+
+<p class="p">You must restart the service to pick up the changed configuration:</p>
+
+<pre class="pre codeblock">/etc/init.d/dnsmasq restart</pre>
+
+</div>
+
+<div class="section" id="topic31232__adding-dns-nameservers"><h2 class="title sectiontitle">Adding DNS Nameservers</h2> 
+<p class="p">You may need to add site-specific DNS nameservers manually if the
+Application Lifecycle Service VM or applications running in Application Lifecycle Service containers need to
+resolve internal hosts using a particular nameserver.</p>
+
+<p class="p">To explicitly add a DNS nameserver to an Application Lifecycle Service VM running under DHCP,
+edit <em class="ph i">/etc/dhcp/dhclient.conf</em> and add a line with the DNS server IP.
+For example:</p>
+
+<pre class="pre codeblock">append domain-name-servers 10.8.8.8;</pre>
+
+<p class="p">Reboot to apply the changes.</p>
+
+<p class="p">For Application Lifecycle Service VMs with a static IP, add the nameservers when prompted
+when running the <samp class="ph codeph">kato op static_ip</samp> command (see
+  <a class="xref" href="#topic31232__setting-a-static-ip">Setting a Static IP</a> above).</p>
+
+</div>
+
+<div class="section" id="topic31232__tcp-udp-port-configuration"><h2 class="title sectiontitle">TCP/UDP Port Configuration</h2> 
+  <p class="p">The Application Lifecycle Service <a class="xref" href="../../user/reference/glossary.html#topic6187__term-micro-cloud">micro cloud</a> runs with
+the following ports exposed:</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">Port</td>
+
+    <td class="entry" valign="top">Type</td>
+
+    <td class="entry" valign="top">Service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">22</td>
+
+    <td class="entry" valign="top">tcp</td>
+
+    <td class="entry" valign="top">ssh</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">25</td>
+
+    <td class="entry" valign="top">tcp</td>
+
+    <td class="entry" valign="top">smtp</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">80</td>
+
+    <td class="entry" valign="top">tcp</td>
+
+    <td class="entry" valign="top">http</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+<p class="p">On a production cluster, or a micro cloud running on a cloud hosting
+provider, only ports 22 (SSH), 80 (HTTPS) and 443 (HTTPS) need to be
+exposed externally (e.g. for the Router / Core node).</p>
+
+<p class="p">Within the cluster (i.e. behind the firewall), it is advisable to allow
+communication between the cluster nodes on all ports. This can be done
+safely by using the security group / security policy tools provided by
+your hypervisor.</p>
+
+<p class="p">If you wish to restrict ports between some nodes (e.g. if you do not
+have the option to use security groups), the following summary describes
+which ports are used by which components. <strong class="ph b">Source</strong> nodes initiate the
+communication, <strong class="ph b">Destination</strong> nodes need to listen on the specified
+port.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">Port Range</td>
+
+    <td class="entry" valign="top">Type</td>
+
+    <td class="entry" valign="top">Source</td>
+
+    <td class="entry" valign="top">Destination</td>
+
+    <td class="entry" valign="top">Required By</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">22</td>
+
+    <td class="entry" valign="top">tcp</td>
+
+    <td class="entry" valign="top">all nodes</td>
+
+    <td class="entry" valign="top">all nodes</td>
+
+    <td class="entry" valign="top">ssh/scp/sshfs</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">4222</td>
+
+    <td class="entry" valign="top">tcp</td>
+
+    <td class="entry" valign="top">all nodes</td>
+
+    <td class="entry" valign="top">all nodes</td>
+
+    <td class="entry" valign="top">dea,controller</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">3306</td>
+
+    <td class="entry" valign="top">tcp</td>
+
+    <td class="entry" valign="top">dea,controller</td>
+
+    <td class="entry" valign="top">mysql nodes</td>
+
+    <td class="entry" valign="top">MySQL</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">5432</td>
+
+    <td class="entry" valign="top">tcp</td>
+
+    <td class="entry" valign="top">all nodes</td>
+
+    <td class="entry" valign="top">postgresql nodes</td>
+
+    <td class="entry" valign="top">PostgreSQL</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">5454</td>
+
+    <td class="entry" valign="top">tcp</td>
+
+    <td class="entry" valign="top">all nodes</td>
+
+    <td class="entry" valign="top">controller</td>
+
+    <td class="entry" valign="top">redis</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+  <p class="p">More on  <a class="xref" href="../../user/reference/glossary.html#topic6187__term-NATS">NATS</a> communication
+    with the MBUS IP (core Cloud Controller)10 is available in the glossary.</p>
+
+<p class="p">Each node can be internally firewalled using
+<a class="xref" href="http://manpages.ubuntu.com/manpages/utopic/en/man8/iptables.8.html" target="_blank">iptables</a> to
+apply the above rules.</p>
+
+<p class="p">Comments:</p>
+
+<ul class="ul">
+<li class="li">Ports 80 and 443 need only be open to the world on router nodes.</li>
+
+<li class="li">Port 4222 should be open on all nodes for
+  <a class="xref" href="../../user/reference/glossary.html#topic6187__term-NATS">NATS</a> communication
+with the MBUS IP (core Cloud Controller)</li>
+
+<li class="li">Port 9022 should be open to allow transfer of droplets to and from
+the DEAs, and Cloud Controllers.</li>
+
+<li class="li">Port 7845 is required if you plan to stream logs from all nodes in a
+cluster using <samp class="ph codeph">kato log tail</samp> command.</li>
+
+<li class="li">External access on port 22 can be restricted if necessary to the
+subnet you expect to connect from. If you are providing the
+<samp class="ph codeph">helion ssh</samp> feature to your users
+(recommended), define a distinct security group for the
+public-facing Cloud Controller node that is the same as a generic
+Application Lifecycle Service group, but has the additional policy of allowing SSH (Port
+22) from hosts external to the cluster.</li>
+
+<li class="li">Within the cluster, port 22 should be open on all hosts to allow
+administrative access over SSH. Port 22 is also used to mount
+Filesystem service partitions in application containers on the DEA
+nodes (via SSHFS).</li>
+
+<li class="li">The optional Harbor port service has a configurable port range
+(default 41000 - 61000) which can be exposed externally if required.</li>
+
+</ul>
+
+</div>
+
+  <div class="section" id="topic31232__service_nodes"><h2 class="title sectiontitle">Service Nodes</h2> In addition to the ports listed above for service nodes and
+      gateways, several service nodes assign a port for each individual user-requested service
+      instance. These ranges should be kept open between DEA nodes and their respective service
+      nodes. The default ranges are: <table cellpadding="4" cellspacing="0" summary="" border="1" class="simpletable"><tr class="strow">
+          <td valign="top" class="stentry">harbor</td>
+
+          <td valign="top" class="stentry">35000 - 40000</td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" class="stentry">memcached</td>
+
+          <td valign="top" class="stentry">45001 - 50000</td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" class="stentry">mongodb</td>
+
+          <td valign="top" class="stentry">15001 - 25000</td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" class="stentry">rabbit</td>
+
+          <td valign="top" class="stentry">35001 - 40000</td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" class="stentry">rabbit3</td>
+
+          <td valign="top" class="stentry">25001 - 30000</td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" class="stentry">redis</td>
+
+          <td valign="top" class="stentry">5000 - 15000</td>
+
+        </tr>
+</table>
+<div class="note note"><span class="notetitle">Note:</span> You can check the port range currently configured for each service with
+          <samp class="ph codeph">kato config</samp> (for exanple: <samp class="ph codeph">kato config get redis_node
+          port_range</samp>).</div>
+</div>
+
+<div class="section" id="topic31232__container_allowed"><h2 class="title sectiontitle">Container Allowed Hosts and Ports</h2>
+  <p class="p">For security reasons, Docker application containers restrict access to hosts on the eth0 subnet (i.e. the hosts making up the cluster). By default, only ports and hosts for built-in services and components, such as service instances bound to an application, are explicitly allowed.</p>
+<p class="p">The following settings are available to allow or restrict access from the application containers:</p>
+ 
+   
+   <ul class="ul">
+<li class="li"><samp class="ph codeph">fence docker/allowed_subnet_ips</samp>: To allow containers to access specific IP
+          addresses, IP ranges (CIDR), and ports:
+          <pre class="pre codeblock">kato config push fence docker/allowed_subnet_ips 10.0.0.54
+    kato config push fence docker/allowed_subnet_ips 10.0.1.0/24
+    kato config push fence docker/allowed_subnet_ips 10.0.0.55:9001
+    kato config push fence docker/allowed_subnet_ips 10.0.5.0/24:27017</pre>
+
+          If no port is specified, any port will be allowed on the specified IP or range.</li>
+
+    
+<li class="li"><samp class="ph codeph">fence docker/block_network_ips</samp>: To explicitly block access to a specific IP
+          address (internal or external):
+          <pre class="pre codeblock">kato config push fence docker/block_network_ips 8.8.8.8</pre>
+</li>
+</ul>
+
+    
+<p class="p">Restart the DEA role to apply these changes for new application containers. If applications which require access to these IP addresses have already been deployed they will need to be restarted.</p>
+
+  <p class="p">Two additional settings are exposed in kato config but should not generally be modified:</p>
+ 
+  <ul class="ul"><li class="li"><samp class="ph codeph">fence docker/exposed_container_ports</samp>: Container ports to be accessed over the
+          subnet (internal services)</li>
+
+    <li class="li"><samp class="ph codeph">fence docker/network_interface</samp>: The Docker bridge interface. Do not
+          modify.</li>
+</ul>
+
+  </div>
+
+<div class="section" id="topic31232__vm-filesystem-setup"><h2 class="title sectiontitle">VM Filesystem Setup</h2> 
+<p class="p">The Application Lifecycle Service VM is distributed with a simple default partitioning scheme
+(i.e. everything but "/boot" mounted on "/").</p>
+
+<div class="note warning"><span class="warningtitle">Warning:</span> When setting up a production cluster, additional filesystem configuration is
+        necessary to prevent certain nodes from running out of disk space.</div>
+
+<p class="p">Some nodes in a production cluster may require additional mount points
+on external block storage for:</p>
+
+<ul class="ul">
+<li class="li">services (data and filesystem service nodes)</li>
+
+<li class="li">droplets (controller nodes)</li>
+
+<li class="li">containers (DEA and Stager nodes)</li>
+
+</ul>
+
+<p class="p">Suggestions for mounting block storage and instructions for relocating
+  data can be found in the <a class="xref" href="../best-practices/best_practices_index.html#topic16169__bestpractices-persistent-storage">Persistent Storage</a>
+section.</p>
+
+</div>
+
+<div class="section" id="topic31232__helion-data-services-vs-high-availability-databases"><h2 class="title sectiontitle">Application Lifecycle Service Data Services vs. High Availability Databases</h2> 
+<p class="p">Application Lifecycle Service data services do not offer any built-in redundancy. For
+business-critical data storage, a high-availability database or cluster
+is recommended.</p>
+
+<p class="p">To use an external database instead of the data services provided by
+Application Lifecycle Service, specify the database credentials directly in your application
+code instead of using the credentials from the
+  <a class="xref" href="../../user/reference/environment.html#topic7631__vcap-services">VCAP_SERVICES</a>
+environment variable.</p>
+
+<p class="p">To tie external databases to Application Lifecycle Service as a data service, see the
+  examples in the <a class="xref" href="../reference/add-service.html">Adding System
+Services</a> section.</p>
+
+</div>
+
+
+<div class="section" id="topic31232__cipher"><h2 class="title sectiontitle">Customizing the Cipher Suites</h2> 
+<p class="p">The router's TLS cipher suite can be modified using <em class="ph i">kato config</em>. For example:</p>
+
+<pre class="pre codeblock">kato config set router2g ssl/cipher_suite 'ALL:!ADH:!EXP:!LOW:!RC2:!3DES:!SEED:!SSLv3:RC4+RSA:+HIGH:+MED'</pre>
+
+<p class="p">The setting above is the default for the Helion router minus SSLv3. See OpenSSL's <a class="xref" href="https://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT" target="_blank">Cipher List Format</a> and <a class="xref" href="https://www.openssl.org/docs/apps/ciphers.html#CIPHER_STRINGS" target="_blank">Cipher Strings</a> documentation for other valid values.</p>
+
+</div>
+
+<div class="section" id="topic31232__quota-definitions"><h2 class="title sectiontitle">Quota Definitions</h2> 
+<p class="p">Quota definitions define limits for:</p>
+
+<ul class="ul">
+<li class="li">physical memory (RAM) in MB</li>
+
+<li class="li">number of services</li>
+
+<li class="li">
+<em class="ph i">sudo</em> privilege within application containers</li>
+
+</ul>
+
+<p class="p">Each organization is assigned a quota definition, and all users of an
+organization share the defined limits.</p>
+
+<p class="p">Use the <em class="ph i">helion quota ...</em> commands to modify
+quota definitions:</p>
+
+<ul class="ul">
+<li class="li">
+  <a class="xref" href="../../user/reference/client-ref-quotas.html#topic5727__command-quota-configure">
+<em class="ph i">helion quota configure</em>
+</a>
+</li>
+
+<li class="li">
+  <a class="xref" href="../../user/reference/client-ref-quotas.html#topic5727__command-quota-create">
+<em class="ph i">helion quota
+create</em>
+</a>
+</li>
+
+<li class="li">
+  <a class="xref" href="../../user/reference/client-ref-quotas.html#topic5727__command-quota-delete">
+<em class="ph i">helion quota
+delete</em>
+</a>
+</li>
+
+<li class="li">
+  <a class="xref" href="../../user/reference/client-ref-quotas.html#topic5727__command-quota-list">
+<em class="ph i">helion quota
+list</em>
+</a>
+</li>
+
+</ul>
+
+  <p class="p">Existing quota definitions can also be viewed and edited in the <a class="xref" href="../console/console_settings.html#topic_od4_byj_rs__quotaPlans">Management Console
+          Quota Definitions</a> settings. </p>
+
+</div>
+
+<div class="section" id="topic31232__sudo"><h2 class="title sectiontitle">sudo</h2> 
+<p class="p">Quota Definitions can give all users in an Organization the use of the <strong class="ph b">sudo</strong> command within application containers. This option is disabled by default as a security precaution, and should only be enabled for Organizations where all users are trusted.</p>
+
+</div>
+
+<div class="section" id="topic31232__allowed-repositories"><h2 class="title sectiontitle">Allowed Repositories</h2> 
+<p class="p">Users (with our without <em class="ph i">sudo</em> permissions) can install Ubuntu packages in application containers by requesting them in the requirements section of an application's <em class="ph i">manifest.yml</em> file. The system allows package installation only from those repositories specified in the <strong class="ph b">Allowed Repos</strong> list in the Management Console.</p>
+
+<p class="p">This list can also be viewed and modified at the command line using <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-config">kato config</a>. For example, to view the 
+ current list:</p>
+
+<pre class="pre codeblock">  kato config get cloud_controller_ng allowed_repos 
+    - deb mirror://mirrors.ubuntu.com/mirrors.txt precise main restricted universe multiverse 
+    - deb mirror://mirrors.ubuntu.com/mirrors.txt precise-updates main restricted universe multiverse 
+    - deb http://security.ubuntu.com/ubuntu precise-security main universe </pre>
+
+<p class="p">To add a repository:</p>
+
+<pre class="pre codeblock">kato config push cloud_controller_ng allowed_repos 'deb http://apt.newrelic.com/debian/ newrelic non-free' 
+    - deb mirror://mirrors.ubuntu.com/mirrors.txt precise main restricted universe multiverse 
+    - deb mirror://mirrors.ubuntu.com/mirrors.txt precise-updates main restricted universe multiverse 
+    - deb http://security.ubuntu.com/ubuntu precise-security main universe 
+    - deb http://apt.newrelic.com/debian/ newrelic non-free </pre>
+
+  <p class="p">Once a repository has been added to the list, <strong class="ph b">the GPG key must also be added</strong> to the
+          base image on each DEA (or the <a class="xref" href="docker.html#topic7767__creating-a-docker-registry">Docker
+          registry</a> server if configured).</p>
+
+<p class="p">For example, to trust the GPG for the New Relic repository, add the following line to the <em class="ph i">Dockerfile</em> for the base image:</p>
+
+<pre class="pre codeblock">RUN wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add -</pre>
+
+</div>
+
+<div class="section" id="topic31232__container_NFS"><h2 class="title sectiontitle">Container NFS Mounts</h2> 
+      <div class="note warning"><span class="warningtitle">Warning:</span> Reconfiguring ALS to allow user applications to mount NFS partitions has serious
+        security implications. See the <a class="xref" href="docker.html#topic7767__docker-privileged-containers">Privileged Containers</a> section for details.</div>
+
+<p class="p">By default, application containers are unable to mount external filesystems (other than the built-in <a class="xref" href="../../user/services/filesystem.html">Filesystem Service</a> via network protocols such as NFS.</p>
+
+  <p class="p">If the system has been configured to use <a class="xref" href="docker.html#topic7767__docker-privileged-containers">privileged containers</a> and <em class="ph i">sudo</em> permissions have been explicitly allowed in the quota, NFS partitions can be mounted in application containers using application configuration similar to the following manifest.yml excerpt:
+requirements:</p>
+
+<pre class="pre codeblock">ubuntu:
+      - nfs-common
+hooks:
+  pre-running:
+    - mkdir /mount/point
+    - sudo mount nfs.server:/path/to/export /mount/point</pre>
+
+<p class="p">The IP address of the NFS server must also be added to the  docker/allowed_supnet_ips  list. For example:</p>
+
+<pre class="pre codeblock">kato config push fence docker/allowed_subnet_ips 10.0.0.110</pre>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

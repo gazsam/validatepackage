@@ -1,0 +1,78 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Configure Availability Zones for Database Service</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_hhh_lm4_xt" /> <meta name="html-import-file-path" content="devplatform/2.0/installation/install_dbaas_configureAvailabilityZones.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Configure Availability Zones for Database Service</h1>
+
+
+  <h1 class="title topictitle1">HPE Helion 2.0 Development Platform: Configure Availability Zones for Database Service
+    Installation</h1>
+
+  <div class="body">
+    
+    <div class="section" id="topic_hhh_lm4_xt__availability-zones">
+      <div class="p">To configure the Database Service in a highly available manner, it is necessary to create
+        separate availability zones. Best practice is to create three availability zones. <div class="note note"><span class="notetitle">Note:</span> All
+          hosts should be associated with one of these availability zones, or the Database Service
+          will not be able to provision a database instance on that host. This may cause the
+          Database Service may run out of capacity even though there are unassociated hosts that
+          still have room.</div>
+</div>
+
+      <p class="p">The following steps show how to create three availability zones and assign a compute host to the zone.</p>
+
+      <ol class="ol">
+        <li class="li">Download an RC file for the admin user and project.
+          <ol class="ol" type="a" id="topic_hhh_lm4_xt__ol_bpk_1c1_4t">
+            <li class="li"> Log in to Horizon using the admin account.</li>
+
+            <li class="li">Download the OpenStack RC file. <p class="p">
+              <br/><img class="image" id="topic_hhh_lm4_xt__image_asb_jvy_nt" src="../../../media/quickstartDownloadRCFile.png"/><br/>
+            </p>
+</li>
+
+            <li class="li">Use <samp class="ph codeph">scp</samp> to copy the RC file over to the Deployer.</li>
+
+            <li class="li">SSH to the Deployer and source the RC file. You will need to provide the same admin
+              password that you used to log in to Horizon. <div class="p">
+                <pre class="pre codeblock"> source admin-openrc.sh</pre>
+
+              </div>
+</li>
+
+          </ol>
+</li>
+
+        <li class="li">Execute the following commands to create three availability zones named: "AZ-1", "AZ-2" and
+          "AZ-3".<pre class="pre codeblock">openstack aggregate create --zone AZ-1 aggregate-AZ-1
+openstack aggregate create --zone AZ-2 aggregate-AZ-2
+openstack aggregate create --zone AZ-3 aggregate-AZ-3</pre>
+</li>
+
+        <li class="li"> Validate that the availability zones were correctly created by issuing the following
+          command.<pre class="pre codeblock">openstack aggregate list</pre>
+</li>
+
+        <li class="li"> The following commands will add a host to your newly created aggregate. Execute this command
+          once for every host that you wish to associate with an
+          aggregate.<pre class="pre codeblock">openstack aggregate add host &lt;aggregate name or id&gt; &lt;host&gt;</pre>
+</li>
+
+        <li class="li"> The following command can be used to list all availability zones and the hosts associated with
+          each one.<pre class="pre codeblock">openstack availability zone list</pre>
+</li>
+
+      </ol>
+
+    </div>
+
+  </div>
+
+
+</body>
+</html>

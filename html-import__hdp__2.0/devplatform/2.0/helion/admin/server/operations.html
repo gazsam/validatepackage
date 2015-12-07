@@ -1,0 +1,206 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Common Server Operations</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="server_operations" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/admin/server/operations.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Common Server Operations</h1>
+
+
+  
+
+  <div class="body">
+    <ul class="ul">
+      <li class="li">
+        <a class="xref" href="#server_operations__server-status">Server Status</a>
+      </li>
+
+      <li class="li">
+        <a class="xref" href="#server_operations__starting-and-stopping-roles">Starting and Stopping
+          Roles</a>
+      </li>
+
+      <li class="li">
+        <a class="xref" href="#server_operations__system-shutdown">System Shutdown</a>
+      </li>
+
+      <li class="li">
+        <a class="xref" href="#server_operations__setting-the-time-zone">Setting the Time Zone</a>
+      </li>
+
+      <li class="li">
+        <a class="xref" href="#server_operations__resetting-the-vm">Resetting the VM</a>
+      </li>
+
+      <li class="li">
+        <a class="xref" href="#server_operations__monitoring-the-application-lifecycle-service-server">Monitoring The Application Lifecycle Service Server</a></li>
+
+      <li class="li">
+        <a class="xref" href="#server_operations__management-console">Management Console</a>
+      </li>
+
+      <li class="li">
+        <a class="xref" href="#server_operations__creating-an-admin-user">Creating an Admin User</a>
+      </li>
+
+      <li class="li">
+        <a class="xref" href="#server_operations__system-monitoring-with-nagios">System Monitoring with
+          Nagios</a>
+      </li>
+
+      <li class="li">
+        <a class="xref" href="#server_operations__server-backup-import-and-export">Server Backup,
+          Import, and Export</a>
+      </li>
+
+    </ul>
+
+    <div class="section" id="server_operations__server-status"><h2 class="title sectiontitle">Server Status</h2>
+      
+      <p class="p">To check the status of Application Lifecycle Service:</p>
+
+      <pre class="pre codeblock">kato status</pre>
+
+      <p class="p">This will list all the roles configured to run on the VM, and whether they are running,
+        stopped, or starting.</p>
+
+      <p class="p">Roles are logical groups of processes (see <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-role-info">kato role
+          info</a>) which can be inspected individually with <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-process-list">kato process ...</a> commands.</p>
+
+      <p class="p">In particular, the <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-process-ready">kato process
+          ready</a> command is useful for determining if the system is in a state to receive
+          <a class="xref" href="configuration.html#topic31232">configuration commands</a>. For example, to
+        check that all processes for the configured roles are ready:</p>
+
+      <pre class="pre codeblock">kato process ready all</pre>
+
+    </div>
+
+    <div class="section" id="server_operations__starting-and-stopping-roles"><h2 class="title sectiontitle">Starting and Stopping Roles</h2>
+      
+      <p class="p">To control the Application Lifecycle Service roles, use the <em class="ph i">kato</em> start, stop and
+        restart commands.</p>
+
+      <p class="p">Without any further options specified, the operation applies to all Application Lifecycle
+        Service roles.</p>
+
+      <pre class="pre codeblock">kato stop</pre>
+
+      <p class="p"> To start, stop or restart individual roles, specify them after the desired command:</p>
+
+      <pre class="pre codeblock">kato stop mysql</pre>
+
+    </div>
+
+    <div class="section" id="server_operations__system-shutdown"><h2 class="title sectiontitle">System Shutdown</h2>
+      
+      <p class="p">To safely shut down the VM, run the <em class="ph i">shutdown</em> command as root:</p>
+
+      <pre class="pre codeblock">sudo shutdown -h now</pre>
+
+    </div>
+
+    <div class="section" id="server_operations__setting-the-time-zone"><h2 class="title sectiontitle">Setting the Time Zone</h2>
+      
+      <p class="p">At first boot, the time zone of the Application Lifecycle Service VM is set to UTC. To set
+        this to your local time zone, use the <samp class="ph codeph">kato op set_timezone</samp> command. When
+        run without arguments, the command will prompt for time zone selection, but the time zone
+        can be set non-interactively with the <samp class="ph codeph">--timezone</samp> option. For example:</p>
+
+      <pre class="pre codeblock">kato op set_timezone --timezone America/Chicago</pre>
+
+      <p class="p">You can also use the <samp class="ph codeph">tzselect</samp> command to find the appropriate time zone
+        string for your location.</p>
+
+    </div>
+
+    <div class="section" id="server_operations__resetting-the-vm"><h2 class="title sectiontitle">Resetting the VM</h2>
+      
+      <p class="p">To return an Application Lifecycle Service VM to its original "out-of-the-box"
+        configuration, use the <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-node-attach">
+          <em class="ph i">kato node reset</em>
+        </a> command. </p>
+
+      <div class="note note"><span class="notetitle">Note:</span> The <samp class="ph codeph">kato node reset factory</samp> option is no longer supported.</div>
+
+      <ul class="ul">
+        <li class="li">
+          <p class="p">
+            <samp class="ph codeph">kato node reset soft</samp>: Resets only configuration and data, but leaves
+            first boot (naming) or other state info. You would normally run this together with the
+              <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-node-attach">
+              <em class="ph i">kato node setup</em>
+            </a> command. For example:</p>
+
+          <pre class="pre codeblock">kato node reset soft
+kato node setup micro</pre>
+
+        </li>
+
+      </ul>
+
+    </div>
+
+    <div class="section" id="server_operations__monitoring-the-application-lifecycle-service-server"><h2 class="title sectiontitle">Monitoring The Application Lifecycle Service Server</h2>
+      
+    </div>
+
+    <div class="section" id="server_operations__management-console"><h2 class="title sectiontitle">Management Console</h2>
+      
+      <p class="p">The <a class="xref" href="../../user/console/console_index.html#topic8844"><em class="ph i">Management Console</em>
+        </a>has a Settings page that allows an administrator to monitor the server component and
+        services, and restart or stop services as necessary.</p>
+
+    </div>
+
+
+    <div class="section" id="server_operations__creating-an-admin-user"><h2 class="title sectiontitle">Creating an Admin User</h2>
+      
+      <p class="p">The easiest way to add admin users to Application Lifecycle Service is via the Management
+        Console under <a class="xref" href="../console/console_index.html#topic13823__users">Users</a>. The
+        Management Console will prompt to create the initial admin user the first time you use
+        it.</p>
+
+      <p class="p">If you do not have access to the Management Console, create a user by logging in to the
+        micro cloud or Core node controller via SSH or through the VM <a class="xref" href="../../user/reference/glossary.html#topic6187__term-tty-console">tty
+          console</a> as the <em class="ph i">helion</em> user and run <em class="ph i">helion register</em>:</p>
+
+      <pre class="pre codeblock">helion target api.helion-xxxx.local
+helion register superuser@example.net</pre>
+
+      <p class="p">Grant administrative privileges using <em class="ph i">kato config</em>:</p>
+
+      <pre class="pre codeblock">kato config push cloud_controller_ng admins superuser@example.net</pre>
+
+      <p class="p">Subsequent new users can be added remotely with the Helion client by an admin user.</p>
+
+    </div>
+
+    <div class="section" id="server_operations__system-monitoring-with-nagios"><h2 class="title sectiontitle">System Monitoring with Nagios</h2>
+      
+      <p class="p">If Nagios is installed on your server nodes, you can use it to monitor and report resource
+        utilization. See the <a class="xref" href="../best-practices/best_practices_index.html#topic16169">Best Practices documentation</a> for details.</p>
+
+    </div>
+
+    <div class="section" id="server_operations__server-backup-import-and-export"><h2 class="title sectiontitle">Server Backup, Import, and Export</h2>
+      
+      <p class="p">The import and export functionality can be used to do regular backups, or to move the
+        Application Lifecycle Service configuration from one server to another. It is also a means
+        of upgrading the Application Lifecycle Service VM without having to install everything from
+        the ground up.</p>
+
+      <p class="p">Please see the <a class="xref" href="../best-practices/best_practices_index.html#topic16169__bestpractices-migration">Best
+          Practices</a> documentation for details on how to <a class="xref" href="../best-practices/best_practices_index.html#topic16169__bestpractices-migration">export</a> and <a class="xref" href="../best-practices/best_practices_index.html#topic16169__bestpractices-migration">migrate.</a>
+      </p>
+
+    </div>
+
+  </div>
+
+
+</body>
+</html>

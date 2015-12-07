@@ -1,0 +1,71 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Connecting the Database Service with the Application Lifecycle Service</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic2065" /> <meta name="html-import-file-path" content="devplatform/2.0/database/devplatform.database-ALS.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Connecting the Database Service with the Application Lifecycle Service</h1>
+
+
+
+
+
+<div class="body">
+    <p class="p">If a more durable or scalable MySQL database service is needed, ensure your ALS cluster is
+      configured to use a database instance or master/slave pair provided by the Database Service.
+      This is an option at cluster create time.</p>
+
+    <p class="p"><cite class="cite">ALS cluster create wizard </cite></p>
+
+    <p class="p">
+      <img class="image" src="../../../media/databaseALS.png"/>
+    </p>
+
+    <div class="section" id="topic2065__configure"><h2 class="title sectiontitle">Configuration</h2>
+      
+      <p class="p">Alternatively, if the Database Service was not integrated with the cluster at the time of
+        cluster creation, the administrator of the ALS cluster can switch from the unmanaged MySQL
+        service to the managed Database Service using the following kato commands:</p>
+
+      <ol class="ol">
+        <li class="li">Enable the root user on the database instance you want to join to the ALS cluster</li>
+
+        <li class="li">SSH to the ALS cluster instances and use the kato admin client. </li>
+
+        <li class="li">Set the endpoint details including hostname, port, root user, and
+          password:<pre class="pre codeblock">kato config set mysql_node mysql/host 10.5.120.101
+kato config set mysql_node mysql/port 3306
+kato config set mysql_node mysql/user root
+kato config set mysql_node mysql/pass CorrectHorseBatteryStaple</pre>
+</li>
+
+        <li class="li">Increase the timeout settings to make the <a class="xref" href="http://code.macournoyer.com/thin/" target="_blank">
+            <em class="ph i">thin</em>
+          </a> mysql_gateway connect reliably to the database instance. </li>
+
+        <li class="li">Run the following
+          commands:<pre class="pre codeblock">kato config set mysql_node connection_wait_timeout 100
+kato config set mysql_node keep_alive_interval 60</pre>
+</li>
+
+      </ol>
+
+      <p class="p">Application deployment does not change between the managed and unmanaged versions of the
+        MySQL service. A developer connects to and interacts with the MySQL database in exactly the
+        same way regardless of which service is used.</p>
+
+      <p class="p">The benefits of the unmanaged service include a lighter footprint (fewer virtual machines)
+        and no dependency on the Database Service being configured and available. The managed
+        service provides full lifecycle management and scalability; capabilities not found in the
+        unmanaged service.</p>
+
+    </div>
+
+  </div>
+
+
+</body>
+</html>

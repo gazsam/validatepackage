@@ -1,0 +1,90 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Testing</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_rkg_vlg_tt" /> <meta name="html-import-file-path" content="devplatform/2.0/codeEngine/engine_testing.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Testing</h1>
+
+
+  
+
+  <div class="body">
+    <p class="p">Each of the tech stacks and frameworks has conventions for supporting unit testing. </p>
+
+    <p class="p">The HPE Helion Code Engine looks for specific files in the root directory of the project. The
+      specific file found will determine how the project is built and tested.</p>
+<div class="note note"><span class="notetitle">Note:</span> Only one of these files is
+      expected to exist in the project root directory. The behavior is undefined in the presence of
+      multiple files.</div>
+
+    
+    <div class="section"><h2 class="title sectiontitle">Java Projects</h2><dl class="dl">
+        
+          <dt class="dt dlterm">pom.xml</dt>
+
+          <dd class="dd">Build: <samp class="ph codeph">mvn -Dmaven.test.skip=true package</samp>
+          </dd>
+
+          <dd class="dd">Test: <samp class="ph codeph">mvn test</samp></dd>
+
+        
+        
+          <dt class="dt dlterm">gradle.build</dt>
+
+          <dd class="dd">Build: <samp class="ph codeph">gradle build -x test</samp></dd>
+
+          <dd class="dd">Test: <samp class="ph codeph">gradle test</samp></dd>
+
+        
+        
+          <dt class="dt dlterm">gradlew</dt>
+
+          <dd class="dd">Build: <samp class="ph codeph"/></dd>
+
+          <dd class="dd">Test: <samp class="ph codeph">gradlew test</samp></dd>
+
+        
+      </dl>
+ 
+ </div>
+
+    <div class="section"><h2 class="title sectiontitle">Python projects</h2><dl class="dl">
+      
+        <dt class="dt dlterm">tox.ini</dt>
+
+        <dd class="dd">Build: <samp class="ph codeph">python setup.py install</samp></dd>
+
+        <dd class="dd">Test: <samp class="ph codeph">tox</samp></dd>
+
+      
+        <dt class="dt dlterm">setup.py</dt>
+
+        <dd class="dd">Build: <samp class="ph codeph">python setup.py install</samp></dd>
+
+        <dd class="dd">Test: <samp class="ph codeph">python setup.py test</samp></dd>
+
+      
+    </dl>
+ </div>
+
+    <div class="section"><h2 class="title sectiontitle">NodeJS Projects</h2> <dl class="dl">
+      
+        <dt class="dt dlterm"/>
+
+        <dd class="dd">Build: <samp class="ph codeph">npm install</samp></dd>
+
+        <dd class="dd">Test: <samp class="ph codeph">npm test</samp></dd>
+
+      
+    </dl>
+</div>
+
+  </div>
+
+
+</body>
+</html>

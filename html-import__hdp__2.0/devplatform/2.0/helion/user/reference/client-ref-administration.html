@@ -1,0 +1,1314 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Command Reference: Administration</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic11202" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/client-ref-administration.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Command Reference: Administration</h1>
+
+
+
+
+
+<div class="body">
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic11202__command-admin-grant">helion admin grant</a>: Grant the named user administrator privileges for the current or specified target.</li>
+
+<li class="li">
+<a class="xref" href="#topic11202__command-admin-list">helion admin list</a>: Show a list of the administrators for the current or specified target.</li>
+
+<li class="li">
+<a class="xref" href="#topic11202__command-admin-patch">helion admin patch</a>: Apply a patch to the current or specified target.</li>
+
+<li class="li">
+<a class="xref" href="#topic11202__command-admin-report">helion admin report</a>: Retrieve a report containing the logs of the current or specified target.</li>
+
+<li class="li">
+<a class="xref" href="#topic11202__command-admin-revoke">helion admin revoke</a>:Revoke administrator privileges for the named user at the current or specified target.</li>
+
+<li class="li">
+<a class="xref" href="#topic11202__command-info">helion info</a>: Show the basic system and account information.</li>
+
+<li class="li">
+<a class="xref" href="#topic11202__command-show-token">helion show-token</a>: Print the current target's authorization token.</li>
+
+<li class="li">
+<a class="xref" href="#topic11202__command-stacks">helion stacks</a>: List the supported stacks of the target.</li>
+
+<li class="li">
+<a class="xref" href="#topic11202__command-targets">helion targets</a>: List the available targets and their authorization tokens, if any.</li>
+
+<li class="li">
+<a class="xref" href="#topic11202__command-tokens">helion tokens</a>: List the available targets and their authorization tokens, if any.</li>
+
+<li class="li">
+<a class="xref" href="#topic11202__command-usage">helion usage</a>: Show the current memory allocation and usage of the specified or current space.</li>
+
+<li class="li">
+<a class="xref" href="#topic11202__command-user">helion user</a>: Show the name of the current user in the current or specified target.</li>
+
+<li class="li">
+<a class="xref" href="#topic11202__command-user-info">helion user-info</a>: Shows the information of a user in the current or specified target.</li>
+
+<li class="li">
+<a class="xref" href="#topic11202__command-version">helion version</a>: Print the version number of the client.</li>
+
+</ul>
+
+<div class="section" id="topic11202__syntax"><h2 class="title sectiontitle">Syntax</h2> 
+<pre class="pre codeblock">helion [options] command [arguments] [command-options]</pre>
+
+<p class="p">For more information, use the <strong class="ph b">helion help</strong> or <strong class="ph b">helion help [<em class="ph i">command</em>]</strong> commands.</p>
+
+
+</div>
+
+<div class="section" id="topic11202__command-admin-grant"><h2 class="title sectiontitle">helion admin grant &lt;<em class="ph i">email</em>&gt;</h2> 
+<p class="p">Grant the named user administrator privileges for the current or specified target.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic11202__command-admin-list"><h2 class="title sectiontitle">helion admin list</h2> 
+<p class="p">Show a list of the administrators for the current or specified target.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic11202__command-admin-patch"><h2 class="title sectiontitle">helion admin patch &lt;<em class="ph i">patch</em>&gt;</h2> 
+<p class="p">Apply a patch to the current or specified target.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--dry</td>
+
+<td class="entry" valign="top">Print the low-level ssh command to stdout instead of executing it.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--dry-run</td>
+
+<td class="entry" valign="top">Alias of --dry.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic11202__command-admin-report"><h2 class="title sectiontitle">helion admin report &lt;<em class="ph i">destination</em>&gt;</h2> 
+<p class="p">Retrieve a report containing the logs of the current or specified target.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic11202__command-admin-revoke"><h2 class="title sectiontitle">helion admin revoke &lt;<em class="ph i">email</em>&gt;</h2> 
+<p class="p">Revoke administrator privileges for the named user at the current or specified target.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic11202__command-info"><h2 class="title sectiontitle">helion info</h2> 
+<p class="p">Show the basic system and account information.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+    <td class="entry" valign="top">
+      <strong class="ph b">Option</strong>
+    </td>
+
+    <td class="entry" valign="top">
+      <strong class="ph b">Description</strong>
+    </td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+<td class="entry" valign="top">The once-off group to use for the current operation. This is a
+Application Lifecycle Service 2 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+name.  Cannot be used together with <var class="keyword varname">--space-guid</var>.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+guid. Cannot be used together with <var class="keyword varname">--space</var>.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic11202__command-show-token"><h2 class="title sectiontitle">helion show-token</h2> 
+<p class="p">Print the current target's authorization token.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic11202__command-stacks"><h2 class="title sectiontitle">helion stacks</h2> 
+<p class="p">List the supported stacks of the target.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic11202__command-targets"><h2 class="title sectiontitle">helion targets</h2> 
+<p class="p">List the available targets and their authorization tokens, if any.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic11202__command-tokens"><h2 class="title sectiontitle">helion tokens</h2> 
+<p class="p">List the available targets and their authorization tokens, if any.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic11202__command-usage"><h2 class="title sectiontitle">helion usage &lt;<em class="ph i">UserOrGroup</em>&gt;</h2> 
+<p class="p">Show the current memory allocation and usage of the specified or current space.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--group</td>
+
+<td class="entry" valign="top">The once-off group to use for the current operation. This is a
+Application Lifecycle Service 2 option.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+name. Cannot be used together with <var class="keyword varname">--space-guid</var>.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+guid. Cannot be used together with <var class="keyword varname">--space</var>.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-o</td>
+
+<td class="entry" valign="top">Alias of --organization.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic11202__command-user"><h2 class="title sectiontitle">helion user</h2> 
+<p class="p">Show the name of the current user in the current or specified target.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic11202__command-user-info"><h2 class="title sectiontitle">helion user-info &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Shows the information of a user in the current or specified target. Defaults to the current user.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-prompt</td>
+
+<td class="entry" valign="top">Disable interactive queries.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--no-trace</td>
+
+<td class="entry" valign="top">Complementary alias of --trace.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--trace</td>
+
+<td class="entry" valign="top">Activate tracing of the issued REST requests and responses. This
+option is a no-op now. Tracing is always active. See the 'trace'
+command to print the saved trace to stdout.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-t</td>
+
+<td class="entry" valign="top">Alias of --trace.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic11202__command-version"><h2 class="title sectiontitle">helion version</h2> 
+<p class="p">Print the version number of the client.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--non-interactive</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--noprompt</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">-n</td>
+
+<td class="entry" valign="top">Alias of --no-prompt.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Go</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic1938" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/languages/go.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Go</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">Go applications (<a class="xref" href="http://golang.org/" target="_blank">golang</a>) are supported through a
+BuildPack framework and can be pushed using the Application Lifecycle Service.</p>
+
+<div class="section" id="topic1938__local-install"><h2 class="title sectiontitle">Local Installation</h2> 
+<p class="p">To build Go code, install it locally using one of the <a class="xref" href="http://code.google.com/p/go/downloads/list" target="_blank">Go packages</a>.</p>
+
+</div>
+
+<div class="section" id="topic1938__deployment"><h2 class="title sectiontitle">Deployment</h2> 
+<p class="p">Here is a basic deployment setup based on the <a class="xref" href="https://github.com/Stackato-Apps/go-hello-buildpack" target="_blank">"Hello World" Go sample
+application</a>.</p>
+
+</div>
+
+<div class="section" id="topic1938__files"><h2 class="title sectiontitle">Files</h2> 
+<p class="p">You will need the following files to deploy a Go app on Application Lifecycle Service:</p>
+
+<pre class="pre codeblock">app.go
+Procfile
+.godir
+manifest.yml</pre>
+
+</div>
+
+<div class="section" id="topic1938__app-go"><h2 class="title sectiontitle">app.go</h2> 
+<p class="p">The Go buildpack recognizes Go apps by the existence of a .go source
+file anywhere in the repository:</p>
+
+<pre class="pre codeblock">package main
+
+import (
+        "fmt"
+        "log"
+        "net/http"
+        "os"
+)
+
+func main() {
+        http.HandleFunc("/", hello)
+        err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
+        if err != nil {
+                log.Fatal("ListenAndServe:", err)
+        }
+}
+
+func hello(w http.ResponseWriter, req *http.Request) {
+        fmt.Fprintln(w, "hello, world!")
+}</pre>
+
+</div>
+
+<div class="section" id="topic1938__procfile"><h2 class="title sectiontitle">Procfile</h2> 
+<p class="p">To run your web process, you need to declare what command to use. In
+this case, we simply need to execute our Go program. Use Procfile to
+declare how your web process type is run:</p>
+
+<pre class="pre codeblock">web: server</pre>
+
+</div>
+
+<div class="section" id="topic1938__godir"><h2 class="title sectiontitle">.godir</h2> 
+<p class="p">The <samp class="ph codeph">go</samp> tool uses the directory name of your
+project to name executables and determine package import paths. Create
+a file called .godir, in your project root, containing the path from
+<em class="ph i">\$GOPATH/src</em> to your project root:</p>
+
+<pre class="pre codeblock">example.com/hello</pre>
+
+</div>
+
+<div class="section" id="topic1938__manifest-yml"><h2 class="title sectiontitle">manifest.yml</h2> 
+<p class="p">This file is optional, as the framework will automatically be detected
+by Application Lifecycle Service. However, it can still be used to set the app name,
+configure settings, create services, etc. See the <a class="xref" href="../manifestyml.html">
+<em class="ph i">manifest.yml</em>
+</a> documentation.</p>
+
+<pre class="pre codeblock">name:
+   hello-go</pre>
+
+</div>
+
+<div class="section" id="topic1938__examples"><h2 class="title sectiontitle">Examples</h2> 
+<ul class="ul">
+<li class="li">
+<a class="xref" href="https://github.com/Stackato-Apps/go-hello-buildpack" target="_blank">"Hello World" Go sample
+application</a>.</li>
+
+<li class="li">
+<a class="xref" href="http://mmcgrana.github.com/2012/09/getting-started-with-go-on-heroku" target="_blank">Getting Started with Go on
+Heroku</a>.</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

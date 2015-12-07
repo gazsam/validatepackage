@@ -1,0 +1,491 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Management Console (Admin View)</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic13823" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/admin/console/console_index.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Management Console (Admin View)</h1>
+
+
+
+
+
+<div class="body">
+    <p class="p">The Application Lifecycle Service Management Console is a web interface that allows the
+      administration and management of the Application Lifecycle Service Server. Many of the
+      features described below are only available to Administrator users from the Admin view.</p>
+
+    <ul class="ul">
+      <li class="li">
+        <a class="xref" href="console_intro.html">Management Console Introduction and First Access</a>
+      </li>
+
+      <li class="li">
+        <a class="xref" href="#topic13823__setup">Management Console Setup and Access</a>
+      </li>
+
+      <li class="li">
+        <a class="xref" href="#topic13823__welcome">Welcome Page</a>
+      </li>
+
+      <li class="li">
+        <a class="xref" href="#topic13823__applications">Applications</a>
+      </li>
+
+      <li class="li">
+        <a class="xref" href="#topic13823__organizations">Organizations</a>
+      </li>
+
+      <li class="li">
+        <a class="xref" href="#topic13823__support">Support</a>
+      </li>
+
+      <li class="li">
+        <a class="xref" href="#topic13823__admin">Admin</a>
+        <ul class="ul">
+          <li class="li">
+            <a class="xref" href="#topic13823__clustermanagement">Cluster Management</a>
+            <ul class="ul">
+              <li class="li">
+                <a class="xref" href="#topic13823__clustersummary">Summary</a>
+              </li>
+
+              <li class="li">
+                <a class="xref" href="#topic13823__cluster-nodes">Cluster Nodes</a>
+              </li>
+
+            </ul>
+</li>
+
+          <li class="li">
+            <a class="xref" href="#topic13823__patches">Available Patches</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic13823__app-org">Applications &amp; Organizations</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic13823__domains">Domains</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic13823__routes">Routes</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic13823__services">Services</a>
+            <ul class="ul">
+              <li class="li">
+                <a class="xref" href="#topic13823__managed-services">Managed Services
+                  Instances</a>
+              </li>
+
+              <li class="li">
+                <a class="xref" href="#topic13823__user-services">User-provided Service
+                  Instances</a>
+              </li>
+
+              <li class="li">
+                <a class="xref" href="#topic13823__avail-services">Available Services</a>
+              </li>
+
+              <li class="li"><a class="xref" href="#topic13823__quotaPlans">Quota
+                  Plans</a>
+              </li>
+
+            </ul>
+</li>
+
+          <li class="li">
+            <a class="xref" href="#topic13823__users">Users</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic13823__dashboards">Dashboards</a>
+            <ul class="ul">
+              <li class="li">
+                <a class="xref" href="#topic13823__memory-summary">Memory Summary</a>
+              </li>
+
+              <li class="li">
+                <a class="xref" href="#topic13823__dea-usage">DEA Usage</a>
+              </li>
+
+              <li class="li">
+                <a class="xref" href="#topic13823__zone-usage">Placement Zone Usage</a>
+              </li>
+
+              <li class="li">
+                <a class="xref" href="#topic13823__avail-zone-usage">Availability Zone
+                  Usage</a>
+              </li>
+
+              <li class="li">
+                <a class="xref" href="#topic13823__router-stats">Router Stats</a>
+              </li>
+
+              <li class="li">
+                <a class="xref" href="#topic13823__primary-node-status-graphs">Primary Node
+                  Status Graphs</a>
+              </li>
+
+              <li class="li">
+                <a class="xref" href="#topic13823__cloud-events">Cloud Events</a>
+              </li>
+
+            </ul>
+</li>
+
+        </ul>
+</li>
+
+      <li class="li"><a class="xref" href="console_settings.html">Console Settings Menu </a></li>
+
+    </ul>
+
+    <div class="section" id="topic13823__setup"><h2 class="title sectiontitle">Management Console Setup and Access</h2>
+      
+      <p class="p">Your hypervisor provides <a class="xref" href="../../user/reference/glossary.html#topic6187__term-tty-console">tty
+          console</a> access to each of its virtual machines. After startup, an Application
+        Lifecycle Service VM displays:</p>
+
+      <pre class="pre codeblock">Application Lifecycle Service Management Console at
+https://helion-xxxx.local</pre>
+
+      <p class="p">On a <a class="xref" href="../../user/reference/glossary.html#topic6187__term-micro-cloud">micro
+          cloud</a> VM where the local network supports <a class="xref" href="../../user/reference/glossary.html#topic6187__term-multicast-dns">multicast DNS</a>, the hostname will be <samp class="ph codeph">helion-xxxx.local</samp>. If you
+        have configured the <a class="xref" href="../server/configuration.html#topic31232__server-config-hostname">hostname</a> and <a class="xref" href="../server/configuration.html#topic31232__server-config-dns">DNS</a> of the Application Lifecycle Service server manually, or are
+        connecting to a server administered by someone else, supply the assigned hostname instead
+        (ex: <em class="ph i">api.helion-test.example.com</em>).</p>
+
+      <p class="p">Enter the URL into your web browser and the Management Console will load. The Console is
+        supported on the following browsers:</p>
+
+      <ul class="ul">
+        <li class="li">Chrome 30+ (WebKit)</li>
+
+        <li class="li">Firefox 20+</li>
+
+        <li class="li">IE 10+</li>
+
+      </ul>
+
+      <p class="p">Using a browser which fully support WebSockets is recommended.</p>
+
+      <div class="p">
+        <div class="note note"><span class="notetitle">Note:</span>  The SSL certificate for the Application Lifecycle Service Management Console is
+          self-signed. You will need to manually accept this certificate in your browser. See the
+            <a class="xref" href="../server/https_and_ssl.html#topic_gwr_qgd_ws__using-your-own-ssl-certificate">Using your own SSL certificate</a> for information on using your own
+          certificate.</div>
+
+      </div>
+
+      <p class="p">When you first access the Management Console, you will be prompted to create a primary
+        administrative user for ALS. Enter an email address as the username, set a secure password,
+        and then review and accept the license agreement.</p>
+
+      <div class="note note"><span class="notetitle">Note:</span>  The password you choose here becomes the login password for the <em class="ph i">helion</em> user on
+        the VM for SSH access. This is critical since all login is done as the <em class="ph i">helion</em> user,
+        not as <em class="ph i">root</em>.</div>
+
+      <p class="p">Once you've logged in, you can begin to add other users and admins, enable and disable
+        services, and generally set up the system to your requirements.</p>
+
+      <p class="p">Basic Application Lifecycle Service administration can be done through the Management
+        Console, but some maintenance and configuration tasks may need to be done at the command
+        line using the <em class="ph i">kato</em> command. See the <a class="xref" href="../reference/kato-ref.html">Kato Command Reference</a> for a full
+        list of options.</p>
+
+      <p class="p">The Application Lifecycle Service Management Console will periodically send non-identifying
+        pingbacks (Application Lifecycle Service version number and UUID) to HPE servers to help
+        improve the web console experience. You can disable this option by setting</p>
+
+      <pre class="pre codeblock">theme_settings['pingback_allowed'] = false;</pre>
+
+      <p class="p">in the <em class="ph i">settings.js</em> file as described in the <a class="xref" href="customize.html#topic5029">Customization</a> documentation.</p>
+
+    </div>
+
+    <div class="section" id="topic13823__welcome"><h2 class="title sectiontitle">Welcome Page</h2>
+      
+      <p class="p">The top-level page of the Management Console displays quick links to the most used
+        resources and views. The blue buttons are for features also available to regular end users.
+        See <a class="xref" href="../../user/console/console_index.html#topic8844__welcome">Management
+          Console</a> (User View).</p>
+
+      <p class="p">Available patches for the system, new releases, and the latest news are also displayed on
+        this page.</p>
+
+      <p class="p">Green buttons expose Admin-only functionality:</p>
+
+      <ul class="ul">
+        <li class="li">Configure Available Services: Opens the <a class="xref" href="#topic13823__cluster-nodes">Cluster Nodes</a> view showing which roles are running on which nodes.
+          From this view you can add or remove Service roles on the various nodes in the cluster (or
+          on 127.0.0.1 for micro clouds).</li>
+
+        <li class="li">Manage Organizations: Opens the <a class="xref" href="#topic13823__organizations">Organizations</a> view.</li>
+
+        <li class="li">Manage Users: Opens the <a class="xref" href="#topic13823__users">Users
+          </a>view.</li>
+
+        <li class="li">View All Deployed Applications: Opens the <a class="xref" href="#topic13823__applications">Console Applications</a> view.</li>
+
+        <li class="li">View Cloud Events: Opens the <a class="xref" href="#topic13823__cloud-events">Cloud
+            Events</a> view.</li>
+
+        <li class="li">View Dashboard: Opens the <a class="xref" href="#topic13823__dashboards">Dashboard</a>.</li>
+
+      </ul>
+
+    </div>
+
+    <div class="section" id="topic13823__applications"><h2 class="title sectiontitle">Applications</h2>
+      
+      <p class="p">The Applications section displays a list of all apps on the server. Click anywhere on the
+        line for an app to view its details. Admins have the same permissions in the Application
+        View as a Developer of the space it was deployed to.</p>
+
+    </div>
+
+    <div class="section" id="topic13823__organizations"><h2 class="title sectiontitle">Organizations</h2>
+      
+      <p class="p">The top level Organizations page allows Admins to add and delete <a class="xref" href="#topic13823__organizations">Organizations</a>. Clicking on an
+        organization name opens its details. This view is the same as a regular user's <a class="xref" href="../../user/console/console_index.html#topic8844__organization-view">Organizations</a>
+        view, but admin users can also edit quotas and add/remove domains, spaces, and users.</p>
+
+    </div>
+
+    <div class="section" id="topic13823__support"><h2 class="title sectiontitle">Support</h2>
+      
+      <p class="p">The Support menu includes the same options as the regular user's menu.</p>
+
+    </div>
+
+    <div class="section" id="topic13823__admin"><h2 class="title sectiontitle">Admin</h2>
+      
+      <p class="p">Several views that are only available to administrators are in the Admin menu.</p>
+
+    </div>
+
+    <div class="section" id="topic13823__clustermanagement"><h2 class="title sectiontitle">Cluster Management</h2>
+      
+      <p class="p">Commands for managing a cluster as a whole.</p>
+
+    </div>
+
+    <div class="section" id="topic13823__clustersummary"><h2 class="title sectiontitle">Summary</h2>
+      
+      <p class="p">Displays a list of roles and their status in the system. Additionally, the following system
+        information is displayed:</p>
+
+      <ul class="ul">
+        <li class="li">
+          <strong class="ph b">Number of nodes</strong>: The number of nodes in the cluster.</li>
+
+        <li class="li">
+          <strong class="ph b">Version</strong>: Version (release) number of the system.</li>
+
+        <li class="li">
+          <strong class="ph b">MBUS IP</strong>: The IP address that hosts the primary node. Cluster nodes (if any) will
+          connect via this IP address. In a micro cloud setting, it will be 127.0.0.1.</li>
+
+        <li class="li">
+          <strong class="ph b">API Endpoint</strong>: The URL for ALS clients to target. Normally also the URL for the
+          Management Console.</li>
+
+      </ul>
+
+    </div>
+
+    <div class="section" id="topic13823__cluster-nodes"><h2 class="title sectiontitle">Cluster Nodes</h2>
+      
+      <p class="p">Displays a list of nodes in the current cluster, and what services are running on each
+        node. In a micro cloud configuration, only the current local node (127.0.0.1) is shown.</p>
+
+      <p class="p">To enable or disable services on a node, click the Configure Roles button (cog icon) to see
+        the Node Settings, showing a list of all available roles and checkboxes to enable or disable
+        each one. Click Save to apply changes.</p>
+
+      <p class="p">See also the <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-role-add">kato role</a>
+        and <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-info">kato
+          info</a> command documentation for the CLI equivalents, and the <a class="xref" href="../cluster/cluster_index.html">Cluster Setup</a> documentation for information on
+        adding nodes to the cluster.</p>
+
+    </div>
+
+    <div class="section" id="topic13823__patches"><h2 class="title sectiontitle">Available Patches</h2>
+      
+      <p class="p">Displays a list of available patches for the current cluster.</p>
+
+    </div>
+
+    <div class="section" id="topic13823__app-org"><h2 class="title sectiontitle">Applications &amp; Organizations</h2>
+      
+      <p class="p">Links to the <a class="xref" href="../../user/console/console_index.html#topic8844__application-view">Applications</a> and <a class="xref" href="../../user/deploy/orgs-spaces.html">Organizations</a> lists.</p>
+
+    </div>
+
+    <div class="section" id="topic13823__domains"><h2 class="title sectiontitle">Domains</h2>
+      
+      <p class="p">A filterable list of all domains configured on the system, showing whether they are <a class="xref" href="../../user/deploy/orgs-spaces.html#topic2729__domains">Shared or
+          Owned domains</a>.</p>
+
+    </div>
+
+    <div class="section" id="topic13823__routes"><h2 class="title sectiontitle">Routes</h2>
+      
+      <p class="p">A filterable list of routes in the system.</p>
+
+    </div>
+
+    <div class="section" id="topic13823__services"><h2 class="title sectiontitle">Services</h2>
+      
+    </div>
+
+    <div class="section" id="topic13823__managed-services"><h2 class="title sectiontitle">Managed Services Instances</h2>
+      
+      <p class="p">A filterable list of managed service instances on the system.</p>
+
+    </div>
+
+    <div class="section" id="topic13823__user-services"><h2 class="title sectiontitle">User-provided Service Instances</h2>
+      
+      <p class="p">A filterable list of user provided service instances on the system.</p>
+
+    </div>
+
+    <div class="section" id="topic13823__avail-services"><h2 class="title sectiontitle">Available Services</h2>
+      
+      <p class="p">A list of available service types (with their version).</p>
+</div>
+<div class="section" id="topic13823__quotaPlans"><h2 class="title sectiontitle">Quota Plans</h2>
+      
+      <p class="p">Lists the Quota Plans available to apply to Organizations on the system. To edit a
+        definition, click the edit button on the right. To create a new definition, use the <a class="xref" href="../../user/reference/client-ref-quotas.html#topic5727__command-quota-create">
+          <em class="ph i">quota create</em>
+        </a> command.</p>
+
+      <p class="p">The following fields can be modified:</p>
+
+      <ul class="ul" id="topic13823__ul_ujf_nm2_5s">
+        <li class="li">
+          <strong class="ph b">Name</strong>: The definition name. Do not change this without also changing the settings of
+          any Organization using the definition.</li>
+
+        <li class="li">
+          <strong class="ph b">Memory Usage Limit</strong>: The total amount of application RAM (in MB) that can be
+          allocated to user applications.</li>
+
+        <li class="li">
+          <strong class="ph b">Total Services</strong>: The total number of service instances that can be allocated.</li>
+
+        <li class="li">
+          <strong class="ph b">Total Routes</strong>: The total number of routes that can be created.</li>
+
+        <li class="li">
+          <strong class="ph b">Droplets per App</strong>: The number of droplets stored (per application) for versioning
+          and rollback.</li>
+
+        <li class="li">
+          <strong class="ph b">Allow Sudo</strong>: Allow users in the Organization sudo privileges within their
+          application containers.</li>
+
+      </ul>
+
+    </div>
+
+    <div class="section" id="topic13823__users"><h2 class="title sectiontitle">Users</h2>
+      
+      <p class="p">The Users section displays a list of users and admins.</p>
+
+      <ul class="ul">
+        <li class="li">Click <strong class="ph b">+ Add User</strong> to add users.</li>
+
+        <li class="li">Click on the user name or email address to view account details or change the
+          password.</li>
+
+      </ul>
+
+    </div>
+
+    <div class="section" id="topic13823__dashboards"><h2 class="title sectiontitle">Dashboards</h2>
+      
+      <p class="p">A list of available dashboards and their functionality.</p>
+
+    </div>
+
+    <div class="section" id="topic13823__memory-summary"><h2 class="title sectiontitle">Memory Summary</h2>
+      
+      <p class="p">Helion tracks the amount of memory used by applications across all DEA nodes and shows
+        various reports. Available memory is calculated based on the system memory of the DEA nodes
+        multiplied by the <a class="xref" href="console_settings.html#topic_od4_byj_rs__console-settings-dea">Max Memory
+          Percentage</a>.</p>
+
+      <p class="p">Memory Summary shows how much memory:</p>
+
+      <ul class="ul">
+        <li class="li">has been assigned to Organizations via <a class="xref" href="console_settings.html#topic_od4_byj_rs__quotaPlans">Quota Plans</a>
+        </li>
+
+        <li class="li">is available on DEA nodes</li>
+
+        <li class="li">remains unallocated</li>
+
+        <li class="li">has been allocated</li>
+
+        <li class="li">is currently in use</li>
+
+      </ul>
+
+    </div>
+
+    <div class="section" id="topic13823__dea-usage"><h2 class="title sectiontitle">DEA Usage</h2>
+      
+      <p class="p">Memory usage statistics and a usage bar graph for each DEA node in the pool.</p>
+
+    </div>
+
+    <div class="section" id="topic13823__zone-usage"><h2 class="title sectiontitle">Placement Zone Usage</h2>
+      
+      <p class="p">Memory usage statistics and a usage bar graph for all configured <a class="xref" href="console_settings.html#topic_od4_byj_rs__dea-zones-placement">Placement Zones</a>.</p>
+
+    </div>
+
+    <div class="section" id="topic13823__avail-zone-usage"><h2 class="title sectiontitle">Availability Zone Usage</h2>
+      
+      <p class="p">Memory usage statistics and a usage bar graph for all configured <a class="xref" href="console_settings.html#topic_od4_byj_rs__dea-zones-available">Availability Zones</a>
+      </p>
+
+    </div>
+
+    <div class="section" id="topic13823__router-stats"><h2 class="title sectiontitle">Router Stats</h2>
+      
+      <p class="p">Shows realtime results for incoming requests (connections per second), routing errors
+        (errors per second), and an overview of the cumulative requests to the system.</p>
+
+    </div>
+
+    <div class="section" id="topic13823__primary-node-status-graphs"><h2 class="title sectiontitle">Primary Node Status Graphs</h2>
+      
+      <p class="p">Displays graphs for server statistics: CPU, Load, Memory, Disk Operations, Disk Space,
+        Processes, and Swap (primary node or micro cloud only).</p>
+
+    </div>
+
+    <div class="section" id="topic13823__cloud-events"><h2 class="title sectiontitle">Cloud Events</h2>
+      
+      <p class="p">The Cloud Events section displays a list of events (including errors and warnings) on the
+        ALS server. The events can be filtered by Severity, Node ID, or Type, or by using a
+        substring match in the Search field.</p>
+
+    </div>
+
+  </div>
+
+
+</body>
+</html>

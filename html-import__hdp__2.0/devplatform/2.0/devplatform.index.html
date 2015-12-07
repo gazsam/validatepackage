@@ -1,0 +1,129 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Documentation</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic5490" /> <meta name="html-import-file-path" content="devplatform/2.0/devplatform.index.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Documentation</h1>
+
+
+
+
+<div class="body">
+<p class="p">Welcome! The HPE Helion Development Platform is a Platform-as-a-Service (PaaS) that helps
+      developers build great cloud-native applications across private and public clouds. Based on
+        <a class="xref" href="http://cloudfoundry.org/" target="_blank">Cloud
+          Foundry™</a> and fully integrated with <a class="xref" href="http://docs.hpcloud.com/#helion/index.html" target="_blank">HPE Helion
+          OpenStack<sup>®</sup></a>, the HPE Helion Development Platform is open and
+      interoperable, ensuring that developers can focus on building the right app for any
+      environment.</p>
+
+<div class="section" id="topic5490__platform-overview"><h2 class="title sectiontitle">Platform Overview</h2> 
+<p class="p">The Helion Development Platform is a Cloud Foundry-based, managed runtime environment for applications.</p>
+
+<ul class="ul">
+  <li class="li">It supports <a class="xref" href="devplatform.appdev.html#topic2457__java">Java</a>, <a class="xref" href="devplatform.appdev.html#topic2457__node">Node</a>, <a class="xref" href="devplatform.appdev.html#topic2457__PHP">PHP</a>, and other language runtimes.</li>
+
+<li class="li">It provides easy access to services like MySQL, PostgreSQL, RabbitMQ, and Memcache.</li>
+
+<li class="li">It allows Disk, Memory and Placement Zone constraints to be set per application.</li>
+
+<li class="li">It provides auto-scaling and application log drains.</li>
+
+</ul>
+
+      <p class="p">The Application Lifecycle Service is <a class="xref" href="installation/devplatform_install_ALS.html">installed</a> as part of the Helion Development Platform. You can easily <a class="xref" href="helion/admin/helion_admin_index.html#topic2276__wizard-based-cluster-creation">create and configure</a> Application Lifecycle Service clusters from the
+        Horizon management console.</p>
+
+<p class="p">Helion Development Platform now includes a full end-to-end solution for creating and deploying .NET  applications. Windows developers can now leverage their knowledge and use the tools they are accustomed to in order to leverage the power of the Helion Development Platform. For more information on Windows and .NET support, see the <a class="xref" href="windows/windows_overview.html">Windows Overview</a>.</p>
+
+</div>
+
+<div class="section" id="topic5490__application-services"><h2 class="title sectiontitle">Application Services</h2> 
+<p class="p">The HPE Helion Development Platform provides additional Application Services that integrate into the Application Lifecycle Service. These currently include:</p>
+
+</div>
+
+<div class="section" id="topic5490__database-as-a-service"><h2 class="title sectiontitle">Database as a Service</h2> 
+  <p class="p">The <a class="xref" href="database/devplatform.database-instance.html">Database as a Service (DBaaS)</a> provides lifecycle services for MySQL database instances. Lifecycle services includes provisioning, configuration, patching, backups, restores, and monitoring that can be administered from either a CLI interface, RESTful APIs or the Horizon dashboard.</p>
+
+<ul class="ul">
+  <li class="li">An implementation of <a class="xref" href="https://wiki.openstack.org/wiki/Trove" target="_blank">OpenStack Trove</a>, <a class="xref" href="database/devplatform.database-instance.html">Database as a Service</a> provides scalable and reliable cloud database provisioning functionality for both relational and non-relational databases.  </li>
+
+<li class="li">The Database service provides a simple and easy way to access and utilize features in a database without the overhead of administration.  </li>
+
+</ul>
+
+      <p class="p">The <a class="xref" href="database/devplatform.database-ALS.html">Database as a Service</a> is
+        optionally <a class="xref" href="installation/devplatform_install_database.html">installed and configured</a> as part of the Helion Development Platform. If not
+        installed as part of the platform, you can install it and then configure it for <a class="xref" href="database/devplatform.database-ALS.html">use from within the Application Lifecycle
+          Service</a>.</p>
+
+</div>
+
+<div class="section" id="topic5490__messaging-service"><h2 class="title sectiontitle">Messaging Service</h2>
+      
+      <p class="p">The <a class="xref" href="messaging/devplatform.using-the-messaging-service.html">Messaging
+          Service</a> provides developers with the ability to provision messaging clusters using a
+        wizard-based UI directly from Horizon.</p>
+
+      <ul class="ul" id="topic5490__ul_srf_bbs_wt">
+        <li class="li">The Messaging Broker Service integrates with Keystone to remove the need to create and manage separate credentials. </li>
+
+        <li class="li">The Messaging Service allows developers to focus on building their apps without worrying
+          about installing, configuring, or troubleshooting.</li>
+
+      </ul>
+
+      <p class="p">The Messaging Service is optionally installed as part of the Helion Development Platform.
+        If not installed as part of the platform, you can <a class="xref" href="installation/devplatform_install_messaging.html">install</a> it and then <a class="xref" href="messaging/devplatform.using-the-messaging-service.html">configure</a> it for
+          <a class="xref" href="messaging/devplatform.using-messaging-service-with-ALS.html">use from within
+          the Application Lifecycle Service</a>.</p>
+
+    </div>
+
+<div class="section" id="topic5490__platform-tools"><h2 class="title sectiontitle">Platform Tools</h2> 
+<p class="p">The Helion Development Platform is accessible via the following tools:</p>
+
+<p class="p">
+        <strong class="ph b"><a class="xref" href="helion/user/reference/client-ref.html#topic13355">Helion Command-Line
+            Interface (CLI)</a></strong>
+      </p>
+
+<p class="p">Use the Helion CLI to deploy your app to the development platform through the command line. <a class="xref" href="helion/user/client/client_index.html#topic3165__helion-client-setup">Setup</a> instructions are available for here both Windows<sup>®</sup> and
+        Unix/Mac operating systems.</p>
+
+<p class="p">
+<strong class="ph b">Eclipse Plugin</strong>
+
+ If your developers work in the Eclipse IDE, <a class="xref" href="devplatform.eclipse.html">install and use</a> the Eclipse plug-in to quickly configure the Helion Development Platform as a deployment target for your app.</p>
+
+</div>
+
+  <div class="section"><h2 class="title sectiontitle">Related Documentation</h2>
+      <p class="p"> The HPE Helion Development Platform is based on Cloud
+          Foundry™ and OpenStack<sup>®</sup> technology along with an HP-configured
+        Linux operating system.</p>
+
+      <p class="p">You can find related information on the following sites:</p>
+
+      <ul class="ul" id="topic5490__ul_kxs_rjj_pt">
+        <li class="li">
+          <a class="xref" href="http://docs.cloudfoundry.org/" target="_blank">Cloud Foundry™</a>
+        </li>
+
+        <li class="li">OpenStack<a class="xref" href="https://wiki.openstack.org/wiki/Trove" target="_blank">Trove</a>
+        </li>
+
+      </ul>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

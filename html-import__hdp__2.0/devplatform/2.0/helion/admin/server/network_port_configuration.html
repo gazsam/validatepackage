@@ -1,0 +1,465 @@
+
+
+
+<html><head><title>Network Port Configuration</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_l51_22v_xs" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/admin/server/network_port_configuration.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">Network Port Configuration</h1>
+
+
+  
+
+  <div class="body">
+    <div class="p">The ALS <a class="xref" href="../../user/reference/glossary.html#topic6187__term-micro-cloud">micro-cloud</a> runs with the following ports exposed: 
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top">Port</td>
+
+              <td class="entry" valign="top">Type</td>
+
+              <td class="entry" valign="top">Service</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top">22</td>
+
+              <td class="entry" valign="top">tcp</td>
+
+              <td class="entry" valign="top">ssh</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top">25</td>
+
+              <td class="entry" valign="top">tcp</td>
+
+              <td class="entry" valign="top">smtp</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top">80</td>
+
+              <td class="entry" valign="top">tcp</td>
+
+              <td class="entry" valign="top">http</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top">111</td>
+
+              <td class="entry" valign="top">tcp</td>
+
+              <td class="entry" valign="top">portmapper</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top">111</td>
+
+              <td class="entry" valign="top">udp</td>
+
+              <td class="entry" valign="top">portmapper</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top">443</td>
+
+              <td class="entry" valign="top">tcp</td>
+
+              <td class="entry" valign="top">https</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top">3306</td>
+
+              <td class="entry" valign="top">tcp</td>
+
+              <td class="entry" valign="top">mysql</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top">5432</td>
+
+              <td class="entry" valign="top">tcp</td>
+
+              <td class="entry" valign="top">postgresql</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top">5678</td>
+
+              <td class="entry" valign="top">tcp</td>
+
+              <td class="entry" valign="top">DEA directory server</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top">8181</td>
+
+              <td class="entry" valign="top">tcp</td>
+
+              <td class="entry" valign="top">upload server</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top">9001</td>
+
+              <td class="entry" valign="top">tcp</td>
+
+              <td class="entry" valign="top">supervisord</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+ On a production cluster, or a micro cloud running on a cloud hosting provider, only
+      ports 22 (SSH), 80 (HTTPS) and 443 (HTTPS) need to be exposed externally (e.g. for the Router
+      / Core node). </div>
+
+     <p class="p"> 
+      Within the cluster (i.e. behind the firewall), it is advisable to allow
+      communication between the cluster nodes on all ports. This can be done
+      safely by using the security group / security policy tools provided by
+      your hypervisor. </p>
+
+          
+         <p class="p"> If you wish to restrict ports between some nodes, for example, if you do not
+          have the option to use security groups, the following summary describes
+          which ports are used by which components. <strong class="ph b">Source</strong> nodes initiate the
+           communication; <strong class="ph b">Destination</strong> nodes need to listen on the specified port.</p>
+
+          
+<div class="p">
+      <table cellpadding="4" cellspacing="0" summary="" id="topic_l51_22v_xs__simpletable_zjp_nhv_xs" border="1" class="simpletable"><tr class="sthead">
+          <th valign="bottom" align="left" id="d54087e191" class="stentry" width="20%">Port Range</th>
+
+          <th valign="bottom" align="left" id="d54087e194" class="stentry" width="20%">Type</th>
+
+          <th valign="bottom" align="left" id="d54087e197" class="stentry" width="20%">Source</th>
+
+          <th valign="bottom" align="left" id="d54087e200" class="stentry" width="20%">Destination</th>
+
+          <th valign="bottom" align="left" id="d54087e203" class="stentry" width="20%">Required by</th>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" headers="d54087e191" class="stentry">22</td>
+
+          <td valign="top" headers="d54087e194" class="stentry">tcp</td>
+
+          <td valign="top" headers="d54087e197" class="stentry"> all nodes </td>
+
+          <td valign="top" headers="d54087e200" class="stentry">all nodes </td>
+
+          <td valign="top" headers="d54087e203" class="stentry">ssh/scp/sshfs </td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" headers="d54087e191" class="stentry">4222 </td>
+
+          <td valign="top" headers="d54087e194" class="stentry">tcp</td>
+
+          <td valign="top" headers="d54087e197" class="stentry"> all nodes</td>
+
+          <td valign="top" headers="d54087e200" class="stentry"> controller</td>
+
+          <td valign="top" headers="d54087e203" class="stentry"><a class="xref" href="../../user/reference/glossary.html#topic6187__term-NATS">NATS</a></td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" headers="d54087e191" class="stentry">3306</td>
+
+          <td valign="top" headers="d54087e194" class="stentry">tcp </td>
+
+          <td valign="top" headers="d54087e197" class="stentry">dea,controller</td>
+
+          <td valign="top" headers="d54087e200" class="stentry"> mysql nodes </td>
+
+          <td valign="top" headers="d54087e203" class="stentry">MySQL </td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" headers="d54087e191" class="stentry">5432</td>
+
+          <td valign="top" headers="d54087e194" class="stentry">tcp </td>
+
+          <td valign="top" headers="d54087e197" class="stentry">dea,controller</td>
+
+          <td valign="top" headers="d54087e200" class="stentry"> postgresql nodes </td>
+
+          <td valign="top" headers="d54087e203" class="stentry">PostgreSQL</td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" headers="d54087e191" class="stentry"> 5454</td>
+
+          <td valign="top" headers="d54087e194" class="stentry"> tcp</td>
+
+          <td valign="top" headers="d54087e197" class="stentry">all nodes</td>
+
+          <td valign="top" headers="d54087e200" class="stentry"> controller </td>
+
+          <td valign="top" headers="d54087e203" class="stentry">redis </td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" headers="d54087e191" class="stentry">6464</td>
+
+          <td valign="top" headers="d54087e194" class="stentry"> tcp </td>
+
+          <td valign="top" headers="d54087e197" class="stentry">all nodes</td>
+
+          <td valign="top" headers="d54087e200" class="stentry"> all nodes </td>
+
+          <td valign="top" headers="d54087e203" class="stentry">applog (redis) </td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" headers="d54087e191" class="stentry">7000 - 7999</td>
+
+          <td valign="top" headers="d54087e194" class="stentry"> tcp</td>
+
+          <td valign="top" headers="d54087e197" class="stentry">all nodes</td>
+
+          <td valign="top" headers="d54087e200" class="stentry"> all nodes </td>
+
+          <td valign="top" headers="d54087e203" class="stentry">``kato log tail`` </td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" headers="d54087e191" class="stentry">7474</td>
+
+          <td valign="top" headers="d54087e194" class="stentry"> tcp </td>
+
+          <td valign="top" headers="d54087e197" class="stentry">all nodes</td>
+
+          <td valign="top" headers="d54087e200" class="stentry"> all nodes </td>
+
+          <td valign="top" headers="d54087e203" class="stentry">config (redis) </td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" headers="d54087e191" class="stentry">8181</td>
+
+          <td valign="top" headers="d54087e194" class="stentry"> tcp </td>
+
+          <td valign="top" headers="d54087e197" class="stentry">router</td>
+
+          <td valign="top" headers="d54087e200" class="stentry"> controller </td>
+
+          <td valign="top" headers="d54087e203" class="stentry">upload server </td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" headers="d54087e191" class="stentry">9001</td>
+
+          <td valign="top" headers="d54087e194" class="stentry"> tcp </td>
+
+          <td valign="top" headers="d54087e197" class="stentry">controller</td>
+
+          <td valign="top" headers="d54087e200" class="stentry"> all nodes</td>
+
+          <td valign="top" headers="d54087e203" class="stentry"><a class="xref" href="../../user/reference/glossary.html#topic6187__term-supervisord">supervisord</a></td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" headers="d54087e191" class="stentry">9022</td>
+
+          <td valign="top" headers="d54087e194" class="stentry"> tcp</td>
+
+          <td valign="top" headers="d54087e197" class="stentry">dea </td>
+
+          <td valign="top" headers="d54087e200" class="stentry">controller </td>
+
+          <td valign="top" headers="d54087e203" class="stentry">droplets </td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" headers="d54087e191" class="stentry">9022</td>
+
+          <td valign="top" headers="d54087e194" class="stentry"> tcp </td>
+
+          <td valign="top" headers="d54087e197" class="stentry">controller</td>
+
+          <td valign="top" headers="d54087e200" class="stentry"> dea </td>
+
+          <td valign="top" headers="d54087e203" class="stentry">droplets </td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" headers="d54087e191" class="stentry">9025</td>
+
+          <td valign="top" headers="d54087e194" class="stentry"> tcp </td>
+
+          <td valign="top" headers="d54087e197" class="stentry">controller</td>
+
+          <td valign="top" headers="d54087e200" class="stentry"> router </td>
+
+          <td valign="top" headers="d54087e203" class="stentry">stackato-rest </td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" headers="d54087e191" class="stentry">9026</td>
+
+          <td valign="top" headers="d54087e194" class="stentry"> tcp </td>
+
+          <td valign="top" headers="d54087e197" class="stentry">controller</td>
+
+          <td valign="top" headers="d54087e200" class="stentry"> all nodes</td>
+
+          <td valign="top" headers="d54087e203" class="stentry">stackato-rest </td>
+
+        </tr>
+<tr class="strow">
+          <td valign="top" headers="d54087e191" class="stentry">41000 - 61000</td>
+
+          <td valign="top" headers="d54087e194" class="stentry"> tcp </td>
+
+          <td valign="top" headers="d54087e197" class="stentry">dea,controller</td>
+
+          <td valign="top" headers="d54087e200" class="stentry"> service nodes </td>
+
+          <td valign="top" headers="d54087e203" class="stentry">service gateways </td>
+
+        </tr>
+</table>
+
+    </div>
+
+          
+    <p class="p">Each node can be internally firewalled using <a class="xref" href="http://manpages.ubuntu.com/manpages/man8/iptables.8.html" target="_blank">iptables</a> to apply the above rules.</p>
+
+            
+            <p class="p">Comments:</p>
+
+         <ul class="ul">  
+           <li class="li">Ports 80 and 443 need only be open to the world on router nodes.</li>
+
+            
+           <li class="li">Port 4222 should be open on all nodes for <a class="xref" href="../../user/reference/glossary.html#topic6187__term-NATS">NATS</a> communication with the MBUS IP
+        (core Cloud Controller)</li>
+
+            
+             <li class="li">Port 9022 should be open to allow transfer of droplets to and
+               from the DEAs and Cloud Controllers.</li>
+
+            
+               <li class="li">Port 7845 is required if you plan to stream logs from all nodes
+                 in a cluster using the <samp class="ph codeph">kato log tail</samp> command.</li>
+
+            
+                 <li class="li">External access on port 22 can be restricted if necessary to the subnet you
+                   expect to connect from. If you are providing the <samp class="ph codeph">helion ssh</samp> feature to your users
+        (recommended), define a distinct security group for the public-facing Cloud Controller node
+        that is the same as a generic group, but has the additional policy of allowing SSH (Port 22)
+        from hosts external to the cluster.</li>
+
+            
+                   <li class="li">Within the cluster, port 22 should be open on all hosts to allow
+            administrative access over SSH. Port 22 is also used to mount
+            Filesystem service partitions in application containers on the DEA
+            nodes (via SSHFS).</li>
+
+            
+                     <li class="li">The optional Harbor port service has a configurable port range
+                       (default 41000 - 61000) which can be exposed externally if required.</li>
+
+         </ul>
+ 
+            <div class="section"><h2 class="title sectiontitle">Service Nodes</h2>In addition to the ports listed above for service
+      nodes and gateways, several service nodes assign a port for each individual user-requested
+      service instance. These ranges should be kept open between DEA nodes and their respective
+      service nodes. The default ranges are: <ul class="ul">
+        <li class="li">harbor: 35000 - 40000</li>
+
+        <li class="li">memcached: 45001 - 50000</li>
+
+        <li class="li">mongodb: 15001 - 25000</li>
+
+        <li class="li">rabbit: 35001 - 40000</li>
+
+        <li class="li">rabbit3: 25001 - 30000</li>
+
+        <li class="li">redis: 5000 - 15000</li>
+
+      </ul>
+<p class="p">You can check the currently configured port range for each service with <samp class="ph codeph">kato
+          config</samp> commands like <samp class="ph codeph">kato config get redis_node
+      port_range</samp>).</p>
+</div>
+
+          <div class="section" id="topic_l51_22v_xs__ports-hosts-allowed"><h2 class="title sectiontitle">Container Allowed Hosts and Ports</h2> For
+      security reasons, Docker application containers restrict access to hosts on the eth0 subnet.
+      By default, only ports and hosts for built-in services and components (e.g. service instances
+      bound to an application) are explicitly allowed. The following settings are available to allow
+      or restrict access from the application containers: <dl class="dl">
+        
+          <dt class="dt dlterm">fence docker/allowed_host_ports</dt>
+
+          <dd class="dd">If applications need access to custom services on a specific port, but the IP address
+            changes or is not known ahead of time, add the port to this list. For
+            example:<pre class="pre codeblock">kato config push fence docker/allowed_host_ports 25</pre>
+</dd>
+
+        
+        
+          <dt class="dt dlterm">fence docker/allowed_subnet_ips</dt>
+
+          <dd class="dd">If the specific IP address for the service is static and known, add the IP address
+            with or without the port specification:
+            <pre class="pre codeblock">kato config push fence docker/allowed_subnet_ips 10.0.0.54
+            kato config push fence docker/allowed_subnet_ips 10.0.0.55:9001</pre>
+</dd>
+
+        
+        
+          <dt class="dt dlterm">fence docker/block_network_ips</dt>
+
+          <dd class="dd">To explicitly block access to a specific IP address (internal or external):
+            <pre class="pre codeblock">kato config push fence docker/block_network_ips 8.8.8.8</pre>
+</dd>
+
+        
+      </dl>
+Restart the DEA role to apply these changes for new application containers. If
+      applications which require access to these IP addresses have already been deployed, they will
+      need to be restarted. <p class="p">Two additional settings are exposed in <samp class="ph codeph">kato config</samp>
+        but should not generally be modified:</p>
+<dl class="dl">
+        
+          <dt class="dt dlterm">fence docker/exposed_container_ports</dt>
+
+          <dd class="dd"> Container ports to be accessed over the subnet (internal services)</dd>
+
+        
+        
+          <dt class="dt dlterm">fence docker/network_interface</dt>
+
+          <dd class="dd">The Docker bridge interface.<strong class="ph b"> Do not modify.</strong></dd>
+
+        
+      </dl>
+
+    </div>
+     
+            </div>
+
+
+</body>
+</html>

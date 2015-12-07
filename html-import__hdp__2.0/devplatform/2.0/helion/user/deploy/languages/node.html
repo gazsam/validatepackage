@@ -1,0 +1,130 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Developing in Node</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic3629" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/languages/node.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Developing in Node</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">Application Lifecycle Service has a built in Node framework with multiple versions of the
+  <a class="xref" href="http://nodejs.org/" target="_blank">Node.js</a> runtime. <a class="xref" href="https://npmjs.org/" target="_blank">NPM</a> is used
+to install Node packages automatically.</p>
+
+  <p class="p">Deployable <a class="xref" href="../../../../devplatform.appdev.html#topic2457__node">sample applications</a> are available in this language.</p>
+
+<div class="section" id="topic3629__node-npm"><h2 class="title sectiontitle">NPM</h2> 
+<p class="p">Your application should list dependencies in a standard, top-level
+<a class="xref" href="https://docs.npmjs.com/getting-started/creating-node-modules" target="_blank">
+<em class="ph i">package.json</em> file</a>. Application Lifecycle Service
+automatically installs packages listed in the "dependencies" section
+before starting the server.</p>
+
+<p class="p">Alternatively, you can call NPM directly using <a class="xref" href="../manifestyml.html#topic20922__hooks"><em class="ph i">hooks</em></a> in the
+          <em class="ph i">manifest.yml</em> file.</p>
+
+<p class="p">For NPM packages which include callable scripts or binaries, executable components are automatically added to the container's \$PATH, so a "global install" (<samp class="ph codeph">npm install -g</samp>) is not required.</p>
+
+</div>
+
+<div class="section" id="topic3629__host-and-port-environment-variables"><h2 class="title sectiontitle">Host and Port Environment Variables</h2> 
+<p class="p">Deploying Node applications to Application Lifecycle Service requires changing some
+application settings to use instance-specific values. These values are
+provided to Application Lifecycle Service using environment variables. For example, the
+application is not allowed to arbitrarily choose which port it runs on.
+It must use the port assigned by Application Lifecycle Service with the <samp class="ph codeph">PORT</samp> variable. To access this in a node application:</p>
+
+<pre class="pre codeblock">process.env.PORT</pre>
+
+<p class="p">Likewise, the host IP address is exposed by <samp class="ph codeph">VCAP_APP_HOST</samp>:</p>
+
+<pre class="pre codeblock">process.env.VCAP_APP_HOST</pre>
+
+<p class="p">To make the application usable in both local and Application Lifecycle Service deployments,
+use structures such as:</p>
+
+<pre class="pre codeblock">var port = process.env.PORT || 1337;
+var host = process.env.VCAP_APP_HOST || "127.0.0.1";</pre>
+
+</div>
+
+<div class="section" id="topic3629__using-data-services"><h2 class="title sectiontitle">Using Data Services</h2> 
+<p class="p">Data services need to be configured with values from VCAP_SERVICES, DATABASE_URL, or a
+        database-specific environment variable (see also <a class="xref" href="../../services/data-services.html#user_data_services__using-database-services">Using
+          Database Services</a>).</p>
+
+<p class="p">If the database module you use supports URL-formatted connection strings, using the <a class="xref" href="../../services/data-services.html#user_data_services__database-specific-urls">database-specific</a> URL variable (REDIS_URL, MONGODB_URL, etc.) is often
+        the simplest option.</p>
+
+<p class="p">Use the variable in your code to connect your application to the
+database. For example:</p>
+
+<pre class="pre codeblock">console.log("attempting to connect to mongodb");
+if(process.env.MONGODB_URL){
+  mongoose.connect(process.env.MONGODB_URL);
+} else {
+  mongoose.connect("127.0.0.1", "myappdb", 27017);
+}</pre>
+
+<p class="p">
+<samp class="ph codeph">VCAP_SERVICES</samp> is a JSON object
+containing information about all the data service bound to the
+application. A typical <samp class="ph codeph">VCAP_SERVICES</samp> variable
+containing a single MongoDB service might look like this:</p>
+
+<pre class="pre codeblock">  {
+  "mongodb": [
+    {
+      "name": "todos",
+      "label": "mongodb-2.4",
+      "plan": "free",
+      "tags": [
+        "mongodb",
+        "mongodb-2.4",
+        "nosql"
+      ],
+      "credentials": {
+        "hostname": "192.168.66.117",
+        "host": "192.168.66.117",
+        "port": 25001,
+        "username": "4ce459bf-7a15-4c40-ac28-81adbdeba902",
+        "password": "00a42612-9751-4d63-a758-186429d4903f",
+        "name": "b89e2bc0-cae7-482c-8a47-8c816c67c62e",
+        "db": "db"
+      }
+    }
+  ]
+}</pre>
+
+<p class="p">To use this information in your application code, use something similar
+to this block:</p>
+
+<pre class="pre codeblock">  if(process.env.VCAP_SERVICES){
+  var services = JSON.parse(process.env.VCAP_SERVICES);
+  var dbcreds = services['mongodb'][0].credentials;
+}
+
+if(dbcreds){
+  console.log(dbcreds);
+  mongoose.connect(dbcreds.host, dbcreds.db, dbcreds.port, {user: dbcreds.username, pass: dbcreds.password});
+} else {
+  mongoose.connect("127.0.0.1", "myappdb", 27017);
+}</pre>
+
+<p class="p">This is the typical pattern used for all databases exposed by
+VCAP_SERVICES.</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

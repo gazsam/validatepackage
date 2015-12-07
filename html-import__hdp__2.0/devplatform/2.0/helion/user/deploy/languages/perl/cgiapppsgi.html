@@ -1,0 +1,72 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: CGI Application: PSGI</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic1236" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/languages/perl/cgiapppsgi.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: CGI Application: PSGI</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">An app using the CGI::Application::PSGI framework needs an <em class="ph i">app.psgi</em>
+and <em class="ph i">requirements.txt</em> file.</p>
+
+<p class="p">In the <em class="ph i">requirements.txt</em> file, list any module requirements, with at
+least:</p>
+
+<pre class="pre codeblock">CGI::Application::PSGI
+Plack::Builder</pre>
+
+<p class="p">In the <em class="ph i">app.psgi</em> file, the basic code will be something like:</p>
+
+<pre class="pre codeblock">#perl
+
+use lib "lib";
+
+use strict;
+use Plack::Builder;
+use CGI::Application::PSGI;
+use AppCore;
+
+my $handler = sub {
+  my $env = shift;
+  my $app = AppCore-&gt;new({ QUERY =&gt; CGI::PSGI-&gt;new($env) });
+  CGI::Application::PSGI-&gt;run($app);
+};
+
+builder {
+  enable 'Plack::Middleware::ContentLength';
+  $handler;
+};</pre>
+
+<p class="p">In the above example, AppCore.pm is located in the local lib folder and
+handles processing of the data and the response as per the
+<a class="xref" href="http://search.cpan.org/~markstos/CGI-Application-4.50/lib/CGI/Application.pm" target="_blank">CGI::Application</a>
+documentation.</p>
+
+<div class="p">
+      <div class="note note"><span class="notetitle">Note:</span> The <samp class="ph codeph">Plack::Middleware::ContentLength</samp> code adds the Content-Length
+        header which is currently required for Perl apps under Application Lifecycle Service.</div>
+
+    </div>
+
+<div class="section" id="topic1236__examples"><h2 class="title sectiontitle">Examples</h2> 
+<ul class="ul">
+<li class="li">
+<a class="xref" href="https://github.com/Stackato-Apps/rubric" target="_blank">Rubric</a>: The winning entry from our Application Lifecycle Service contest.</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Command Reference: Services</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic3675" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/client-ref-services.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Command Reference: Services</h1>
+
+
+
+
+
+<div class="body">
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic3675__command-marketplace">helion marketplace</a>: List the supported service plans of the target for the current or specified space.</li>
+
+<li class="li">
+<a class="xref" href="#topic3675__command-purge-service-offerings">helion purge-service-offerings</a>: Purge all offerings of the service type from the system. <div class="note warning"><span class="warningtitle">Warning:</span> Removes ALL offerings. Use with caution.</div>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic3675__command-service">helion service</a>: Show information about the named service.</li>
+
+<li class="li">
+<a class="xref" href="#topic3675__command-services">helion services</a>: List the supported and provisioned services of the target.</li>
+
+</ul>
+
+<div class="section" id="topic3675__syntax"><h2 class="title sectiontitle">Syntax</h2> 
+<pre class="pre codeblock">helion [options] command [arguments] [command-options]</pre>
+
+<p class="p">For more information, use the <strong class="ph b">helion help</strong> or <strong class="ph b">helion help [<em class="ph i">command</em>]</strong> commands.</p>
+
+
+</div>
+
+<div class="section" id="topic3675__command-marketplace"><h2 class="title sectiontitle">helion marketplace</h2> 
+<p class="p">List the supported service plans of the target, for the current or specified space.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization, -o</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+name. Cannot be used together with <var class="keyword varname">--space-guid</var>.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+guid. Cannot be used together with <var class="keyword varname">--space</var>.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic3675__command-purge-service-offerings"><h2 class="title sectiontitle">helion purge-service-offerings &lt;<em class="ph i">service</em>&gt;</h2> 
+<div class="p">Purge all offerings of the service type from the system. <div class="note warning"><span class="warningtitle">Warning:</span> Do this <strong class="ph b">only</strong> for services that have been "orphaned" because their brokers have already been killed.</div>
+</div>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--version</td>
+
+<td class="entry" valign="top">The service version. Use this to disambiguate between multiple versions of the same vendor/type.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic3675__command-service"><h2 class="title sectiontitle">helion service &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Show the information about the named service.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization, -o</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+name. Cannot be used together with <var class="keyword varname">--space-guid</var>.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+guid. Cannot be used together with <var class="keyword varname">--space</var>.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic3675__command-services"><h2 class="title sectiontitle">helion services</h2> 
+<p class="p">List the supported and provisioned services of the target.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--organization, -o</td>
+
+<td class="entry" valign="top">The once-off organization to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+name. Cannot be used together with <var class="keyword varname">--space-guid</var>.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--space-guid</td>
+
+<td class="entry" valign="top">The once-off space to use for the current operation, specified by
+guid. Cannot be used together with <var class="keyword varname">--space</var>.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

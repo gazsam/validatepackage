@@ -1,0 +1,109 @@
+
+
+
+<html><head><title>Availability and Placement Zones</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_u3c_rtd_5s" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/admin/cluster/zones.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">Availability and Placement Zones</h1>
+
+
+  
+
+  <div class="body">
+<div class="section"><div class="p">
+    ALS has two mechanisms for allocating application instances on
+    particular Droplet Execution Agent (DEA) nodes or groups of nodes:
+    <dl class="dl">
+      <dt class="dt dlterm">Availability Zones</dt>
+
+      <dd class="dd">for distributing application instances across
+        groups of servers in different physical locations, network segments,
+        or racks.</dd>
+
+    
+      <dt class="dt dlterm">Placement Zones</dt>
+
+      <dd class="dd">for restricting application instances to
+        particular sets of servers.</dd>
+
+    </dl>
+
+    
+    Both zone types are set in the  <samp class="ph codeph">placement_properties</samp> configuration on each
+    DEA node, which can be set with  <samp class="ph codeph">kato node</samp> sub-commands.
+    
+    See also <a class="xref" href="../../user/deploy/deploy_index.html">Availability and Placement Zones</a>in the User Guide.
+      
+</div>
+  </div>
+
+  <div class="section" id="topic_u3c_rtd_5s__dea-zones-availability"><h2 class="title sectiontitle">Availability Zones</h2><p class="p">Setting availability
+        zones allows configuration to respect the physical/logical distribution of servers. In this
+        sense, they are similar to availability zones or regions in EC2. </p>
+If there are multiple
+      availability zones, application instances are evenly distributed among zones as much as
+      possible. For example, if there are three instances of an application and three availability
+      zones, one instance will be deployed in each zone.  <p class="p">This significantly improves high
+        availability and disaster recovery. If an entire availability zone goes offline, the app
+        will remain running with little or no down time. By default, all DEAs are part of the
+          <em class="ph i">default</em> availability zone. To set a zone, use the <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-node-availabilityzone"><samp class="ph codeph">kato node availabilityzone</samp></a> command. </p>
+For example, to see the
+      current availability zone of a DEA:
+      <pre class="pre codeblock">kato node availabilityzone
+Availability zone on node 10.0.0.41 is 'default'.</pre>
+To
+      set the availability zone:
+      <pre class="pre codeblock">kato node availabilityzone region-b
+Availability zone on node 10.0.0.41 is 'region-b'.</pre>
+</div>
+     
+ <div class="section" id="topic_u3c_rtd_5s__dea-zones-placement"><h2 class="title sectiontitle">Placement Zones</h2>
+        <p class="p">Placement Zones allow application instances to be limited to a certain set of DEA nodes.
+        Admins can tag DEAs with a certain set of security policies or hardware characteristics with
+        placement zones, allowing users deploying applications to choose which group of servers to
+        run instances of a particular application on.</p>
+
+        
+   <p class="p">For example, users can choose to deploy instances of an application only to a
+          <em class="ph i">production</em> placement zone. Only those DEA nodes in the <em class="ph i">production</em> placement
+        zone will receive instances of that application.</p>
+
+        
+   <div class="p">DEAs have a <samp class="ph codeph">placement_properties/zones</samp> key in their node-specific config
+        where placement zones are specified. These are set with the <samp class="ph codeph"><a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-node-placementzones-add">node placementzones</a></samp> command. The relevant sub-commands are:
+        <pre class="pre codeblock">kato node placementzones list
+kato node placementzones add [zone]
+kato node placementzones remove [zone]</pre>
+</div>
+
+          <p class="p">When deploying an application instance to a placement zone, the Cloud Controller
+        chooses which DEA nodes receive the instance, prioritizing the DEA that is running the
+        fewest instances of the app already. This maintains an even distribution of instances of any
+        one app across the DEAs in the placement zone.</p>
+
+          
+          <p class="p">DEAs tagged with multiple zones will accept applications for any of those zones.</p>
+
+          
+   <p class="p">By default, apps are deployed into the <em class="ph i">default</em> zone. DEAs that don't register
+          <strong class="ph b">any</strong> zone will also accept apps for the <em class="ph i">default</em> zone. This maintains
+        backwards compatibility.</p>
+
+          
+   <p class="p">Users can set the placement zone for an app using the <a class="xref" href="../../user/deploy/manifestyml.html#topic20922__placement-zone">manifest_yml-placement-zone</a> key or using the <a class="xref" href="../../user/reference/client-ref-placement.html#topic4565__command-set-placement-zone">helion set-placement-zone </a> command. </p>
+        
+   <p class="p">Zones are strictly enforced. If an application requests the <em class="ph i">production</em> zone, and the
+        DEA doesn't advertise it, then the app will never be deployed to that DEA. If an app
+        attempts to use a zone which is not provided by any DEA in the cluster, the app will not
+        deploy, displaying an error during <samp class="ph codeph">helion push</samp>.</p>
+
+      </div>
+                      
+  </div>
+
+
+</body>
+</html>

@@ -1,0 +1,177 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Node Hello World Sample</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic4388" /> <meta name="html-import-file-path" content="devplatform/2.0/workbook/helloworld/helloworld.node.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Node Hello World Sample</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">This very simple Node.js web app displays the text "Hello World!". This sample is a demonstration of the minimum requirements to build a functional application. Use this sample to ensure that you have set up your environment for deployment to Helion Development Platform.</p>
+
+<div class="section" id="topic4388__prerequisites"><h2 class="title sectiontitle">Prerequisites</h2> 
+<p class="p">If you are missing any of these items, you must <a class="xref" href="../../devplatform.appdev.html">install them</a>.</p>
+
+<ul class="ul">
+<li class="li">Access to an Application Lifecycle Service (ALS) <a class="xref" href="../../helion/admin/cluster/cluster_index.html">Cluster</a>
+</li>
+
+<li class="li">The  <a class="xref" href="../../helion/CLI/ALS_Client_Downloads.html">Helion command-line interface (CLI)</a> must be installed.</li>
+
+<li class="li">Access to the web-based <a class="xref" href="../../helion/user/console/console_index.html">Helion Management Console</a>.</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic4388__download-the-application-files"><h2 class="title sectiontitle">Download the Application Files</h2> 
+<p class="p">
+  <a class="xref" href="https://github.com/HelionDevPlatform/helion-hello-world-node" target="_blank">Click here to access the code repository.</a>
+</p>
+
+</div>
+
+<div class="section" id="topic4388__about-the-application-files"><h2 class="title sectiontitle">About the Application Files</h2> 
+  <p class="p">To create a Cloud Foundry™ app in Node.js, the only mandatory files are:</p>
+
+<ul class="ul">
+<li class="li">The main .js file</li>
+
+<li class="li">manifest.yml</li>
+
+<li class="li">package.json</li>
+
+<li class="li">Procfile </li>
+
+</ul>
+
+<p class="p">
+<em class="ph i">Manifest.yml</em> is a configuration file used to specify settings that would otherwise be specified by a command-line tool.</p>
+
+<p class="p">The <em class="ph i">package.json</em> file is your standard metadata file. <strong class="ph b">Name</strong> and <strong class="ph b">version</strong> are the only required fields.</p>
+
+<p class="p">The <em class="ph i">Procfile</em> tells the Helion Development Platform how to run your Node.js application. An extremely simple one is included with this sample.</p>
+
+</div>
+
+<div class="section" id="topic4388__deploy-the-application"><h2 class="title sectiontitle">Deploy the Application</h2> 
+<p class="p">
+        <strong class="ph b">Note</strong>: Application Lifecycle Service clusters that require an upstream HTTP proxy to
+        access the internet will need to be <a class="xref" href="../../helion/admin/server/https_and_ssl.html#topic_gwr_qgd_ws__staging-cache-app-http-proxy">made aware of the proxy</a>. The sample applications require access to the Internet in
+        order to download dependent packages.</p>
+
+<p class="p">Use the Helion client to deploy your app to Helion Development Platform.  If you have Eclipse installed, you have the option to use the <a class="xref" href="../../devplatform.eclipse.html">plugin</a>.</p>
+
+<ol class="ol">
+<li class="li">Open the <a class="xref" href="../../helion/user/reference/client-ref.html">Helion command-line interface (CLI)</a>
+</li>
+
+<li class="li">Ensure that you are targeting your desired environment.
+           If you are not,
+          execute<pre class="pre codeblock">helion target https://api.xx.xx.xx.xx.xip.io    </pre>
+</li>
+
+<li class="li"> Ensure that you are logged in to your desired environment.
+          If you are not,
+          execute<pre class="pre codeblock">helion login</pre>
+</li>
+
+<li class="li"> If you are not already there, <samp class="ph codeph">cd</samp> to the root directory of the sample.</li>
+
+<li class="li"> Deploy the application by using the command:<pre class="pre codeblock">helion push </pre>
+</li>
+
+<li class="li"> Accept any default values that you may be prompted for.  <div class="note note"><span class="notetitle">Note:</span> By default, ALS Clusters are
+            configured with two domains (private and public). In some situations, the Helion CLI may
+            prompt you to select a target domain. If prompted, select the public domain from the
+            given list (i.e. <em class="ph i">&lt;app-name&gt;.xxx.xxx.xxx.xxx.xip.io</em>)</div>
+</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic4388__key-code-snippets"><h2 class="title sectiontitle">Key Code Snippets</h2> 
+<p class="p">This simple Servlet prints "Hello World".</p>
+
+<pre class="pre codeblock">// Load the http module 
+var http = require('http');
+
+// The  HTTP server will respond with Hello World to all requests.
+var server = http.createServer(function (request, response) {
+  response.writeHead(200, {"Content-Type": "text/plain"});
+  response.end("\n Hello World \n");
+});
+
+// Listen to the port being used by this app. The call to process.env.PORT will
+// return the port that has been assigned to the app from the Helion Development
+// Platform.
+var port = process.env.PORT || 8888;
+server.listen(port);
+
+// Print to the terminal
+console.log("Server listening to port: " + port);</pre>
+
+<p class="p">The <em class="ph i">package.json</em> file is used by ALS during deployment. This is an extremely basic manifest file. 
+Note that <strong class="ph b">name</strong> is always required while other fields are optional.</p>
+
+<pre class="pre codeblock">    {
+      "name": "hello-world-node",
+      "version": "1.0.0",
+      "description" : "A 'Hello World' app demonstrating Node.js running on the Helion Development Platform.",
+      "repository" : {"type": "git", "url": "git://notyetpublished"}
+    }</pre>
+
+</div>
+
+<div class="section" id="topic4388__run-the-application"><h2 class="title sectiontitle">Run the Application</h2> 
+<ol class="ol">
+<li class="li">Open the Helion Management Console.  The Management Console is the web-based administrative interface that can be reached by typing the ALS endpoint URL into a browser window.</li>
+
+<li class="li">Click <strong class="ph b">Applications</strong>.</li>
+
+<li class="li">If the file push was successful, you should see <strong class="ph b">hello-world-node</strong> in the list of available applications.</li>
+
+<li class="li">The status of the application should be <strong class="ph b">Started</strong>.  Click the name of the application to launch it.</li>
+
+<li class="li">In the upper right-hand corner, click <strong class="ph b">View App</strong>.</li>
+
+<li class="li">You should see a simple text message: <strong class="ph b">Hello World</strong>
+</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic4388__key-learnings"><h2 class="title sectiontitle">Key Learnings</h2> 
+<ul class="ul">
+<li class="li">
+<p class="p">You interact with and deploy your app using the <a class="xref" href="../../helion/user/reference/client-ref.html">Helion command line client</a> or the web-based <a class="xref" href="../../helion/admin/console/console_index.html">ALS Management Console</a>.</p>
+
+</li>
+
+<li class="li">
+<p class="p">ALS requires configuration information to create an environment for your app. Configuration information is contained in the <em class="ph i">manifest.yml</em> file.</p>
+
+</li>
+
+</ul>
+
+<p class="p">
+<a class="xref" href="../../devplatform.appdev.html">Exit Samples</a> | <a class="xref" href="../messaging/messaging.node.html">Previous Sample</a> | <a class="xref" href="../database/database.node.html">Next Sample</a>
+</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

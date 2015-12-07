@@ -1,0 +1,162 @@
+
+
+
+<html><head><title>HPE Helion Code Engine</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="cloudCodeEngine" /> <meta name="html-import-file-path" content="devplatform/2.0/installation/cloud/cloud_codeengine.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion Code Engine</h1>
+
+
+  
+
+  <div class="body">
+    <div class="section">A complete clouds.yaml file is <a class="xref" href="fullFile.html#topic_mhg_f2n_vt">available
+        here</a> for reference.</div>
+
+    <div class="section"><p class="p">If you are deploying Helion Code Engine, append the <samp class="ph codeph">helionce</samp>
+        section to the <samp class="ph codeph">clouds.yml</samp> file as described
+      below:</p>
+<pre class="pre">clouds:
+  mycloud:
+  ...           
+    helionce:
+      deployer_key: helionce-shared
+      deployer_flavor: 3
+      deployer_ntp_servers: ntpservers
+      deployer_dns_servers: dnsservers
+      deployer_cloud: 'mycloud'
+      auth:
+        auth_url: http://10.22.200.2:35357/v3
+        project_name: admin
+        username: admin
+        password: verystrongpassword</pre>
+</div>
+
+    
+    <div class="section"><h2 class="title sectiontitle">Leave these Parameters Unchanged </h2>
+  
+      <dl class="dl">
+        
+          <dt class="dt dlterm">deployer_key</dt>
+
+          <dd class="dd">Default value: <samp class="ph codeph">helionce-shared</samp></dd>
+
+          <dd class="dd">Do not change this value.</dd>
+
+        
+        
+          <dt class="dt dlterm">deployer_flavor</dt>
+
+          <dd class="dd">The flavor to use for the deployer instance,</dd>
+
+          <dd class="dd">Default value: 3</dd>
+
+          <dd class="dd">Do not change this value.</dd>
+
+        
+        
+          <dt class="dt dlterm">deployer_ntp_servers</dt>
+
+          <dd class="dd">Provided value: ntpservers</dd>
+
+          <dd class="dd">Do not change this value. </dd>
+
+             
+          <dt class="dt dlterm">deployer_dns_servers</dt>
+
+          <dd class="dd">Provided value: dnsservers</dd>
+
+          <dd class="dd">Do not change this value.</dd>
+
+        </dl>
+</div>
+
+      
+      <div class="section"><h2 class="title sectiontitle">Modify the Following Parameters</h2><dl class="dl">
+
+    
+        
+          <dt class="dt dlterm">deployer_cloud</dt>
+
+          <dd class="dd">This value must match the name of the section you created in the <a class="xref" href="cloud_platform.html#cloudPlatform">Platform Configuration</a> section. In the
+            examples, the name is <em class="ph i">mycloud</em></dd>
+
+        
+        
+          <dt class="dt dlterm">auth_url</dt>
+
+          <dd class="dd">
+            <p class="p">This is the value of the <samp class="ph codeph">OS_AUTH_URL</samp> variable from
+                <samp class="ph codeph">~/service.osrc</samp></p>
+
+            <p class="p">Example:</p>
+
+            <div class="p">
+              <pre class="pre">user@host:~$ grep OS_AUTH_URL ~/service.osrc</pre>
+
+              <pre class="pre">export OS_AUTH_URL=http://10.22.200.2:35357/v3</pre>
+
+            </div>
+
+          </dd>
+
+        
+        
+          <dt class="dt dlterm">project_name</dt>
+
+          <dd class="dd">
+            <p class="p">This is the value of the <samp class="ph codeph">OS_PROJECT_NAME</samp> variable from
+                <samp class="ph codeph">~/service.osrc</samp></p>
+
+            <div class="p">Example:<pre class="pre">user@host:~$ grep OS_AUTH_URL ~/service.osrc</pre>
+<pre class="pre">export OS_PROJECT_NAME=admin</pre>
+</div>
+
+          </dd>
+
+        
+        
+          <dt class="dt dlterm">username</dt>
+
+          <dd class="dd">
+            <p class="p">This is the value of the <samp class="ph codeph">OS_USERNAME</samp> variable from
+                <samp class="ph codeph">~/service.osrc</samp></p>
+
+            <p class="p">Example:</p>
+
+            <div class="p">
+              <pre class="pre">user@host:~$ grep OS_USERNAME ~/service.osrc</pre>
+
+              <pre class="pre">export OS_USERNAME=admin</pre>
+
+            </div>
+
+          </dd>
+
+        
+        
+          <dt class="dt dlterm">password</dt>
+
+          <dd class="dd">
+            <p class="p">This is the value of the <samp class="ph codeph">OS_PASSWORD </samp>variable from
+                <samp class="ph codeph">~/service.osrc</samp></p>
+
+            <div class="p">Example:<pre class="pre">user@host:~$ grep OS_PASSWORD ~/service.osrc</pre>
+<pre class="pre">export OS_PASSWORD=verystrongpassword</pre>
+</div>
+
+          </dd>
+
+        
+      </dl>
+
+    </div>
+
+  </div>
+
+
+</body>
+</html>

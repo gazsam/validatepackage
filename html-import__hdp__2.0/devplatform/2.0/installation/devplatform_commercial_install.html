@@ -1,0 +1,1368 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Installation and Configuration</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic24073" /> <meta name="html-import-file-path" content="devplatform/2.0/installation/devplatform_commercial_install.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Installation and Configuration</h1>
+
+
+
+
+<div class="body">
+<div class="section">
+<p class="p">Installing HPE Helion Development Platform requires first installing the service deployer itself and then deploying key services.</p>
+
+<p class="p">The following topics explain how to install and configure a new deployment of the HPE Helion
+        Development Platform. There is also <a class="xref" href="../devplatform.troubleshooting.html">Troubleshooting</a> documentation to handle
+        issues that may occur.</p>
+
+<ul class="ul">
+<li class="li">
+          <a class="xref" href="#id_tfs_4qv_ft">Prerequisites </a></li>
+
+  <li class="li">
+  <a class="xref" href="#id_l4p_cxw_ft">Install the HPE Helion Development Platform</a>
+</li>
+
+<li class="li">
+  <a class="xref" href="#id_o3f_zww_ft">Install the Application Lifecycle Service</a></li>
+
+
+  <li class="li">
+    <a class="xref" href="#id_xn3_1xw_ft">Install the Database Service</a> </li>
+
+        <li class="li">
+          <a class="xref" href="#id_hm5_bxw_ft">Install the Messaging Service</a>
+        </li>
+
+  <li class="li"><a class="xref" href="#engine">Install the Helion Code Engine</a></li>
+
+
+</ul>
+
+</div>
+
+  
+</div>
+
+  <div class="topic nested1" id="id_tfs_4qv_ft">
+  <h2 class="title topictitle2">HPE Helion 2.0 Development Platform: Installation Prerequisites</h2>
+
+  <div class="body">
+    <div class="section" id="id_tfs_4qv_ft__d229e11"><h3 class="title sectiontitle">General Prerequisites</h3>
+      
+      <ul class="ul" id="id_tfs_4qv_ft__d229e16">
+        <li class="li">
+          <p class="p">The Cinder block storage backend must be configured to use <a class="xref" href="http://docs.hpcloud.com/#helion/installation/configure_vsa.html" target="_blank">VSA</a>, <a class="xref" href="http://docs.hpcloud.com/#helion/installation/configure_3par.html" target="_blank">3Par</a>, or <a class="xref" href="http://docs.hpcloud.com/#helion/installation/configure_ceph.html" target="_blank">Ceph</a>.</p>
+
+        </li>
+
+        <li class="li">
+          <p class="p">The system running the installer needs to have Python 2.7. Most modern operating
+            systems include this as part of their base toolkit. This document is geared toward a
+            Linux operating system, but this does not preclude the installer from running on other
+            operating systems with appropriate modifications to the command-line statements.</p>
+
+        </li>
+
+        <li class="li">
+          <p class="p">If you did not <a class="xref" href="http://docs.hpcloud.com/#helion/administration/create_hdp_servicenet.html" target="_blank">create the Service Network </a>immediately after
+            installing HP Helion OpenStack<sup>®</sup>, you <strong class="ph b">must</strong> do so now.</p>
+
+        </li>
+
+        <li class="li">
+          <p class="p">For Windows and .NET support, due to licensing requirements, you must create and deploy
+            your own Windows and SQL Server images. This requires the following:</p>
+
+          <ul class="ul" id="id_tfs_4qv_ft__d229e59">
+            <li class="li">Windows images must be created in a MacOS or Linux environment.</li>
+
+            <li class="li">You must have a Windows Server 2012 Enterprise (non-evaluation) image.</li>
+
+            <li class="li">A volume license for Windows Server 2012 Enterprise is strongly recommended.</li>
+
+            <li class="li">Additional tools (VirtIO and Virtual Box) are also required. See <a class="xref" href="../windows/windows_building_and_deploying.html">Building and
+                Deploying Windows DEA and SQL Server Express Images</a> for more
+              information.</li>
+
+          </ul>
+
+        </li>
+
+      </ul>
+
+    </div>
+
+    <div class="section" id="id_tfs_4qv_ft__d229e80"><h3 class="title sectiontitle">Gather Information</h3>
+      
+      <p class="p">You will need the following information:</p>
+
+      <dl class="dl">
+        
+          <dt class="dt dlterm">Deployer</dt>
+
+          <dd class="dd">IP address of the HPE Helion OpenStack Deployer.</dd>
+
+        
+        
+          <dt class="dt dlterm">Username </dt>
+
+          <dd class="dd">The OpenStack username of a cloud admin that has rights to perform a service update
+            for the selected service.</dd>
+
+        
+        
+          <dt class="dt dlterm">Password</dt>
+
+          <dd class="dd">The OpenStack password of a cloud admin that has rights to perform a service update
+            for the selected service.</dd>
+
+        
+      </dl>
+
+    </div>
+
+
+      <div class="note note"><span class="notetitle">Note:</span> All of the following procedures are performed on the HPE Helion OpenStack Deployer. SSH
+      to the Deployer before attempting any of these procedures.</div>
+
+    
+    <div class="section"><h3 class="title sectiontitle">Create the <samp class="ph codeph">clouds.yaml</samp> Configuration File</h3>The installer
+      retrieves configuration information from a configuration file located at
+      <a class="xref" href="install_cloudsyaml.html#id_ufp_fdn_vt">  <samp class="ph codeph">/.config/openstack/clouds.yaml</samp> </a>Each service has its own section within this
+      file where configuration information is stored.<div class="note important"><span class="importanttitle">Important:</span> This file <strong class="ph b">must</strong>
+        contain at least the<a class="xref" href="install_cloudsyaml.html#id_ufp_fdn_vt"> Platform
+          Configuration </a>information before the HDPI can be installed. </div>
+</div>
+
+    <div class="section" id="id_tfs_4qv_ft__d229e144"><h3 class="title sectiontitle">Set Proxy Shell Variables</h3>
+      
+      <p class="p">If your network uses a proxy, it may be necessary to set the <samp class="ph codeph">https_proxy</samp>
+        and <samp class="ph codeph">http_proxy</samp> shell variables.</p>
+
+      <ol class="ol">
+        <li class="li">To set the shell variables, enter the following commands:
+          <pre class="pre codeblock">export https_proxy={ip address or url of https proxy} 
+export http_proxy={ip address or url of http proxy} </pre>
+Example:
+          <pre class="pre codeblock">export https_proxy=http://proxy.example.com
+export http_proxy=http://proxy.example.com</pre>
+</li>
+
+        <li class="li"> If your network uses a proxy, you must define the proxy exclusion list
+            (<samp class="ph codeph">no_proxy</samp>)<ol class="ol" type="a">
+            <li class="li">Source the keystone RC file.<pre class="pre codeblock">source keystone.osrc</pre>
+</li>
+
+            <li class="li">Get the Keystone <strong class="ph b">public</strong> endpoint IP
+              address<pre class="pre codeblock">KEYSTONE_IP_PUBLIC=$(openstack endpoint list | grep keystone | grep public | grep -Eo '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')
+echo 'KEYSTONE PUBLIC IP: ' $KEYSTONE_IP_PUBLIC  </pre>
+or
+              fully-qualified domain name, depending on your HPE Helion OpenStack
+              deployment.<pre class="pre codeblock">id=$(openstack endpoint list | grep identity | cut -d "|" -f2 | tr -d " ")</pre>
+<pre class="pre codeblock">openstack endpoint show $id | grep publicurl | cut -d "|" -f3 | cut -d "/" -f3 | cut -d ":" -f1 </pre>
+</li>
+
+            <li class="li">Get the Keystone <strong class="ph b">internal</strong> endpoint IP address.
+              <pre class="pre codeblock">KEYSTONE_IP_INTERNAL=$(openstack endpoint list | grep keystone | grep internal | grep -Eo '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')
+echo 'KEYSTONE INTERNAL IP: ' $KEYSTONE_IP_INTERNAL </pre>
+or
+              fully-qualified domain name, depending on your HPE Helion OpenStack
+              deployment.<pre class="pre codeblock">id=$(openstack endpoint list | grep identity | cut -d "|" -f2 | tr -d " ")</pre>
+<pre class="pre codeblock">openstack endpoint show $id | grep internalurl | cut -d "|" -f3 | cut -d "/" -f3 | cut -d ":" -f1 </pre>
+</li>
+
+            <li class="li" id="id_tfs_4qv_ft__d229e206">Set the IP address values for <samp class="ph codeph">no_proxy</samp>. <div class="note important"><span class="importanttitle">Important:</span> Ensure that each and every Keystone AUTH_URL IP is included in the
+                no-proxy
+              list.</div>
+<pre class="pre codeblock">export no_proxy=localhost,127.0.0.1,$KEYSTONE_IP_PUBLIC,$KEYSTONE_IP_INTERNAL </pre>
+</li>
+ </ol>
+</li>
+
+        <li class="li">If your HPE Helion OpenStack deployment is behind a firewall, verify that the <a class="xref" href="http://docs.hpcloud.com/#helion/operations/accessing_sherpa.html" target="_blank">Sherpa
+          proxy shell variables</a> have been set. If these variables have not been set, either set them
+          or follow the <a class="xref" href="install_offline.html">offline installation instructions</a>
+          to acquire the packages without using the Sherpa service.</li>
+
+         
+      </ol>
+
+    </div>
+
+    
+    <div class="section"><h3 class="title sectiontitle">Verify Connectivity</h3>
+      
+      <ol class="ol" id="id_tfs_4qv_ft__d229e234">
+        <li class="li">Source the Keystone RC file. <pre class="pre codeblock">source keystone.osrc</pre>
+</li>
+
+        <li class="li">Verify access to the Keystone public endpoint:
+          <pre class="pre codeblock">KEYSTONE_URL_PUBLIC=`openstack endpoint list | grep keystone | grep public | grep -Eo '(http|https)://{1}\S+'`
+wget -t3 --timeout=5 -O/dev/null -q $KEYSTONE_URL_PUBLIC &amp;&amp; echo exists OK || echo ERROR cannot reach $KEYSTONE_URL_PUBLIC</pre>
+</li>
+
+        <li class="li">Verify access to the public Sherpa
+          endpoint. If there is no access, see the <a class="xref" href="http://docs.hpcloud.com/#helion/troubleshooting/troubleshooting_sherpa.html" target="_blank">Sherpa troubleshooting information</a>, particularly
+          how to set the <samp class="ph codeph">http_proxy</samp> shell
+          variables.<pre class="pre">SHERPA_URL_PUBLIC=`openstack endpoint list | grep sherpa | grep public | grep -Eo '(http|https)://{1}\S+' | sed -e 's/v1$//'`
+wget -t3 --timeout=5 -O/dev/null -q $SHERPA_URL_PUBLIC &amp;&amp; echo exists OK || echo ERROR cannot reach $SHERPA_URL_PUBLIC</pre>
+</li>
+
+      </ol>
+
+    </div>
+
+  </div>
+
+</div>
+
+  <div class="topic nested1" id="id_l4p_cxw_ft">
+  <h2 class="title topictitle2">HPE Helion 2.0 Development Platform: Install the Service Installer</h2>
+
+  <div class="body">
+    <div class="section"><p class="p">The installation procedure has changed significantly since the last release. The HDP Installer
+        2.0, also known as HDPI, is a plugin for the python-openstackclient (OSC). It is able to
+        leverage the authentication, configuration and command line option parsing that is already
+        part of OSC to greatly simplify the installation process.</p>
+<div class="note warning"><span class="warningtitle">Warning:</span> You must have
+            <a class="xref" href="devplatform_install_prereq.html#topic_x54_njh_ts">satisfied all
+            prerequisites</a> before beginning installation.</div>
+<div class="note important"><span class="importanttitle">Important:</span> Do not
+          source <samp class="ph codeph">service.osrc</samp>, <samp class="ph codeph">keystone.osrc</samp>, or <strong class="ph b">any</strong> other
+          file before you begin.</div>
+
+    </div>
+
+
+    <div class="section" id="id_l4p_cxw_ft__d263e32"><h3 class="title sectiontitle">Install the HPE Helion Development Platform Installation Client</h3>
+      
+      <ol class="ol">
+        <li class="li">Using your preferred web browser, navigate to <a class="xref" href="https://helion.hpwsportal.com/catalog.html#/Home/Show" target="_blank">HPE Helion Download Network</a> (HDN) and  create an account if you haven't done so already.</li>
+
+        <li class="li">Click the <strong class="ph b">HPE Helion Development Platform</strong> download package.<br/><img class="image" id="id_l4p_cxw_ft__d263e50" src="../../../media/hdp_download.png"/><br/></li>
+
+        <li class="li">From the list of options, click <strong class="ph b">HPE Helion Development Platform 2.0</strong>. </li>
+
+        <li class="li">Click the blue <strong class="ph b">Download</strong> button in the upper right hand corner.</li>
+
+        <li class="li">The best option is to download directly to the HPE Helion OpenStack Deployer. If you can
+          not download directly to the HPE Helion OpenStack deployer, copy all the downloaded
+          packages to a USB stick or external hard drive and then copy the files onto the physical
+          machine hosting the HPE Helion OpenStack Deployer. Make sure there is enough space; the
+          file sizes can be significant.</li>
+
+        <li class="li">SSH to the HPE Helion OpenStack Deployer. </li>
+
+        
+        <li class="li">Create and source the Virtual Environment. In this example,
+            <samp class="ph codeph">&lt;dpi-venv&gt;.gz</samp> is the name of the installer. This process creates
+          a directory under /opt which is owned by root. This directory requires sudo permissions to
+          create, so the owner of that folder needs to be changed to whatever the user will log in
+          as; in this example, the value is <em class="ph i">stack</em>. <div class="note note"><span class="notetitle">Note:</span> The directory name <strong class="ph b">must</strong> match
+            the name of the installer (&lt;dpi-venv&gt;) or HDPI commands will fail. Do not rename
+            the
+          directory.</div>
+<pre class="pre codeblock">sudo mkdir -p /opt/stack/venv/&lt;dpi-venv&gt;
+sudo tar -C /opt/stack/venv/&lt;dpi-venv&gt; -xzf &lt;dpi-venv&gt;.gz
+sudo chown stack.stack /opt/stack/venv/&lt;dpi-venv&gt; 
+source /opt/stack/venv/&lt;dpi-venv&gt;/bin/activate</pre>
+</li>
+
+        <li class="li">Test the installation by retrieving a list of installable files.
+            <pre class="pre codeblock">openstack hdpi --os-cloud mycloud list</pre>
+<div class="note note"><span class="notetitle">Note:</span> If further
+            troubleshooting information is required, add the <samp class="ph codeph">--debug</samp> option to the
+            end of the previous command.</div>
+</li>
+
+      </ol>
+
+    </div>
+
+  </div>
+
+</div>
+
+ 
+  <div class="topic nested1" id="id_o3f_zww_ft">
+  <h2 class="title topictitle2">HPE Helion 2.0 Development Platform: Install the Application Lifecycle Service
+    (ALS)</h2>
+
+  <div class="body"><div class="section"><h3 class="title sectiontitle">Prerequisites</h3>
+      
+      <ul class="ul" id="id_o3f_zww_ft__d286e15">
+        <li class="li">The HDP Installer 2.0, also known as HDPI, must already <a class="xref" href="devplatform_install_platform.html#topic_gly_xmh_ts">be installed</a>.</li>
+
+        <li class="li">A properly configured <a class="xref" href="install_cloudsyaml.html#topic_wzw_r4w_rt">clouds.yaml</a> file. Note that there is no specific sub-section in the clouds.yaml
+          file for the Application Lifecycle Service.</li>
+
+      </ul>
+
+    </div>
+
+      <div class="section"><h3 class="title sectiontitle">Install ALS</h3>
+            
+            <ol class="ol">
+                <li class="li">SSH into the HP Helion OpenStack Deployer. (This is the same location where the
+                    HDPI has been installed.)</li>
+
+                <li class="li"> Source the Virtual
+                    Environment.<pre class="pre">source /opt/stack/venv/dev_platform_installer-devplat_installer-1.0.0/bin/activate </pre>
+</li>
+
+                <li class="li">Install the Application Lifecycle Service <ol class="ol" type="a">
+                        <li class="li">If you <a class="xref" href="install_offline.html#topic_w25_hqp_xt">pre-downloaded</a> the installation file, run the following
+                            command to install
+                                it:<pre class="pre codeblock">cd <em class="ph i">&lt;directory where the pre-downloaded file is&gt;</em>
+openstack --os-cloud mycloud hdpi als install <em class="ph i">&lt;filename&gt;</em></pre>
+<div class="note note"><span class="notetitle">Note:</span> Make
+                                sure you run the installer from the same directory where the
+                                installation files are. If the installer cannot find a file with the
+                                name you provided in the local directory, it will attempt to
+                                download the files again. </div>
+</li>
+
+                        <li class="li">If you did not pre-download the file: 
+                            
+                            <ol class="ol" type="i">
+                                <li class="li">Find the most recent version of the file.  Note that this
+                                    command provides only a quick list of recent files; there are
+                                        <a class="xref" href="install_listOptions.html#listContent">more
+                                        complete listing options</a> available that include
+                                    installation
+                                    status.<pre class="pre">openstack --os-cloud mycloud hdpi list</pre>
+ The
+                                    output should look similar
+                                    to:<pre class="pre">+----------------------------+----------------+-----------+------------+
+| service                    | id             | version   | state      |
++----------------------------+----------------+-----------+------------+
+| Helion Code Engine         | wscatalog.2776 | 1.0.0     | available  |
+| als                        | wscatalog.2765 | 2.0.0.539 | available  |
+<strong class="ph b">| als                        | wscatalog.2800 | 2.0.0.548 | available  |</strong>
+| database                   | wscatalog.2762 | 2.0.0.32  | available  |
+| database                   | wscatalog.2803 | 2.0.0.37  | available  |
+| messaging                  | wscatalog.2761 | 1.0.0     | available  |
+| messaging                  | wscatalog.2796 | 1.0.0.165 | available  |
++----------------------------+----------------+-----------+------------+</pre>
+</li>
+
+                                <li class="li">Find the<strong class="ph b"> ID number</strong> of the most recent version of the
+                                    service (the highest ID number for that service).</li>
+
+                                <li class="li">If desired, inspect the installation files for size, version,
+                                    and other detailed
+                                    information.<pre class="pre codeblock">openstack hdpi show wscatalog.#### --os-cloud mycloud</pre>
+</li>
+
+                                <li class="li">Begin the download and
+                                        installation:<pre class="pre codeblock">openstack --os-cloud mycloud hdpi als install wscatalog.####</pre>
+<div class="note note"><span class="notetitle">Note:</span> 
+                                        Downloading may take a significant amount of time; depending
+                                        on network traffic, it could take 20-90
+                                    minutes.</div>
+During installation, this command will generate
+                                    output similar to the following:
+                                    <pre class="pre codeblock">Downloading Application Lifecycle Service which is available 
+Application Lifecycle Service not downloaded (available) 
+Application Lifecycle Service not downloaded (downloading)
+... 
+Application Lifecycle Service is (downloaded) 
+Staging Application Lifecycle Service in Glance/Swift 
+Application Lifecycle Service is staged 
+UI installed for application lifecycle service 
+Create service endpoint for service application lifecycle service 
+Completed installing application </pre>
+
+                                </li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+
+        
+  </div>
+
+</div>
+
+  <div class="topic nested1" id="id_xn3_1xw_ft">
+  <h2 class="title topictitle2">HPE Helion 2.0 Development Platform: Install the Database Service</h2>
+
+  <div class="body">
+<div class="section" id="id_xn3_1xw_ft__d305e11"><h3 class="title sectiontitle">Prerequisites</h3>
+      
+      <ul class="ul">
+        <li class="li">The HDP Installer 2.0, also known as HDPI, must already <a class="xref" href="devplatform_install_platform.html#topic_gly_xmh_ts">be installed</a>.</li>
+
+        <li class="li">A properly configured <a class="xref" href="install_cloudsyaml.html#topic_wzw_r4w_rt">clouds.yaml</a> file.</li>
+
+        <li class="li">Configure <a class="xref" href="install_dbaas_configureAvailabilityZones.html#topic_hhh_lm4_xt">Availability Zones</a>, if your installation requires them.</li>
+
+        <li class="li"><a class="xref" href="install_dbaas_checkQuotas.html#topic_sjz_wm4_xt">Check your quotas</a> to
+          ensure you have sufficient space, particularly if your installation is configured for high
+          availability.</li>
+
+      </ul>
+
+    </div>
+
+
+<div class="section" id="id_xn3_1xw_ft__d305e43"><h3 class="title sectiontitle">Install the Database Service </h3>
+      
+      <ol class="ol" id="id_xn3_1xw_ft__d305e48">
+        <li class="li">SSH into the HP Helion OpenStack Deployer. (This is the same location where the HDPI has
+          been installed.)</li>
+
+        <li class="li">Source the Virtual
+          Environment.<pre class="pre codeblock">source /opt/stack/venv/&lt;dpi-venv&gt;/bin/activate</pre>
+</li>
+
+        <li class="li">Install the database service.
+       <ol class="ol" type="a"> <li class="li">If you <a class="xref" href="install_offline.html#topic_w25_hqp_xt">pre-downloaded</a> the
+              installation
+                files:
+         <pre class="pre codeblock">cd <em class="ph i">&lt;directory where the pre-downloaded file is&gt;</em>
+openstack --os-cloud mycloud hdpi database install <em class="ph i">&lt;filename&gt;</em></pre>
+<div class="note note"><span class="notetitle">Note:</span> Make
+                sure you run the installer from the <strong class="ph b">same</strong> directory where the installation
+                files are saved. If the installer cannot find a file with the name you provided in
+                the local directory, it will attempt to download the files again. </div>
+</li>
+
+        <li class="li">If you did not pre-download the file: <ol class="ol" type="i" id="id_xn3_1xw_ft__d305e82">
+                <li class="li">Find the most recent version of the file. Note that this command provides only a
+                  quick list of recent files; there are <a class="xref" href="install_listOptions.html#listContent">more complete listing options</a>
+                  available that include installation
+                  status.<pre class="pre">openstack --os-cloud mycloud hdpi list</pre>
+The output should look
+                  similar
+                  to:<pre class="pre">+----------------------------+----------------+-----------+------------+
+| service                    | id             | version   | state      |
++----------------------------+----------------+-----------+------------+
+| Helion Code Engine         | wscatalog.2776 | 1.0.0     | available  |
+| als                        | wscatalog.2765 | 2.0.0.539 | available  |
+| als                        | wscatalog.2800 | 2.0.0.548 | available  |
+| database                   | wscatalog.2762 | 2.0.0.32  | available  |
+<strong class="ph b">| database                   | wscatalog.2803 | 2.0.0.37  | available  |</strong>
+| messaging                  | wscatalog.2761 | 1.0.0     | available  |
+| messaging                  | wscatalog.2796 | 1.0.0.165 | available  |
++----------------------------+----------------+-----------+------------+</pre>
+</li>
+
+                <li class="li">Find the<strong class="ph b"> ID number</strong> of the most recent version of the service (the highest
+                  ID number for that service).</li>
+
+                <li class="li">If desired, inspect the installation files for size, version, and other detailed
+                  information.<pre class="pre codeblock">openstack hdpi show wscatalog.#### --os-cloud mycloud</pre>
+</li>
+
+                <li class="li">Begin the download and
+                  installation:<pre class="pre codeblock">openstack --os-cloud mycloud hdpi database install wscatalog.####</pre>
+</li>
+
+              </ol>
+<div class="note note"><span class="notetitle">Note:</span>  Downloading may take a significant amount of time; depending on network
+                traffic, it could take 20-90 minutes.</div>
+</li>
+
+            <li class="li">During installation, this command will generate output similar to the following:
+              <pre class="pre codeblock">Database is (downloaded)
+Database is already (available)
+Database is already configured
+Launching stack...
+Stack trove creating
+Completed installing database
+$</pre>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+
+
+<div class="section" id="id_xn3_1xw_ft__d305e122"><div class="sectiondiv"><p class="p"><strong class="ph b">Configure HAProxy</strong></p>
+The following steps will configure HAProxy to receive and
+        forward HTTP requests to the VM that hosts the REST API endpoint for the Database Service.<ol class="ol">
+          <li class="li"> Identify all the API server IPs on the SVC network. <div class="p">
+              <pre class="pre codeblock">openstack server list | awk '/trove[0-9]*_api/{ print $4,"\t", substr($8,5) }'</pre>
+
+            </div>
+</li>
+
+          <li class="li"> Identify the Virtual IP used to load balance the HPE Helion OpenStack
+            services.<pre class="pre codeblock">openstack endpoint list | grep database | grep public | awk '{ print $14 }' | awk -F':' '{ print $2 }' | awk -F'/' '{ print $3 }'</pre>
+</li>
+
+          <li class="li"> Update configuration of the HPE Helion OpenStack controller nodes. The following
+            commands are run from the HLM deployer node.<ol class="ol" type="a">
+              <li class="li">Navigate to the following directory.
+                <pre class="pre codeblock">cd ~/helion/my_cloud/config/haproxy/</pre>
+</li>
+
+              <li class="li">Open the <samp class="ph codeph">haproxy.cfg.j2</samp> file for editing. Add the following lines
+                to the Custom Configuration section at the bottom of the
+                  file.<pre class="pre codeblock">listen trove_api
+bind &lt;<em class="ph i">virtual IP from step 2</em>&gt;:8779 ssl crt <em class="ph i">&lt;path to certificate file/certFileName&gt; </em>
+option httpchk GET /
+server trove-trove&lt;<em class="ph i">n</em>&gt;_api-&lt;<em class="ph i">uniqueid</em>&gt; &lt;<em class="ph i">API server n's IP Address</em>&gt; check inter 2000 rise 2 fall 5
+server trove-trove&lt;<em class="ph i">n+1</em>&gt;_api-&lt;<em class="ph i">uniqueid</em>&gt; &lt;<em class="ph i">API server n+1's IP Address</em>&gt; check inter 2000 rise 2 fall 5</pre>
+<div class="note note"><span class="notetitle">Note:</span> The
+                  last line in the codeblock should be repeated once for <strong class="ph b">each</strong> API server
+                  identified in step 1. </div>
+<div class="note note"><span class="notetitle">Note:</span> The <samp class="ph codeph">ssl cert</samp> information in
+                  the <strong class="ph b">bind</strong> statement only applies if SSL has been enabled for public
+                  endpoints. If SSL has not been enabled, omit this section of the statement. To
+                  locate the filepath, navigate to
+                    <samp class="ph codeph">~/helion/hos/ansible/roles/tls-frontend/defaults/main.yml</samp> and
+                  find the value of the <samp class="ph codeph">frontend_server_cert_directory</samp> parameter.
+                  To find the file name, open the
+                    <samp class="ph codeph">/home/stack/helion/my_cloud/definition/data/network_groups.yml</samp>
+                  file and find the value for the <samp class="ph codeph">cert-file</samp> parameter. </div>
+</li>
+
+              <li class="li">Persist the updated configuration
+                file.<pre class="pre codeblock">git commit -a -m "updated haproxy for database service"</pre>
+</li>
+
+              <li class="li">Ready a new HLM
+                deployment.<pre class="pre codeblock">cd ~/helion/hos/ansible
+ansible-playbook -i hosts/localhost ready-deployment.yml</pre>
+</li>
+
+              <li class="li">Update the HAProxy
+                configuration.<pre class="pre codeblock">cd ~/scratch/ansible/next/hos/ansible
+ansible-playbook -i hosts/verb_hosts FND-CLU-reconfigure.yml</pre>
+</li>
+
+            </ol>
+</li>
+
+          <li class="li">On each controller node, edit the IP table filtering rules to permit access by the
+            Trove service on port 8779.
+            <pre class="pre codeblock">sudo iptables -I INPUT -p tcp --dport 8779 -j ACCEPT</pre>
+</li>
+
+        </ol>
+</div></div>
+
+
+ 
+  </div>
+
+</div>
+
+  <div class="topic nested1" id="id_hm5_bxw_ft">
+  <h2 class="title topictitle2">HPE Helion 2.0 Development Platform: Install the Messaging Service</h2>
+
+  <div class="body">
+    <p class="p">This section provides details on installing the Messaging service for the Development
+      Platform.</p>
+
+    <div class="section"><h3 class="title sectiontitle">Prerequisites</h3>
+      
+      <div class="p">
+        <ul class="ul">
+          <li class="li">The HDP Installer 2.0, also known as HDPI, must already <a class="xref" href="devplatform_install_platform.html#topic_gly_xmh_ts">be installed</a>.</li>
+
+          <li class="li">A properly configured <a class="xref" href="install_cloudsyaml.html#topic_wzw_r4w_rt">clouds.yaml</a> file.</li>
+
+          <li class="li">HPE Helion OpenStack 2.0 installation must be completed. </li>
+
+          <li class="li">You must know the NTP server and DNS server IP addresses.</li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+    <div class="section"><h3 class="title sectiontitle">Installation</h3>
+      <ol class="ol">
+            <li class="li">SSH into the HP Helion OpenStack Deployer. (This is the same location where the HDPI
+          has been installed.)</li>
+
+        <li class="li">Source the Virtual
+          Environment.<pre class="pre codeblock">stack@hlm:~$ source /opt/stack/venv/dev_platform_installer-devplat_installer-1.0.0/bin/activate </pre>
+</li>
+
+        <li class="li">Install the Messaging service installation files. <ol class="ol" type="a">
+            <li class="li">If you <a class="xref" href="install_offline.html#topic_w25_hqp_xt">pre-downloaded</a> the
+              installation file, run the following command to install
+              it:<pre class="pre codeblock">cd <em class="ph i">&lt;directory where the pre-downloaded file is&gt;</em>
+openstack --os-cloud mycloud hdpi messaging install <em class="ph i">&lt;filename&gt;</em></pre>
+<div class="note note"><span class="notetitle">Note:</span> When installing
+  pre-downloaded files, make sure you run the installer from the same directory where the
+  installation files are. If the installer cannot find a file with the name you provided in
+  the local directory, it will attempt to download the files again. </div>
+</li>
+
+          <li class="li">If you did not pre-download the installation file, <ol class="ol" type="i">
+                <li class="li">Find the most recent version of the file. Note that this command provides only a
+                  quick list of recent files; there are <a class="xref" href="install_listOptions.html#listContent">more complete listing options</a>
+                  available that include installation
+                  status.<pre class="pre">openstack --os-cloud mycloud hdpi list</pre>
+The output should look
+                  similar
+                  to:<pre class="pre">+----------------------------+----------------+-----------+------------+
+| service                    | id             | version   | state      |
++----------------------------+----------------+-----------+------------+
+| Helion Code Engine         | wscatalog.2776 | 1.0.0     | available  |
+| als                        | wscatalog.2765 | 2.0.0.539 | available  |
+| als                        | wscatalog.2800 | 2.0.0.548 | available  |
+| database                   | wscatalog.2762 | 2.0.0.32  | available  |
+| database                   | wscatalog.2803 | 2.0.0.37  | available  |
+| messaging                  | wscatalog.2761 | 1.0.0     | available  |<strong class="ph b">
+| messaging                  | wscatalog.2796 | 1.0.0.165 | available  |</strong>
++----------------------------+----------------+-----------+------------+</pre>
+</li>
+
+                <li class="li">Find the<strong class="ph b"> ID number</strong> of the most recent version of the service (the highest
+                  ID number for that service).</li>
+
+                <li class="li">If desired, inspect the installation files for size, version, and other detailed
+                  information.<pre class="pre codeblock">openstack hdpi show wscatalog.#### --os-cloud mycloud</pre>
+</li>
+
+                <li class="li">Begin the download and
+                  installation:<pre class="pre codeblock">openstack --os-cloud mycloud hdpi messaging install wscatalog.####</pre>
+</li>
+
+              </ol>
+</li>
+
+          </ol>
+</li>
+
+        
+        <li class="li">Launch the Messaging Deployer VM using the
+            HDPI.<div class="note note"><span class="notetitle">Note:</span> When
+            the launch command indicates that it finished and provides the IP address for the
+            Messaging Deployer VM, SSH into the Messaging Deployer VM and look for the
+              <samp class="ph codeph">/home/stack/helion</samp> directory. Once that directory has been created
+            and populated, continue to the next step. Do <strong class="ph b">not</strong> attempt to continue until the
+            directory has been populated; this may take a few minutes after the launch command
+            indicates that it has completed.
+            </div>
+<pre class="pre codeblock">(dev_platform_installer-devplat_installer-1.0.0)stack@hlm:~$ openstack --os-cloud mycloud hdpi messaging launch  </pre>
+<p class="p">This
+            will return output similar to the following:
+          </p>
+<pre class="pre codeblock">=show the server===========================================
++--------------------------------------+------------------------------------------------------------------------------------+
+| Field                                | Value                                                                              |
++--------------------------------------+------------------------------------------------------------------------------------+
+| OS-EXT-AZ:availability_zone          | nova                                                                               |
+| OS-EXT-SRV-ATTR:host                 | helion-cp1-comp0006-mgmt                                                           |
+| OS-EXT-SRV-ATTR:hypervisor_hostname  | helion-cp1-comp0006-mgmt                                                           |
+| OS-EXT-SRV-ATTR:instance_name        | instance-00000016                                                                  |
+| OS-EXT-STS:power_state               | 1                                                                                  |
+| OS-EXT-STS:task_state                | None                                                                               |
+| OS-EXT-STS:vm_state                  | active                                                                             |
+| OS-SRV-USG:launched_at               | 2015-11-04T22:45:43.000000                                                         |
+| OS-SRV-USG:terminated_at             | None                                                                               |
+| accessIPv4                           |                                                                                    |
+| accessIPv6                           |                                                                                    |
+| addresses                            | <span class="ph codehighlight">SVC=10.241.145.12</span>                             |
+| config_drive                         |                                                                                    |
+| created                              | 2015-11-04T22:44:29Z                                                               |
+| flavor                               | m1.medium (3)                                                                      |
+| hostId                               | 8d1c5e76b6cbc4616ee9ee1ba4d66451f921ac5e4395b4996c04aaa0                           |
+| id                                   | 8fb9334e-ea13-4a1e-aa8c-bd20148f7a42                                               |
+| image                                | msgaas-1.0.0-rc5_cloud-1.0.20151029T002941Z (4b1ea7c6-24a6-4ae7-9456-e65130de51f9) |
+| key_name                             | msgaas                                                                             |
+| name                                 | messaging_deployer                                                                 |
+| os-extended-volumes:volumes_attached | []                                                                                 |
+| progress                             | 0                                                                                  |
+| project_id                           | 02c783d40f7b4d969a9b6847c07e5df2                                                   |
+| properties                           |                                                                                    |
+| security_groups                      | [{u'name': u'default'}]                                                            |
+| status                               | ACTIVE                                                                             |
+| updated                              | 2015-11-04T22:45:43Z                                                               |
+| user_id                              | c241938bec504ed6ac284e432cff32df                                                   |
++--------------------------------------+------------------------------------------------------------------------------------+
+=done======================================================
+Scripts complete.
+Completed launching messaging</pre>
+</li>
+
+        <li class="li">Log in to and Initialize the Messaging Deployer VM<ol class="ol" type="a" id="id_hm5_bxw_ft__d351e135">
+            <li class="li">SSH into the Messaging Deployer VM using the IP address provided (highlighted above) after the launch
+              command completed.</li>
+
+            <li class="li">Copy the <samp class="ph codeph">msgaas</samp> deployment model.<div class="note note"><span class="notetitle">Note:</span> The <samp class="ph codeph">cp</samp>
+                command must be used <strong class="ph b">exactly</strong> as shown - including the /* on the end of the
+                example model path.
+              </div>
+<pre class="pre codeblock">stack@messaging-deployer:~/msgaas-1.0.0-rc1$ cd ~/helion/
+stack@messaging-deployer:~/helion$ cp -r examples/msgaas/* my_cloud/definition/
+stack@messaging-deployer:~/helion$ cp ~/platform-pass-through.yml my_cloud/definition/data/pass-through/platform-pass-through.yml</pre>
+</li>
+
+            <li class="li">Using Git, persist the input model that you are about to deploy with. This
+              information is required for the Pre-Install playbook, which is executed later in this
+              installation
+              process.<pre class="pre codeblock">stack@messaging-deployer:~/helion$ git add -A
+stack@messaging-deployer:~/helion$ git commit -a -m "Add MSGaaS Default Model"</pre>
+</li>
+
+            <li class="li" id="id_hm5_bxw_ft__d351e161">Change to the default values in order to customize the deployment
+              model. <div class="note important"><span class="importanttitle">Important:</span> Do not skip this step or the installation playbooks may
+                not execute as expected in your
+              environment.</div>
+<pre class="pre codeblock"># Open the cloudConfig.yml file and provide appropriate NTP/DNS server IP addresses
+# If you are not sure, use the IP addresses of the HP Helion OpenStack control plane nodes
+# The NTP and DNS servers must be reachable from your HP Helion OpenStack SVC network
+
+stack@messaging-deployer:~/helion$ cd my_cloud/definition/
+stack@messaging-deployer:~/helion/my_cloud/definition$ ls
+cloudConfig.yml  data
+stack@messaging-deployer:~/helion/my_cloud/definition$ nano cloudConfig.yml    # this is the file where the changes need to be made</pre>
+</li>
+
+            <li class="li" id="id_hm5_bxw_ft__d351e168">This step is required for configuring TLS in Cue API endpoint.  <div class="note note"><span class="notetitle">Note:</span> For production environments, TLS (Cue API public endpoint URL with SSL
+                support (https)) is recommended. If not using TLS, for example, in a non-production
+                proof-of-concept environment, skip this
+              step.</div>
+</li>
+
+            <li class="li">Navigate to and open the <samp class="ph codeph">network_groups.yml</samp> file for
+                editing.<pre class="pre codeblock">stack@messaging-deployer:~/helion/my_cloud/definition$ cd data
+stack@messaging-deployer:~/helion/my_cloud/definition/data$ nano network_groups.yml </pre>
+<ol class="ol" type="i">
+          <li class="li">If an IP-based TLS certificate is used, comment out the
+                    <samp class="ph codeph">external-name:</samp> field. For name-based TLS, provide the FQDN name in
+                  the  <samp class="ph codeph">external-name:</samp> field and copy the signed certificate to the <samp class="ph codeph">~/helion/my_cloud/config/tls/certs/</samp> directory. </li>
+
+            <li class="li">Comment out the <samp class="ph codeph">components:</samp> list and uncomment the
+                    <samp class="ph codeph">tls-components:</samp> list.</li>
+
+            <li class="li">Un-comment the <samp class="ph codeph">tls-components:</samp> list.</li>
+
+            <li class="li">provide the TLS certificate file name in
+                  the <samp class="ph codeph">cert-file</samp>: field. This name will have to match the name of the cert-file placed in <samp class="ph codeph">~/helion/my_cloud/config/tls/certs/</samp> (e.g. <strong class="ph b">msgaas-cert</strong>).</li>
+</ol>
+</li>
+
+          <li class="li"> Using Git, persist these changes. This information is required for the Pre-Install playbook,
+              which is executed later in this installation
+              process.<pre class="pre codeblock">stack@messaging-deployer:/helion/my_cloud/definition/data/pass-through$ cd ~/helion
+stack@messaging-deployer:~/helion$ git add -A # Required if you copied a new cert file
+stack@messaging-deployer:~/helion$ git commit -a -m "Configured Deployment Model"</pre>
+</li>
+
+
+          </ol>
+</li>
+
+        <li class="li">Run the Playbooks <div class="note important"><span class="importanttitle">Important:</span> After each playbook runs, both
+              <samp class="ph codeph">unreachable</samp> and <samp class="ph codeph">failed</samp> should be zero (0). This
+            indicates success. If not, check the output for error messages, address the errors, and
+            try running the playbook again.</div>
+<div class="note note"><span class="notetitle">Note:</span> If more detailed output is desired, add the
+            debug option (-vvv) or verbose debug option (-vvvv) to any ansible playbook call.
+            (ansible-playbook)</div>
+<ol class="ol" type="a">
+            <li class="li"> Run the Pre-Install Playbook <div class="note note"><span class="notetitle">Note:</span> For the SVC network, the only valid name is
+                "SVC".</div>
+<div class="note note"><span class="notetitle">Note:</span>  If the External Network is not named <samp class="ph codeph">ext-net</samp>,
+                update the value of the <strong class="ph b">external_net_name</strong> variable in
+                  <samp class="ph codeph">~/helion/hos/ansible/roles/openstack-operations/defaults/main.yml</samp>
+                to the correct
+                value.</div>
+<pre class="pre codeblock">stack@messaging-deployer:~/helion$ source ~/user.src
+stack@messaging-deployer:~/helion$ cd hos/ansible/
+stack@messaging-deployer:~/helion/hos/ansible$ ansible-playbook -i hosts/localhost hlm-pre-install.yml </pre>
+<p class="p">The
+                output should look similar to the
+              following:</p>
+<pre class="pre codeblock">PLAY RECAP ********************************************************************
+openstack-operations | preinstall | Create service ports ---------------- 5.14s
+openstack-operations | lookup-keystone-ids | Lookup Project ID ---------- 2.98s
+openstack-operations | preinstall | Ensure SVC Network Exists ----------- 2.75s
+openstack-operations | preinstall | Ensure External Network Exists ------ 2.73s
+openstack-operations | preinstall | Create Floating IPs necessary for load-balancers --- 2.17s
+openstack-operations | preinstall | Identify pre-existing floating IPs --- 2.07s
+openstack-operations | preinstall | Set Neutron Quotas ------------------ 2.07s
+openstack-operations | preinstall | Set Cinder Quotas ------------------- 2.01s
+openstack-operations | preinstall | Create Virtual IPs necessary for load-balancers externally managed --- 1.81s
+openstack-operations | preinstall | Set Nova Quotas --------------------- 1.77s
+-------------------------------------------------------------------------------
+Total: ----------------------------------------------------------------- 27.45s
+localhost                  : ok=20   changed=14  <strong class="ph b"> unreachable=0 </strong>  <strong class="ph b"> failed=0 </strong></pre>
+</li>
+
+            <li class="li">Configure the Input Model for TLS Support in Cue API (Optional).<div class="note note"><span class="notetitle">Note:</span> If using
+                name-based TLS, skip this step, otherwise the deployment model <a class="xref" href="#topic24073__d351e168">customization</a> performed previously must have included the TLS
+                configuration step.</div>
+<ol class="ol" type="i">
+                <li class="li">Navigate to and open the <samp class="ph codeph">network_groups.yml</samp> file, capture the ip address shown in
+                    the <samp class="ph codeph">external-ip:</samp> field.  Now create and sign an IP-based TLS certificate based on this IP address.</li>
+
+                <li class="li">Copy your signed certificate into
+                    <samp class="ph codeph">~/helion/my_cloud/config/tls/certs/</samp>.  Ensure the certificate name matches the name you provided in <samp class="ph codeph">cert-file:</samp> field. </li>
+
+                <li class="li">Using Git, commit the changes.
+                  <pre class="pre codeblock">stack@messaging-deployer:~/helion/hos/ansible$ git add -A
+stack@messaging-deployer:~/helion/hos/ansible$ git commit -a -m "Configured Deployment Model"</pre>
+</li>
+
+              </ol>
+</li>
+
+            <li class="li">Run the Config Processor Playbook
+                  <pre class="pre codeblock">stack@messaging-deployer:~/helion/hos/ansible$ ansible-playbook -i hosts/localhost config-processor-run.yml </pre>
+<div class="p"><div class="note note"><span class="notetitle">Note:</span> If
+                  you have performed a full installation previously, you <strong class="ph b">must</strong> remove the Cue
+                  user and service from Keystone <strong class="ph b">before</strong> running this playbook again. <ul class="ul" id="id_hm5_bxw_ft__d351e316">
+                    <li class="li"> SSH into the HPE Helion OpenStack lifecycle manager (deployer node), source
+                      the keystone.osrc file, and then execute these
+                      commands:<pre class="pre codeblock">openstack service delete cue
+openstack user delete cue </pre>
+</li>
+
+                  </ul>
+</div>
+Successful output should look similar to the following.
+              </div>
+<pre class="pre codeblock">PLAY RECAP ******************************************************************** 
+config-processor | run-config-processor | Run Configuration Processor over the given cloud configuration --- 2.44s
+git-operations | _assemble-working-directory | Assemble scratch content --- 0.76s
+git-operations | _persist-to-git | Prep new commit ---------------------- 0.69s
+config-processor | configure | Sync ansible vars for cloud deployment --- 0.67s
+config-processor | add-localhost | Add localhost group entry ------------ 0.55s
+config-processor | configure | Make directories required for osconfig network configuration --- 0.33s
+config-processor | configure | Sync generated network artefacts for cloud deployment/update --- 0.32s
+config-processor | configure | Copy hosts.hf for osconfig playbooks ----- 0.28s
+config-processor | configure | Copy ansible hosts file for cloud deployment (verb_hosts) --- 0.28s
+config-processor | add-localhost | Add localhost group ------------------ 0.17s
+-------------------------------------------------------------------------------
+Total: ------------------------------------------------------------------ 7.99s
+localhost                  : ok=21   changed=14   <strong class="ph b">unreachable=0  </strong>  <strong class="ph b">failed=0  </strong>      </pre>
+</li>
+
+            <li class="li">Run the Ready Deployment
+                Playbook<pre class="pre codeblock">stack@messaging-deployer:~/helion/hos/ansible$ ansible-playbook -i hosts/localhost ready-deployment.yml </pre>
+<div class="p">Successful
+                output should look similar to the following. <div class="note note"><span class="notetitle">Note:</span> Ignore the TASK/msg message at
+                  the end of the output. Do not run the playbook as indicated; that playbook must be
+                  run later in the installation
+              process.</div>
+</div>
+<pre class="pre codeblock">PLAY RECAP ******************************************************************** 
+git-operations | _assemble-working-directory | Assemble scratch content --- 0.73s
+config-processor | configure | Sync ansible vars for cloud deployment --- 0.54s
+config-processor | configure | Sync ansible vars for cloud deployment --- 0.49s
+git-operations | _promote-from-staging | Update branches ---------------- 0.41s
+config-processor | configure | Make directories required for osconfig network configuration --- 0.30s
+config-processor | configure | Make directories required for osconfig network configuration --- 0.27s
+config-processor | configure | Sync generated network artefacts for cloud deployment/update --- 0.26s
+config-processor | configure | Sync generated network artefacts for cloud deployment/update --- 0.25s
+config-processor | configure | Copy ansible hosts file for cloud deployment (verb_hosts) --- 0.24s
+config-processor | configure | Copy hosts.hf for osconfig playbooks ----- 0.22s
+-------------------------------------------------------------------------------
+Total: ------------------------------------------------------------------ 5.96s
+localhost                  : ok=20   changed=11   <strong class="ph b">unreachable=0 </strong>   <strong class="ph b">failed=0   </strong>
+
+TASK: [git-operations | ready-deployment-tree-help | Tell the user what to expect] ***
+ok: [localhost] =&gt; {
+    "msg": "The directory /home/stack/scratch/ansible/next/hos/ansible contains a prepared ansible tree 
+ready to run your deployment. You should cd into that directory and run: ansible-playbook -i
+hosts/verb_hosts site.yml"
+}</pre>
+</li>
+
+            <li class="li">Run the Boot Infrastructure Playbook <div class="note note"><span class="notetitle">Note:</span> This step takes approximately 5
+                minutes.</div>
+ Once this is complete, all in-cloud infrastructure (VMs, Networks,
+              Routers, Floating IPs, ports, security groups, etc) will have been created.
+                <pre class="pre codeblock">stack@messaging-deployer:~/helion/hos/ansible$ cd ~/scratch/ansible/next/hos/ansible
+stack@messaging-deployer:~/scratch/ansible/next/hos/ansible$ ansible-playbook -i hosts/localhost hlm-boot-infra.yml </pre>
+<p class="p">Successful
+                output should look similar to the
+              following:</p>
+<pre class="pre codeblock">PLAY RECAP ********************************************************************
+openstack-operations | create_instance | Create controlplane instance - 227.92s
+openstack-operations | create_instance | Give cloud-init time to fetch SSH keys -- 60.07s
+openstack-operations | create_security_groups | Create tcp/icmp security groups rules -- 34.59s
+openstack-operations | create_instance | Extract port-id --------------- 19.89s
+openstack-operations | create_instance | Wait for SSH to become active -- 17.46s
+openstack-operations | create_port | Update ports to include appropriate security group(s) -- 17.24s
+openstack-operations | create_security_groups | Create security groups -- 16.18s
+openstack-operations | create_port | Associate VIP to instance ports --- 14.85s
+openstack-operations | create_port | Create instance ports ------------- 13.97s
+openstack-operations | create_security_groups | Create other security groups rules (e.g. 112 protcol) --- 9.33s
+-------------------------------------------------------------------------------
+Total: ---------------------------------------------------------------- 471.97s
+localhost                  : ok=35   changed=19   <strong class="ph b">unreachable=0</strong>    <strong class="ph b">failed=0</strong></pre>
+</li>
+
+            <li class="li">Run the Site Playbook <div class="cautiontitle">CAUTION:</div><div class="note caution">Unlike all the previous ansible plays,
+                the inventory file supplied to this play is <samp class="ph codeph">hosts/verb_hosts</samp> and
+                not <samp class="ph codeph">hosts/localhost</samp></div>
+<div class="note note"><span class="notetitle">Note:</span> This step takes approximately 10 to
+                15 minutes.
+              </div>
+<pre class="pre codeblock">stack@messaging-deployer:~/scratch/ansible/next/hos/ansible$ ansible-playbook -i hosts/verb_hosts site.yml</pre>
+
+              Successful output should look similar to the following:<div class="note note"><span class="notetitle">Note:</span>  If this playbook does
+                not run successfully, run it again before trying any more advanced
+                troubleshooting.</div>
+<pre class="pre codeblock">PLAY RECAP ******************************************************************** 
+FND-MDB | start | Start MySQL ------------------------------------------ 85.62s
+FND-MDB | install | Install MDB packages ------------------------------- 75.00s
+rabbitmq | install | Install rabbitmq application ---------------------- 20.34s
+rabbitmq | install | Install rabbitmq application ---------------------- 20.28s
+rabbitmq | install | Install rabbitmq application ---------------------- 19.75s
+DES-PDN | install | Install Power DNS packages ------------------------- 17.48s
+FND-MDB | configure | Bootstrap MDB Master ----------------------------- 11.26s
+logging-producer | configure | Setup config files for services that have subscribed for logging -- 10.87s
+logging-producer | configure | Include default log files for centralized logging --- 9.83s
+Install keepalived package ---------------------------------------------- 9.21s
+-------------------------------------------------------------------------------
+Total: ---------------------------------------------------------------- 611.95s
+msgaas-msgaas-ccp-c1-m1-mgmt : ok=377  changed=190  unreachable=0    failed=0   
+msgaas-msgaas-ccp-c1-m2-mgmt : ok=381  changed=194  unreachable=0    failed=0   
+msgaas-msgaas-ccp-c1-m3-mgmt : ok=382  changed=196  unreachable=0    failed=0   
+localhost                  : ok=34   changed=15   unreachable=0    failed=0   </pre>
+</li>
+
+          </ol>
+</li>
+</ol>
+</div>
+
+    <div class="section"><h3 class="title sectiontitle">Verifying the Installation</h3><ol class="ol">
+        <li class="li">Set endpoint type to internal (Cannot access public endpoint from messaging deployer)
+          API.<pre class="pre codeblock">export OS_ENDPOINT_TYPE=internalURL
+export OS_INTERFACE=internal</pre>
+</li>
+
+        <li class="li">List all clusters. <div class="note note"><span class="notetitle">Note:</span> Since you have not yet created any clusters, this list of
+            clusters will be empty, but it should execute without returning any error messages.
+          </div>
+<pre class="pre codeblock">stack@messaging-deployer:~/scratch/ansible/next/hos/ansible$ /opt/stack/service/cueclient/venv/bin/openstack message-broker cluster list</pre>
+</li>
+
+      </ol>
+If you have configured TLS, make sure that the Cue public endpoint begins with https and
+      not just http:<pre class="pre codeblock">openstack catalog list</pre>
+
+    </div>
+
+    
+  </div>
+
+  <div class="related-links"><div class="relinfo"><strong>Related information</strong><br/>
+<div><a class="navheader_parent_path" href="http://python-cueclient.readthedocs.org/en/latest/index.html" target="_blank" title="python-cueclient documentation">python-cueclient documentation</a></div>
+</div>
+</div>
+</div>
+
+ 
+  <div class="topic nested1" id="engine">
+  <h2 class="title topictitle2">HPE Helion 2.0 Development Platform: Install the HPE Helion Code Engine</h2>
+
+  <div class="body">
+    <div class="section"><h3 class="title sectiontitle">Prerequisites</h3>
+      
+      <ul class="ul">
+        <li class="li">The HDP Installer 2.0, also known as HDPI, must already <a class="xref" href="devplatform_install_platform.html#topic_gly_xmh_ts">be installed</a>.</li>
+
+        <li class="li">A properly configured <a class="xref" href="install_cloudsyaml.html#id_xnd_3dn_vt">clouds.yaml
+          </a>file.</li>
+
+        <li class="li">HPE Helion OpenStack 2.0 installation must be completed. You must know the location of
+          its <samp class="ph codeph">services.osrc</samp> file, which contains configuration information.</li>
+
+        <li class="li">You must know the NTP server and DNS server IP addresses.</li>
+
+        <li class="li">You must know the proxy values and ports required for accessing external services such
+          as Github.com, Stormrunner, or Dockerhub.</li>
+
+        <li class="li">You must have an account on <a class="xref" href="http://www.github.com" target="_blank">Github</a>.</li>
+
+      </ul>
+
+    </div>
+  
+    
+    <div class="section"><h3 class="title sectiontitle">Installation</h3>
+      <ol class="ol">
+        <li class="li">SSH into the HP Helion OpenStack Deployer. (This is the same location where the HDPI has
+          been installed.)</li>
+
+        <li class="li">Upload an SSH keypair to Nova to be used by the HPE Helion Code Engine Deployer.
+            <div class="note note"><span class="notetitle">Note:</span> The name of the key you are creating in Nova (<samp class="ph codeph">helionce-shared</samp>)
+            must match the value of the <samp class="ph codeph">deployer_key</samp> value in the <a class="xref" href="install_cloudsyaml.html#id_xnd_3dn_vt">clouds.yaml </a> file. Since you will
+            need these keys to access the Helion Code Engine deployer VM in the future, it is
+            strongly recommended that you save the key files (<samp class="ph codeph">~/.ssh/id_rsa</samp> and
+              <samp class="ph codeph">~/.ssh/id_rsa</samp>) in a safe
+          place.</div>
+<pre class="pre">source ./service.osrc
+nova keypair-add --pub-key ~/.ssh/id_rsa.pub helionce-shared</pre>
+</li>
+    <li class="li">Ensure all OS_ variables are unset. Run <pre class="pre codeblock">env | grep OS_ </pre>
+ and then
+            <samp class="ph codeph">unset</samp> any variables which appear in the list of results. </li>
+
+        <li class="li">Source the Virtual Environment.
+          <pre class="pre codeblock">source /opt/stack/venv/dev_platform_installer-devplat_installer-1.0.0/bin/activate</pre>
+</li>
+
+        <li class="li"> Install the Code Engine service installation files. <ol class="ol" type="a" id="engine__d428e98">
+            <li class="li">If you <a class="xref" href="install_offline.html#topic_w25_hqp_xt">pre-downloaded</a> the
+              installation file, run the following command to install
+                it:<pre class="pre codeblock">cd <em class="ph i">&lt;directory where the pre-downloaded file is&gt;</em>
+openstack --os-cloud mycloud hdpi helionce install <em class="ph i">&lt;filename&gt;</em></pre>
+<div class="note note"><span class="notetitle">Note:</span> When
+                installing pre-downloaded files, make sure you run the installer from the same
+                directory where the installation files are saved. If the installer cannot find a
+                file with the name you provided in the local directory, it will attempt to download
+                the files again. </div>
+</li>
+
+          <li class="li">If you did not pre-download the file: <ol class="ol" type="i">
+                <li class="li">Find the most recent version of the file. Note that this command provides only a
+                  quick list of recent files; there are <a class="xref" href="install_listOptions.html#listContent">more complete listing options</a>
+                  available that include installation
+                  status.<pre class="pre">openstack --os-cloud mycloud hdpi list</pre>
+The output should look
+                  similar
+                  to:<pre class="pre">+----------------------------+----------------+-----------+------------+
+| service                    | id             | version   | state      |
++----------------------------+----------------+-----------+------------+<strong class="ph b">
+| Helion Code Engine         | wscatalog.2776 | 1.0.0     | available  |</strong>
+| als                        | wscatalog.2765 | 2.0.0.539 | available  |
+| als                        | wscatalog.2800 | 2.0.0.548 | available  |
+| database                   | wscatalog.2762 | 2.0.0.32  | available  |
+| database                   | wscatalog.2803 | 2.0.0.37  | available  |
+| messaging                  | wscatalog.2761 | 1.0.0     | available  |
+| messaging                  | wscatalog.2796 | 1.0.0.165 | available  |
++----------------------------+----------------+-----------+------------+</pre>
+
+                </li>
+
+                <li class="li">Find the<strong class="ph b"> ID number</strong> of the most recent version of the service (the highest
+                  ID number for that service).</li>
+
+                <li class="li">If desired, inspect the installation files for size, version, and other detailed
+                  information.<pre class="pre codeblock">openstack hdpi show wscatalog.#### --os-cloud mycloud</pre>
+</li>
+
+                <li class="li">Begin the download and
+                  installation:<pre class="pre codeblock">openstack --os-cloud mycloud hdpi helionce install wscatalog.####</pre>
+</li>
+
+              </ol>
+<div class="note note"><span class="notetitle">Note:</span> If troubleshooting installation, turn on the debug option and run the
+                command again:
+              </div>
+<pre class="pre codeblock">openstack --debug --os-cloud mycloud hdpi helionce install <em class="ph i">&lt;filename or catalog number&gt;</em></pre>
+</li>
+</ol>
+</li>
+
+          
+            <li class="li">Launch the
+          instance.<pre class="pre codeblock">openstack hdpi helionce launch --os-cloud mycloud
+deactivate</pre>
+</li>
+
+        <li class="li">List all available machines. You should see an instance named
+            <samp class="ph codeph">helionce_deployer</samp>. Make a note of its IP address.
+          <pre class="pre codeblock">source helionce.osrc
+openstack server list</pre>
+</li>
+
+        <li class="li">Log in to and initialize the VM. <div class="note note"><span class="notetitle">Note:</span> Ignore the TASK/msg message that appears in the
+            output. Do not run the playbook at this time; that playbook must be run later in the
+            installation
+            process.</div>
+<pre class="pre">ssh -i helionce-shared stack@&lt;IP address&gt;
+...
+stack@helionce-deployer:~$ ls
+helionce-1.0.0
+...
+stack@helionce-deployer:~$ cd helionce-1.0.0/
+stack@helionce-deployer:~/helionce-1.0.0$ ./helionce-init.bash
+...</pre>
+<div class="note note"><span class="notetitle">Note:</span> This
+            process can take a few minutes. When the initialization has completed, ensure both
+              <samp class="ph codeph">unreachable</samp> and <samp class="ph codeph">failed</samp> are zero (0). This indicates
+            success. If not, check the output for error messages, address the errors, and try
+            running the command again.</div>
+</li>
+
+        <li class="li">Copy the helionce deployment model.
+          <pre class="pre codeblock">stack@helionce-deployer:~/helionce-1.0.0$ cd ~/helion/
+stack@helionce-deployer:~/helion$ cp -R /home/stack/helion/examples/helionce/* /home/stack/helion/my_cloud/definition
+stack@helionce-deployer:~/helion$ cp ~/platform-pass-through.yml my_cloud/definition/data/pass-through/platform-pass-through.yml</pre>
+</li>
+
+        <li class="li">Using Git, persist these changes. This information is required for playbooks executed
+          later in this installation
+          process.<pre class="pre codeblock">stack@helionce-deployer:~/helion$ git add -A
+stack@helionce-deployer:~/helion$ git commit -a -m "Add HelionCE default model"</pre>
+</li>
+
+        <li class="li">Create a Github OAuth Application. <ol class="ol" type="a">
+            <li class="li">Create a new application.
+            <ol class="ol" type="i"><li class="li">If you are using the public GitHub.com, create the new application at <a class="xref" href="https://github.com/settings/applications/new" target="_blank">https://github.com/settings/applications/new</a></li>
+
+            <li class="li">If you are using a custom, hosted GitHub Enterprise, create the new application at
+                    <samp class="ph codeph">https://&lt;hostname&gt;/settings/applications/new</samp>. You may
+                  need to contact your System Administrator to get the <samp class="ph codeph">hostname</samp> for
+                  your GitHub instance.</li>
+</ol>
+</li>
+
+            <li class="li">Include the following values: 
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+                  
+                  
+                  <thead class="thead" align="left">
+                    <tr class="row">
+                      <th class="entry" valign="top" width="27.322404371584696%" id="d125960e1431">Field</th>
+
+                      <th class="entry" valign="top" width="72.6775956284153%" id="d125960e1434">Value</th>
+
+                    </tr>
+
+                  </thead>
+
+                  <tbody class="tbody">
+                    <tr class="row">
+                      <td class="entry" valign="top" width="27.322404371584696%" headers="d125960e1431 ">Application name</td>
+
+                      <td class="entry" valign="top" width="72.6775956284153%" headers="d125960e1434 ">Helion Code Engine</td>
+
+                    </tr>
+
+                    <tr class="row">
+                      <td class="entry" valign="top" width="27.322404371584696%" headers="d125960e1431 ">Homepage URL </td>
+
+                      <td class="entry" valign="top" width="72.6775956284153%" headers="d125960e1434 ">http://myhelionce/</td>
+
+                    </tr>
+
+                    <tr class="row">
+                      <td class="entry" valign="top" width="27.322404371584696%" headers="d125960e1431 ">Authorization callback URL</td>
+
+                      <td class="entry" valign="top" width="72.6775956284153%" headers="d125960e1434 ">http://myhelionce/auth/github/callback</td>
+
+                    </tr>
+
+                  </tbody>
+
+                </table>
+</div>
+</li>
+
+            <li class="li">Register the application.</li>
+
+            <li class="li">Make a note of its <samp class="ph codeph">Client ID</samp> and <samp class="ph codeph">Client
+              Secret</samp>.</li>
+
+          </ol>
+</li>
+
+        <li class="li">Return to the terminal window. This process populates the server addresses.<ol class="ol" type="a">
+            <li class="li">Navigate to and open the <samp class="ph codeph">kickstart.yml</samp>
+              file<pre class="pre codeblock">stack@helionce-deployer:~/helion$ vim ~/helion/my_cloud/definition/data/pass-through/kickstart.yml</pre>
+</li>
+
+            <li class="li">Update the following values in the
+              file:<pre class="pre codeblock">github_client_id: &lt;the Client ID from the Github application you created in an earlier step&gt;
+github_client_secret: &lt;the Client Secret from the Github application you created in an earlier step&gt;</pre>
+</li>
+
+            <li class="li">If your installation requires http proxies for access to services such as
+              Github.com, Dockerhub, or Stormrunner, configure the proxy
+              values.<pre class="pre codeblock">https_proxy: "https://&lt;http proxy hostname&gt;:&lt;http proxy port&gt;/"
+http_proxy: "http://&lt;https proxy hostname&gt;:&lt;https proxy port&gt;/"</pre>
+</li>
+
+            <li class="li">If your installation will be using an ALS cluster which does not require a proxy,
+              set the <samp class="ph codeph">use_proxy </samp>flag to False. This is likely if your ALS cluster
+              is in the same cloud as the HPE Helion Code Engine
+              service.<pre class="pre codeblock">use_proxy: false</pre>
+</li>
+
+            <li class="li">Save the file and exit.</li>
+
+            <li class="li">Open the <samp class="ph codeph">cloudConfig.yml
+              </samp>file.<pre class="pre codeblock">stack@helionce-deployer:~/helion$ vim ~/helion/my_cloud/definition/cloudConfig.yml</pre>
+</li>
+
+            <li class="li">Update the values for the <strong class="ph b">nameservers</strong> and <strong class="ph b">ntp-servers</strong>, save the file
+              and exit. The following codeblock is provided as a sample file
+              section.<pre class="pre codeblock">  product:
+    version: 2
+  cloud:
+    name: helionce
+    hostname-data:
+        host-prefix: hci
+        member-prefix: -m
+    data-dir: data
+    <strong class="ph b">ntp-servers:
+      - 15.126.25.4</strong>
+    dns-settings:<strong class="ph b">
+      nameservers:
+        - 206.164.176.23</strong></pre>
+</li>
+
+          </ol>
+</li>
+
+        <li class="li">Using Git, commit the changes. This information is required for playbooks executed later
+          in this installation
+          process.<pre class="pre codeblock">stack@helionce-deployer:~/helion$ git commit -a -m "Configured Deployment Model" </pre>
+</li>
+
+        <li class="li">Run the Playbooks <div class="note important"><span class="importanttitle">Important:</span> At the end of each playbook, ensure both
+              <samp class="ph codeph">unreachable</samp> and <samp class="ph codeph">failed</samp> are zero (0). This indicates
+            success. If not, check the output for error messages, address the errors, add the Debug
+            option (-vvv) to the command line, and run the playbook again.</div>
+<ol class="ol" type="a">
+            <li class="li"> Run the Pre-Installation Playbook
+              <pre class="pre codeblock">stack@helionce-deployer:~/helion$ source ~/service.osrc
+stack@helionce-deployer:~/helion$ cd hos/ansible/
+stack@helionce-deployer:~/helion/hos/ansible$ ansible-playbook -i hosts/localhost hlm-pre-install.yml</pre>
+Successful
+              output will look similar to the
+              following:<pre class="pre codeblock">PLAY RECAP ********************************************************************
+openstack-operations | preinstall | Create service ports ---------------- 5.14s
+openstack-operations | lookup-keystone-ids | Lookup Project ID ---------- 2.98s
+openstack-operations | preinstall | Ensure SVC Network Exists ----------- 2.75s
+openstack-operations | preinstall | Ensure External Network Exists ------ 2.73s
+openstack-operations | preinstall | Create Floating IPs necessary for load-balancers --- 2.17s
+openstack-operations | preinstall | Identify pre-existing floating IPs --- 2.07s
+openstack-operations | preinstall | Set Neutron Quotas ------------------ 2.07s
+openstack-operations | preinstall | Set Cinder Quotas ------------------- 2.01s
+openstack-operations | preinstall | Create Virtual IPs necessary for load-balancers externally managed --- 1.81s
+openstack-operations | preinstall | Set Nova Quotas --------------------- 1.77s
+-------------------------------------------------------------------------------
+Total: ----------------------------------------------------------------- 27.45s
+localhost                  : ok=20   changed=14  <strong class="ph b"> unreachable=0 </strong>   <strong class="ph b">failed=0 </strong> </pre>
+</li>
+
+            <li class="li">Run the Config Processor Play
+              <pre class="pre codeblock">stack@helionce-deployer:~/helion/hos/ansible$ ansible-playbook -i hosts/localhost config-processor-run.yml -e encrypt="" -e rekey=""</pre>
+Successful
+              output will look similar to the
+              following:<pre class="pre codeblock">PLAY RECAP ******************************************************************** 
+config-processor | run-config-processor | Run Configuration Processor over the given cloud configuration --- 2.44s
+git-operations | _assemble-working-directory | Assemble scratch content --- 0.76s
+git-operations | _persist-to-git | Prep new commit ---------------------- 0.69s
+config-processor | configure | Sync ansible vars for cloud deployment --- 0.67s
+config-processor | add-localhost | Add localhost group entry ------------ 0.55s
+config-processor | configure | Make directories required for osconfig network configuration --- 0.33s
+config-processor | configure | Sync generated network artefacts for cloud deployment/update --- 0.32s
+config-processor | configure | Copy hosts.hf for osconfig playbooks ----- 0.28s
+config-processor | configure | Copy ansible hosts file for cloud deployment (verb_hosts) --- 0.28s
+config-processor | add-localhost | Add localhost group ------------------ 0.17s
+-------------------------------------------------------------------------------
+Total: ------------------------------------------------------------------ 7.99s
+localhost                  : ok=21   changed=14   <strong class="ph b">unreachable=0    failed=0 </strong> </pre>
+</li>
+
+            <li class="li">Run the Ready Deployment Playbook
+                <pre class="pre codeblock">stack@helionce-deployer:~/helion/hos/ansible$ ansible-playbook -i hosts/localhost ready-deployment.yml</pre>
+<div class="p">Successful
+                output should look similar to the following.  <div class="note note"><span class="notetitle">Note:</span> Ignore the TASK/msg message that
+                  appears in the output. Do not run the playbook at this time; that playbook must be
+                  run later in the installation
+              process.</div>
+</div>
+<pre class="pre codeblock">PLAY RECAP ******************************************************************** 
+git-operations | _assemble-working-directory | Assemble scratch content --- 0.73s
+config-processor | configure | Sync ansible vars for cloud deployment --- 0.54s
+config-processor | configure | Sync ansible vars for cloud deployment --- 0.49s
+git-operations | _promote-from-staging | Update branches ---------------- 0.41s
+config-processor | configure | Make directories required for osconfig network configuration --- 0.30s
+config-processor | configure | Make directories required for osconfig network configuration --- 0.27s
+config-processor | configure | Sync generated network artefacts for cloud deployment/update --- 0.26s
+config-processor | configure | Sync generated network artefacts for cloud deployment/update --- 0.25s
+config-processor | configure | Copy ansible hosts file for cloud deployment (verb_hosts) --- 0.24s
+config-processor | configure | Copy hosts.hf for osconfig playbooks ----- 0.22s
+-------------------------------------------------------------------------------
+Total: ------------------------------------------------------------------ 5.96s
+localhost                  : ok=20   changed=11  <strong class="ph b"> unreachable=0    failed=0</strong>
+
+TASK: [git-operations | ready-deployment-tree-help | Tell the user what to expect] *** 
+ok: [localhost] =&gt; {
+    "msg": "The directory /home/stack/scratch/ansible/next/hos/ansible contains a prepared ansible tree ready to run your deployment. You should cd into that directory and run: ansible-playbook -i hosts/verb_hosts site.yml"
+}</pre>
+</li>
+
+            <li class="li">Run the Boot Infrastructure Playbook<div class="note note"><span class="notetitle">Note:</span> This step takes approximately 5
+                minutes.</div>
+ Once this is complete, all in-cloud infrastructure (VMs, Networks,
+              Routers, Floating IPs, ports, security groups, etc) will have been created.
+              <pre class="pre codeblock">stack@helionce-deployer:~/helion/hos/ansible$ cd ~/scratch/ansible/next/hos/ansible
+stack@helionce-deployer:~/scratch/ansible/next/hos/ansible$ ansible-playbook -i hosts/localhost hlm-boot-infra.yml</pre>
+Successful
+              output will look similar to the
+              following:<pre class="pre codeblock">PLAY RECAP ********************************************************************
+openstack-operations | create_instance | Create controlplane instance - 227.92s
+openstack-operations | create_instance | Give cloud-init time to fetch SSH keys -- 60.07s
+openstack-operations | create_security_groups | Create tcp/icmp security groups rules -- 34.59s
+openstack-operations | create_instance | Extract port-id --------------- 19.89s
+openstack-operations | create_instance | Wait for SSH to become active -- 17.46s
+openstack-operations | create_port | Update ports to include appropriate security group(s) -- 17.24s
+openstack-operations | create_security_groups | Create security groups -- 16.18s
+openstack-operations | create_port | Associate VIP to instance ports --- 14.85s
+openstack-operations | create_port | Create instance ports ------------- 13.97s
+openstack-operations | create_security_groups | Create other security groups rules (e.g. 112 protcol) --- 9.33s
+-------------------------------------------------------------------------------
+Total: ---------------------------------------------------------------- 471.97s
+localhost                  : ok=35   changed=19   <strong class="ph b">unreachable=0  </strong>  <strong class="ph b">failed=0</strong></pre>
+</li>
+
+            <li class="li">Run the Site Playbook <div class="note note"><span class="notetitle">Note:</span> This step takes approximately 10 to 15 minutes.
+              </div>
+<pre class="pre codeblock">stack@helionce-deployer:~/scratch/ansible/next/hos/ansible$ ansible-playbook -i hosts/verb_hosts site.yml
+...
+PLAY [HELION-CI-WEBUX[0]] *****************************************************
+TASK: [debug msg="Congratulations on installing Helion Code Engine!"] *********
+&lt;10.241.157.75&gt; ESTABLISH CONNECTION FOR USER: stack
+ok: [hci-helionci-ccp-c1-m1-mgmt] =&gt; {
+    "msg": "Congratulations on installing Helion Code Engine!"
+}
+TASK: [debug msg="Browse to the web site at {{ HELION_CI_WEBUX.advertises.vips.public[0].url  }}"] ***
+&lt;10.241.157.75&gt; ESTABLISH CONNECTION FOR USER: stack
+ok: [hci-helionci-ccp-c1-m1-mgmt] =&gt; {
+    "msg": "Browse to the web site at http://10.241.26.126:80"
+}
+...</pre>
+</li>
+
+            <li class="li">Make a note of the IP address and port provided in the final messages from the log.
+              This is the web site you will want to access.</li>
+</ol>
+</li>
+
+            <li class="li">Return to the Github application you created earlier and update the values in the
+            <strong class="ph b">Homepage URL</strong> and <strong class="ph b">Authorization Callback URL</strong> fields based on the IP Address
+          and Port provided by the Site Playbook. You will be replacing the placeholder string
+            <samp class="ph codeph">myhelionce</samp>. For example:<br/><img class="image" id="engine__d428e438" src="../../../media/ce_install_config.png"/><br/></li>
+
+      </ol>
+</div>
+
+       
+  </div>
+
+</div>
+  
+  
+
+</body>
+</html>

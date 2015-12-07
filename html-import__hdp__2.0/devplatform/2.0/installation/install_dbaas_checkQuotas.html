@@ -1,0 +1,188 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Check Quotas for Database Service Installation</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_sjz_wm4_xt" /> <meta name="html-import-file-path" content="devplatform/2.0/installation/install_dbaas_checkQuotas.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Check Quotas for Database Service Installation</h1>
+
+
+  
+
+  <div class="body">
+    
+    <div class="section" id="topic_sjz_wm4_xt__quotas">
+      <p class="p">The project tenant must have sufficient quota available and unused resources for the service to
+        use. To check existing quota availability, log in to Horizon as the <strong class="ph b">admin</strong> user and
+        open the <strong class="ph b">Overview</strong> panel under the <strong class="ph b">Compute</strong> tab. </p>
+
+      <p class="p">If you are not configuring the Database Service to be highly available you must have the following quota available:</p>
+
+      
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <thead class="thead" align="left">
+            <tr class="row">
+              <th class="entry" valign="top" width="132pt" id="d132040e40">Resource</th>
+
+              <th class="entry" align="right" valign="top" width="77.25pt" id="d132040e43">Usage</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="132pt" headers="d132040e40 ">Floating IPs</td>
+
+              <td class="entry" align="right" valign="top" width="77.25pt" headers="d132040e43 ">6</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="132pt" headers="d132040e40 ">Instances</td>
+
+              <td class="entry" align="right" valign="top" width="77.25pt" headers="d132040e43 ">6</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="132pt" headers="d132040e40 ">Networks</td>
+
+              <td class="entry" align="right" valign="top" width="77.25pt" headers="d132040e43 ">2</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="132pt" headers="d132040e40 ">RAM (GB)</td>
+
+              <td class="entry" align="right" valign="top" width="77.25pt" headers="d132040e43 ">24</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="132pt" headers="d132040e40 ">Routers</td>
+
+              <td class="entry" align="right" valign="top" width="77.25pt" headers="d132040e43 ">2</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="132pt" headers="d132040e40 ">Security Groups</td>
+
+              <td class="entry" align="right" valign="top" width="77.25pt" headers="d132040e43 ">6</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="132pt" headers="d132040e40 ">Volumes</td>
+
+              <td class="entry" align="right" valign="top" width="77.25pt" headers="d132040e43 ">4</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="132pt" headers="d132040e40 ">Volume Storage (GB)</td>
+
+              <td class="entry" align="right" valign="top" width="77.25pt" headers="d132040e43 ">160</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+      <p class="p">If you have set up Availability Zones and plan to install the Database Service in a highly-available configuration you must have the following quota available:</p>
+
+      
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <thead class="thead" align="left">
+            <tr class="row">
+              <th class="entry" valign="top" width="120pt" id="d132040e141">Resource</th>
+
+              <th class="entry" align="right" valign="top" width="87.75pt" id="d132040e144">Usage</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="120pt" headers="d132040e141 ">Floating IPs</td>
+
+              <td class="entry" align="right" valign="top" width="87.75pt" headers="d132040e144 ">16</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="120pt" headers="d132040e141 ">Instances</td>
+
+              <td class="entry" align="right" valign="top" width="87.75pt" headers="d132040e144 ">16</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="120pt" headers="d132040e141 ">Networks</td>
+
+              <td class="entry" align="right" valign="top" width="87.75pt" headers="d132040e144 ">2</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="120pt" headers="d132040e141 ">RAM (GB)</td>
+
+              <td class="entry" align="right" valign="top" width="87.75pt" headers="d132040e144 ">64</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="120pt" headers="d132040e141 ">Routers</td>
+
+              <td class="entry" align="right" valign="top" width="87.75pt" headers="d132040e144 ">2</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="120pt" headers="d132040e141 ">Security Groups</td>
+
+              <td class="entry" align="right" valign="top" width="87.75pt" headers="d132040e144 ">6</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="120pt" headers="d132040e141 ">Volumes</td>
+
+              <td class="entry" align="right" valign="top" width="87.75pt" headers="d132040e144 ">4</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="120pt" headers="d132040e141 ">Volume Storage (GB)</td>
+
+              <td class="entry" align="right" valign="top" width="87.75pt" headers="d132040e144 ">600 </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+      <p class="p">In addition to the quotas mentioned above, for every database instance that is created by a user,
+        the necessary resources to create that instance will be deducted from the admin project
+        quota. The user's database service quota will also be affected.</p>
+
+    </div>
+
+  </div>
+
+
+</body>
+</html>

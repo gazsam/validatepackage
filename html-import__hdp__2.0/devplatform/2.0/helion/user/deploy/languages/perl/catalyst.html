@@ -1,0 +1,64 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Catalyst</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic1184" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/languages/perl/catalyst.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Catalyst</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">Catalyst is a framework for building web applications, which will run on
+Application Lifecycle Service. To learn more about Catalyst, see the <a class="xref" href="https://metacpan.org/module/Catalyst" target="_blank">Catalyst
+documentation</a>. Also, take a look
+at the Application Lifecycle Service sample apps listed below to see some working code
+examples.</p>
+
+<div class="section" id="topic1184__home-directory"><h2 class="title sectiontitle">Home Directory</h2> 
+<p class="p">Catalyst makes different assumptions on its Home directory depending on
+whether or not it is installed in @INC. It makes this distinction based
+on the presence of a <em class="ph i">Makefile.PL</em> or <em class="ph i">BUILD.PL</em> file in the app
+directory, so it is important to have one even if all prerequisites are
+installed via <em class="ph i">requirements.txt</em>.</p>
+
+<p class="p">Alternatively, the Home directory can be <a class="xref" href="https://metacpan.org/module/Catalyst#Home" target="_blank">set
+explicitly</a> with environment
+variables. For example, you could set CATALYST_HOME in <em class="ph i">manifest.yml</em>:</p>
+
+<pre class="pre codeblock">env:
+  CATALYST_HOME: $HOME</pre>
+
+</div>
+
+<div class="section" id="topic1184__examples"><h2 class="title sectiontitle">Examples</h2> 
+<ul class="ul">
+<li class="li">
+<a class="xref" href="https://github.com/Stackato-Apps/catalyst-tut2" target="_blank">Catalyst Tutorial
+2</a>: Sample
+application from chapter 2 of the Catalyst-Manual.</li>
+
+<li class="li">
+<a class="xref" href="https://github.com/Stackato-Apps/catalyst-tut3" target="_blank">Catalyst Tutorial
+3</a>: Another Catalyst
+tutorial.</li>
+
+<li class="li">
+<a class="xref" href="https://github.com/Stackato-Apps/catalyst-welcome" target="_blank">Catalyst Hello
+World</a>: A simple
+Catalyst example.</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Deploying Django applications</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic3654" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/languages/python/django.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Deploying Django applications</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">Your app needs a top-level <em class="ph i">wsgi.py</em> file with a global variable named
+<samp class="ph codeph">application</samp> that refers to your Django WSGI
+application. The file should already exist in the Django project,
+although a copy of it needs to be in the root directory in order for
+Application Lifecycle Service to recognize it.</p>
+
+<pre class="pre codeblock">django-admin.py startproject dj14
+cd dj14
+cp dj14/wsgi.py wsgi.py</pre>
+
+<p class="p">Typically, the <em class="ph i">wsgi.py</em> file is just three lines of code:</p>
+
+<pre class="pre codeblock">import os
+import django.core.handlers.wsgi
+application = django.core.handlers.wsgi.WSGIHandler()</pre>
+
+<p class="p">Your project must also have a <em class="ph i">requirements.txt</em> file containing at
+least the <samp class="ph codeph">django</samp> project:</p>
+
+<pre class="pre codeblock">cat requirements.txt
+django==1.4
+mysql-python</pre>
+
+<div class="section" id="topic3654__configuring-database"><h2 class="title sectiontitle">Configuring the Database</h2> 
+  <p class="p">See <a class="xref" href="../../../services/data-services.html#user_data_services__using-external-databases">Using Configured Database Services</a> for more information on connecting with database services.</p>
+
+<ol class="ol">
+<li class="li"> You must modify the <samp class="ph codeph">DATABASES</samp> variable of your project's <em class="ph i">settings.py</em> as
+          shown below to detect the database service provisioned by Helion:<pre class="pre codeblock">import urlparse
+DATABASES = {}
+if 'DATABASE_URL' in os.environ:
+        url = urlparse.urlparse(os.environ['DATABASE_URL'])
+        DATABASES['default'] = {
+                'NAME': url.path[1:],
+                'USER': url.username,
+                'PASSWORD': url.password,
+                'HOST': url.hostname,
+                'PORT': url.port,
+                }
+        if url.scheme == 'postgres':
+                DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
+        elif url.scheme == 'mysql':
+                DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
+else:
+        DATABASES['default'] = {
+                'ENGINE': 'django.db.backends.mysql',
+                'NAME': 'dev.db',
+                'USER': '',
+                'PASSWORD': '',
+                'HOST': '', # Set to empty string for localhost.
+                'PORT': '', # Set to empty string for default.
+                }</pre>
+<div class="p">
+            <div class="note note"><span class="notetitle">Note:</span>  In the future, this may be automatically written to <em class="ph i">local_settings.py</em>
+              (similar to ep.io and others)</div>
+
+          </div>
+</li>
+
+<li class="li"> Then add a new dependency to
+          <em class="ph i">requirements.txt</em>:<pre class="pre codeblock">echo 'mysql-python' &gt;&gt; requirements.txt</pre>
+</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic3654__initializing-database"><h2 class="title sectiontitle">Initializing database</h2> 
+<p class="p">Run the <samp class="ph codeph">syncdb</samp> command to initialize the database
+tables:</p>
+
+<pre class="pre codeblock">helion run &lt;appname&gt; python manage.py syncdb</pre>
+
+<p class="p">If you use a data migration library such as
+<a class="xref" href="http://south.aeracode.org/" target="_blank">South</a>, also run:</p>
+
+<pre class="pre codeblock">helion run &lt;appname&gt; python manage.py migrate</pre>
+
+</div>
+
+<div class="section" id="topic3654__configuring-static-media"><h2 class="title sectiontitle">Configuring static media</h2> 
+<p class="p">There are various ways to serve static files for a Django application. While Option #1 is the most recommended for production deployments, option #3 is the simplest for non-production/development/test/QA deployments.</p>
+
+<ol class="ol">
+<li class="li">Directly serve static files with uWSGI. See <a class="xref" href="python_index.html">
+<em class="ph i">Serving static files with uWSGI</em>
+</a> for details. or:</li>
+
+<li class="li">Use <samp class="ph codeph">django.contrib.staticfiles</samp>, which is
+included by default in recent versions of Django. Read the <a class="xref" href="https://docs.djangoproject.com/en/1.8/howto/static-files/" target="_blank">Django
+documentation</a>
+to understand the steps involved, or take a look at <a class="xref" href="https://github.com/hpcloud/stackato-samples/commit/59ec0791" target="_blank">this
+commit</a>
+in the django-gtd sample app. or:</li>
+
+<li class="li">Set <samp class="ph codeph">DEBUG=True</samp> in settings.py. This is not
+recommended for production applications.</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic3654__configuring-project-location"><h2 class="title sectiontitle">Configuring project location</h2> 
+<p class="p">Your project's <em class="ph i">settings.py</em> may not always reside at the root directory. Furthermore, you may want to extend <samp class="ph codeph">sys.path</samp> to point to certain project sub-directories.</p>
+
+<p class="p">To persist such environment changes (across wsgi.py, settings.py, manage.py, etc.), add the following to manifest.yml:</p>
+
+<pre class="pre codeblock">env:
+  DJANGO_SETTINGS_MODULE: myproject.settings
+  PYTHONPATH: myproject</pre>
+
+<p class="p">This assumes that your Django project lives under the <em class="ph i">myproject/</em> sub-directory.</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,253 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Application Lifecycle Service User Guide</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="user_deploy_index" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/deploy_index.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Application Lifecycle Service User Guide</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">The Application Lifecycle Service is a polyglot Platform-as-a-Service (PaaS). You can easily
+      deploy applications written in a wide range of languages and web frameworks using a variety of
+      data services simply by pushing your source code to the system.</p>
+
+<p class="p">Application Lifecycle Service handles the automatic configuration of the language runtime,
+web server, application dependencies, databases, and other services.</p>
+
+    <div class="note note"><span class="notetitle">Note:</span> "Worker Applications" are non-HTTP apps, such as background scripts, which run as ALS
+      applications. To deploy worker applications, you need to use the <a class="xref" href="manifestyml.html#topic20922__command">command</a>key and set the <a class="xref" href="manifestyml.html#topic20922__web">proceses: web</a> key to Null ("~").</div>
+
+<div class="section" id="user_deploy_index__quick-start"><h2 class="title sectiontitle">Quick Start</h2> 
+<ul class="ul">
+<li class="li">
+          <a class="xref" href="../quick-start/quickstart_index.html">ALS Quick Start Guide</a>.
+        </li>
+
+<li class="li">
+          <a class="xref" href="../quick-start/quickstart_index.html#topic4745__management-console">Management Console
+          </a></li>
+
+<li class="li">
+          <a class="xref" href="../client/client_index.html#topic3165__helion-client-setup">Application Lifecycle
+              Service Client</a>
+        </li>
+
+<li class="li">
+          <a class="xref" href="../quick-start/quickstart_index.html#topic4745__setting-organization-and-space">Setting
+            Organization and Space</a>
+        </li>
+
+<li class="li">
+          <a class="xref" href="../quick-start/quickstart_index.html#topic4745__deploying-apps">Deploying Apps</a>
+        </li>
+
+</ul>
+
+</div>
+
+<div class="section" id="user_deploy_index__helion-client"><h2 class="title sectiontitle">Application Lifecycle Service Client</h2> 
+<ul class="ul">
+<li class="li">
+          <a class="xref" href="../reference/client-ref.html#topic13355__getting-started">Application
+            Lifecycle Service Client Command Reference</a>
+        </li>
+
+<li class="li">
+          <a class="xref" href="../client/client_index.html#topic3165">Download the Application
+            Lifecycle Service Client</a>
+          <ul class="ul">
+            <li class="li">
+              <a class="xref" href="../client/client_index.html#topic3165__helion-client-setup">Application Lifecycle Service Client Setup</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="../client/client_index.html#topic3165__getting-help">Getting
+                Help</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="../client/client_index.html#topic3165__targeting-the-api-endpoint">Targeting the API Endpoint</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="../client/client_index.html#topic3165__http-proxies">HTTP
+                Proxies</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="../client/client_index.html#topic3165__removing-the-client">Removing the Client</a>
+            </li>
+
+            <li class="li"><a class="xref" href="../reference/api.html#topic455__related-documentation">Application Lifecycle Service Client API</a>
+            </li>
+
+          </ul>
+</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="user_deploy_index__frameworks"><h2 class="title sectiontitle">Frameworks</h2>
+
+          <ul class="ul">
+                <li class="li">
+                  <a class="xref" href="orgs-spaces.html#topic2729">Organizations &amp; Spaces</a>
+                </li>
+
+                <li class="li">
+                  <a class="xref" href="buildpack.html#topic3370">Buildpacks</a>
+                </li>
+
+                <li class="li">
+                  <a class="xref" href="other-frameworks.html#topic2413">Generic &amp; Standalone Frameworks</a>
+                </li>
+
+                </ul>
+</div>
+
+  <div class="section" id="user_deploy_index__languages"><h2 class="title sectiontitle">Deploying Applications (by Language)</h2>
+         <ul class="ul">
+        <li class="li"><a class="xref" href="languages/docker_apps.html">Docker apps</a></li>
+
+            <li class="li"><a class="xref" href="languages/clojure.html">Clojure</a></li>
+
+            <li class="li"><a class="xref" href="languages/go.html">Go</a></li>
+
+            <li class="li">
+              <a class="xref" href="languages/java.html#topic2811">Java</a>
+            </li>
+
+            <li class="li">
+              <a class="xref" href="languages/node.html#topic3629__node-npm">Node.js</a>
+            </li>
+
+            <li class="li"><a class="xref" href="languages/perl/perl_index.html">Perl</a></li>
+
+            <li class="li">
+              <a class="xref" href="languages/php.html#topic5845">PHP</a>
+            </li>
+
+            <li class="li"><a class="xref" href="languages/python/python_index.html">Python</a></li>
+
+            <li class="li"><a class="xref" href="languages/ruby.html">Ruby</a></li>
+
+          </ul>
+
+</div>
+
+<div class="section" id="user_deploy_index__services"><h2 class="title sectiontitle">Services</h2> 
+<ul class="ul">
+<li class="li">
+          <a class="xref" href="../services/data-services.html#user_data_services">Data Services</a>
+        </li>
+
+<li class="li">
+          <a class="xref" href="../services/filesystem.html">Persistent File System</a>
+        </li>
+
+<li class="li">
+          <a class="xref" href="../services/memcached.html#topic2514">Memcached Service</a>
+        </li>
+
+<li class="li">
+          <a class="xref" href="../services/port-service.html#topic7511__requesting-a-port">Port
+            Service</a>
+        </li>
+
+<li class="li">
+          <a class="xref" href="../services/user-provided.html#topic4060__creating">User-Provided
+            Services</a>
+        </li>
+
+</ul>
+
+</div>
+
+<div class="section" id="user_deploy_index__logging-monitoring"><h2 class="title sectiontitle">Logging &amp; Monitoring</h2> 
+<ul class="ul">
+<li class="li">
+          <a class="xref" href="app-logs.html#topic5165">Application Logs</a>
+        </li>
+
+
+</ul>
+
+</div>
+
+<div class="section" id="user_deploy_index__management-console"><h2 class="title sectiontitle">Management Console</h2> 
+<ul class="ul">
+<li class="li">
+          <a class="xref" href="../../admin/console/customize.html#topic5029">Customize the Management
+            Console</a>
+        </li>
+
+<li class="li">
+          <a class="xref" href="../../admin/console/customize.html#topic5029__welcome-page">Welcome</a>
+        </li>
+
+<li class="li">
+          <a class="xref" href="../console/console_index.html#topic8844__organization-view">Organization View</a>
+        </li>
+
+<li class="li">
+          <a class="xref" href="../console/console_index.html#topic8844__space-view">Space View</a>
+        </li>
+
+<li class="li">
+          <a class="xref" href="../console/console_index.html#topic8844__application-view">Application View</a>
+        </li>
+
+<li class="li">
+          <a class="xref" href="../console/console_index.html#topic8844__service-instance-view">Service Instance
+            View</a>
+        </li>
+
+<li class="li">
+          <a class="xref" href="../../admin/console/app-store.html#topic5271">Sample Applications</a>
+        </li>
+
+        <li class="li"><a class="xref" href="../../admin/console/console_settings.html">Management Console Settings Menu</a></li>
+
+</ul>
+
+</div>
+
+<div class="section" id="user_deploy_index__reference"><h2 class="title sectiontitle">Reference</h2> 
+<ul class="ul">
+<li class="li">
+          <a class="xref" href="../reference/environment.html#topic7631">Environment Variables</a>
+        </li>
+
+<li class="li">
+          <a class="xref" href="../reference/glossary.html#topic6187">Glossary</a>
+        </li>
+
+<li class="li">
+          <a class="xref" href="../reference/reference_troubleshoot.html#topic2774">Troubleshooting</a>
+        </li>
+
+<li class="li">
+          <a class="xref" href="manifestyml.html#topic20922__applications">Manifest.yml
+            Options</a>
+        </li>
+
+        <li class="li"><a class="xref" href="app-debug.html#topic1398">Remote Debugging</a>
+        </li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Buildpacks</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic3370" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/buildpack.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Buildpacks</h1>
+
+
+
+
+<div class="body">
+<p class="p">
+<a class="xref" href="https://devcenter.heroku.com/articles/buildpacks" target="_blank">Buildpacks</a> are
+bundles of detection and configuration scripts which set up containers
+to run applications.</p>
+
+<p class="p">Application deployment is done primarily using buildpacks, and the syntax for specifying which buildpack to use has changed. Instead of using a BUILDPACK_URL environment variable, set the buildpack's Git URL in a  <strong class="ph b">buildpack</strong>  key at the top level of <em class="ph i">manifest.yml</em>.</p>
+
+<p class="p">Buildpacks are the recommended method for deploying applications to Application Lifecycle Service. Buildpacks replace the built-in frameworks used in previous versions.</p>
+
+<div class="section" id="topic3370__built-in-buildpacks"><h2 class="title sectiontitle">Built-In Buildpacks</h2> 
+<p class="p">Application Lifecycle Service will cycle through the <em class="ph i">detect</em> scripts of the built-in buildpacks prior to staging to match the code you are pushing. For most applications using the built-in buildpacks, no additional ALS configuration is required.</p>
+
+</div>
+
+<div class="section" id="topic3370__legacy-buildpack"><h2 class="title sectiontitle">Legacy Buildpack</h2> 
+<p class="p">The legacy buildpack is a special meta-buildpack for deploying applications configured for Cloud Foundry v1 without the need for extensive reconfiguration.</p>
+
+<p class="p">To use the Legacy buildpack: specify the <strong class="ph b">framework</strong> type for your application (e.g. php,
+play, rails3, sinatra, java_web, java_ee, etc.). You can optionally
+set a specific <strong class="ph b">runtime</strong> as well. For example:</p>
+
+<pre class="pre codeblock">name: bottle-py3
+framework:
+  type: python
+  runtime: python32</pre>
+
+<div class="p">
+  <div class="note restriction"><span class="restrictiontitle">Restriction:</span>  When using the Legacy buildpack, config-defined environment variable
+          values can only be updated by re-pushing the entire application with the new settings.
+          Changes to variables made in the Management Console will be overwritten by the original
+          ones defined at push when the application is restarted. To modify custom environment
+          variables, re-push the application after changing the values in
+            <span class="ph filepath">manifest.yml</span>. </div>
+
+      </div>
+
+</div>
+
+<div class="section" id="topic3370__custom-buildpacks"><h2 class="title sectiontitle">Custom Buildpacks</h2> 
+<p class="p">To specify the exact buildpack to use for deploying your application,
+set a top-level <samp class="ph codeph">buildpack:</samp> key in <em class="ph i">manifest.yml</em> to the URL of the buildpack's Git repository. For example:</p>
+
+<pre class="pre codeblock">name: myrubyapp
+mem: 256MB
+buildpack: https://github.com/hpcloud/stackato-buildpack-ruby.git</pre>
+
+<p class="p">You can use a specific branch by specifying it at the end of the URL using the following format:</p>
+
+<pre class="pre codeblock">buildpack: https://github.com/hpcloud/stackato-buildpack-ruby.git#branchname</pre>
+
+<p class="p">There are hundreds of buildpacks available on Github. Searching Github for the term "buildpack" and the name of the language or framework you wish to deploy may provide you with a working solution, or at least the starting point for your own custom buildpack.</p>
+
+<div class="p">
+        <div class="cautiontitle">CAUTION:</div><div class="note caution">Not all Heroku buildpacks work with ALS due to environmental differences such as
+          relying on the presence of certain executables or libraries in Heroku-specific locations.
+          Examine and test any buildpack carefully before using it in production deployments.</div>
+
+      </div>
+
+      <div class="note note"><span class="notetitle">Note:</span> Using <em class="ph i">config_vars</em> in a buildpack's <em class="ph i">bin/release</em> to set environment
+        variables has been deprecated. Use a shell script in <em class="ph i">$HOME/.profile.d</em> instead.</div>
+
+</div>
+
+<div class="section" id="topic3370__procfile"><h2 class="title sectiontitle">Procfile</h2> 
+<p class="p">Buildpacks will usually contain a <strong class="ph b">default_process_type</strong> setting with the command used to start the application process. If your application needs a custom command to start the process, create a Procfile in the base directory of your application.</p>
+
+<p class="p">The Procfile should contain a single line defining the <strong class="ph b">web:</strong> <strong class="ph b">
+<em class="ph i">process</em>
+</strong> for the application defined. For example:</p>
+
+<pre class="pre codeblock">web: bundle exec rails server -p $PORT</pre>
+
+<p class="p">ALS does not support multiple process types in the Procfile. To launch a <em class="ph i">worker</em> process, create a separate app with an empty URL ( <strong class="ph b">url: [ ]</strong> ) in <em class="ph i">manifest.yml</em>.</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

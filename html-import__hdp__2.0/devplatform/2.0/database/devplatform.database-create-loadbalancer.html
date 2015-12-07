@@ -1,0 +1,190 @@
+
+
+
+<html><head><title>Creating a load balancer for a MySql cluster</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="create_database_loadbalancer" /> <meta name="html-import-file-path" content="devplatform/2.0/database/devplatform.database-create-loadbalancer.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">Creating a load balancer for a MySql cluster</h1>
+
+
+  
+
+  <div class="body">
+    <p class="p">This topic describes how to create a load balancer for a MySql cluster from the command line, and how to use a load balancer in an application.</p>
+
+    <p class="p">A load balancer is an object that exposes a VIP (Virtual IP address) endpoint to applications, and manages pools (logical sets of devices, such as web servers, that you group together to receive and process traffic), listeners (processes that monitor connections to endpoints), 
+      and members (applications running on the backend server).</p>
+
+    <ul class="ul">
+      <li class="li"><a class="xref" href="#create_database_loadbalancer__prerequisites">Connect to your database and set up a MySql cluster</a></li>
+
+      <li class="li"><a class="xref" href="#create_database_loadbalancer__neutron_2">Create a load balancer with Neutron 2.0</a></li>
+
+      <li class="li"><a class="xref" href="#create_database_loadbalancer__neutron_1">Create a load balancer with Neutron 1.0</a></li>
+ 
+      <li class="li"><a class="xref" href="#create_database_loadbalancer__get_ips">Get the ip addresses of the instances in the mysql cluster</a></li>
+
+      <li class="li"><a class="xref" href="#create_database_loadbalancer__member_v2">Create members with Neutron 2.0</a></li>
+
+      <li class="li"><a class="xref" href="#create_database_loadbalancer__member_v1">Create members with Neutron 1.0</a></li>
+
+      <li class="li"><a class="xref" href="#create_database_loadbalancer__application">Use a load balancer in an application</a></li>
+
+    </ul>
+
+    <div class="section" id="create_database_loadbalancer__prerequisites"><h2 class="title sectiontitle">Connect to your database and set up a MySql cluster</h2>
+      <ol class="ol">
+        <li class="li">Log in to the installer node for your HPE Helion OpenStack environment and source the service.osrc file:
+          <pre class="pre codeblock">
+. service.osrc
+          </pre>
+</li>
+
+        <li class="li">Use the following <samp class="ph codeph">trove cluster-create</samp> command to create a 3 instance mysql cluster :
+          <pre class="pre codeblock">
+trove cluster-create test-mysql-cluster mysql-cluster 5.5 --instance flavor=2,volume=2,nic='net-id=&lt;uuid-of-private-subnet&gt;' --instance flavor=2,volume=2,nic='net-id=&lt;uuid-of-private-subnet&gt;' --instance flavor=2,volume=2,nic='net-id=&lt;uuid-of-private-subnet&gt;'
+          </pre>
+
+        </li>
+
+      </ol>
+
+    </div>
+
+    <div class="section" id="create_database_loadbalancer__neutron_2"><h2 class="title sectiontitle">Create a load balancer with Neutron 2.0</h2>
+      <ol class="ol">
+        <li class="li">Use the following Neutron command to create a load balancer:
+          <pre class="pre codeblock">
+neutron lbaas-loadbalancer-create --name lb-mysql-cluster private-subnet
+          </pre>
+</li>
+
+        <li class="li">Use the following Neutron command to create a Listener:
+          <pre class="pre codeblock">
+neutron lbaas-listener-create --loadbalancer lb-mysql-cluster --protocol TCP --protocol-port 3306 --name listener-mysql-cluster
+          </pre>
+</li>
+
+        <li class="li">Use the following Neutron command to create a Pool:
+          <pre class="pre codeblock">
+neutron lbaas-pool-create --lb-algorithm ROUND_ROBIN --listener listener-mysql-cluster --protocol TCP --name pool-mysql-cluster
+          </pre>
+
+        </li>
+
+      </ol>
+
+    </div>
+
+    <div class="section" id="create_database_loadbalancer__neutron_1"><h2 class="title sectiontitle">Create a load balancer with Neutron 1.0</h2>
+      <ol class="ol">
+        <li class="li">Use the following Neutron command to create a Pool:
+          <pre class="pre codeblock">
+neutron lb-pool-create --lb-method ROUND_ROBIN --name pool-mysql-cluster  --protocol TCP --subnet-id &lt;uuid-of-private-subnet&gt;
+          </pre>
+
+        </li>
+
+        <li class="li">Use the following Neutron command to create a Virtual IP (VIP):
+          <pre class="pre codeblock">
+neutron lb-vip-create --name lb-mysql-cluster --protocol-port 3306 --protocol TCP --subnet-id &lt;uuid-of-private-subnet&gt;
+          </pre>
+
+        </li>
+
+      </ol>
+
+    </div>
+
+    <div class="section" id="create_database_loadbalancer__get_ips"><h2 class="title sectiontitle">Get the IP addresses of the instances in the mysql cluster</h2>
+      <p class="p">Use the following command to list the IP addresses within a cluster:</p>
+
+      <pre class="pre codeblock">
+trove cluster-show test-mysql-cluster
+      </pre>
+
+      <p class="p">This will produce output similar to the following:</p>
+
+      <pre class="pre codeblock">
++-------------------+------------------------------------------+
+| Property          | Value                                    |
++-------------------+------------------------------------------+
+| created           | 2015-10-07T21:38:24                      |
+| datastore         | mysql-cluster                            |
+| datastore_version | 5.5                                      |
+| id                | 2957b2cf-8205-413b-ba64-9cc03ff73ff4     |
+| ip                | <span class="ph codehighlight">192.168.0.42, 192.168.0.43, 192.168.0.44</span> |
+| name              | test-mysql-cluster                       |
+| task_description  | No tasks for the cluster.                |
+| task_name         | NONE                                     |
+| updated           | 2015-10-07T21:43:34                      |
++-------------------+------------------------------------------+
+
+      </pre>
+
+    </div>
+
+    <div class="section" id="create_database_loadbalancer__member_v2"><h2 class="title sectiontitle">Create members using Neutron v2</h2>
+    <p class="p">Use the following command, with IP addresses from the <samp class="ph codeph">cluster-show</samp> command above, to create members using Neutron v2:</p>
+
+      <pre class="pre codeblock">
+neutron lbaas-member-create  --subnet private-subnet --address &lt;mysql-cluster-member-1-ip&gt; --protocol-port 3306 pool-mysql-cluster
+neutron lbaas-member-create  --subnet private-subnet --address &lt;mysql-cluster-member-2-ip&gt; --protocol-port 3306 pool-mysql-cluster
+neutron lbaas-member-create  --subnet private-subnet --address &lt;mysql-cluster-member-3-ip&gt; --protocol-port 3306 pool-mysql-cluster        
+      </pre>
+
+    </div>
+
+    <div class="section" id="create_database_loadbalancer__member_v1"><h2 class="title sectiontitle">Create members using Neutron v1</h2>
+      <p class="p">Use the following command, with IP addresses from the <samp class="ph codeph">cluster-show</samp> command above, to create members using Neutron v1:</p>
+
+      <pre class="pre codeblock">
+neutron lb-member-create --address &lt;mysql-cluster-member-1-ip&gt; --protocol-port 3306 pool-mysql-cluster
+neutron lb-member-create --address &lt;mysql-cluster-member-2-ip&gt; --protocol-port 3306 pool-mysql-cluster
+neutron lb-member-create --address &lt;mysql-cluster-member-3-ip&gt; --protocol-port 3306 pool-mysql-cluster
+      </pre>
+
+    </div>
+
+    <div class="section" id="create_database_loadbalancer__application"><h2 class="title sectiontitle">Use a load balancer in an application</h2>
+      <p class="p">Use the following commands to list the IP addresses exposed by your load balancer:</p>
+
+      <ul class="ul">
+        <li class="li"><strong class="ph b">Neutron v2:</strong> <samp class="ph codeph">neutron lbaas-loadbalancer-show lb-mysql-cluster</samp></li>
+
+        <li class="li"><strong class="ph b">Neutron v1:</strong> <samp class="ph codeph">neutron lb-vip-show vip</samp></li>
+
+      </ul>
+
+      <p class="p">This will produce output similar to the following:</p>
+
+      <pre class="pre codeblock">
++---------------------+------------------------------------------------+
+| Field               | Value                                          |
++---------------------+------------------------------------------------+
+| admin_state_up      | True                                           |
+| description         |                                                |
+| id                  | 1123fc73-cf2f-44d8-9f3f-9d2915bada34           |
+| listeners           | {"id": "ee185459-6600-42af-b0bb-21be7c9e3cc0"} |
+| name                | lb-mysql-cluster                               |
+| operating_status    | ONLINE                                         |
+| provider            | haproxy                                        |
+| provisioning_status | ACTIVE                                         |
+| tenant_id           | e7a2538496f8457c97d9c90faa661850               |
+| vip_address         | 192.168.0.25                                   |
+| vip_port_id         | cadebbfe-101d-4ced-ba10-21a966b73280           |
+| vip_subnet_id       | 0135cfa8-be49-4749-8cbc-19356aae4189           |
++---------------------+------------------------------------------------+
+
+      </pre>
+
+    </div>
+
+  </div>
+
+
+</body>
+</html>

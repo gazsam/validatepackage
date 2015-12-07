@@ -1,0 +1,175 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Troubleshooting</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic4317" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/admin/reference/reference_troubleshoot.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Troubleshooting</h1>
+
+
+
+
+
+<div class="body">
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic4317__server-log-files">Server Log Files</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic4317__health-manager-log">health_manager.log</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic4317__inspecting-user-apps-as-an-admin">Inspecting User Apps as an Admin</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic4317__system-diagnosis">System Diagnosis</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic4317__specific-cases">Specific Error Cases</a>
+</li>
+
+</ul>
+
+<div class="section" id="topic4317__server-log-files"><h2 class="title sectiontitle">Server Log Files</h2> 
+<p class="p">If you need to troubleshoot or monitor Application Lifecycle Service logs with a third party,
+they can be found in the \~/helion/logs/* directory on the Application Lifecycle Service
+server.</p>
+
+<p class="p">These logs are under daily log rotation with the use of
+<a class="xref" href="http://manpages.ubuntu.com/manpages/utopic/en/man8/logrotate.8.html" target="_blank">logrotate</a>.
+Up to three days worth of compressed logs are kept before deletion of
+the oldest archive.</p>
+
+<p class="p">To modify the log rotation, edit the <em class="ph i">/etc/logrotate.d/helion</em> file as
+needed. To disable Application Lifecycle Service log rotation, delete the file or move it to
+another folder.</p>
+
+</div>
+
+<div class="section" id="topic4317__health-manager-log"><h2 class="title sectiontitle">health_manager.log</h2> 
+<p class="p">The <samp class="ph codeph">health_manager</samp> process is responsible for
+monitoring containers and making sure they are relaunched if there's a
+problem. The <em class="ph i">health_manager.log</em> file contains information on all
+application instances running on the system.</p>
+
+<p class="p">Sometimes you may see "CRASHED" notifications such as this:</p>
+
+<pre class="pre codeblock">[2013-04-07 22:42:01.329571] hm - pid=2701 tid=5b3b fid=5cbf  DEBUG -- healthmanager.status: {"droplet":119,"state":"CRASHED"}</pre>
+
+<p class="p">A CRASHED status means that the app crashed within the container and the
+health_manager is no longer able to find a running process that looks
+like that app (e.g. for a Node app, the node process isn't running; for
+a Java app, there is no Java process, etc.). Most of the time this is a
+problem with the app within the container.</p>
+
+<p class="p">Cross reference the droplet ID in the <em class="ph i">dea.log</em> or <em class="ph i">stager.log</em> files to
+find the application name, then check the logs for the application (e.g.
+'helion crashlogs'). By far the most common cause of crashing apps is
+a lack of memory, allocating more memory to an app is a good first step
+to see if this fixes the problem.</p>
+
+</div>
+
+<div class="section" id="topic4317__inspecting-user-apps-as-an-admin"><h2 class="title sectiontitle">Inspecting User Apps as an Admin</h2> 
+<p class="p">Application Lifecycle Service Admin accounts have root-like privileges. They can inspect all
+user applications and service instances running on the system.</p>
+
+<p class="p">The helion group \&lt;command-users-groups-limits&gt; command can be used
+by admin accounts to inspect applications and service instances for any
+group or user. For example:</p>
+
+<pre class="pre codeblock">helion group jane.doe@example.com</pre>
+
+<p class="p">This sets the scope of subsequent operations to the specified user. Use
+<samp class="ph codeph">helion group --reset</samp> to return to the scope of
+the logged-in admin user.</p>
+
+</div>
+
+<div class="section" id="topic4317__system-diagnosis"><h2 class="title sectiontitle">System Diagnosis</h2> 
+<p class="p">There may be cases where resolving an issue requires a complete view of
+the system metrics. This functionality is provided by the
+<samp class="ph codeph">helion admin report</samp> command. It generates a
+single file (by default named <em class="ph i">\&lt;target&gt;-report.tgz</em>) that can be
+provided to the Application Lifecycle Service support team for analysis:</p>
+
+<pre class="pre codeblock">helion admin report</pre>
+
+<p class="p">The file is several megabytes in size and will take a few seconds to
+generate. Send it, along with a detailed description of your problem, to
+HPE at: <a class="xref" href="mailto:als-support@hp.com">als-support@hp.com</a>
+</p>
+
+</div>
+
+<div class="section" id="topic4317__specific-cases"><h2 class="title sectiontitle">Specific Error Cases</h2> 
+<p class="p">
+  <strong class="ph b">When pushing an app, the Application Lifecycle Service Client reports OK but app isn't running</strong>
+</p>
+
+<p class="p">The final output from pushing an app should look like:</p>
+
+<pre class="pre codeblock">Staging Application: OK
+Starting Application: OK</pre>
+
+<p class="p">If the app is being pushed to multiple instances, the client waits
+until at least one instance is running, and exits at that point (it
+does not wait until all instances are active). If afterwards you run
+<samp class="ph codeph">helion apps</samp> and find the Health status at 0%,
+it is because the app crashed after starting successfully, not because
+the Application Lifecycle Service client reported incorrectly.</p>
+
+<p class="p">
+  <strong class="ph b">DNS queries returning "connection refused"</strong>
+</p>
+
+<p class="p">This error is reported when the Application Lifecycle Service server does not have an IP
+Address. To investigate and resolve, try the following:</p>
+
+<ul class="ul">
+<li class="li">
+  <p class="p">Verify the ARP tables on the hypervisor host, and on the Application Lifecycle Service server through its <a class="xref" href="../../user/reference/glossary.html#topic6187__term-tty-console">tty console</a>:</p>
+
+
+<pre class="pre codeblock">arp -n</pre>
+
+</li>
+
+<li class="li">
+<p class="p">Check that the DHCP client is running:</p>
+
+
+<pre class="pre codeblock">pgrep dhclient
+grep dhclient /var/log/syslog</pre>
+
+</li>
+
+<li class="li">
+<p class="p">Connect to the DHCP server and verify that it is receiving client requests from the Application Lifecycle Service server.</p>
+
+</li>
+
+<li class="li">
+<p class="p">If your network is statically configured, assign an IP address on the Application Lifecycle Service server by editing the <a class="xref" href="http://manpages.ubuntu.com/manpages/utopic/en/man5/interfaces.5.html" target="_blank">interfaces</a> file:</p>
+
+
+<pre class="pre codeblock">/etc/network/interfaces</pre>
+
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

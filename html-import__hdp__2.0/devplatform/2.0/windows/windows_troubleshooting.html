@@ -1,0 +1,75 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Windows Troubleshooting</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="windows_troubleshooting" /> <meta name="html-import-file-path" content="devplatform/2.0/windows/windows_troubleshooting.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Windows Troubleshooting</h1>
+
+
+  
+
+  
+  
+  <div class="body">
+    <div class="section"><span class="ph">
+      <em class="ph i">Windows, .NET, SQL Server, and IIS are either registered trademarks or trademarks of Microsoft Corporation in the United States and/or other countries.</em>
+    </span></div>
+
+    <p class="p">This document describes troubleshooting and additional configuration steps for Windows instances.</p>
+
+    <p class="p">This document contains the following sections:</p>
+
+    <ul class="ul">
+      <li class="li"><a class="xref" href="#windows_troubleshooting__kato_upstream_proxies">Upstream proxies are not set in DEAs added after cluster creation</a></li>
+
+      <li class="li"><a class="xref" href="#windows_troubleshooting__kato_patch">Kato tries to install patches on Windows nodes</a></li>
+
+      <li class="li"><a class="xref" href="#windows_troubleshooting__instances">Windows instances created from the Images page in Horizon do not work</a></li>
+
+    </ul>
+
+    <div class="section" id="windows_troubleshooting__kato_upstream_proxies"><h2 class="title sectiontitle">Upstream proxies are not set in DEAs added after cluster creation</h2>
+    <p class="p">When DEAs are added to clusters after they have been created, upstream proxies are not automatically configured. To configure upstream proxies for these nodes, do the following:</p>
+
+    <ol class="ol">
+      <li class="li">Connect to each DEA node using SSH</li>
+
+      <li class="li">Run the following commands:
+      <pre class="pre codeblock">
+kato op upstream_proxy set &lt;proxy server&gt;
+service polipo restart
+      </pre>
+</li>
+
+    </ol>
+</div>
+
+    <div class="section" id="windows_troubleshooting__kato_patch"><h2 class="title sectiontitle">Kato tries to install patches on Windows nodes</h2>
+    <p class="p">When <samp class="ph codeph">kato patch install</samp> is run, the installer will attempt to add patches to Windows nodes. This installation will fail with the following errors:</p>
+
+    <pre class="pre codeblock">stackato@fd-core:~$ kato patch install
+ The authenticity of host '10.0.0.36 (10.0.0.36)' can't be established.
+ ECDSA key fingerprint is 85:72:28:b6:4a:61:27:42:f7:0c:ab:8c:12:9a:06:ca.
+ Are you sure you want to continue connecting (yes/no)? yes
+ Warning: Permanently added '10.0.0.36' (ECDSA) to the list of known hosts.
+ ssh: connect to host 10.0.0.38 port 22: Connection timed out
+ Updating kato patch on 10.0.0.38...
+ ssh: connect to host 10.0.0.38 port 22: Connection timed out
+ ssh: connect to host 10.0.0.40 port 22: Connection timed out
+ Updating kato patch on 10.0.0.40...
+ ssh: connect to host 10.0.0.40 port 22: Connection timed out</pre>
+</div>
+
+    <div class="section" id="windows_troubleshooting__instances"><h2 class="title sectiontitle">Windows instances created from the Images page in Horizon do not work</h2>
+    <p class="p">This behavior is by design. Windows instances must be created with the <strong class="ph b">cf-mgmt</strong> tool or through Horizon.</p>
+</div>
+
+  </div>
+
+
+</body>
+</html>

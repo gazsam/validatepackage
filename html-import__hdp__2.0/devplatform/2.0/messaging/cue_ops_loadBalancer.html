@@ -1,0 +1,177 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Accessing RabbitMQ via a Load Balancer</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="cue_ops_loadbalancer" /> <meta name="html-import-file-path" content="devplatform/2.0/messaging/cue_ops_loadBalancer.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Accessing RabbitMQ via a Load Balancer</h1>
+
+
+
+
+<div class="body">
+  <p class="p">Clustering and load balancing connect multiple nodes to form one single logical broker. Virtual hosts, exchanges, users and permissions are mirrored across all nodes in a cluster. 
+    A client connecting to any node can see all the queues in a cluster. Clustering enables high availability of queues and increases the throughput.</p>
+
+  <div class="section" id="cue_ops_loadbalancer__haproxy"><h2 class="title sectiontitle">HAProxy</h2>
+    <p class="p">There are several options for a load balancer solution, including hardware and software. Any type of load balance can be used for a rabbitmq cluster. This document will demonstrate
+      how to use HAproxy.</p>
+
+    <p class="p"><strong class="ph b">Installation</strong></p>
+
+    <p class="p">To set up a load balancer for the rabbitmq cluster, create a VM on the same network as the cluster, install HAProxy, and configure it.</p>
+
+    <p class="p"><strong class="ph b">Create VM</strong></p>
+
+    <p class="p">To create a VM for the load balancer, follow these steps:</p>
+
+    <ol class="ol">
+      <li class="li">Create a security group for this VM. The security group will need to open ports 22, 5672, and 15672:
+      <pre class="pre codeblock">stack@rd-ccp-c0-m1-mgmt:~$ nova secgroup-create haproxy haproxy
++--------------------------------------+---------+-------------+
+| Id                                   | Name    | Description |
++--------------------------------------+---------+-------------+
+| 6e5006f5-1166-4522-be3f-2a0cfe1c5655 | haproxy | haproxy     |
++-------------+-----------+---------+-----------+--------------+
+ 
+stack@env-ccp-c0-m1-mgmt:~$ nova secgroup-add-rule haproxy tcp 22 22 0.0.0.0/0
++-------------+-----------+---------+-----------+--------------+
+| IP Protocol | From Port | To Port | IP Range  | Source Group |
++-------------+-----------+---------+-----------+--------------+
+| tcp         | 22        | 22      | 0.0.0.0/0 |              |
++-------------+-----------+---------+-----------+--------------+
+ 
+stack@env-ccp-c0-m1-mgmt:~/msgaas$ nova secgroup-add-rule haproxy tcp 5672 5672 0.0.0.0/0
++-------------+-----------+---------+-----------+--------------+
+| IP Protocol | From Port | To Port | IP Range  | Source Group |
++-------------+-----------+---------+-----------+--------------+
+| tcp         | 5672      | 5672    | 0.0.0.0/0 |              |
++-------------+-----------+---------+-----------+--------------+
+ 
+stack@env-ccp-c0-m1-mgmt:~/msgaas$ nova secgroup-add-rule haproxy tcp 15672 15672 0.0.0.0/0
++-------------+-----------+---------+-----------+--------------+
+| IP Protocol | From Port | To Port | IP Range  | Source Group |
++-------------+-----------+---------+-----------+--------------+
+| tcp         | 15672     | 15672   | 0.0.0.0/0 |              |
++-------------+-----------+---------+-----------+--------------+</pre>
+</li>
+
+      <li class="li">Create the keypair to SSH into the VM. You can also use an existing keypair if you already have one:
+      <pre class="pre codeblock">nova keypair-add --pub-key my-key.pub my-key</pre>
+</li>
+
+      <li class="li">Create the VM. Make sure you select the same network where the rabbitmq cluster is. For this tutorial, you'll use an <strong class="ph b">Ubuntu 14.04</strong> image.
+      <pre class="pre codeblock">stack@env-ccp-c0-m1-mgmt:~/msgaas$ nova boot --poll --nic net-id=39c8768d-edd7-4cbf-b109-33752d241f06 --image 6ac3d39c-5d22-44bb-893f-17f5312ded44 --key-name msgaas-redwood --security-group haproxy --flavor m1.small  steve-cue-haproxy
++--------------------------------------+-----------------------------------------------------+
+| Property                             | Value                                               |
++--------------------------------------+-----------------------------------------------------+
+| OS-EXT-AZ:availability_zone          | nova                                                |
+| OS-EXT-SRV-ATTR:host                 | -                                                   |
+| OS-EXT-SRV-ATTR:hypervisor_hostname  | -                                                   |
+| OS-EXT-SRV-ATTR:instance_name        | instance-00000021                                   |
+| OS-EXT-STS:power_state               | 0                                                   |
+| OS-EXT-STS:task_state                | scheduling                                          |
+| OS-EXT-STS:vm_state                  | building                                            |
+| OS-SRV-USG:launched_at               | -                                                   |
+| OS-SRV-USG:terminated_at             | -                                                   |
+| accessIPv4                           |                                                     |
+| accessIPv6                           |                                                     |
+| adminPass                            | Z9Zarehu8LfX                                        |
+| config_drive                         |                                                     |
+| created                              | 2015-10-27T21:48:09Z                                |
+| flavor                               | m1.small (2)                                        |
+| hostId                               |                                                     |
+| id                                   | 1b995c26-8e72-417c-9b6a-12066b2a9e1f                |
+| image                                | Ubuntu 14.04 (6ac3d39c-5d22-44bb-893f-17f5312ded44) |
+| key_name                             | my-key                                              |
+| metadata                             | {}                                                  |
+| name                                 | steve-cue-haproxy                                   |
+| os-extended-volumes:volumes_attached | []                                                  |
+| progress                             | 0                                                   |
+| security_groups                      | haproxy                                             |
+| status                               | BUILD                                               |
+| tenant_id                            | 1d2110bc79004439934250748f528c82                    |
+| updated                              | 2015-10-27T21:48:09Z                                |
+| user_id                              | 42ec65af6d2d49a58676ec24321b7524                    |
++--------------------------------------+-----------------------------------------------------+</pre>
+</li>
+
+      <li class="li">Associate a floating IP with the VM:
+      <pre class="pre codeblock">nova floating-ip-associate steve-cue-haproxy 10.241.234.5</pre>
+</li>
+
+      <li class="li">Connect to the VM: 
+      <pre class="pre codeblock">ssh ubuntu@10.241.234.5 -i my-key.pem</pre>
+</li>
+
+    </ol>
+
+    <p class="p"><strong class="ph b">Install HAProxy</strong></p>
+
+    <p class="p">Once the VM has been created and you are connected, follow these steps to install and configure HAProxy:</p>
+
+    <ol class="ol">
+      <li class="li">Elevate to root: <samp class="ph codeph">sudo -i</samp></li>
+
+      <li class="li">If your environment uses a proxy, set up your proxy file:
+        <ul class="ul">
+          <li class="li">Create a file called <samp class="ph codeph">01proxy</samp> in <samp class="ph codeph">/etc/apt/apt.conf.d</samp></li>
+
+          <li class="li">Add the following: <samp class="ph codeph">Acquire::http::Proxy "http://&lt;proxy-ip&gt;:&lt;proxy-port&gt;";</samp></li>
+
+        </ul>
+</li>
+
+        <li class="li">Update apt source: <samp class="ph codeph">apt-get update</samp></li>
+
+        <li class="li">Install haproxy: <samp class="ph codeph">apt-get install haproxy</samp></li>
+
+        <li class="li">Edit <samp class="ph codeph">/etc/default/haproxy</samp>. Set: <samp class="ph codeph">ENABLE=1</samp></li>
+
+        <li class="li">Open <samp class="ph codeph">/etc/haproxy/haproxy.cfg</samp> and append the following to the end. Fill in the IPs of the clusters:
+        <pre class="pre codeblock">...
+listen my-cue-cluster :5672
+    mode tcp
+    retries 3
+    maxconn 2000
+    balance roundrobin
+    option clitcpka
+    timeout client 10m
+    timeout server 10m
+    server cue-cluster-node-1 &lt;cluster-node-1-ip&gt;:5672 check inter 12000 rise 3 fall 3
+    server cue-cluster-node-2 &lt;cluster-node-2-ip&gt;:5672 check inter 12000 rise 3 fall 3
+    server cue-cluster-node-3 &lt;cluster-node-3-ip&gt;:5672 check inter 12000 rise 3 fall 3
+listen my-cue-cluster-management :15672
+    mode tcp
+    retries 3
+    maxconn 2000
+    balance roundrobin
+    option redispatch
+    timeout client 10m
+    timeout server 10m
+    server cue-cluster-node-1 &lt;cluster-node-1-ip&gt;:15672 check inter 12000 rise 3 fall 3
+    server cue-cluster-node-2 &lt;cluster-node-2-ip&gt;:15672 check inter 12000 rise 3 fall 3
+    server cue-cluster-node-3 &lt;cluster-node-3-ip&gt;:15672 check inter 12000 rise 3 fall 3</pre>
+</li>
+
+      <li class="li">Restart HAProxy: <samp class="ph codeph">service haproxy restart</samp></li>
+
+    </ol>
+
+    <p class="p"><strong class="ph b">Verify the installation</strong></p>
+
+    <p class="p">After these steps, your HAProxy should be configured and ready to use. You should now be able to reach the RabbitMQ cluster via the floating IP address. 
+      You can also access the RabbitMQ management console by browsing to http://&lt;floating-ip&gt;:15672</p>
+
+  </div>
+
+  
+  
+</div>
+
+
+</body>
+</html>

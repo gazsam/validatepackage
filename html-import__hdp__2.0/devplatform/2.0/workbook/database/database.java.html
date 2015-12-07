@@ -1,0 +1,244 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Java MySQL Database Sample</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic6838" /> <meta name="html-import-file-path" content="devplatform/2.0/workbook/database/database.java.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Java MySQL Database Sample</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">This very simple Servlet-based Java webapp displays the text "Executed query "SELECT "Hello World!"".", and then the result of that query: "Hello World". This is a demonstration of the minimum requirements to build an application that can connect to a MySQL database provided by ALS and run queries against it. Use this sample to ensure that you have set up your environment for connecting to and working with MySQL on the Helion Development Platform.</p>
+
+<div class="section" id="topic6838__prerequisites"><h2 class="title sectiontitle">Prerequisites</h2> 
+<p class="p">If you are missing any of these items, you must <a class="xref" href="../../devplatform.appdev.html">install them</a>.</p>
+
+<ul class="ul">
+<li class="li">Access to an Application Lifecycle Service (ALS) <a class="xref" href="../../helion/admin/cluster/cluster_index.html">Cluster</a>
+</li>
+
+<li class="li">The  <a class="xref" href="../../helion/user/client/client_index.html">Helion command-line interface (CLI)</a> must be installed.</li>
+
+<li class="li">Access to the web-based <a class="xref" href="../../helion/user/console/console_index.html">Helion Management Console</a>.</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic6838__mysql"><h2 class="title sectiontitle">MySQL</h2> 
+<p class="p">If the MySQL service is not enabled on your cluster, or if you are not sure, follow these steps:</p>
+
+<ol class="ol">
+<li class="li">Go to the Administrative console for your ALS cluster. For example: <em class="ph i">https://api.xx.xx.xx.xx.xip.io</em>, substitute your own cluster's link.</li>
+
+<li class="li">On the <strong class="ph b">Admin</strong> tab, click <strong class="ph b">Cluster</strong>.</li>
+
+<li class="li">Click <strong class="ph b">Cluster Nodes</strong> on the left side of the page.</li>
+
+<li class="li">Click the <strong class="ph b">Settings</strong> icon (a gear icon in the upper right corner)</li>
+
+<li class="li">The <strong class="ph b">MySQL</strong> check box should be checked. If it is not, check it.</li>
+
+<li class="li">Click <strong class="ph b">Save</strong>.</li>
+
+</ol>
+
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span>  If a more durable or scalable MySQL database service is needed, ensure your ALS
+          cluster is configured to use a database instance or master/slave pair provided by the
+          Database Service. For more information, refer to <a class="xref" href="../../database/devplatform.database-instance.html">Using the Database Service</a> and
+          <a class="xref" href="../../database/devplatform.database-ALS.html">Connecting the Database Service with
+            ALS</a>.</div>
+
+      </div>
+
+</div>
+
+<div class="section" id="topic6838__jdk"><h2 class="title sectiontitle">JDK</h2> 
+<p class="p">Install the Java Development Kit (JDK) before installing other prerequisites.</p>
+
+<ul class="ul">
+<li class="li">
+<p class="p">Mac/UNIX: the JDK can be installed with the following command.</p>
+
+
+<pre class="pre codeblock">sudo apt-get install default-jdk</pre>
+
+</li>
+
+<li class="li">
+<p class="p">PC: Navigate to the <a class="xref" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">JDK installation page</a> and run the appropriate JDK installer for your platform.</p>
+
+</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic6838__maven"><h2 class="title sectiontitle">Maven</h2> 
+<p class="p">
+<a class="xref" href="http://maven.apache.org/" target="_blank">Maven</a> must be installed.</p>
+
+<ul class="ul">
+<li class="li">
+<p class="p">Mac/UNIX: Maven can be installed with the following command:</p>
+
+
+<pre class="pre codeblock">sudo apt-get install maven </pre>
+
+</li>
+
+<li class="li">
+<p class="p">PC: Navigate to the <a class="xref" href="http://maven.apache.org/download.cgi" target="_blank">Maven installation page</a> and follow the <a class="xref" href="http://maven.apache.org/guides/getting-started/windows-prerequisites.html" target="_blank">installation directions</a>.</p>
+
+</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic6838__download-the-application-files"><h2 class="title sectiontitle">Download the Application Files</h2> 
+<p class="p">
+<a class="xref" href="https://github.com/HelionDevPlatform/helion-mysql-java" target="_blank">Click here to access the code repository</a>.</p>
+
+</div>
+
+<div class="section" id="topic6838__build-the-application"><h2 class="title sectiontitle">Build the Application</h2> 
+<p class="p">If you are not already there, <em class="ph i">cd</em> into this app's root directory and execute:</p>
+
+<pre class="pre codeblock">mvn clean package</pre>
+
+<p class="p">This builds the application with Maven. It will create the <em class="ph i">mysql-java-1.0.war</em> file within the target directory.</p>
+
+</div>
+
+<div class="section" id="topic6838__deploy-the-application"><h2 class="title sectiontitle">Deploy the Application</h2> 
+<p class="p">Application Lifecycle Service clusters that require an upstream HTTP proxy to access the internet
+        will need to be <a class="xref" href="../../helion/admin/server/https_and_ssl.html#topic_gwr_qgd_ws__staging-cache-app-http-proxy">made aware of the proxy</a>. The sample applications require access to the Internet in
+        order to download dependent packages.</p>
+
+<p class="p">Use the Helion client to deploy your app to Helion Development Platform.  If you are using Eclipse, you can optionally use the <a class="xref" href="../../devplatform.eclipse.html">plugin</a> to deploy.</p>
+
+<ol class="ol">
+<li class="li">Open the <a class="xref" href="../../helion/user/reference/client-ref.html">Helion command-line interface (CLI)</a>
+</li>
+
+<li class="li"> Ensure that you are targeting your desired environment. If you are not,
+          execute<pre class="pre codeblock">helion target https://api.xx.xx.xx.xx.xip.io    </pre>
+</li>
+
+<li class="li"> Ensure that you are logged in to your desired environment. If you are not,
+          execute<pre class="pre codeblock">helion login</pre>
+</li>
+
+<li class="li"> If you are not already there, <samp class="ph codeph">cd</samp> to the root directory of the sample.</li>
+
+<li class="li"> Deploy the application by using the command:<pre class="pre codeblock">helion push</pre>
+</li>
+
+<li class="li"> Accept any default values that you may be prompted for.
+            <strong class="ph b">Note</strong>: By default, ALS
+          clusters are configured with two domains (private and public). In some situations the
+          Helion CLI may prompt you to select a target domain. If prompted, select the public domain
+          from the given list (i.e. <em class="ph i">&lt;app-name&gt;.xxx.xxx.xxx.xxx.xip.io</em>)</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic6838__key-code-snippets"><h2 class="title sectiontitle">Key Code Snippets</h2> 
+<p class="p">This first line in this section of the MysqlServlet.java file shows how to retrieve the connection information for the MySQL instance from the application's environment variables. The connection information is represented using JSON.</p>
+
+<p class="p">The rest of the code shown here parses the JSON string that was retrieved and builds the appropriate JDBC connection string.</p>
+
+<pre class="pre codeblock">String vcap_services = System.getenv("VCAP_SERVICES");
+
+        Connection dbConnection = null;
+
+        if (vcap_services != null &amp;&amp; vcap_services.length() &gt; 0) {
+            try {
+                // Use a JSON parser to get the info we need from  the
+                // VCAP_SERVICES environment variable. This variable contains
+                // credentials for all services bound to the application.
+                // In this case, MySQL is the only bound service.
+                JsonRootNode root = new JdomParser().parse(vcap_services);
+
+                JsonNode mysqlNode = root.getNode("mysql");
+                JsonNode credentials = mysqlNode.getNode(0).getNode("credentials");
+
+                // Grab login info for MySQL from the credentials node
+                String dbname = credentials.getStringValue("name");
+                String hostname = credentials.getStringValue("hostname");
+                String user = credentials.getStringValue("user");
+                String password = credentials.getStringValue("password");
+                String port = credentials.getNumberValue("port");
+
+                String dbUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbname;
+
+                // Connect to MySQL
+                writer.println("Connecting to MySQL...");
+
+                Class.forName("com.mysql.jdbc.Driver");
+                dbConnection = DriverManager.getConnection(dbUrl, user, password);
+            } catch (Exception e) {
+                System.out.println("Caught error: ");
+                e.printStackTrace();
+            }
+        }</pre>
+
+<p class="p">The <em class="ph i">manifest.yml</em> file contains configuration information used by ALS to set up the environment. The <strong class="ph b">services</strong> element informs ALS how to bind to the MySQL service provided by the ALS cluster to the application.</p>
+
+<pre class="pre codeblock">---
+applications: 
+- name: mysql-java
+  mem: 512M
+  path: target/mysql-java-1.0
+  services:
+    ${name}-db:
+      type: mysql</pre>
+
+</div>
+
+<div class="section" id="topic6838__run-the-application"><h2 class="title sectiontitle">Run the Application</h2> 
+<ol class="ol">
+<li class="li">Open the Helion Management Console.  The Management Console is the web-based administrative interface that can be reached by typing the ALS endpoint URL into a browser window.</li>
+
+<li class="li">Click <strong class="ph b">Applications</strong>.</li>
+
+<li class="li">If the file push was successful, you should see <strong class="ph b">mysql-java</strong> in the list of available applications.</li>
+
+<li class="li">The status of the application should be <strong class="ph b">Started</strong>.  Click the name of the application to launch it.</li>
+
+<li class="li">In the upper right-hand corner, click <strong class="ph b">View App</strong>.</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic6838__key-learnings"><h2 class="title sectiontitle">Key Learnings</h2> 
+<ol class="ol">
+<li class="li">You need to provide configuration information so that ALS can bind to a MySQL service. Configuration information is contained in the <em class="ph i">manifest.yml</em> file.</li>
+
+<li class="li">You need to retrieve connection information for MySQL from the application's environment variables and then parse the information into a JDBC-compliant connection string.</li>
+
+<li class="li">You interact with and deploy your app using the Helion CLI or the Eclipse <a class="xref" href="../../devplatform.eclipse.html">plugin</a>.</li>
+
+</ol>
+
+<p class="p">
+<a class="xref" href="../../devplatform.appdev.html">Exit Samples</a> | <a class="xref" href="../helloworld/helloworld.java.html">Previous Sample</a> | <a class="xref" href="../messaging/messaging.java.html">Next Sample</a>
+</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

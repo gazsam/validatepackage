@@ -1,0 +1,57 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform Management Console: Introduction</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_zqb_nk4_xs" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/admin/console/console_intro.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform Management Console: Introduction</h1>
+
+
+  
+
+  <div class="body">
+    <p class="p">The Management Console is a web interface that allows the  administration and management of the ALS Server.</p>
+
+    <p class="p">Your hypervisor provides <a class="xref" href="../../user/reference/glossary.html#topic6187__term-tty-console">tty console</a> access to
+      each of its virtual
+      machines
+      If you have configured the <a class="xref" href="../server/configuration.html#topic31232__server-config-hostname">hostname</a> and
+        <a class="xref" href="../server/configuration.html#topic31232__server-config-hostname">DNS</a> of
+      the server manually, or are connecting to a server administered by someone else, supply the
+      assigned hostname [Example: <samp class="ph codeph">api.helion-test.example.com</samp>] Enter that URL into
+      your web browser and the Management Console will load. </p>
+    <div class="p">The Console is supported on the following browsers:  
+        <ul class="ul">
+          <li class="li">Chrome 30+ (WebKit) </li>
+
+          <li class="li">Firefox 20+ </li>
+
+          <li class="li">IE 10+  </li>
+        
+        </ul>
+ Using a browser which fully supports WebSockets is recommended.</div>
+
+      
+      <div class="note note"><span class="notetitle">Note:</span> The SSL certificate for the ALS Management Console is self-signed. You will need to manually accept this certificate in your browser. See the <a class="xref" href="../server/https_and_ssl.html#topic_gwr_qgd_ws__using-your-own-ssl-certificate">HTTPS documentation</a> for information on using your own certificate.</div>
+   
+      
+      <p class="p">When you first access the Management Console, you will be prompted to create a primary
+      administrative user. Enter an email address as the username, set a secure password, then
+      review and accept the license agreement. </p>
+<div class="note important"><span class="importanttitle">Important:</span> The password you choose here becomes the login password for the <samp class="ph codeph">helion</samp> user on the VM. This user and password is used for <samp class="ph codeph">ssh</samp> access.  </div>
+  
+      <p class="p">Once you've logged in, you can add other users and admins, enable and disable services, and
+      generally set up the system to meet your requirements. note that advanced maintenance and
+      configuration tasks may need to be done at the command line using the <samp class="ph codeph">kato</samp>
+      command utility or the <samp class="ph codeph">cf-mgmt</samp> cluster creation tool. See the command-line
+      tool references (<a class="xref" href="../reference/kato-ref.html#topic39432">kato</a>, <a class="xref" href="../../CLI/ALS_Client_Reference.html#topic13234">cf-mgmt</a>, or the <a class="xref" href="../../user/reference/client-ref.html#topic13355">helion client</a>) for a full
+      list of options. </p>
+
+  </div>
+
+
+</body>
+</html>

@@ -1,0 +1,5339 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Kato Command Reference</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic39432" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/admin/reference/kato-ref.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Kato Command Reference</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">Kato is the Application Lifecycle Service command line administration utility.</p>
+
+<div class="section" id="topic39432__usage"><h2 class="title sectiontitle">Syntax</h2> 
+<pre class="pre codeblock">kato <strong class="ph b">command</strong> [--help] [arguments] [command-options]</pre>
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-list"><h2 class="title sectiontitle">Command List</h2> 
+<p class="p">
+<strong class="ph b">Config</strong>: Manipulates configuration values of Helion components.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-config">config</a>
+</li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">Data</strong>: Import, export, or repair Helion system data</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-data-export">data export</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-data-import">data import</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-data-repair-routes">data repair</a>
+</li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">Debug</strong>: Commands for debugging Helion internals.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-debug-configwatch">debug configwatch</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-debug-redis">debug redis</a>
+</li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">History</strong>: Display the kato commands that have been run</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-history">history</a>
+</li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">Info</strong>: Display information about this node or cluster, including assigned and available roles.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-info">info</a>
+</li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">Inspect</strong>: Detect common problems with your installation.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-inspect">inspect</a>
+</li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">License</strong>: Set the license in use for this microcloud or cluster.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-license">license</a> </li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">Logging</strong>: Logging utilities.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-log-stream">log</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-log-drain-add">log drain</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-log-stream">log stream</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-log-tail">log tail</a>
+</li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">Node</strong>: Node management</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-node-attach">node attach</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-node-availabilityzone">node availabilityzone</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-node-detach">node detach</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-node-list">node list</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-node-migrate">node migrate</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-node-placementzones-add">node placementzones</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-node-remove">node remove</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-node-rename">node rename</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-node-reset">node reset</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-node-retire">node retire</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-node-setup-core">node setup</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-node-update">node update</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-node-upgrade">node upgrade</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-node-version">node version</a>
+</li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">OP</strong>: Various operational commands</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-op-custom_ssl_cert">op custom_ssl_cert</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-op-defer">op defer</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-op-dhcp">op dhcp</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-op-generate_service_tokens">op generate_service_tokens</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-op-import_from_yaml_file">op import_from_yaml_file</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-op-import_from_yaml_files">op import_from_yaml_files</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-op-max_client_upload">op max_client_upload</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-op-regenerate">op regenerate</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-op-remap_hosts">op remap_hosts</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-op-run_deferred">op run_deferred</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-op-set_timezone">op set_timezone</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-op-static_ip">op static_ip</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-op-update_hostsfile">op update_hostsfile</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-op-upstream_proxy">op upstream_proxy</a>
+</li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">Patch</strong>: Update a cluster with post-release fixes.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-patch">patch</a> </li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">Process</strong>: Start, stop, or restart individual processes. Generally not required.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-process-list">process list</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-process-ready">process ready</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-process-restart">process restart</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-process-start">process start</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-process-stop">process stop</a>
+</li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">Relocate</strong>: Move containers, application droplets, or services to a new mount point</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-relocate">relocate</a> </li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">Report</strong>: Generate a report that can be sent to technical support.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-report">report</a> </li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">Restart</strong>: Restart the service or individual roles.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-restart">restart</a>
+</li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">Role</strong>: Management of node roles</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-role-add">role add</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-role-info">role info</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-role-remove">role remove</a>
+</li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">Shell</strong>: Interactive shell for kato</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-shell">shell</a> </li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">Start</strong>: Start the ALS or start individual roles.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-start">start</a> </li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">Status</strong>: List configured roles and their current status across the cluster.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-status">status</a> </li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">Stop</strong>: Stop the service or individual roles.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-stop">stop</a> </li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">Version</strong>: Display the version of ALS currently in use.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic39432__kato-command-ref-version">version</a> </li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-details"><h2 class="title sectiontitle">Command Usage Details</h2> 
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-config"><h2 class="title sectiontitle">Config</h2> 
+<p class="p">Manipulate configuration values of service components.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<p class="p">
+<strong class="ph b">config</strong> <strong class="ph b">get</strong> [<strong class="ph b">options</strong>] &lt;<em class="ph i">component</em>&gt; <em class="ph i">&lt;key-path&gt;</em>
+</p>
+
+<p class="p">
+<strong class="ph b">config</strong> <strong class="ph b">set</strong> [<strong class="ph b">options</strong>] &lt;<em class="ph i">component</em>&gt;  <em class="ph i">&lt;key-path&gt;</em> &lt;<em class="ph i">value</em>&gt;</p>
+
+<p class="p">
+<strong class="ph b">config</strong> <strong class="ph b">del</strong> [<strong class="ph b">options</strong>] &lt;<em class="ph i">component</em>&gt; <em class="ph i">&lt;key-path&gt;</em>
+</p>
+
+<p class="p">
+<strong class="ph b">config</strong> <strong class="ph b">push</strong> [<strong class="ph b">options</strong>] &lt;<em class="ph i">component</em>&gt; <em class="ph i">&lt;key-path&gt;</em> &lt;<em class="ph i">value</em>&gt;</p>
+
+<p class="p">
+<strong class="ph b">config</strong> <strong class="ph b">pop</strong> [<strong class="ph b">options</strong>] &lt;<em class="ph i">component</em>&gt; <em class="ph i">&lt;key-path&gt;</em> &lt;<em class="ph i">value</em>&gt;</p>
+
+<ul class="ul">
+<li class="li">&lt;<em class="ph i">value</em>&gt;: If value is not given for <em class="ph i">set</em>, then it is read from STDIN.</li>
+
+<li class="li">&lt;<em class="ph i">component</em>&gt;: Can be <strong class="ph b">cluster</strong>, <strong class="ph b">local</strong> or the name of a process.</li>
+
+</ul>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-j  --json</td>
+
+    <td class="entry" valign="top">For <var class="keyword varname">set</var>, use JSON format when setting config key values. For <var class="keyword varname">get</var>, use JSON format when displaying output.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-y --yaml</td>
+
+    <td class="entry" valign="top">Use YAML format when retrieving or setting config key values. YAML is the default output format.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-f --flat</td>
+
+    <td class="entry" valign="top">Use a flat output format. <var class="keyword varname"/>
+</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--force</td>
+
+    <td class="entry" valign="top">Force updating value to different type</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-data-export"><h2 class="title sectiontitle">Data Export</h2> 
+<p class="p">Export system data to or from clusters/nodes. </p>
+
+      <p class="p">If no options are specified, includes <strong class="ph b">all</strong> data except <em class="ph i">resources</em> and
+          <em class="ph i">aok-config</em>.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">data export --only-this-node [options] &lt;filename&gt;
+
+data export --cluster [options] &lt;filename&gt;
+
+data export --manual [options] &lt;filename&gt;</pre>
+
+<ul class="ul">
+<li class="li">&lt;<em class="ph i">filename</em>&gt;: The name of the file that the export will be written to.</li>
+
+<li class="li">
+<strong class="ph b">--cluster</strong>:  Affect the entire cluster </li>
+
+<li class="li">
+<strong class="ph b">--only-this-node</strong>: Only affect this node</li>
+
+<li class="li">
+<strong class="ph b">--manual</strong>: Import/export ONLY the roles specified on the command line</li>
+
+</ul>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Display help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--force</td>
+
+    <td class="entry" valign="top">Force import/export of specified roles even if they are not enabled. This command requires --manual and implies --only-this-node</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--remote</td>
+
+    <td class="entry" valign="top">Remote import/export (internal use only)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--base-dir base-dir&gt;</td>
+
+    <td class="entry" valign="top">Base directory for extracting temporary files </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--only-users-orgs</td>
+
+    <td class="entry" valign="top">Include ONLY the portions related to users and organizations (parts of main-db, aok-db, aok-config, db-encryption-key, license) </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--droplets</td>
+
+    <td class="entry" valign="top">Include droplets (uploaded apps) in the export</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-droplets</td>
+
+    <td class="entry" valign="top">Do not include droplets (uploaded apps) in the export  </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--packages</td>
+
+    <td class="entry" valign="top">Include app packages in the export </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-packages</td>
+
+    <td class="entry" valign="top">Do not include app packages </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--resources</td>
+
+    <td class="entry" valign="top">Include the upload cache</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-resources</td>
+
+    <td class="entry" valign="top">Do not include the upload cache (default)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--license</td>
+
+    <td class="entry" valign="top">Include the service license</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-license</td>
+
+    <td class="entry" valign="top">Do not include the service license</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--db-encryption-key</td>
+
+    <td class="entry" valign="top">Include the key used to encrypt the service DB (recommended) </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-db-encryption-key</td>
+
+    <td class="entry" valign="top">Do not include the database encryption key</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--main-db</td>
+
+    <td class="entry" valign="top">Include the cloud controller's main database</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-main-db</td>
+
+    <td class="entry" valign="top">Do not include the cloud controller's main database </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--aok-db</td>
+
+    <td class="entry" valign="top">Include AOK's database</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-aok-db</td>
+
+    <td class="entry" valign="top">Do not include AOK's database </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--aok-config</td>
+
+    <td class="entry" valign="top">Include AOK's configuration</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-aok-config</td>
+
+    <td class="entry" valign="top">Do not include AOK's configuration (default)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--helion-rest-db</td>
+
+    <td class="entry" valign="top">Include the Rest's database</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-helion-rest-db</td>
+
+    <td class="entry" valign="top">Do not include the Rest's database</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--filesystem</td>
+
+    <td class="entry" valign="top">Include the filesystem service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-filesystem</td>
+
+    <td class="entry" valign="top">Do not include the filesystem service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-filesystem-data</td>
+
+    <td class="entry" valign="top">Do not include the filesystem service's user data</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-filesystem-user-creation</td>
+
+    <td class="entry" valign="top">Do not include the filesystem service's user creation/quota </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--harbor</td>
+
+    <td class="entry" valign="top">Include the harbor service </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-harbor</td>
+
+    <td class="entry" valign="top">Do not include the harbor service </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-harbor-data</td>
+
+    <td class="entry" valign="top">Do not include the harbor service's user data</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-harbor-metadata</td>
+
+    <td class="entry" valign="top">Do not include the harbor service's metadata </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--mysql</td>
+
+    <td class="entry" valign="top">Include the MySQL service </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-mysql</td>
+
+    <td class="entry" valign="top">Do not include the MySQL service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-mysql-data</td>
+
+    <td class="entry" valign="top">Do not include the MySQL service's data</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-mysql-metadata</td>
+
+    <td class="entry" valign="top">Do not include the MySQL service's metadata </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--postgresql</td>
+
+    <td class="entry" valign="top">Include the PostgreSQL service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-postgresql</td>
+
+    <td class="entry" valign="top">Do not include the PostgreSQL service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-postgresql-data</td>
+
+    <td class="entry" valign="top">Do not include the PostgreSQL service's data </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-postgresql-metadata</td>
+
+    <td class="entry" valign="top">Do not include the PostgreSQL service's metadata </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--mongodb</td>
+
+    <td class="entry" valign="top">Include the MongoDB service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-mongodb</td>
+
+    <td class="entry" valign="top">Do not include the MongoDB service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-mongodb-data</td>
+
+    <td class="entry" valign="top">Do not include the MongoDB service's data</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-mongodb-metadata</td>
+
+    <td class="entry" valign="top">Do not include the MongoDB service's metadata </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--memcached</td>
+
+    <td class="entry" valign="top">Include the memcached service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-memcached</td>
+
+    <td class="entry" valign="top">Do not include the memcached service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-memcached-data</td>
+
+    <td class="entry" valign="top">Do not include the memcached service's data</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-memcached-metadata</td>
+
+    <td class="entry" valign="top">Do not include the memcached service's metadata </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--redis</td>
+
+    <td class="entry" valign="top">Include the Redis service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-redis</td>
+
+    <td class="entry" valign="top">Do not include the Redis service </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-redis-data</td>
+
+    <td class="entry" valign="top">Do not include the Redis service's data</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-redis-metadata</td>
+
+    <td class="entry" valign="top">Do not include the Redis service's metadata</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--rabbit</td>
+
+    <td class="entry" valign="top">Include the RabbitMQ service (Messaging)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-rabbit</td>
+
+    <td class="entry" valign="top">Do not include the RabbitMQ service </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-rabbit-data</td>
+
+    <td class="entry" valign="top">Do not include the RabbitMQ service's data</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-rabbit-metadata</td>
+
+    <td class="entry" valign="top">Do not include the RabbitMQ service's metadata </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--rabbit3</td>
+
+    <td class="entry" valign="top">Include the RabbitMQ service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-rabbit3</td>
+
+    <td class="entry" valign="top">Do not include the RabbitMQ service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-rabbit3-data</td>
+
+    <td class="entry" valign="top">Do not include the RabbitMQ service's data</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-rabbit3-metadata</td>
+
+    <td class="entry" valign="top">Do not include the RabbitMQ service's metadata </td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-data-import"><h2 class="title sectiontitle">Data Import</h2> 
+<p class="p">Import system data to or from clusters/nodes. </p>
+
+      <p class="p">If no options are specified, includes <strong class="ph b">all</strong> data except <em class="ph i">resources</em> and
+          <em class="ph i">aok-config</em>.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">data import --only-this-node [options] &lt;source&gt;
+data  import --cluster [options] &lt;source&gt;
+data import --manual [options] &lt;source&gt;</pre>
+
+<ul class="ul">
+<li class="li">&lt;<em class="ph i">source</em>&gt;:    The hostname or a filename to import from.</li>
+
+<li class="li">
+<strong class="ph b">--cluster</strong>:  Affect the entire cluster </li>
+
+<li class="li">
+<strong class="ph b">--only-this-node</strong>: Only affect this node</li>
+
+<li class="li">
+<strong class="ph b">--manual</strong>: Import/export ONLY the roles specified on the command line</li>
+
+</ul>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--fix-app-paths</td>
+
+    <td class="entry" valign="top">Rewrite /app and /app/app paths in manifest.yml</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--force</td>
+
+    <td class="entry" valign="top">Force import/export of specified roles even if they are not enabled Requires --manual and implies --only-this-node</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--remote</td>
+
+    <td class="entry" valign="top">Remote import/export (internal use only)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--base-dir base-dir&gt;</td>
+
+    <td class="entry" valign="top">Base directory for extracting temporary files </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--timeout seconds&gt;</td>
+
+    <td class="entry" valign="top">Override staging timeout default for legacy import</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--legacy</td>
+
+    <td class="entry" valign="top">Treat import as a legacy services import (internal use only)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--droplets</td>
+
+    <td class="entry" valign="top">Include droplets (uploaded apps) in the export</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-droplets</td>
+
+    <td class="entry" valign="top">Do not include droplets (uploaded apps) in the export  </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--packages</td>
+
+    <td class="entry" valign="top">Include app packages in the export </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-packages</td>
+
+    <td class="entry" valign="top">Do not include app packages </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--resources</td>
+
+    <td class="entry" valign="top">Include the upload cache</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-resources</td>
+
+    <td class="entry" valign="top">Do not include the upload cache (default)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--license</td>
+
+    <td class="entry" valign="top">Include the service license</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-license</td>
+
+    <td class="entry" valign="top">Do not include the service license</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--db-encryption-key</td>
+
+    <td class="entry" valign="top">Include the key used to encrypt the service DB (recommended) </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-db-encryption-key</td>
+
+    <td class="entry" valign="top">Do not include the database encryption key</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--main-db</td>
+
+    <td class="entry" valign="top">Include the cloud controller's main database</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-main-db</td>
+
+    <td class="entry" valign="top">Do not include the cloud controller's main database </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--aok-db</td>
+
+    <td class="entry" valign="top">Include AOK's database</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-aok-db</td>
+
+    <td class="entry" valign="top">Do not include AOK's database </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--aok-config</td>
+
+    <td class="entry" valign="top">Include AOK's configuration</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-aok-config</td>
+
+    <td class="entry" valign="top">Do not include AOK's configuration (default)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--helion-rest-db</td>
+
+    <td class="entry" valign="top">Include the Rest's database</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-helion-rest-db</td>
+
+    <td class="entry" valign="top">Do not include the Rest's database</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--filesystem</td>
+
+    <td class="entry" valign="top">Include the filesystem service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-filesystem</td>
+
+    <td class="entry" valign="top">Do not include the filesystem service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-filesystem-data</td>
+
+    <td class="entry" valign="top">Do not include the filesystem service's user data</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-filesystem-user-creation</td>
+
+    <td class="entry" valign="top">Do not include the filesystem service's user creation/quota </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--harbor</td>
+
+    <td class="entry" valign="top">Include the harbor service </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-harbor</td>
+
+    <td class="entry" valign="top">Do not include the harbor service </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-harbor-data</td>
+
+    <td class="entry" valign="top">Do not include the harbor service's user data</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-harbor-metadata</td>
+
+    <td class="entry" valign="top">Do not include the harbor service's metadata </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--mysql</td>
+
+    <td class="entry" valign="top">Include the MySQL service </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-mysql</td>
+
+    <td class="entry" valign="top">Do not include the MySQL service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-mysql-data</td>
+
+    <td class="entry" valign="top">Do not include the MySQL service's data</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-mysql-metadata</td>
+
+    <td class="entry" valign="top">Do not include the MySQL service's metadata </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--postgresql</td>
+
+    <td class="entry" valign="top">Include the PostgreSQL service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-postgresql</td>
+
+    <td class="entry" valign="top">Do not include the PostgreSQL service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-postgresql-data</td>
+
+    <td class="entry" valign="top">Do not include the PostgreSQL service's data </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-postgresql-metadata</td>
+
+    <td class="entry" valign="top">Do not include the PostgreSQL service's metadata </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--mongodb</td>
+
+    <td class="entry" valign="top">Include the MongoDB service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-mongodb</td>
+
+    <td class="entry" valign="top">Do not include the MongoDB service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-mongodb-data</td>
+
+    <td class="entry" valign="top">Do not include the MongoDB service's data</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-mongodb-metadata</td>
+
+    <td class="entry" valign="top">Do not include the MongoDB service's metadata </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--memcached</td>
+
+    <td class="entry" valign="top">Include the memcached service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-memcached</td>
+
+    <td class="entry" valign="top">Do not include the memcached service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-memcached-data</td>
+
+    <td class="entry" valign="top">Do not include the memcached service's data</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-memcached-metadata</td>
+
+    <td class="entry" valign="top">Do not include the memcached service's metadata </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--redis</td>
+
+    <td class="entry" valign="top">Include the Redis service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-redis</td>
+
+    <td class="entry" valign="top">Do not include the Redis service </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-redis-data</td>
+
+    <td class="entry" valign="top">Do not include the Redis service's data</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-redis-metadata</td>
+
+    <td class="entry" valign="top">Do not include the Redis service's metadata</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--rabbit</td>
+
+    <td class="entry" valign="top">Include the RabbitMQ service (Messaging)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-rabbit</td>
+
+    <td class="entry" valign="top">Do not include the RabbitMQ service </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-rabbit-data</td>
+
+    <td class="entry" valign="top">Do not include the RabbitMQ service's data</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-rabbit-metadata</td>
+
+    <td class="entry" valign="top">Do not include the RabbitMQ service's metadata </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--rabbit3</td>
+
+    <td class="entry" valign="top">Include the RabbitMQ service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-rabbit3</td>
+
+    <td class="entry" valign="top">Do not include the RabbitMQ service</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-rabbit3-data</td>
+
+    <td class="entry" valign="top">Do not include the RabbitMQ service's data</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--exclude-rabbit3-metadata</td>
+
+    <td class="entry" valign="top">Do not include the RabbitMQ service's metadata </td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-data-repair-routes"><h2 class="title sectiontitle">Data Repair</h2> 
+<p class="p">Detects and fixes issues in the cloud controller database routes:
+  - Fix leading dots
+  - Fix duplicate prefix</p>
+
+<p class="p">After a legacy import, some apps ended up having routes with a leading '.' character,  which is invalid. These routes were not present in the source cluster.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">data repair routes [options]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n  --dry-run</td>
+
+    <td class="entry" valign="top">Display problematic routes, but don't change anything </td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-y --no-prompt</td>
+
+    <td class="entry" valign="top">Convert all with no user prompting</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-v --verbose</td>
+
+    <td class="entry" valign="top">Be verbose. (display maximum information output)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-q --quiet</td>
+
+    <td class="entry" valign="top">Be quiet. (display minimum or no information output)</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-debug-configwatch"><h2 class="title sectiontitle">Debug Configwatch</h2> 
+<p class="p">Watch changes to cluster configuration.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">debug configwatch [options] [&lt;process-name&gt;...]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-d  --dump-tree</td>
+
+    <td class="entry" valign="top">Dump the config tree seen since starting</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-s  --no-value</td>
+
+    <td class="entry" valign="top">Do not print the value of path</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-debug-redis"><h2 class="title sectiontitle">Debug Redis</h2> 
+<p class="p">Connects to the Redis server used for cluster config via redis-cli</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">debug redis</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+<p class="p">None.</p>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-history"><h2 class="title sectiontitle">History</h2> 
+<p class="p">Displays the kato commands that have been run.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">history [--help] [-n &lt;node-IP&gt;*] [--json]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n  --node node-IP&gt;</td>
+
+    <td class="entry" valign="top">Get command history from a specific cluster node</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-j --json</td>
+
+    <td class="entry" valign="top">Output as JSON</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-info"><h2 class="title sectiontitle">Info</h2> 
+<p class="p">Display information about this node or cluster, including assigned and available roles.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">info [--help] [-n &lt;node-IP&gt;] [--json] [--yaml]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n  --node node-IP&gt;</td>
+
+    <td class="entry" valign="top">Display info from a specific cluster node</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-j --json</td>
+
+    <td class="entry" valign="top">Output as JSON</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-y --yaml</td>
+
+    <td class="entry" valign="top">Output as YAML</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-inspect"><h2 class="title sectiontitle">Inspect</h2> 
+<p class="p">Detect common problems with your installation.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">inspect [options]
+
+inspect [options] all
+
+inspect [options] group &lt;group-name&gt;
+
+inspect [options] tests &lt;test-name&gt;
+
+inspect [options] list</pre>
+
+<p class="p">To run all tests, enter:</p>
+
+<pre class="pre codeblock">kato inspect</pre>
+
+<p class="p">To run a specific group of tests, enter:</p>
+
+<pre class="pre codeblock">kato inspect group &lt;name of group&gt;</pre>
+
+<p class="p">To run specific tests, enter:</p>
+
+<pre class="pre codeblock">kato inspect tests &lt;testname1&gt; &lt;testname2&gt; &lt;testname3&gt;</pre>
+
+<p class="p">To list all available tests, enter:</p>
+
+<pre class="pre codeblock">kato inspect list</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-v  --verbose</td>
+
+    <td class="entry" valign="top">Verbose (maximum) output</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-license"><h2 class="title sectiontitle">License</h2> 
+<p class="p">Set the service license in use for this microcloud or cluster.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">license set [options] &lt;value&gt;
+
+license enable
+
+license disable</pre>
+
+<ul class="ul">
+<li class="li">&lt;<em class="ph i">value</em>&gt;: The license to use; if not given then it is read from STDIN</li>
+
+</ul>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-log-drain-add"><h2 class="title sectiontitle">Log Drain Add</h2> 
+<p class="p">Add a new log drain.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">log drain add [options] &lt;name&gt; &lt;uri&gt; [&lt;param&gt;...]</pre>
+
+<p class="p">
+  <strong class="ph b">Examples</strong>
+</p>
+
+<p class="p">Add a drain to receive system logs</p>
+
+<pre class="pre codeblock">kato log drain add system_splunk udp://logs.splunk.com:1234/</pre>
+
+<p class="p">Add a drain to forward all application and system logs as json</p>
+
+<pre class="pre codeblock">kato log drain add -f json -p apptail,systail app_sys_splunk \
+udp://logs.splunk.com:1235/</pre>
+
+<p class="p">Add a drain with a custom or named format,</p>
+
+<pre class="pre codeblock">kato log drain add -f ": " system_splunk_2 \
+  udp://logs.splunk.com:1236/
+kato log drain add -f systail-syslog system_splunk_2 \
+  udp://logs.splunk.com:1236/</pre>
+
+<p class="p">Pass custom parameters to a drain</p>
+
+<pre class="pre codeblock">kato log drain add mydrain redis://localhost:6379 key=logdata </pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-f --format format&gt; </td>
+
+    <td class="entry" valign="top">Set the message format</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-p  --prefix  prefix&gt;</td>
+
+    <td class="entry" valign="top">Message key prefix; possible values: systail, event, apptail (comma-separated, no spaces)</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-log-drain-delete"><h2 class="title sectiontitle">Log Drain Delete</h2> 
+<p class="p">Delete a specified drain.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">log drain delete [options] &lt;name&gt;</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-log-drain-list"><h2 class="title sectiontitle">Log Drain List</h2> 
+<p class="p">List all log drains.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">log drain list [options]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-y  --yaml</td>
+
+    <td class="entry" valign="top">Output as YAML</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-j  --json</td>
+
+    <td class="entry" valign="top">Output as JSON</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-log-drain-status"><h2 class="title sectiontitle">Log Drain Status</h2> 
+<p class="p">Show the status of all or specified log drains. If no options are passed, all drains are
+        shown.</p>
+
+<pre class="pre codeblock">log drain status [options] [&lt;drain1&gt;...]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n  --not-running</td>
+
+    <td class="entry" valign="top">Show only drains that are not running</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-y  --yaml</td>
+
+    <td class="entry" valign="top">Output as YAML</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-j  --json</td>
+
+    <td class="entry" valign="top">Output as JSON</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-log-stream"><h2 class="title sectiontitle">Log Stream</h2> 
+<p class="p">Define a log stream.</p>
+
+<pre class="pre codeblock">log stream [options] &lt;key&gt;...</pre>
+
+<ul class="ul">
+<li class="li">&lt;<em class="ph i">key</em>&gt;: Logyard stream key prefix (ex: <em class="ph i">systail.dea</em>)</li>
+
+</ul>
+
+<p class="p">
+  <strong class="ph b">Examples</strong>
+</p>
+
+<p class="p">Stream cloud events</p>
+
+<pre class="pre codeblock">kato log stream event</pre>
+
+<p class="p">Stream DEA and app log stream</p>
+
+<pre class="pre codeblock">kato log stream systail.dea systail.stager apptail</pre>
+
+<p class="p">Stream system logs (Note this is equivalent to <em class="ph i">kato log tail</em>.)</p>
+
+<pre class="pre codeblock">kato log stream systail</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--no-color</td>
+
+    <td class="entry" valign="top">Turn off color</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--raw</td>
+
+    <td class="entry" valign="top">Show unformatted logs, including logyard INFO records (which are skipped by default)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--json</td>
+
+    <td class="entry" valign="top">Display the original JSON</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--time</td>
+
+    <td class="entry" valign="top">Show timestamp</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n  --node node-IP&gt;</td>
+
+    <td class="entry" valign="top">Only show logs from the specified cluster node</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-l  --local</td>
+
+    <td class="entry" valign="top">Only show logs from the current node</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-log-tail"><h2 class="title sectiontitle">Log Tail</h2> 
+<p class="p"> Create a stream that displays changes to the specified component in real time.</p>
+
+      <p class="p"><strong class="ph b">Syntax</strong>
+      </p>
+
+<pre class="pre codeblock">log tail [options] [&lt;component&gt;...]</pre>
+
+<ul class="ul">
+<li class="li">&lt;<em class="ph i">component</em>&gt;: A process name, role name or role group name.</li>
+
+</ul>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--no-color</td>
+
+    <td class="entry" valign="top">Turn off color</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--raw</td>
+
+    <td class="entry" valign="top">Show unformatted logs, including logyard INFO records (which are skipped by default)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--json</td>
+
+    <td class="entry" valign="top">Display the original JSON</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--time</td>
+
+    <td class="entry" valign="top">Show timestamp</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n  --node node-IP&gt;</td>
+
+    <td class="entry" valign="top">Only show logs from the specified cluster node</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-l  --local</td>
+
+    <td class="entry" valign="top">Only show logs from the current node</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-attach"><h2 class="title sectiontitle">Node Attach</h2> 
+<p class="p">Attach a node to a specified ALS core node.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node attach [options] &lt;core-ip&gt;</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-e  --enable roles&gt;</td>
+
+    <td class="entry" valign="top">Enable the specified roles (comma-separated list, no spaces)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-s  --no-start</td>
+
+    <td class="entry" valign="top">Do not auto start processes</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-v  --verbose</td>
+
+    <td class="entry" valign="top">Show process information when starting/stopping roles</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-f  --force</td>
+
+    <td class="entry" valign="top">Forces this node to attach to a core node, ignoring any version mismatches</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-availabilityzone"><h2 class="title sectiontitle">Node Availability Zone</h2> 
+<p class="p">Gets/sets the availability zone on a node.</p>
+
+<pre class="pre codeblock">node availabilityzone [options] [&lt;zone&gt;]</pre>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n --node node-id&gt; </td>
+
+    <td class="entry" valign="top">Sets the availability zone on the specified DEA node. If unspecified, local node is used.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-detach"><h2 class="title sectiontitle">Node Detach</h2> 
+<p class="p">Detaches this node from an ALS core node.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node detach [options]</pre>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-s --start</td>
+
+    <td class="entry" valign="top">Automatically start processes after detaching</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-v --verbose</td>
+
+    <td class="entry" valign="top">Show process information when starting/stopping roles</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-list"><h2 class="title sectiontitle">Node List</h2> 
+<p class="p">List all nodes known to this cluster.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node list [options]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-y  --yaml</td>
+
+    <td class="entry" valign="top">Display output as YAML</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-j  --json</td>
+
+    <td class="entry" valign="top">Display output as JSON</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-migrate"><h2 class="title sectiontitle">Node Migrate</h2> 
+<p class="p">Migrate the node configuration from old node to a new node.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node migrate &lt;old-node-IP&gt; &lt;new-node-IP&gt;</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-r --no-restart</td>
+
+    <td class="entry" valign="top">Do not restart roles after migration</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-placementzones-add"><h2 class="title sectiontitle">Node Placement Zones</h2> 
+<p class="p">Adds a DEA zone to the current node.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node placementzones add [options] &lt;zone&gt;</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n --node node-id&gt; </td>
+
+    <td class="entry" valign="top">Add a zone on the specified DEA node. If unspecified, local node is used.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-placementzones-list"><h2 class="title sectiontitle">Node Placement Zones List</h2> 
+<p class="p">Lists the DEA zones on the specified node.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node placementzones list [options]</pre>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n --node node-id&gt; </td>
+
+    <td class="entry" valign="top">Add a zone on the specified DEA node. If unspecified, local node is used.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-placementzones-remove"><h2 class="title sectiontitle">Node Placement Zones Remove</h2> 
+<p class="p">Removes a DEA zone from the specified node.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node placementzones remove [options] &lt;zone&gt;*</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n --node node-id&gt; </td>
+
+    <td class="entry" valign="top">Removes the placement zone from the specified DEA node. If unspecified, the local node is used.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-remove"><h2 class="title sectiontitle">Node Remove</h2> 
+<p class="p">Remove the node(s) from the cluster</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node remove [--skip-detach] &lt;node-IP&gt;...</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-s --skip-detach</td>
+
+    <td class="entry" valign="top">Skips updating the removed nodes config via detaching the node. Use this option ONLY if the node has already been destroyed.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-rename"><h2 class="title sectiontitle">Node Rename</h2> 
+<p class="p">Rename a node.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node rename [options] &lt;hostname&gt;</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-s --skip-remap-hosts</td>
+
+    <td class="entry" valign="top">Skip the remapping of existing app URLS to the new domain.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-l --skip-ssl-regeneration</td>
+
+    <td class="entry" valign="top">Skip regenerating the SSL keys.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--no-restart</td>
+
+    <td class="entry" valign="top">Do not restart roles.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-v --verbose</td>
+
+    <td class="entry" valign="top">Show process information when restarting roles.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-reset"><h2 class="title sectiontitle">Node Reset</h2> 
+<p class="p">Reset the ALS VM to its default configuration.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node reset docker
+
+node reset services
+
+node reset --help</pre>
+
+<ul class="ul">
+<li class="li">
+<em class="ph i">docker</em>: removes all Docker containers and deletes all but the ALS release images; not meant for general use.</li>
+
+<li class="li">
+<em class="ph i">services</em>: removes all service data; not meant for general use.</li>
+
+</ul>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+      <div class="note note"><span class="notetitle">Note:</span> <samp class="ph codeph">node reset factory</samp> is no longer a supported operation.</div>
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-retire"><h2 class="title sectiontitle">Node Retire</h2> 
+<p class="p">Gracefully retires a DEA node from the cluster. New instances of the apps are started on other available DEAs before the retiring DEA is shut down.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node retire [options]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n --node &lt;node-id&gt;</td>
+
+    <td class="entry" valign="top">Retire the specified DEA node; if unspecified, the local node is used.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-setup-core"><h2 class="title sectiontitle">Node Setup Core</h2> 
+<p class="p">Configure the core node of your ALS cluster.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node setup core [&lt;endpoint&gt;]
+
+node setup core --help</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-v --verbose</td>
+
+    <td class="entry" valign="top">Show process information.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-setup-firstuser"><h2 class="title sectiontitle">Node Setup Firstuser</h2> 
+<p class="p">First user setup.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node setup firstuser [options] &lt;email&gt; &lt;org&gt;</pre>
+
+<ul class="ul">
+<li class="li">
+<em class="ph i">&lt;email&gt;</em>: First user's email address.</li>
+
+<li class="li">
+<em class="ph i">&lt;org&gt;</em>: First user's Organization.</li>
+
+</ul>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-p --password password&gt;</td>
+
+    <td class="entry" valign="top">First user's password. If your UNIX password has not been updated, then your UNIX password will be updated to this. Will be prompted for if not given.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-u --username username&gt;</td>
+
+    <td class="entry" valign="top">First user's username. If not specified, defaults to the first user's email address.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-s --space space&gt;</td>
+
+    <td class="entry" valign="top">First user's initial space. If not specified, user will NOT initially be assigned to a space.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-setup-load_balancer"><h2 class="title sectiontitle">Node Setup Load Balancer</h2> 
+<p class="p">Configure this node as a HTTP/S load balancer.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node setup load_balancer [&lt;IP&gt;...] [--force]
+
+node setup load_balancer --help</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-setup-micro"><h2 class="title sectiontitle">Node Setup Micro</h2> 
+<p class="p">Configure this instance as a micro cloud.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node setup micro [options] [&lt;role&gt;...]
+
+node setup micro --help</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-d --delete </td>
+
+    <td class="entry" valign="top">Delete old configuration and re-initialize everything.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-s --no-start</td>
+
+    <td class="entry" valign="top">Do not auto start processes.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-v --verbose</td>
+
+    <td class="entry" valign="top">Show process information.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-update"><h2 class="title sectiontitle">Node Update</h2> 
+<p class="p">Update IP references in config.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node update [options]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-upgrade"><h2 class="title sectiontitle">Node Upgrade</h2> 
+<p class="p">Upgrade the installation to the latest available version, preserving deployed applications, config, services, and other state.</p>
+
+<p class="p">Will operate on current node by default; upgrade can be done for the entire cluster at once (with --cluster) or for a specific node (with --node).</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node upgrade [options]
+
+node upgrade --run-command &lt;command&gt;</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top"> -j --json</td>
+
+    <td class="entry" valign="top">Display output in JSON.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n --node <var class="keyword varname"/>
+</td>
+
+    <td class="entry" valign="top">Targets the provided node.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-u --update-kato</td>
+
+    <td class="entry" valign="top">Updates kato node upgrade to the latest codebase.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-v --version &lt;<var class="keyword varname">version</var>&gt;</td>
+
+    <td class="entry" valign="top">The version to upgrade to. If unspecified, the latest version is used.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--force</td>
+
+    <td class="entry" valign="top">Forces an upgrade to run.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--prepare</td>
+
+    <td class="entry" valign="top">Prepare the core node for an upgrade.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--resume</td>
+
+    <td class="entry" valign="top">Resumes an upgrade process, used internally by Kato and should only be called manually when requested.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--role-order &lt;<var class="keyword varname">role-order</var>&gt;</td>
+
+    <td class="entry" valign="top">Comma separated list of roles defining the order that roles should be upgraded in a cluster.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--skip-confirmation</td>
+
+    <td class="entry" valign="top">Skips initial confirmation of upgrade.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--status</td>
+
+    <td class="entry" valign="top">Shows the status of upgrades on a node.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--development</td>
+
+    <td class="entry" valign="top">Run a development upgrade (internal use only).</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--cache-ip &lt;<var class="keyword varname">cache-ip</var>&gt;</td>
+
+    <td class="entry" valign="top">The IP of the node to act as a cache for all nodes in the cluster during upgrade.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--download-only</td>
+
+    <td class="entry" valign="top">Downloads the files required to perform an upgrade without starting an upgrade. When using this option, --cache-ip must be specified.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--cluster</td>
+
+    <td class="entry" valign="top">Unused parameter for backwards compatibility.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--offline</td>
+
+    <td class="entry" valign="top">Upgrade while offline. This option requires that the upgrade content was downloaded previously.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-node-version"><h2 class="title sectiontitle">Node Version</h2> 
+<p class="p">Retrieves the version number from the specified node.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">node version [options] [&lt;node-IP&gt;]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-op-custom_ssl_cert"><h2 class="title sectiontitle">OP Custom SSL Cert</h2> 
+<p class="p">Configuration of custom SSL certificates to be used in conjunction with router2g and deployed applications.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">op custom_ssl_cert install [options] &lt;key-path&gt; &lt;cert-path&gt; &lt;domain&gt;
+
+op custom_ssl_cert remove &lt;domain&gt;
+
+op custom_ssl_cert list</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--wildcard-subdomains</td>
+
+    <td class="entry" valign="top">Wildcard SSL certificate.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--update</td>
+
+    <td class="entry" valign="top">Update an existing SSL certificate.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-op-defer"><h2 class="title sectiontitle">OP Defer</h2> 
+<p class="p">Defer a kato command to be run by <em class="ph i">op run_deferred</em> when the system is rebooted and supervisor has started. Commands are saved to the <em class="ph i">/home/helion/.kato-deferred</em> YAML file.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">op defer (&lt;command&gt; | --reset) [--run-as-root] [--post-start]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--run-as-root</td>
+
+    <td class="entry" valign="top">Run deferred command as root</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--reset</td>
+
+    <td class="entry" valign="top">Clear list of deferred commands</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--post-start</td>
+
+    <td class="entry" valign="top">Run the deferred command after all processes managed by kato have started.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-op-dhcp"><h2 class="title sectiontitle">OP DHCP</h2> 
+<p class="p">Configure this node's networking to use DHCP.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">op dhcp</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-op-generate_service_tokens"><h2 class="title sectiontitle">OP Generate Service Tokens</h2> 
+<p class="p">Generates auth tokens for services.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">op generate_service_tokens</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-op-import_from_yaml_file"><h2 class="title sectiontitle">OP Import from YAML File</h2> 
+<p class="p">Import the YAML configuration for a single process, deleting and replacing all prior configuration for that process.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">op import_from_yaml_file [--upgrade] [--new-key-file=&lt;file&gt;] &lt;process&gt;</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--new-key-file=&lt;file&gt;</td>
+
+    <td class="entry" valign="top">Override config with a specific YAML file.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--upgrade</td>
+
+    <td class="entry" valign="top">Merge the new configuration rather than deleting and replacing.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-op-import_from_yaml_files"><h2 class="title sectiontitle">OP Import from YAML Files</h2> 
+<p class="p">Import configuration from YAML files for all processes, deleting and replacing prior configuration.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">op import_from_yaml_files [--upgrade] [--new-key-file=&lt;file&gt;]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--new-key-file=&lt;file&gt;</td>
+
+    <td class="entry" valign="top">Override config with a specific YAML file.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--upgrade</td>
+
+    <td class="entry" valign="top">Merge the new configuration rather than deleting and replacing.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-op-max_client_upload"><h2 class="title sectiontitle">OP Max Client Upload</h2> 
+<p class="p">Set the maximum upload size in MB from ALS clients.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">op max_client_upload &lt;max-size&gt;</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-op-regenerate"><h2 class="title sectiontitle">OP Regenerate</h2> 
+<p class="p">Regenerate the configuration for various processes and components.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">op regenerate all [--no-restart] [--no-prompt]
+
+op regenerate authorized_keys [--frontend] [--dea]
+
+op regenerate cloud-controller-bulk-api-auth [--no-prompt]
+
+op regenerate cloud-controller-client-auth [--no-prompt]
+
+op regenerate cloud-controller-db-encryption-key [--no-prompt]
+
+op regenerate cloud-controller-staging-auth [--no-prompt]
+
+op regenerate mysql [--no-prompt]
+
+op regenerate postgresql [--no-restart] [--no-prompt]
+
+op regenerate ssh_keys [--no-prompt]
+
+op regenerate ssl_cert [--no-prompt]
+
+op regenerate helion-rest-auth [--no-prompt]
+
+op regenerate helion-router-auth [--no-prompt]
+
+op regenerate token-signing-secret [--no-prompt]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-y --no-prompt</td>
+
+    <td class="entry" valign="top">Regenerate all with no user prompting</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-r --no-restart</td>
+
+    <td class="entry" valign="top">Do not restart processes after regeneration.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-op-remap_hosts"><h2 class="title sectiontitle">OP Remap Hosts</h2> 
+<p class="p">Change the fully qualified basename (i.e. the default shared domain) in the URLs of hosted applications. Used when renaming the system or migrating user applications to a new system.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">op remap_hosts &lt;old-hostname&gt; &lt;new-hostname&gt;</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-op-run_deferred"><h2 class="title sectiontitle">OP Run Deferred</h2> 
+<p class="p">Runs deferred commands saved with 'kato defer'.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">op run_deferred [--post-start]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--post-start</td>
+
+    <td class="entry" valign="top">Run the deferred command after all processes managed by kato have started.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-op-set_timezone"><h2 class="title sectiontitle">OP Set Timezone</h2> 
+<p class="p">Change the default system timezone for the host machine.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">op set_timezone [--timezone &lt;TZ&gt;]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-op-static_ip"><h2 class="title sectiontitle">OP Static IP</h2> 
+<p class="p">Configures this node to use a static IP. Interactively prompts for inputs if they are not specified as options.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">op static_ip [--interface=&lt;if&gt;] [--ip=&lt;ip&gt;] [--netmask=&lt;netmask&gt;] [--gateway=&lt;gateway&gt;] [--dns-nameservers=&lt;dnsname&gt;] [--dns-search-domains=&lt;dnssearch&gt;] [--restart-network] [--no-restart]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--interface= &lt;if&gt;</td>
+
+    <td class="entry" valign="top">Network interface to configure (e.g. eth0)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--ip= &lt;ip&gt;</td>
+
+    <td class="entry" valign="top">Host IP address</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--netmask= &lt;netmask&gt;</td>
+
+    <td class="entry" valign="top">Network netmask (e.g. 255.255.255.0)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--gateway= &lt;gateway&gt;</td>
+
+    <td class="entry" valign="top">Network gateway (IP address)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--dns-nameservers= &lt;ips&gt;</td>
+
+    <td class="entry" valign="top">Optional list of DNS names servers (e.g. 10.0.0.252, 10.0.0.253)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--dns-search-domains= &lt;domains&gt;</td>
+
+    <td class="entry" valign="top">Optional list of DNS search domains (e.g. example.com, example.org)</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--restart-network</td>
+
+    <td class="entry" valign="top">Restart networking.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--no-restart</td>
+
+    <td class="entry" valign="top">Do not restart processes.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-op-update_hostsfile"><h2 class="title sectiontitle">OP Update Hostsfile</h2> 
+<p class="p">Updates the /etc/hosts file with the endpoint URI mapped to the cloud controller's internal IP.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">op update_hostsfile</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-op-upstream_proxy"><h2 class="title sectiontitle">OP Upstream Proxy</h2> 
+<p class="p">Configure ALS to use an external or upstream proxy server for staging and deployed apps.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">op upstream_proxy set &lt;proxy-address&gt; [options]
+
+op upstream_proxy delete</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--no-proxy no_proxy&gt; </td>
+
+    <td class="entry" valign="top">Comma-separated list of domain names that should bypass the proxy.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-p --pass pass&gt;&gt;</td>
+
+    <td class="entry" valign="top">Proxy password.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-u --user user&gt;</td>
+
+    <td class="entry" valign="top">Proxy username.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-patch"><h2 class="title sectiontitle">Patch</h2> 
+<p class="p">Update an ALS cluster with post-release fixes.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">patch status [options]
+
+patch install [--node &lt;nodeip&gt;] [options]
+
+patch install [--node &lt;nodeip&gt;] [options] &lt;patchname&gt;
+
+patch reset [--node &lt;nodeip&gt;] [options]
+
+patch update [--node &lt;nodeip&gt; | --local]
+
+patch mark [--node &lt;nodeip&gt;] [options] &lt;patchname&gt;
+
+patch reinstall [--node &lt;nodeip&gt;] [options] &lt;patchname&gt;
+
+patch revert [--node &lt;nodeip&gt;] [options]
+
+patch revert [--node &lt;nodeip&gt;] [options] &lt;patchname&gt;</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-a --all</td>
+
+    <td class="entry" valign="top">Show status for all patches.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-d --notinstalled</td>
+
+    <td class="entry" valign="top">Manually mark patch as not installed.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-i --installed</td>
+
+    <td class="entry" valign="top">Manually mark patch as installed.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-j  --json</td>
+
+    <td class="entry" valign="top">Return JSON (for 'status').</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-l --local</td>
+
+    <td class="entry" valign="top">Affect this node only. If not specified, command operates on entire cluster.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-m --manifest manifest&gt;</td>
+
+    <td class="entry" valign="top">Specify a custom manifest file.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n --node node-IP&gt;</td>
+
+    <td class="entry" valign="top">Only affect the specified cluster node.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-q --quiet</td>
+
+    <td class="entry" valign="top">Be quieter (output less information).</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-r --no-restart</td>
+
+    <td class="entry" valign="top">Don't restart any roles during patching.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-s --single</td>
+
+    <td class="entry" valign="top">Remotely install single patch (internal use only).</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--to-patch-id patch-id&gt;</td>
+
+    <td class="entry" valign="top">Specify the id of the patch to patch the cluster up to. Patches above this ID will not be applied.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-u --force-update</td>
+
+    <td class="entry" valign="top">Force a new manifest to be downloaded.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-process-list"><h2 class="title sectiontitle">Process List</h2> 
+<p class="p">Lists configured processes and their current running status.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">process list [options] [&lt;process&gt;...]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-c --cluster</td>
+
+    <td class="entry" valign="top"> Include process status for all cluster nodes.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n --node node-IP&gt;</td>
+
+    <td class="entry" valign="top">Get status for a specific cluster node only. Defaults to local node.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-y  --yaml</td>
+
+    <td class="entry" valign="top">Display output as YAML</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-j  --json</td>
+
+    <td class="entry" valign="top">Display output as JSON</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-process-ready"><h2 class="title sectiontitle">Process Ready</h2> 
+<p class="p">Check the status of a process.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">process ready [options] &lt;process&gt;</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-b --block seconds&gt;</td>
+
+    <td class="entry" valign="top">Block until ready. The maximum block time is set in <var class="keyword varname">seconds</var>. If <var class="keyword varname">seconds</var> is set to 0, then it will be blocked forever.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n --node node-IP&gt;</td>
+
+    <td class="entry" valign="top">Check the process on a specific cluster node only.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-process-restart"><h2 class="title sectiontitle">Process Restart</h2> 
+<p class="p">Restart a process.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">process restart [options] [&lt;process&gt;...]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-c --cluster</td>
+
+    <td class="entry" valign="top">Restarts process on all nodes in the cluster.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n --node node-IP&gt;</td>
+
+    <td class="entry" valign="top">Restart process on a specific cluster node only.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-process-start"><h2 class="title sectiontitle">Process Start</h2> 
+<p class="p">Start a process.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">process start [options] [&lt;process&gt;...]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n --node node-IP&gt;</td>
+
+    <td class="entry" valign="top">Start the process on a specific cluster node only.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-process-stop"><h2 class="title sectiontitle">Process Stop</h2> 
+<p class="p">Stop a process.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">process stop [options] [&lt;process&gt;...]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n --node node-IP&gt;</td>
+
+    <td class="entry" valign="top">Stop the process on a specific cluster node only.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-relocate"><h2 class="title sectiontitle">Relocate</h2> 
+<div class="p">Move containers, application droplets, or services to a new mount point or filesystem
+          location.<div class="note note"><span class="notetitle">Note:</span> This command stops all roles and does <strong class="ph b">not</strong> restart them after
+          execution. This behavior permits performing multiple sequential <samp class="ph codeph">relocate</samp>
+          commands.</div>
+</div>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">relocate [options] containers &lt;new_location&gt;
+
+relocate [options] droplets &lt;new_location&gt;
+
+relocate [options] services &lt;new_location&gt;</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-v --verbose</td>
+
+    <td class="entry" valign="top">Show process information.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-report"><h2 class="title sectiontitle">Report</h2> 
+<p class="p">Generate a report that can be sent to technical support.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">report
+
+report --node &lt;node-IP&gt;
+
+report --cluster
+
+report --help</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-c --cluster</td>
+
+    <td class="entry" valign="top">Gather report information from the entire cluster into one tarball.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n --node node-IP&gt;</td>
+
+    <td class="entry" valign="top">Gather report information from a specific cluster node only.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-v --verbose</td>
+
+    <td class="entry" valign="top">Show process information.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-restart"><h2 class="title sectiontitle">Restart</h2> 
+<p class="p">Restart a node or individual roles.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">restart [options] [&lt;role&gt;...]
+
+restart --help</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n --node node-IP&gt;</td>
+
+    <td class="entry" valign="top">Restart a specific cluster node.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-v --verbose</td>
+
+    <td class="entry" valign="top">Show process information.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-role-add"><h2 class="title sectiontitle">Role Add</h2> 
+<p class="p">Enable roles on a node.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">role add --help
+
+role add [-v] [--node &lt;node-IP&gt;] [--no-start] &lt;role&gt;...
+
+role add [-v] [--node &lt;node-IP&gt;*] [--no-start] --all
+
+role add [-v] [--node &lt;node-IP&gt;*] [--no-start] --all-but &lt;role&gt;...
+
+role add [-v] [--node &lt;node-IP&gt;*] --only &lt;role&gt;...</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-a --all</td>
+
+    <td class="entry" valign="top">Enable all available roles.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-b --all-but</td>
+
+    <td class="entry" valign="top">Enable all available roles except those listed.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n --node node-IP&gt;</td>
+
+    <td class="entry" valign="top">Add a role on a specific cluster node.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-o --only</td>
+
+    <td class="entry" valign="top">Enable only these roles; disable all others.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-s --no-start</td>
+
+    <td class="entry" valign="top">Do not start processes.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-v --verbose</td>
+
+    <td class="entry" valign="top">Show process information.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-role-info"><h2 class="title sectiontitle">Role Info</h2> 
+<p class="p">Display info on roles.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">role info --help
+
+role info [&lt;role&gt;...]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-role-remove"><h2 class="title sectiontitle">Role Remove</h2> 
+<p class="p">Disable roles on a node.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">role remove --help
+
+role remove [-v] [--node &lt;node-IP&gt;] &lt;role&gt;...
+
+role remove [-v] [--node &lt;node-IP&gt;] --all
+
+role remove [-v] [--node &lt;node-IP&gt;] --all-but &lt;role&gt;...</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-a --all</td>
+
+    <td class="entry" valign="top">Disable all available roles.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-b --all-but</td>
+
+    <td class="entry" valign="top">Disable all available roles except those listed.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n --node node-IP&gt;</td>
+
+    <td class="entry" valign="top">Remove a role on a specific cluster node.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-v --verbose</td>
+
+    <td class="entry" valign="top">Show process information.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-shell"><h2 class="title sectiontitle">Shell</h2> 
+<p class="p">Interactive shell for kato.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">shell [options]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-start"><h2 class="title sectiontitle">Start</h2> 
+<p class="p">Start nodes or individual roles.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">start [options] [&lt;role&gt;...]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n --node node-IP&gt;</td>
+
+    <td class="entry" valign="top">Start a specific cluster node.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-e --ephemeral</td>
+
+    <td class="entry" valign="top">Try not to regenerate/modify any config items.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-v --verbose</td>
+
+    <td class="entry" valign="top">Show process information.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-status"><h2 class="title sectiontitle">Status</h2> 
+<p class="p">List configured roles and their current status across the cluster.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">status [options]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-a  --all</td>
+
+    <td class="entry" valign="top">Show all roles, including roles not currently configured on this cluster.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-y  --yaml</td>
+
+    <td class="entry" valign="top">Display output as YAML</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-j  --json</td>
+
+    <td class="entry" valign="top">Display output as JSON</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-stop"><h2 class="title sectiontitle">Stop</h2> 
+<p class="p">Stop service or individual roles.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">stop [options] [&lt;rolename1&gt; &lt;rolename2&gt;...]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-n  --node node-IP&gt;</td>
+
+    <td class="entry" valign="top">Stop a specific node</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-v  --verbose</td>
+
+    <td class="entry" valign="top">Display process information</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+
+</div>
+
+<div class="section" id="topic39432__kato-command-ref-version"><h2 class="title sectiontitle">Version</h2> 
+<p class="p">Display the version of ALS currently in use.</p>
+
+<p class="p">
+  <strong class="ph b">Syntax</strong>
+</p>
+
+<pre class="pre codeblock">version [-h]</pre>
+
+<p class="p">
+  <strong class="ph b">Options</strong>
+</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Name</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Purpose</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">-h  --help</td>
+
+    <td class="entry" valign="top">Show help information</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

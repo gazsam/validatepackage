@@ -1,0 +1,473 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Command Reference: Security Groups</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic5620" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/client-ref-securitygroups.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Command Reference: Security Groups</h1>
+
+
+
+
+
+<div class="body">
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic5620__command-bind-security-group">helion bind-security-group</a>: Bind the named security group to the current space, the specified space, or the running and staging phases. </li>
+
+<li class="li">
+<a class="xref" href="#topic5620__command-create-security-group">helion create-security-group</a>: Create a new security group.</li>
+
+<li class="li">
+<a class="xref" href="#topic5620__command-delete-security-group">helion delete-security-group</a>: Delete the named security group.</li>
+
+<li class="li">
+<a class="xref" href="#topic5620__command-security-group">helion security-group</a>: Show the details of the named security group.</li>
+
+<li class="li">
+<a class="xref" href="#topic5620__command-security-groups">helion security-groups</a>: Show all known security groups or just those assigned to the running and staging phases.</li>
+
+<li class="li">
+<a class="xref" href="#topic5620__command-unbind-security-group">helion unbind-security-group</a>: Drop the named security group from the current space, the specified space, or the running and staging phases.</li>
+
+<li class="li">
+<a class="xref" href="#topic5620__command-update-security-group">helion update-security-group</a>: Modify the named security group.</li>
+
+</ul>
+
+<div class="section" id="topic5620__syntax"><h2 class="title sectiontitle">Syntax</h2> 
+<pre class="pre codeblock">helion [options] command [arguments] [command-options]</pre>
+
+<p class="p">For more information, use the <strong class="ph b">helion help</strong> or <strong class="ph b">helion help [<em class="ph i">command</em>]</strong> commands.</p>
+
+
+</div>
+
+<div class="section" id="topic5620__command-bind-security-group"><h2 class="title sectiontitle">helion bind-security-group &lt;<em class="ph i">security_group</em>&gt;</h2> 
+<p class="p">Bind the named security group to the current space, the specified space, or the running and staging phases.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--organization, -o</td>
+
+    <td class="entry" valign="top">The name of the parent organization to use as context. Defaults to the current organization. A current organization is automatically set if there is none, either by taking the one organization the user belongs to, or asking the user to choose among the possibilities.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--running</td>
+
+    <td class="entry" valign="top">Switch operation to work on the security groups for running applications.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--space</td>
+
+    <td class="entry" valign="top">The name of the space to use as context. Defaults to the current space. A current space is automatically set if there is none, either by taking the one space the user has, or asking the user to choose among the possibilities.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--staging</td>
+
+    <td class="entry" valign="top">Switch operation to work on the security groups for staging applications.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic5620__command-create-security-group"><h2 class="title sectiontitle">helion create-security-group &lt;<em class="ph i">security_group</em>&gt; &lt;<em class="ph i">rules</em>&gt;</h2> 
+<p class="p">Create a new security group.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic5620__command-delete-security-group"><h2 class="title sectiontitle">helion delete-security-group  &lt;<em class="ph i">security_group</em>&gt;</h2> 
+<p class="p">Delete the named security group.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic5620__command-security-group"><h2 class="title sectiontitle">helion security-group &lt;<em class="ph i">security_group</em>&gt;</h2> 
+<p class="p">Show the details of the named security group.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--json</td>
+
+    <td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic5620__command-security-groups"><h2 class="title sectiontitle">helion security-groups</h2> 
+<p class="p">Show all known security groups or just those assigned to the running and staging phases.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--json</td>
+
+<td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--running</td>
+
+<td class="entry" valign="top">Switch operation to work on the security groups for running applications.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--staging</td>
+
+<td class="entry" valign="top">Switch operation to work on the security groups for staging applications.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic5620__command-unbind-security-group"><h2 class="title sectiontitle">helion unbind-security-group  &lt;<em class="ph i">security_group</em>&gt;</h2> 
+<p class="p">Drop the named security group from the current space, the specified space, or the running and staging phases.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--organization, -o</td>
+
+    <td class="entry" valign="top">The name of the parent organization to use as context. Defaults to the current organization. A current organization is automatically set if there is none, either by taking the one organization the user belongs to, or asking the user to choose among the possibilities.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--running</td>
+
+    <td class="entry" valign="top">Switch operation to work on the security groups for running applications.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--space</td>
+
+    <td class="entry" valign="top">The name of the space to use as context. Defaults to the current space. A current space is automatically set if there is none, either by taking the one space the user has, or asking the user to choose among the possibilities.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--staging</td>
+
+    <td class="entry" valign="top">Switch operation to work on the security groups for staging applications.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic5620__command-update-security-group"><h2 class="title sectiontitle">helion update-security-group  &lt;<em class="ph i">security_group</em>&gt; &lt;<em class="ph i">rules</em>&gt;</h2> 
+<p class="p">Modify the named security group by replacing the old set of rules with a new set.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+
+
+
+<html><head><title>Creating and connecting to a Microsoft SQL Server service</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_rbs_ysb_bt" /> <meta name="html-import-file-path" content="devplatform/2.0/windows/windows_creating_sql.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">Creating and connecting to a Microsoft SQL Server service</h1>
+
+
+  
+
+  <div class="body">
+    <p class="p"><span class="ph"><em class="ph i">Windows, .NET, SQL Server, and IIS are either registered trademarks or trademarks of Microsoft Corporation in the United States and/or other countries.</em></span></p>
+
+    <p class="p">This document describes how to create a Microsoft SQL Server 2012 or 2014 service, and provide connectivity to it using the Helion client's <strong class="ph b">tunnel</strong> command.</p>
+
+    <div class="note note"><span class="notetitle">Note:</span> This document will demonstrate how to create and connect to a Microsoft SQL Server 2012 instance; the procedure for creating and connecting to a Microsoft SQL Server 2014 service is the same.</div>
+
+    <p class="p">This document contains the following sections:</p>
+
+    <ul class="ul">
+      <li class="li"><a class="xref" href="#topic_rbs_ysb_bt__requirements">System requirements</a></li>
+
+      <li class="li"><a class="xref" href="#topic_rbs_ysb_bt__create">Create a Microsoft SQL Server service instance</a></li>
+
+      <li class="li"><a class="xref" href="#topic_rbs_ysb_bt__deploy">Deploy a Helion tunneling application</a></li>
+
+      <li class="li"><a class="xref" href="#topic_rbs_ysb_bt__connect">Connect to the service instance</a></li>
+
+    </ul>
+
+    <div class="section" id="topic_rbs_ysb_bt__requirements"><h2 class="title sectiontitle">System Requirements</h2>
+    <p class="p">This tutorial requires the following:</p>
+
+      
+      <ul class="ul"><li class="li">A Helion Openstack installation or a Helion Public Cloud account</li>
+
+        <li class="li">An ALS 1.3 (or later) cluster with an instance of SQL Server added. This cluster and service is created using the <a class="xref" href="../helion/CLI/ALS_Client_Reference.html">ALS cluster management tool (cf-mgmt)</a> with the following
+          <a class="xref" href="../helion/CLI/ALS_Client_Reference.html#topic13234__commands">commands</a>:
+          <ul class="ul"><li class="li"><strong class="ph b">create-cluster</strong></li>
+
+            <li class="li"><strong class="ph b">add-service</strong></li>
+</ul>
+
+          <div class="note note"><span class="notetitle">Note:</span> You must use the 1.3 version (or later) of the ALS cluster management tool for this tutorial.</div>
+
+          </li>
+
+      </ul>
+</div>
+
+    <div class="section" id="topic_rbs_ysb_bt__create"><h2 class="title sectiontitle">Create a Microsoft SQL Server service instance</h2>
+      <div class="note note"><span class="notetitle">Note:</span> If you have already created a Microsoft SQL Server instance, you don't need to create
+        another.</div>
+
+      <p class="p">To create a Microsoft SQL Server service instance, use the <a class="xref" href="../helion/CLI/ALS_Client_Downloads.html">Helion ALS Client</a>. To create a service
+        instance, first connect the Helion ALS client to your ALS cluster using <a class="xref" href="../helion/user/reference/client-ref-getting-started.html#topic2439__command-login">helion login</a>
+        and <a class="xref" href="../helion/user/reference/client-ref-getting-started.html#topic2439__command-target">helion target</a>.</p>
+
+    <p class="p">The following command creates an instance of a Microsoft SQL Server 2012 service called <strong class="ph b">MSSQL2012Service</strong> (the command will request the service plan to use):</p>
+
+    <pre class="pre codeblock">helion create-service mssql2012 MSSQL2012Service</pre>
+
+    <p class="p">The output from this command may look like the following (in this example, the Free service plan is selected):</p>
+
+      <br/><img class="image" src="../../../media/windows_sql_create.png"/><br/></div>
+
+    <div class="section" id="topic_rbs_ysb_bt__deploy"><h2 class="title sectiontitle">Deploy a Helion tunneling application</h2>
+    <p class="p">Once the service instance is created, in order to connect to the instance, you must first deploy a tunneling application using the <strong class="ph b">helion tunnel</strong> command.</p>
+
+      <p class="p">The following command creates a tunneling application to the <strong class="ph b">MSSQL2012Service</strong> service in the connected cluster, binds the tunneling application to the requested service, and returns the credentials
+        <strong class="ph b">username</strong>, <strong class="ph b">password</strong>, <strong class="ph b">(database) name</strong>, and <strong class="ph b">connectionString</strong> required to connect to the service:</p>
+
+      <pre class="pre codeblock">helion tunnel MSSQL2012Service</pre>
+
+      <p class="p">The output from this command may look like the following:</p>
+
+      <br/><img class="image" src="../../../media/windows_sql_tunnel.png"/><br/></div>
+
+    <div class="section" id="topic_rbs_ysb_bt__connect"><h2 class="title sectiontitle">Connect to the service instance</h2>
+    <p class="p">Once the tunneling application is deployed and bound to the service, you can connect to the service using SQL Server Management Studio.</p>
+
+      <p class="p">In the login dialog for SQL Management Studio, enter the hostname and port for the ALS cluster, and provide the login credentials from the previous section:</p>
+
+      <br/><img class="image" src="../../../media/windows_sql_connect_1.png"/><br/>
+      <p class="p">In the next dialog, provide the database name from the previous section: </p>
+
+      <br/><img class="image" src="../../../media/windows_sql_connect_2.png"/><br/>
+      <p class="p">When the connection is complete, you will be connected to the database service in SQL Management Studio:</p>
+
+      <br/><img class="image" src="../../../media/windows_sql_connect_3.png"/><br/></div>
+
+  </div>
+
+
+</body>
+</html>

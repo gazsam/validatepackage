@@ -1,0 +1,336 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Building and Deploying Windows DEA and SQL Server</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic7321" /> <meta name="html-import-file-path" content="devplatform/2.0/windows/windows_building_and_deploying.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Building and Deploying Windows DEA and SQL Server</h1>
+
+
+<h1 class="title topictitle1">HPE Helion 2.0 Development Platform: Building and Deploying Windows DEA and SQL Server
+    Express Images</h1>
+
+
+<div class="body">
+<p class="p">
+
+ 
+ </p>
+
+<p class="p">
+  <span class="ph">
+    <em class="ph i">Windows, .NET, SQL Server, and IIS are either registered trademarks or trademarks of Microsoft Corporation in the United States and/or other countries.</em>
+  </span>
+</p>
+
+<p class="p">This document demonstrates how to create and deploy a Windows image in an HPE Helion OpenStack<sup>®</sup> environment to be used in Helion Development Platform. Image creation is needed to enable Windows support. This process can take several hours (approximately 7 hours, depending on hardware and network) and in most cases can be left unattended once the scripts begin execution.</p>
+
+<div class="section" id="topic7321__prerequsites"><h2 class="title sectiontitle">Prerequsites</h2> 
+</div>
+
+<div class="section" id="topic7321__host-prerequisites"><h2 class="title sectiontitle">Host Prerequisites</h2> 
+<p class="p">The following requirements pertain to the system where the Windows image will be created.</p>
+
+<ul class="ul">
+<li class="li">MacOS X or Linux (Ubuntu recommended) non-virtualized environment. (i.e. the image cannot be created in a virtual machine).</li>
+
+<li class="li">Virtualization support enabled</li>
+
+<li class="li">16 GB RAM recommended.</li>
+
+<li class="li">100 GB available disk space</li>
+
+<li class="li">Connectivity to the Internet and the HPE Helion OpenStack environment where the Windows image
+          will be deployed</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic7321__software-prerequisites"><h2 class="title sectiontitle">Software Prerequisites</h2> 
+<ul class="ul">
+<li class="li">A Windows Server 2012R2 ISO image (Volume-licensed images can be obtained through MSDN for development or test; volume-licensed production images must be obtained through the OEM channel).
+
+<ul class="ul">
+<li class="li">The ISO must be a retail or volume licensed (non-evaluation) image</li>
+
+<li class="li">The ISO must be an English-language version.</li>
+
+<li class="li">The tool verifies that the name of the ISO image contains the following:
+
+<ul class="ul">
+<li class="li">
+<samp class="ph codeph">en</samp>
+</li>
+
+<li class="li">
+<samp class="ph codeph">2012</samp>
+</li>
+
+<li class="li">
+<samp class="ph codeph">x64</samp>
+</li>
+
+<li class="li">File extension <samp class="ph codeph">.iso</samp>
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+<li class="li">Virtual Box version 4.3.26 or later: <a class="xref" href="https://www.virtualbox.org/wiki/Downloads" target="_blank">Download</a>
+</li>
+
+<li class="li">The latest stable Virtio driver: <a class="xref" href="https://fedorapeople.org/groups/virt/virtio-win/deprecated-isos/stable/virtio-win-0.1-81.iso" target="_blank">Download</a>
+</li>
+
+<li class="li">Download and extract the Glazier tool: <a class="xref" href="http://clients.als.hpcloud.com/glazier-1.2.0-posix_x86_64.zip" target="_blank">Download</a>. For more information about Glazier, see the <a class="xref" href="windows_glazier_reference_guide.html">Glazier Reference Guide</a>.</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic7321__setup-information-needed"><h2 class="title sectiontitle">Setup Information Needed</h2> 
+<ul class="ul">
+<li class="li">A Windows product key for Windows Server 2012R2. A multiple activation key is strongly recommended, as temporary instances will be created that need product keys.</li>
+
+<li class="li">The RC file for the target HPE Helion OpenStack environment. This can be downloaded from the
+          Horizon interface, under <strong class="ph b">Project-&gt;Compute-&gt;Access &amp; Security-&gt;API
+            Access-&gt;Download OpenStack RC File</strong>.</li>
+
+<li class="li">
+<p class="p">The certificate for the target HPE Helion OpenStack environment. The location of this certificate
+            can be found in the cacert field in the <a class="xref" href="../installation/install_cloudsyaml.html#topic_wzw_r4w_rt">clouds.yaml
+              configuration file</a>:</p>
+
+<pre class="pre codeblock">clouds:
+  mycloud:
+    codn_username: 
+    codn_password: 
+    region_name: region1
+    <span class="ph codehighlight">cacert: /home/stack/ca/cacert.pem</span>
+</pre>
+
+</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic7321__creating-and-uploading-images"><h2 class="title sectiontitle">Creating and uploading images</h2> 
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span> A Windows DEA and a SQL Server <strong class="ph b">cannot</strong> both exist on the same image. You will
+          need to create an image for each one.</div>
+
+      </div>
+
+</div>
+
+<div class="section" id="topic7321__step-1-create-a-glazier-virtual-machine"><h2 class="title sectiontitle">Step 1: Create a Glazier Virtual Machine</h2> 
+<p class="p">This VM is used to create the images for the guest operating system.</p>
+
+<ol class="ol">
+<li class="li">Open Terminal and change to the Glazier directory where you extracted the tool.</li>
+
+<li class="li"> Run the <samp class="ph codeph">create-glazier</samp> command (To verify your parameters before starting the
+          tool, you can use the <samp class="ph codeph">--dry-run</samp> command line
+          switch.)<pre class="pre codeblock">./create-glazier \
+    --windows-iso &lt;path to Windows Server 2012R2 iso&gt; \
+    --virtio-iso &lt;path to VirtIO iso&gt; \
+    --product-key &lt;Windows Product Key&gt; \
+    --os-network-id &lt;os network ID; found in Horizon on the Network Detail page under Project -&gt; Network -&gt; Networks -&gt; (select network name) &gt; \
+    --os-key-name &lt;os key pair name&gt; 
+    --os-security-group &lt;os security group; e.g Default&gt; \
+    --os-flavor &lt;os flavor name: e.g. m1.small&gt; \
+</pre>
+</li>
+
+<li class="li">When the tool finishes, you will see a command prompt open in a Virtual Box instance. </li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic7321__step-2-create-and-initialize-the-os-windows-dea-image"><h2 class="title sectiontitle">Step 2: Create and Initialize the Windows DEA Image</h2> 
+<ol class="ol">
+<li class="li">In the Glazier VM command prompt that opens after the end of the previous step, run the
+          following
+          command:<pre class="pre codeblock"><samp class="ph codeph">New-Image -name "windows2012r2-windea" -GlazierProfilePath "windea"
+</samp></pre>
+</li>
+
+<li class="li">Once the image gets created, the image will be initialized automatically.</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic7321__step-3-create-and-initialize-the-os-sql-server-express-2012-image-optional"><h2 class="title sectiontitle">Step 3: Create and Initialize the SQL Server Express 2012 Image (Optional)</h2> 
+<ol class="ol">
+<li class="li"> In the Glazier VM command prompt, run the following
+          command:<pre class="pre codeblock"><samp class="ph codeph">New-Image -name "windows 2012r2-sql2012" -GlazierProfilePath "mssql2012"</samp>
+</pre>
+</li>
+
+<li class="li"> Once the image gets created, the image will be initialized automatically.</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic7321__step-4-create-and-initialize-the-os-sql-server-express-2014-image-optional"><h2 class="title sectiontitle">Step 4: Create and Initialize the SQL Server Express 2014 Image (Optional)</h2> 
+<ol class="ol">
+<li class="li"> In the Glazier VM command prompt, run the following
+          command:<pre class="pre codeblock"><samp class="ph codeph">New-Image -name "windows 2012r2-sql2014" -GlazierProfilePath "mssql2014"</samp></pre>
+</li>
+
+<li class="li"> Once the image gets created, the image will be initialized automatically.</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic7321__enabling"><h2 class="title sectiontitle">Enabling Windows and SQL Server in your ALS cluster</h2> 
+<p class="p">Note that you can do this <a class="xref" href="windows_growcluster.html">through the Horizon console</a> instead of the command line if you prefer.</p>
+
+</div>
+
+<div class="section" id="topic7321__add-windows-dea"><h2 class="title sectiontitle">Add Windows DEA</h2> 
+<ol class="ol">
+<li class="li"> Create a yml file to add (e.g.
+            <samp class="ph codeph">manifest.yml</samp>)<pre class="pre codeblock"><samp class="ph codeph">version: 1.2
+constructor-image-name: {?}
+seed-node-image-name: {Windows DEA Image Name}
+cluster-title: MyCluster
+cluster-prefix: MyCluster
+az: {az name}
+constructor-flavor: standard.medium
+flavor: standard.medium
+keypair-name: {key name}
+stack: win2012r2
+max-cluster-wait-duration: 30m
+network-name: {network name}
+</samp></pre>
+<p class="p">The
+              <samp class="ph codeph">cluster-title</samp> and <samp class="ph codeph">cluster-prefix</samp> need to match the
+            cluster you are deploying the image to.</p>
+</li>
+
+<li class="li">Run this
+          command<pre class="pre codeblock"><samp class="ph codeph">cf-mgmt add-role dea --load &lt;file name&gt;.yml</samp>
+</pre>
+</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic7321__add-sql-server-2012-service"><h2 class="title sectiontitle">Add SQL Server 2012 service</h2> 
+<ol class="ol">
+<li class="li">Create a yml file to add (e.g.
+            <samp class="ph codeph">manifest.yml</samp>)<pre class="pre codeblock"><samp class="ph codeph">version: 1.2
+constructor-image-name: {?}
+seed-node-image-name: {SQL Image Image Name}
+cluster-title: MyCluster
+cluster-prefix: MyCluster
+az: {az name}
+constructor-flavor: standard.medium
+flavor: standard.medium
+keypair-name: {key name}
+stack: mssql2012
+max-cluster-wait-duration: 30m
+network-name: {network name}
+</samp></pre>
+<p class="p">The
+              <samp class="ph codeph">cluster-title</samp> and <samp class="ph codeph">cluster-prefix</samp> need to match the
+            cluster you are deploying the image to.</p>
+</li>
+
+<li class="li">Run this command for SQL Server
+          2012<pre class="pre codeblock"><samp class="ph codeph">cf-mgmt add-service mssql2012 --load &lt;file name&gt;.yml</samp>
+</pre>
+</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic7321__add-sql-server-2014-service"><h2 class="title sectiontitle">Add SQL Server 2014 service</h2> 
+<ol class="ol">
+<li class="li"> Create a yml file to add (e.g.
+            <samp class="ph codeph">manifest.yml</samp>)<pre class="pre codeblock"><samp class="ph codeph">version: 1.2
+constructor-image-name: {?}
+seed-node-image-name: {SQL Image Image Name}
+cluster-title: MyCluster
+cluster-prefix: MyCluster
+az: {az name}
+constructor-flavor: standard.medium
+flavor: standard.medium
+keypair-name: {key name}
+stack: mssql2012
+max-cluster-wait-duration: 30m
+network-name: {network name}
+</samp></pre>
+<p class="p">The
+              <samp class="ph codeph">cluster-title</samp> and <samp class="ph codeph">cluster-prefix</samp> need to match the
+            cluster you are deploying the image to</p>
+</li>
+
+<li class="li"> Run this command for SQL Server
+          2014<pre class="pre codeblock"><samp class="ph codeph">cf-mgmt add-service mssql2014 --load &lt;file name&gt;.yml</samp>
+</pre>
+</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic7321__activating-windows-images"><h2 class="title sectiontitle">Activating Windows Images</h2> 
+<p class="p">When a Windows DEA or SQL Server image node added to an ALS server, these instances need to be activated to be compliant with 
+  <a class="xref" href="https://www.microsoft.com/licensing/" target="_blank">Microsoft licensing</a>. 
+  You can activate by either connecting to them with Remote Desktop and activating Windows manually, or by using KVM.</p>
+
+
+</div>
+
+  <div class="section" id="topic7321__setting-windows-administrator-password"><h2 class="title sectiontitle">Setting the Windows Administrator Password</h2>
+  <p class="p">When the new image is created, the administrator password must be set. Follow these steps to set the administrator password for the image:</p>
+
+  <ol class="ol">
+    <li class="li">Log into the Horizon console</li>
+
+    <li class="li">Select Project</li>
+
+    <li class="li">Select Compute</li>
+
+    <li class="li">Select Instances</li>
+
+    <li class="li">Select the desired instance for which to set   the password</li>
+
+    <li class="li">Select <strong class="ph b">Console</strong> </li>
+
+    <li class="li">Select <strong class="ph b">Click here to show only console</strong></li>
+
+    <li class="li">Click on the screen, and then click <strong class="ph b">Send CtrlAltDel</strong></li>
+
+    <li class="li">Select <strong class="ph b">Administrator</strong></li>
+
+    <li class="li">Set the new password</li>
+
+    <li class="li">Log out of the console</li>
+
+  </ol>
+</div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+
+
+
+<html><head><title>Database Configuration</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="cloudDatabase" /> <meta name="html-import-file-path" content="devplatform/2.0/installation/cloud/cloud_database.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">Database Configuration</h1>
+
+
+  
+
+  <div class="body">
+    <div class="section">
+      <div class="p">This additional section is required only if the Database Service is
+                installed.<pre class="pre codeblock">clouds:
+  mycloud:
+    database:
+      trove_enable_ssl: False
+      ephemeral_ca_cert: /home/stack/ca/cacert.pem  
+      external_network: 
+      provider_network:
+      ntp_server: 
+      keypair: default
+      enable_ha: False
+      flavor: m1.medium
+      database_flavor: m1.medium
+      messaging_flavor: m1.medium
+      database_volume_size: 10
+      logstash_rabbitmq_host:
+      logstash_rabbitmq_password:
+      hotpools_enabled: True
+      hotpools_max_instances: 1
+      hotpools_image_name: percona
+      hotpools_flavor_names: 'm1.medium'
+      project_id: 
+      control_plane_database_volume_type: VOLTYPE_HERE
+      guest_instance_volume_type: VOLTYPE_HERE</pre>
+</div>
+
+      <dl class="dl">
+        <dt class="dt dlterm">trove_enable_ssl</dt>
+<dd class="dd">This variable defines whether SSL is used internally by Trove. HPE Helion OpenStack 2.0
+            implements SSL using HAProxy, so in installations of version 2.0 or later, this value
+            must be <strong class="ph b">False</strong>. </dd>
+
+        <dt class="dt dlterm">ephemeral_ca_cert</dt>
+<dd class="dd">If SSL has been enabled on the public endpoints, this value needs to be identical to the
+                            <samp class="ph codeph">cacert</samp> value provided previously. </dd>
+
+                    <dd class="dd">If SSL has <strong class="ph b">not</strong> been enabled,<a class="xref" href="../install_dbaasNoTLS.html#topic_gxm_4xw_yt"> follow these
+                            additional instructions</a> to determine the value that should be
+                        provided here. </dd>
+
+        <dt class="dt dlterm">external_network</dt>
+<dd class="dd">The ID (GUID) of the external network. In a typical installation, the name of this network is
+              <strong class="ph b">ext-net</strong>. </dd>
+
+        <dt class="dt dlterm">provider_network</dt>
+<dd class="dd"> The ID (GUID) of the service provider network. In a typical installation, the name of this
+            network is <strong class="ph b">svc-net</strong>. </dd>
+
+        <dt class="dt dlterm">ntp_server</dt>
+<dd class="dd"> IP address of NTP server. In typical installations, this is the IP address of the first
+                        Management Controller.</dd>
+
+        <dt class="dt dlterm">keypair</dt>
+<dd class="dd"> Specify the name of a keypair to use when creating the Database Service. This keypair will be
+            used for debugging purposes when logging into instances of the Database Service.
+              <div class="note note"><span class="notetitle">Note:</span> This key must already exist in Nova prior to installation.</div>
+</dd>
+
+        <dt class="dt dlterm">enable_ha</dt>
+<dd class="dd"> Options are True or False. If True, the database will be
+          created with high-availability configurations. Ensure you have enough quota to do
+          so.</dd>
+
+        <dt class="dt dlterm">flavor</dt>
+<dd class="dd">The default is m1.medium. This flavor size is used to create instances of the Database
+              Service.<div class="note note"><span class="notetitle">Note:</span> The minimum size is m1.medium. </div>
+</dd>
+
+        <dt class="dt dlterm">database_flavor</dt>
+<dd class="dd">The default is m1.medium. This flavor size is used to create instances of the Database Service's
+            MySQL Database backend.<div class="note note"><span class="notetitle">Note:</span> The minimum size is m1.medium. Larger flavors can be used
+              for large or complex installations.</div>
+</dd>
+
+        <dt class="dt dlterm">messaging_flavor: </dt>
+<dd class="dd">The default is m1.medium. This flavor size is used to create instances of the Database Services
+            Messaging backend.<div class="note note"><span class="notetitle">Note:</span> The minimum size is m1.medium. </div>
+</dd>
+
+        <dt class="dt dlterm">database_volume_size</dt>
+<dd class="dd">The default value is "10"; this is measured in GB (gigabytes). This is the volume size that will
+            be used to create storage for the Database Service's MySQL database backend.</dd>
+
+        <dt class="dt dlterm">logstash_rabbitmq_host</dt>
+<dd class="dd"> The IP address of the HPE Helion OpenStack logging service. In typical installations, this is
+            the IP address of the first Management Controller.</dd>
+
+        <dt class="dt dlterm">logstash_rabbitmq_password</dt>
+<dd class="dd"> The admin password for the HPE Helion OpenStack logging service. This password is stored in the
+                            <samp class="ph codeph">rabbitmq_password</samp> variable in the
+                            <samp class="ph codeph">/etc/beaver/beaver.conf</samp> configuration file located on
+                        the controller nodes.</dd>
+
+        <dt class="dt dlterm">hotpools_enabled</dt>
+<dd class="dd"> Options are True or False. The default value is True. If True, a pool of "hot" databases will
+            be pre-provisioned for use when a new instance is requested. This functionalty greatly
+            reduces database creation time. If False, remove all other <em class="ph i">hotpools</em> configuration
+            variables.</dd>
+
+        <dt class="dt dlterm">hotpools_max_instances</dt>
+<dd class="dd"> Default is 1. This is the number of "hot" databases to keep in the pool.</dd>
+
+        <dt class="dt dlterm">hotpools_image_name</dt>
+<dd class="dd">The default value is <samp class="ph codeph">percona</samp> . For HPE Helion OpenStack installations version
+            2.0 or greater, this value must not be changed.</dd>
+
+        <dt class="dt dlterm">hotpools_flavor_names</dt>
+<dd class="dd"> The default value is <samp class="ph codeph">m1.medium</samp>.  This is the set of  flavor sizes to keep in
+            the pool. </dd>
+
+        <dt class="dt dlterm">project_id</dt>
+<dd class="dd"> Project id of the project where the service will be installed.  </dd>
+
+      
+          <dt class="dt dlterm">control_plane_database_volume_type</dt>
+
+          <dd class="dd">This value sets the Cinder volume type. The default value is LVM; if you are using LVM, do not include this parameter. If you are using Ceph for Cinder volumes, set this value to <samp class="ph codeph">ceph</samp></dd>
+
+      
+          
+              <dt class="dt dlterm">guest_instance_volume_type</dt>
+
+              <dd class="dd">This value sets the Cinder volume type. The default value is LVM; if you are using LVM, do not include this parameter. If you are using Ceph for Cinder volumes, set this value to <samp class="ph codeph">ceph</samp></dd>
+
+          
+          
+      
+      </dl>
+</div>
+
+    
+  </div>
+
+
+</body>
+</html>

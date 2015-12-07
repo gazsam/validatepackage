@@ -1,0 +1,2427 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Cluster Management Tool Reference</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic13234" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/CLI/ALS_Client_Reference.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Cluster Management Tool Reference</h1>
+
+
+
+
+
+<div class="body">
+    <div class="p">The ALS command-line interface client (<samp class="ph codeph">cf-mgmt.exe</samp>) provides an option for
+      executing commands that construct, manage, update, or delete ALS clusters. Use the command
+      line when the Horizon management console is unavailable or when direct access is preferred.
+        <div class="note note"><span class="notetitle">Note:</span> When creating clusters that support Keystone v3, you will need to <a class="xref" href="cfmgmt_configure_keystonev3.html#topic_j5v_bsb_rt">modify the configuration
+          file</a> first.</div>
+</div>
+
+    <ul class="ul">
+      <li class="li">
+        <a class="xref" href="#topic13234__global">Global Options</a>
+      </li>
+
+      <li class="li">Debugging</li>
+
+      <li class="li"><a class="xref" href="#topic13234__update-the-cf-mgmt-tool">Update the cf-mgmt Tool</a></li>
+
+      <li class="li">
+        <a class="xref" href="#topic13234__commands">Cluster Commands</a>
+        <ul class="ul" id="topic13234__ul_j43_nzl_ms">
+          <li class="li">
+            <a class="xref" href="#topic13234__create">Create a Cluster</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic13234__delete">Delete a Cluster</a>
+          </li>
+
+          <li class="li"><a class="xref" href="#topic13234__list">List Clusters in a Tenant</a></li>
+
+          <li class="li"><a class="xref" href="#topic13234__show">Display Detailed Cluster Information</a></li>
+
+          <li class="li"><a class="xref" href="#topic13234__addrole">Add a Role to an Existing
+              Cluster</a>
+          </li>
+
+          <li class="li"><a class="xref" href="#topic13234__removerole">Remove a Role from an Existing
+              Cluster</a></li>
+
+          <li class="li"><a class="xref" href="#topic13234__addservice">Add a Service to an Existing
+              Cluster</a></li>
+
+          <li class="li"><a class="xref" href="#topic13234__removeservice">Remove a Service from an
+              Existing Cluster</a>
+          </li>
+
+        </ul>
+</li>
+
+    </ul>
+
+    <div class="section" id="topic13234__configuration-values"><h2 class="title sectiontitle">Configuration Values</h2>
+      
+      <p class="p">There are three ways to pass configuration values into ALS:</p>
+
+      <ul class="ul">
+        <li class="li">Direct entry through the <samp class="ph codeph">cf-mgmt</samp> tool</li>
+
+        <li class="li">Defined in an <a class="xref" href="../user/reference/environment.html">environment
+            variable</a></li>
+
+        <li class="li">Recorded in a <a class="xref" href="#topic13234__downloadfile">configuration
+            file</a>
+        </li>
+
+      </ul>
+
+    </div>
+
+    <div class="section" id="topic13234__downloadfile"><h2 class="title sectiontitle">Configuration Files</h2>
+      
+      <div class="p">ALS maintains separate configuration files, so configuration values must be included in the
+        appropriate file.<div class="note note"><span class="notetitle">Note:</span> When creating clusters that support Keystone v3, you will need to
+            <a class="xref" href="cfmgmt_configure_keystonev3.html#topic_j5v_bsb_rt">modify the configuration
+            file</a> first.</div>
+</div>
+
+      <p class="p">One configuration file contains the values for the global variables. The global
+        configuration file is located in the home directory and is named <em class="ph i">cf-mgmt.yml</em>. </p>
+
+      <ul class="ul" id="topic13234__ul_jsn_n5b_ys">
+        <li class="li">Global level <strong class="ph b">commands</strong> create, delete, and add entire clusters. </li>
+
+        <li class="li">Global level <strong class="ph b">configurations</strong> manage tenants, users, versions, and other system
+          information on single or multiple clusters.</li>
+
+      </ul>
+
+      <p class="p">The other configuration files, specified by the <strong class="ph b">--load</strong> option, includes the values
+        that should be passed as arguments to a specific command. </p>
+
+    </div>
+
+    <div class="section" id="topic13234__global"><h2 class="title sectiontitle">Global Options</h2>
+      
+      <p class="p">These variables affect the entire cluster; they are <strong class="ph b">global</strong> in scope. These
+        environment variables are configured to work with the OpenStack<sup>®</sup> Python
+        tools to enable faster integration.</p>
+
+      <pre class="pre codeblock">cf-mgmt <strong class="ph b">[global options]</strong> command [command options] [arguments...] </pre>
+
+      
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          
+          
+          <thead class="thead" align="left">
+            <tr class="row">
+              <th class="entry" valign="top" width="25%" id="d10819e206">Option</th>
+
+              <th class="entry" valign="top" width="25%" id="d10819e209">Description</th>
+
+              <th class="entry" valign="top" width="25%" id="d10819e212">Environment Variable</th>
+
+              <th class="entry" valign="top" width="25%" id="d10819e215">Required</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d10819e206 ">--debug</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e209 ">Enables additional debug information.</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e212 ">$CFMGMT_DEBUG</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e215 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d10819e206 ">--dry-run</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e209 ">Simulate the command with provided flags.</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e212 ">N/A</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e215 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d10819e206 ">--os-username</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e209 ">OpenStack user name</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e212 ">$OS_USERNAME </td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e215 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d10819e206 ">--os-password</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e209 ">OpenStack password</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e212 ">$OS_PASSWORD</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e215 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d10819e206 ">--os-auth-url</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e209 ">OpenStack authentication URL</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e212 ">$OS_AUTH_URL</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e215 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d10819e206 ">--os-project-id</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e209 ">OpenStack project ID</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e212 ">$OS_PROJECT_ID</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e215 ">Yes, if <samp class="ph codeph">project-name</samp> is not defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d10819e206 ">--os-project-name</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e209 ">OpenStack project name</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e212 ">$OS_PROJECT_NAME</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e215 ">Yes, if <samp class="ph codeph">project-id</samp> is not defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d10819e206 ">--os-region-name</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e209 ">OpenStack region</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e212 ">$OS_REGION_NAME</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e215 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d10819e206 ">--os-cacert</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e209 ">OpenStack CA certificate</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e212 ">$OS_CACERT</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e215 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d10819e206 ">--skip-ssl-validation </td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e209 ">Skip SSL validation process</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e212 ">n/a</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e215 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d10819e206 ">--env &lt;user home directory&gt;.cf-mgmt.yml'</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e209 ">The default location for the configuration file is the user home directory.
+                Enter a new file path to change the location of the configuration file.</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e212 ">n/a</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e215 "> </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d10819e206 ">--help, -h</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e209 ">Displays help.</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e212 ">n/a</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e215 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d10819e206 ">--version, -v</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e209 ">Displays the version of the client.</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e212 ">n/a</td>
+
+              <td class="entry" valign="top" width="25%" headers="d10819e215 ">No</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+    </div>
+
+  <div class="section"><h2 class="title sectiontitle">Debugging</h2>
+    <p class="p"><strong class="ph b">Syntax</strong>: <samp class="ph codeph">--debug [option]</samp></p>
+
+      <p class="p">This command provides debug information and can be very helpful when creating clusters. </p>
+
+      <p class="p">The options are <samp class="ph codeph">general</samp>, <samp class="ph codeph">cpi</samp>, <samp class="ph codeph">shell</samp>,
+          <samp class="ph codeph">kato</samp>, <samp class="ph codeph">timing</samp>, <samp class="ph codeph">all</samp>.</p>
+
+<div class="p">Example: <pre class="pre codeblock">cf-mgmt --debug all cc</pre>
+</div>
+
+         
+   
+  </div>
+
+    <div class="section" id="topic13234__commands"><h2 class="title sectiontitle">Cluster Commands</h2>
+      
+      <p class="p">These commands are available from the command line interface.</p>
+
+    </div>
+
+    <div class="section" id="topic13234__use-syntax"><h2 class="title sectiontitle">Use Syntax</h2>
+      
+      <pre class="pre codeblock">cf-mgmt [global options] <strong class="ph b">command</strong> [command options] [arguments...] </pre>
+
+    </div>
+
+    <div class="section" id="topic13234__command-options"><h2 class="title sectiontitle">Command Options</h2>
+      
+      
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <thead class="thead" align="left">
+            <tr class="row">
+              <th class="entry" valign="top" width="109.5pt" id="d10819e510">Command</th>
+
+              <th class="entry" valign="top" width="445.5pt" id="d10819e513">Description</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="109.5pt" headers="d10819e510 ">create-cluster, cc</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e513 ">Creates a cluster</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="109.5pt" headers="d10819e510 ">delete-cluster, dc</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e513 ">Deletes a cluster</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="109.5pt" headers="d10819e510 ">list-clusters, lc</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e513 ">Lists clusters within a tenant. </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="109.5pt" headers="d10819e510 ">show-cluster, sc </td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e513 ">Display detailed cluster information.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="109.5pt" headers="d10819e510 ">add-service, as</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e513 ">Add services to an existing cluster.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="109.5pt" headers="d10819e510 ">add-role, ar</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e513 ">Add node of the specified role to an existing cluster.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="109.5pt" headers="d10819e510 ">remove service, rs</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e513 ">Remove services from an existing cluster.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="109.5pt" headers="d10819e510 ">remove role, rr</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e513 ">Remove node of the specified role from an existing cluster.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="109.5pt" headers="d10819e510 ">update, up</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e513 ">Update to the most recent version of <em class="ph i">cf-mgmt</em></td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="109.5pt" headers="d10819e510 ">help, h</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e513 ">Displays a list of available commands or help for a command.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+    </div>
+
+    <div class="section" id="topic13234__create"><h2 class="title sectiontitle">Create a Cluster</h2>
+      
+      <p class="p">This command creates a cluster. (<em class="ph i">create-cluster</em>).</p>
+
+      <pre class="pre codeblock">cf-mgmt [global options] <strong class="ph b">create-cluster</strong> [command options] [arguments...] </pre>
+
+      <p class="p">For help with this command within the command-line interface, enter</p>
+
+      <pre class="pre codeblock">cf-mgmt help create-cluster</pre>
+
+      
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          
+          <thead class="thead" align="left">
+            <tr class="row">
+              <th class="entry" valign="top" width="22.98850574712644%" id="d10819e655">Command Options</th>
+
+              <th class="entry" valign="top" width="43.67816091954023%" id="d10819e658">Description</th>
+
+              <th class="entry" valign="top" width="33.333333333333336%" id="d10819e661">Required</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--load </td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Load flags from the specified file</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--save</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Save flags to the specified file</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--admin-email</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Email address for the Cloud Foundry admin user</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--admin-password</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Password for the Cloud Foundry admin user</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--admin-org 'org1'</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Organization the Cloud Foundry admin user is part of</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--cluster-title</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Title of the Cloud Foundry cluster</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--cluster-prefix</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Prefix to affix to cluster instance names.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--dea-count '0'</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Number of DEAs nodes in the cluster.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--services</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">The list of services enabled for the cluster</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--services-on-core 'false'</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Should services be enabled on core nodes? True/False</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--az</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Availability zone for the cluster</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--core-flavor</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Flavor name of core nodes in the cluster</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--dea-flavor</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Flavor name for DEA nodes</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--service-flavor</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Flavor name for service nodes in the cluster</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">Required only if <samp class="ph codeph">services</samp> and
+                  <samp class="ph codeph">services-on-core</samp> are used.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--router-flavor</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Flavor name for Router nodes in the cluster.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">Required only if <samp class="ph codeph">router-count</samp> is used.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--router-count '0'</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Number of Router nodes in the cluster</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--keypair-name</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">The name of the key pair on instances</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--seed-node-image-id</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">ID of the seed node image.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">Required only if <samp class="ph codeph">seed-node-image-name</samp> is undefined. Optional
+                if <samp class="ph codeph">seed-node-image-name</samp> is defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--seed-node-image-name</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Name of the seed node image.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">Required only if <samp class="ph codeph">seed-node-image-id</samp> is undefined. Optional if
+                  <samp class="ph codeph">seed-node-image-id</samp> is defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--database-instance-id</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Database instance id</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--database-flavor</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Flavor name of database</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">Required only if <samp class="ph codeph">database-volume-size</samp> is used.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--database-volume-size '0'</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Database volume size</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--core-volume-size '0'</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Size of block storage volume to add (in GB) for the core machine.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--mountpoint '/block_storage'</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Mountpoint of added block storage (defaults to /block_storage)</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--max-cluster-wait-duration '-1'</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Maximum time to wait for the cluster creation to occur; the default value
+                specifies an infinite wait.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--max-corenode-wait-duration '10m'</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Maximum time to wait for the core node to come up on cluster creation; defaults
+                to 10 minutes.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--subnet-id</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">ID of the subnet for the Constructor VM, the cluster created by create-cluster,
+                and the DEA nodes added by add-role dea.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">Deprecated in favor of <samp class="ph codeph">network-id</samp>. Avoid use.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--subnet-name</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Name of the subnet for the Constructor VM, the cluster created by
+                create-cluster and the DEA nodes added by add-role dea.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">Deprecated in favor of <samp class="ph codeph">network-name</samp>. Avoid use.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--network-id</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">ID of the network for the created nodes.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--network-name</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Name of the network for the created nodes.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--dns-suffix</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">DNS suffix of the host machine.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--core-floating-ip</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Fixed Floating IP for the core machine. A Floating IP is one that is publicly
+                available. When assigned to a machine, it becomes a Fixed IP.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--upstream-proxy </td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Upstream proxy. (Protocol://hostname:port. For example:<samp class="ph codeph">
+                  http://proxy.comp.net:8080</samp>)</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--http-proxy</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">HTTP proxy.(Protocol://hostname:port. For example:<samp class="ph codeph">
+                  http://proxy.comp.net:8080</samp>)</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--https-proxy</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">HTTPS proxy. (Protocol://hostname:port. For example:<samp class="ph codeph">
+                  http://proxy.comp.net:8080</samp>)</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--ftp-proxy</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">FTP proxy. (Protocol://hostname:port. For example:
+                  <samp class="ph codeph">ftp://proxy.comp.net:8080</samp>)</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--service-volume-size '0'</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Size of block storage volume to add (in GB) for the service.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--max-constructor-wait-duration '10m'</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Duration to wait for the constructor machine to come up. Default is 10
+                minutes.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--constructor-image-name </td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Name of the image of the constructor server</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">Required only if <samp class="ph codeph">constructor-image-id</samp> is undefined. Optional
+                if <samp class="ph codeph">constructor-image-id</samp> is defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--constructor-image-id</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">ID of the image of the constructor server</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">Required only if <samp class="ph codeph">constructor-image-name</samp> is undefined. Optional
+                if <samp class="ph codeph">constructor-image-name</samp> is defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--constructor-flavor</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Flavor name for the constructor server</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--max-constructor-wait-duration '10m'</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Duration to wait for the constructor virtual machine to come up. The default is
+                10 minutes.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--keep-constructor </td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Keep the constructor virtual machine up and running after command
+                completion.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e655 ">--no-rollback </td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e658 ">Do not rollback in the event of a failure.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e661 ">No</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+    </div>
+
+    <div class="section" id="topic13234__delete"><h2 class="title sectiontitle">Delete a Cluster</h2>
+      
+      <p class="p">This command deletes a cluster (<em class="ph i">delete-cluster</em>).</p>
+
+    </div>
+
+    <div class="section" id="topic13234__delete-cluster-use-syntax"><h2 class="title sectiontitle">Use Syntax</h2>
+      
+      <pre class="pre codeblock">cf-mgmt [global options] <strong class="ph b">delete-cluster</strong> [command options] [arguments...] </pre>
+
+      <p class="p">For help with this command within the command-line interface, enter</p>
+
+      <pre class="pre codeblock">cf-mgmt help delete-cluster</pre>
+
+    </div>
+
+    <div class="section" id="topic13234__delete-cluster-command-options"><h2 class="title sectiontitle">Command Options</h2>
+      
+      
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          
+          <thead class="thead" align="left">
+            <tr class="row">
+              <th class="entry" valign="top" width="22.98850574712644%" id="d10819e1311">Command Options</th>
+
+              <th class="entry" valign="top" width="43.67816091954023%" id="d10819e1314">Description</th>
+
+              <th class="entry" valign="top" width="33.333333333333336%" id="d10819e1317">Required</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e1311 ">--load</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e1314 ">Load flags from the specified file</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e1317 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e1311 ">--save </td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e1314 ">Save flags to the specified file</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e1317 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e1311 ">--cluster-prefix</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e1314 ">Prefix to affix to cluster instance names.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e1317 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e1311 ">--keypair-name</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e1314 ">The name of the key pair on instances</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e1317 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e1311 ">--constructor-image-name</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e1314 ">Name of the image of the constructor server</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e1317 ">Required only if <samp class="ph codeph">constructor-image-id</samp> is undefined. Optional
+                if <samp class="ph codeph">constructor-image-id</samp> is defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e1311 ">--constructor-image-id</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e1314 ">ID of the image of the constructor server</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e1317 ">Required only if <samp class="ph codeph">constructor-image-name</samp> is undefined. Optional
+                if <samp class="ph codeph">constructor-image-name</samp> is defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e1311 ">--constructor-flavor</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e1314 ">Flavor name of the constructor server</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e1317 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e1311 ">--max-cluster-wait-duration '4m'</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e1314 ">Maximum time to wait for cluster deletion to occur. Default wait time is 4
+                minutes.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e1317 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e1311 ">--subnet-name</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e1314 ">Name of the subnet for the Constructor VM, the cluster created by
+                create-cluster and the DEA nodes added by add-role dea.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e1317 ">Deprecated in favor of <samp class="ph codeph">network-name</samp>. Avoid use.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e1311 ">--subnet-id</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e1314 ">ID of the subnet for the Constructor VM, the cluster created by create-cluster
+                and the DEA nodes added by add-role dea.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e1317 ">Deprecated in favor of <samp class="ph codeph">network-id</samp>. Avoid use.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e1311 ">--network-id</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e1314 ">ID of the network for the created nodes</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e1317 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e1311 ">--network-name </td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e1314 ">Name of the network for the created nodes</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e1317 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e1311 ">--max-constructor-wait-duration '10m'</td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e1314 ">Duration to wait for the constructor machine to come up. Default wait time is
+                10 minutes.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e1317 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e1311 "> --no-prompt </td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e1314 ">On deleting the cluster, do not prompt.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e1317 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e1311 "> --delete-database </td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e1314 ">On deleting the cluster, also delete the cluster databases.</td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e1317 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="22.98850574712644%" headers="d10819e1311 "> --delete-volume </td>
+
+              <td class="entry" valign="top" width="43.67816091954023%" headers="d10819e1314 ">On deleting the cluster, also delete the cluster volumes </td>
+
+              <td class="entry" valign="top" width="33.333333333333336%" headers="d10819e1317 ">No</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+    </div>
+
+    <div class="section" id="topic13234__list"><h2 class="title sectiontitle">List Clusters</h2>
+      <p class="p">Lists all clusters that exist on a single tenant. (<em class="ph i">list-clusters</em>)</p>
+
+      
+      <pre class="pre codeblock">cf-mgmt [global options] <strong class="ph b">list-clusters</strong> [arguments...] </pre>
+
+      <p class="p">For help with this command within the command-line interface, enter</p>
+
+      <pre class="pre codeblock">cf-mgmt help list-clusters</pre>
+      
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          
+          <thead class="thead" align="left">
+            <tr class="row">
+              <th class="entry" valign="top" width="19.762845849802368%" id="d10819e1580">Command Options</th>
+
+              <th class="entry" valign="top" width="48.023715415019765%" id="d10819e1583">Description</th>
+
+              <th class="entry" valign="top" width="32.21343873517786%" id="d10819e1586">Required</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="19.762845849802368%" headers="d10819e1580 ">-h</td>
+
+              <td class="entry" valign="top" width="48.023715415019765%" headers="d10819e1583 ">Shows a list of commands or help for one command.</td>
+
+              <td class="entry" valign="top" width="32.21343873517786%" headers="d10819e1586 ">No</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+    </div>
+
+  <div class="section" id="topic13234__show"><h2 class="title sectiontitle">Show Details</h2>
+    <p class="p">Displays detailed information about the target cluster. (<em class="ph i">show-cluster</em>)</p>
+
+      <p class="p">For help with this command within the command-line interface, enter</p>
+
+      <pre class="pre codeblock">cf-mgmt help show-cluster</pre>
+
+    
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          
+          <thead class="thead" align="left">
+            <tr class="row">
+              <th class="entry" valign="top" width="19.762845849802368%" id="d10819e1639">Command Options</th>
+
+              <th class="entry" valign="top" width="48.81422924901186%" id="d10819e1642">Description</th>
+
+              <th class="entry" valign="top" width="31.422924901185766%" id="d10819e1645">Required</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="19.762845849802368%" headers="d10819e1639 "> --cluster-prefix </td>
+
+              <td class="entry" valign="top" width="48.81422924901186%" headers="d10819e1642 ">Prefix to affix to cluster instance names.</td>
+
+              <td class="entry" valign="top" width="31.422924901185766%" headers="d10819e1645 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.762845849802368%" headers="d10819e1639 ">-h</td>
+
+              <td class="entry" valign="top" width="48.81422924901186%" headers="d10819e1642 ">Shows a list of commands or help for one command.</td>
+
+              <td class="entry" valign="top" width="31.422924901185766%" headers="d10819e1645 ">No</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+  </div>
+
+    <div class="section" id="topic13234__addrole"><h2 class="title sectiontitle">Add Roles to an Existing Cluster</h2>
+      
+      <p class="p">Options can be passed when adding roles to an existing cluster (<em class="ph i">add-role dea</em>). </p>
+
+      <div class="p">
+        <div class="note note"><span class="notetitle">Note:</span> Adding a role will create one or more additional nodes in the cluster as part of the
+          process.</div>
+
+      </div>
+
+    </div>
+
+    <div class="section" id="topic13234__add-role-use-syntax"><h2 class="title sectiontitle">Use Syntax</h2>
+      
+      <pre class="pre codeblock">cf-mgmt [global options] <strong class="ph b">add-role</strong> [subcommand] [subcommand options] [arguments...]</pre>
+
+      <p class="p">For help with this command within the command-line interface, enter</p>
+
+      <pre class="pre codeblock">cf-mgmt add-role --help</pre>
+
+    </div>
+
+    <div class="section" id="topic13234__subcommands"><h2 class="title sectiontitle">Subcommands</h2>
+      
+      <pre class="pre codeblock">cf-mgmt [global options] add-role <strong class="ph b">[subcommand]</strong> [subcommand options] [arguments...]</pre>
+
+      
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <thead class="thead" align="left">
+            <tr class="row">
+              <th class="entry" valign="top" width="12.004801920768307%" id="d10819e1740">Subcommand</th>
+
+              <th class="entry" valign="top" width="87.9951980792317%" id="d10819e1743">Description</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="12.004801920768307%" headers="d10819e1740 ">dea</td>
+
+              <td class="entry" valign="top" width="87.9951980792317%" headers="d10819e1743 ">Add DEA nodes to an existing cluster.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+    </div>
+
+    <div class="section" id="topic13234__sub-command-options"><h2 class="title sectiontitle">Sub-Command Options</h2>
+      
+      <pre class="pre codeblock">cf-mgmt [global options] add-role [subcommand] <strong class="ph b">[subcommand options]</strong> [arguments...]</pre>
+
+      
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          
+          <thead class="thead" align="left">
+            <tr class="row">
+              <th class="entry" valign="top" width="21.321961620469086%" id="d10819e1788">Options (with default input)</th>
+
+              <th class="entry" valign="top" width="45.41577825159915%" id="d10819e1791">Description</th>
+
+              <th class="entry" valign="top" width="33.262260127931775%" id="d10819e1794">Required</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e1788 ">--load</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e1791 ">Load flags from the specified file</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e1794 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e1788 ">--save</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e1791 ">Save flag values to the specified file</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e1794 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e1788 ">--cluster-prefix</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e1791 ">Prefix to affix to cluster instance names.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e1794 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e1788 ">--count '1'</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e1791 ">Number of nodes in the cluster</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e1794 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e1788 ">--seed-node-image-name</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e1791 ">Name of the image of the constructor server.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e1794 ">Required only if <samp class="ph codeph">seed-node-image-id</samp> is undefined. Optional if
+                  <samp class="ph codeph">seed-node-image-id</samp> is defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e1788 ">--seed-node-image-id</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e1791 ">Name of the image of the constructor server.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e1794 ">Required only if <samp class="ph codeph">seed-node-image-name</samp> is undefined. Optional
+                if <samp class="ph codeph">seed-node-image-name</samp> is defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e1788 ">--flavor</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e1791 ">Flavor name of the instance in the cluster.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e1794 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e1788 ">--keypair-name</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e1791 ">The name of the key pair on instances</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e1794 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e1788 ">--max-cluster-wait-duration '-1'</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e1791 ">Maximum time to wait for addition of node or service to cluster; defaults to an
+                infinite wait.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e1794 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e1788 ">--constructor-flavor</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e1791 ">Flavor name reference to use when creating a constructor server</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e1794 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e1788 ">--subnet-name</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e1791 ">Name of the subnet for the Constructor VM, the cluster created by
+                create-cluster and the DEA nodes added by add-role dea.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e1794 ">Deprecated in favor of <samp class="ph codeph">network-name</samp>. Avoid use.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e1788 ">--subnet-id</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e1791 ">ID of the subnet for the Constructor VM, the cluster created by create-cluster
+                and the DEA nodes added by add-role dea.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e1794 ">Deprecated in favor of <samp class="ph codeph">network-id</samp>. Avoid use.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e1788 ">--network-id</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e1791 ">ID of the network for the created nodes</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e1794 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e1788 ">--network-name </td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e1791 ">Name of the network for the created nodes</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e1794 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e1788 ">--max-constructor-wait-duration '10m'</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e1791 ">Duration to wait for the constructor machine to come up. Default is 10
+                minutes.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e1794 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e1788 ">--az</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e1791 ">Availability zone for the created node.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e1794 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e1788 ">--stack 'lucid64'</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e1791 ">Stack indicates the platform to use when adding DEAs. Valid values are lucid64
+                or win2012r2. Default is lucid64</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e1794 ">No</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+    </div>
+
+    <div class="section" id="topic13234__addservice"><h2 class="title sectiontitle">Add Services to an Existing Cluster</h2>
+      
+      <p class="p">This command adds services to an existing cluster (<em class="ph i">add-service</em>).</p>
+
+    </div>
+
+    <div class="section" id="topic13234__add-service-use-syntax"><h2 class="title sectiontitle">Use Syntax</h2>
+      
+      <pre class="pre codeblock">cf-mgmt [global options] <strong class="ph b">add-service</strong> [subcommand] [subcommand options] [arguments..]</pre>
+
+      <p class="p">For help with each subcommand, enter</p>
+
+      <pre class="pre codeblock">cf-mgmt add-service <strong class="ph b">[subcommand]</strong> --help</pre>
+
+    </div>
+
+    <div class="section" id="topic13234__add-service-subcommands"><h2 class="title sectiontitle">Subcommands</h2>
+      
+      <pre class="pre codeblock">cf-mgmt [global options] add-service <strong class="ph b">[subcommand]</strong> [subcommand options] [arguments..]</pre>
+
+      
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <thead class="thead" align="left">
+            <tr class="row">
+              <th class="entry" valign="top" width="119.25pt" id="d10819e2085">Subcommand</th>
+
+              <th class="entry" valign="top" width="445.5pt" id="d10819e2088">Description</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="119.25pt" headers="d10819e2085 ">mysql</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e2088 ">Add a MySQL service to an existing cluster.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="119.25pt" headers="d10819e2085 ">filesystem</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e2088 ">Add a filesystem service to an existing cluster.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="119.25pt" headers="d10819e2085 ">memcached</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e2088 ">Add a memcached service to an existing cluster.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="119.25pt" headers="d10819e2085 ">redis </td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e2088 ">Add a redis service to an existing cluster.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="119.25pt" headers="d10819e2085 ">postgresql</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e2088 ">Add a postgresql service to an existing cluster.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="119.25pt" headers="d10819e2085 ">rabbit</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e2088 ">Add a RabbitMQ service to an existing cluster.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="119.25pt" headers="d10819e2085 ">mongodb</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e2088 ">Add a MongoDB service to an existing cluster.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="119.25pt" headers="d10819e2085 ">mssql2012</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e2088 ">Add a Microsoft SQL 2012 service to an existing cluster.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="119.25pt" headers="d10819e2085 ">mssql2014 </td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e2088 ">Add a Microsoft SQL 2014 service to an existing cluster.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="119.25pt" headers="d10819e2085 ">harbor</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e2088 ">Add a Harbor service to an existing cluster.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="119.25pt" headers="d10819e2085 ">help, h</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e2088 ">Shows a list of commands or help for one command.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+    </div>
+
+    <div class="section" id="topic13234__subcommand-options"><h2 class="title sectiontitle">Subcommand Options</h2>
+      
+      <p class="p">Each subcommand in the Add-Service command has these following options available. The
+          <var class="keyword varname">mysql</var> subcommand has <a class="xref" href="#topic13234__mysqlcommand">additional options</a>.</p>
+
+      <pre class="pre codeblock">cf-mgmt [global options] add-service [subcommand] <strong class="ph b">[subcommand options]</strong> [arguments..]</pre>
+
+      
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          
+          <thead class="thead" align="left">
+            <tr class="row">
+              <th class="entry" valign="top" width="21.321961620469086%" id="d10819e2234">Subcommand Options</th>
+
+              <th class="entry" valign="top" width="45.41577825159915%" id="d10819e2237">Description</th>
+
+              <th class="entry" valign="top" width="33.262260127931775%" id="d10819e2240">Required</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--load</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">Load flags from the specified file</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--save</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">Save flag values to the specified file</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--cluster-prefix</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">Prefix to affix to cluster instance names.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--seed-node-image-name</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">The seed node image name.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">Required only if <samp class="ph codeph">seed-node-image-id</samp> is undefined. Optional if
+                  <samp class="ph codeph">seed-node-image-id</samp> is defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--seed-node-image-id</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">The seed node image ID.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">Required only if <samp class="ph codeph">seed-node-image-name</samp> is undefined. Optional
+                if <samp class="ph codeph">seed-node-image-name</samp> is defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--flavor</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">Flavor name of this instance in the cluster.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--keypair-name</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">The name of the key pair on instances</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--constructor-image-name</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">Name of the image of the constructor server.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">Required only if <samp class="ph codeph">constructor-node-image-id</samp> is undefined.
+                Optional if <samp class="ph codeph">constructor-node-image-id</samp> is defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--constructor-image-id</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">ID of the image of the constructor server.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">Required only if <samp class="ph codeph">constructor-node-image-name</samp> is undefined.
+                Optional if <samp class="ph codeph">constructor-node-image-name</samp> is defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--max-cluster-wait-duration '-1'</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">Maximum time to wait for addition of node or service to cluster; defaults to an
+                infinite wait.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--constructor-flavor</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">Flavor name reference to use when creating a constructor server.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--subnet-name</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">Name of the subnet for the Constructor VM, the cluster created by
+                create-cluster and the DEA nodes added by add-role dea.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">Deprecated in favor of <var class="keyword varname">network-name</var>. Avoid use.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--subnet-id</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">ID of the subnet for the Constructor VM, the cluster created by create-cluster
+                and the DEA nodes added by add-role dea.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">Deprecated in favor of <var class="keyword varname">network-id</var>. Avoid use.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--network-id</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">ID of the network for the created nodes</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--network-name </td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">Name of the network for the created nodes</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--service-volume-size '0'</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">Size of block storage volume to add (in GB) for the service.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--mountpoint '/block_storage'</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">Mount point of added block storage (defaults to /block_storage)</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--max-constructor-wait-duration '10m'</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">Duration to wait for the constructor machine to come up. Default is 10
+                minutes.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--az</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">Availability zone for the created node.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 "> --keep-constructor </td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">Keep the constructor VM up and running after command completion.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2234 ">--no-rollback </td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2237 ">Do not rollback in the event of a failure.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2240 ">No</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+      <p class="p">The <var class="keyword varname">mysql</var> subcommand has additional options.</p>
+
+      
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="topic13234__mysqlcommand" class="table" frame="border" border="1" rules="all">
+          
+          
+          
+          <thead class="thead" align="left">
+            <tr class="row">
+              <th class="entry" valign="top" width="1" id="d10819e2556">MySQL Subcommand Options</th>
+
+              <th class="entry" valign="top" width="1" id="d10819e2559">Description</th>
+
+              <th class="entry" valign="top" width="33.33333333333333%" id="d10819e2562">Required</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="1" headers="d10819e2556 ">--database-instance-id</td>
+
+              <td class="entry" valign="top" width="1" headers="d10819e2559 ">Database instance id</td>
+
+              <td class="entry" valign="top" width="33.33333333333333%" headers="d10819e2562 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="1" headers="d10819e2556 ">--database-flavor</td>
+
+              <td class="entry" valign="top" width="1" headers="d10819e2559 ">Flavor name of database</td>
+
+              <td class="entry" valign="top" width="33.33333333333333%" headers="d10819e2562 ">Required only if <samp class="ph codeph">database-volume-size </samp>is used.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="1" headers="d10819e2556 ">--database-volume-size '0'</td>
+
+              <td class="entry" valign="top" width="1" headers="d10819e2559 ">Database volume size</td>
+
+              <td class="entry" valign="top" width="33.33333333333333%" headers="d10819e2562 ">No</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+    </div>
+
+    <div class="section" id="topic13234__update-the-cf-mgmt-tool"><h2 class="title sectiontitle">Update the <samp class="ph codeph">cf-mgmt </samp>Tool</h2>
+      
+      <p class="p">This command checks for and downloads the latest version of the
+          <var class="keyword varname">cf-mgmt.exe</var> tool.</p>
+
+      <p class="p">There are no arguments for this command. Passing the <samp class="ph codeph">Help</samp> option will
+        generate an empty list.</p>
+
+      <pre class="pre codeblock">cf-mgmt <strong class="ph b">update</strong></pre>
+
+      
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <thead class="thead" align="left">
+            <tr class="row">
+              <th class="entry" valign="top" width="13.49527665317139%" id="d10819e2650">Command Options</th>
+
+              <th class="entry" valign="top" width="86.5047233468286%" id="d10819e2653">Description</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%" headers="d10819e2650 ">-h</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%" headers="d10819e2653 ">Shows a list of commands or help for one command.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+    </div>
+
+  
+  <div class="section" id="topic13234__removeservice"><h2 class="title sectiontitle">Remove Services from an Existing Cluster</h2>
+      
+      <p class="p">This command removes services from an existing cluster (<em class="ph i">add-service</em>).</p>
+
+    </div>
+
+  <div class="section" id="topic13234__remove-service-use-syntax"><h2 class="title sectiontitle">Use Syntax</h2>
+    
+    <pre class="pre codeblock">cf-mgmt [global options] <strong class="ph b">remove-service</strong> [subcommand] [subcommand options] [arguments..]</pre>
+
+    <p class="p">For help with each subcommand, enter</p>
+
+    <pre class="pre codeblock">cf-mgmt remove-service <strong class="ph b">[subcommand]</strong> --help</pre>
+
+  </div>
+
+  <div class="section" id="topic13234__remove-service-subcommands"><h2 class="title sectiontitle">Subcommands</h2>
+    
+    <pre class="pre codeblock">cf-mgmt [global options] remove-service <strong class="ph b">[subcommand]</strong> [subcommand options] [arguments..]</pre>
+
+    
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+        
+        
+        <thead class="thead" align="left">
+          <tr class="row">
+            <th class="entry" valign="top" width="119.25pt" id="d10819e2729">Subcommand</th>
+
+            <th class="entry" valign="top" width="445.5pt" id="d10819e2732">Description</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody class="tbody">
+          <tr class="row">
+            <td class="entry" valign="top" width="119.25pt" headers="d10819e2729 ">mysql</td>
+
+            <td class="entry" valign="top" width="445.5pt" headers="d10819e2732 ">Remove a MySQL service from an existing cluster.</td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top" width="119.25pt" headers="d10819e2729 ">filesystem</td>
+
+            <td class="entry" valign="top" width="445.5pt" headers="d10819e2732 ">Remove a filesystem service from an existing cluster.</td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top" width="119.25pt" headers="d10819e2729 ">memcached</td>
+
+            <td class="entry" valign="top" width="445.5pt" headers="d10819e2732 ">Remove a memcached service from an existing cluster.</td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top" width="119.25pt" headers="d10819e2729 ">redis </td>
+
+            <td class="entry" valign="top" width="445.5pt" headers="d10819e2732 ">Remove a redis service from an existing cluster.</td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top" width="119.25pt" headers="d10819e2729 ">postgresql</td>
+
+            <td class="entry" valign="top" width="445.5pt" headers="d10819e2732 ">Remove a postgresql service from an existing cluster.</td>
+
+          </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="119.25pt" headers="d10819e2729 ">harbor</td>
+
+              <td class="entry" valign="top" width="445.5pt" headers="d10819e2732 ">Remove a Harbor service from an existing cluster.</td>
+
+            </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top" width="119.25pt" headers="d10819e2729 ">rabbit</td>
+
+            <td class="entry" valign="top" width="445.5pt" headers="d10819e2732 ">Remove a RabbitMQ service from an existing cluster.</td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top" width="119.25pt" headers="d10819e2729 ">mongodb</td>
+
+            <td class="entry" valign="top" width="445.5pt" headers="d10819e2732 ">Remove a MongoDB service from an existing cluster.</td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top" width="119.25pt" headers="d10819e2729 ">mssql2012</td>
+
+            <td class="entry" valign="top" width="445.5pt" headers="d10819e2732 ">Remove a Microsoft SQL 2012 service from an existing cluster.</td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top" width="119.25pt" headers="d10819e2729 ">mssql2014 </td>
+
+            <td class="entry" valign="top" width="445.5pt" headers="d10819e2732 ">Remove a Microsoft SQL 2014 service from an existing cluster.</td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top" width="119.25pt" headers="d10819e2729 ">help, h</td>
+
+            <td class="entry" valign="top" width="445.5pt" headers="d10819e2732 ">Shows a list of commands or help for one command.</td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+</div>
+
+  </div>
+
+  <div class="section" id="topic13234__remove-subcommand-options"><h2 class="title sectiontitle">Subcommand Options</h2>
+    
+    <p class="p">Each subcommand in the Remove-Service command has these following options available. The
+          <var class="keyword varname">mysql</var> subcommand has <a class="xref" href="#topic13234__remove-mysqlcommand">additional options</a>.</p>
+
+    <pre class="pre codeblock">cf-mgmt [global options] remove-service [subcommand] <strong class="ph b">[subcommand options]</strong> [arguments..]</pre>
+
+    
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+        
+        
+        
+        <thead class="thead" align="left">
+          <tr class="row">
+            <th class="entry" valign="top" width="21.321961620469086%" id="d10819e2878">Subcommand Options</th>
+
+            <th class="entry" valign="top" width="45.41577825159915%" id="d10819e2881">Description</th>
+
+            <th class="entry" valign="top" width="33.262260127931775%" id="d10819e2884">Required</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody class="tbody">
+          <tr class="row">
+            <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--load</td>
+
+            <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">Load flags from the specified file</td>
+
+            <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">No</td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--save</td>
+
+            <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">Save flag values to the specified file</td>
+
+            <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">No</td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--cluster-prefix</td>
+
+            <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">Prefix to affix to cluster instance names.</td>
+
+            <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">Yes</td>
+
+          </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--keypair-name</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">The name of the key pair on instances</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--constructor-image-name</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">Name of the image of the constructor server.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">Required only if <samp class="ph codeph">constructor-node-image-id</samp> is undefined.
+                Optional if <samp class="ph codeph">constructor-node-image-id</samp> is defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--constructor-image-id</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">ID of the image of the constructor server.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">Required only if <samp class="ph codeph">constructor-node-image-name</samp> is undefined.
+                Optional if <samp class="ph codeph">constructor-node-image-name</samp> is defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--constructor-flavor</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">Flavor name reference to use when creating a constructor server.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--max-cluster-wait-duration '-1'</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">Maximum time to wait for addition of node or service to cluster; defaults to an
+                infinite wait.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--network-id</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">ID of the network for the created nodes</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--network-name </td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">Name of the network for the created nodes</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--external-network-id</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">ID of the external network for the public created nodes.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--external-network-name </td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">Name of the external network for the public created nodes.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--max-constructor-wait-duration '10m'</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">Duration to wait for the constructor machine to come up. Default is 10
+                minutes.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--private-key</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">The private key file needed to connect to cluster nodes.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--delete-instance</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">Delete the server instance.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--keep-constructor </td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">Keep the constructor VM up and running after command completion.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--backup-to-volume</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">Create a service backup to the volume previously attached.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e2878 ">--delete-volume</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e2881 ">On deleting the cluster also include deleting the cluster volumes</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e2884 ">No</td>
+
+            </tr>
+
+        </tbody>
+
+      </table>
+</div>
+
+    <p class="p">The <var class="keyword varname">mysql</var> subcommand has additional options.</p>
+
+    
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="topic13234__remove-mysqlcommand" class="table" frame="border" border="1" rules="all">
+        
+        
+        
+        <thead class="thead" align="left">
+          <tr class="row">
+            <th class="entry" valign="top" width="1" id="d10819e3146">MySQL Subcommand Options</th>
+
+            <th class="entry" valign="top" width="1" id="d10819e3149">Description</th>
+
+            <th class="entry" valign="top" width="33.33333333333333%" id="d10819e3152">Required</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody class="tbody">
+          <tr class="row">
+            <td class="entry" valign="top" width="1" headers="d10819e3146 ">--delete-database</td>
+
+            <td class="entry" valign="top" width="1" headers="d10819e3149 ">On deleting the cluster, also delete the database.</td>
+
+            <td class="entry" valign="top" width="33.33333333333333%" headers="d10819e3152 ">No</td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+</div>
+
+  </div>
+ 
+  
+  <div class="section" id="topic13234__removerole"><h2 class="title sectiontitle">Remove Roles From an Existing Cluster</h2>
+    
+  </div>
+
+  <div class="section" id="topic13234__remove-role-use-syntax"><h2 class="title sectiontitle">Use Syntax</h2>
+    
+    <pre class="pre codeblock">cf-mgmt [global options] <strong class="ph b">remove-role</strong> [subcommand] [subcommand options] [arguments...]</pre>
+
+    <p class="p">For help with this command within the command-line interface, enter</p>
+
+    <pre class="pre codeblock">cf-mgmt remove-role --help</pre>
+
+  </div>
+
+  <div class="section" id="topic13234__remove-role-subcommands"><h2 class="title sectiontitle">Subcommands</h2>
+    
+    <pre class="pre codeblock">cf-mgmt [global options] remove-role <strong class="ph b">[subcommand]</strong> [subcommand options] [arguments...]</pre>
+
+    
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+        
+        
+        <thead class="thead" align="left">
+          <tr class="row">
+            <th class="entry" valign="top" width="12.004801920768307%" id="d10819e3223">Subcommand</th>
+
+            <th class="entry" valign="top" width="87.9951980792317%" id="d10819e3226">Description</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody class="tbody">
+          <tr class="row">
+            <td class="entry" valign="top" width="12.004801920768307%" headers="d10819e3223 ">dea</td>
+
+            <td class="entry" valign="top" width="87.9951980792317%" headers="d10819e3226 ">Remove DEA nodes from an existing cluster.</td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+</div>
+
+  </div>
+
+  <div class="section" id="topic13234__remove-role-sub-command-options"><h2 class="title sectiontitle">Sub-Command Options</h2>
+    
+    <pre class="pre codeblock">cf-mgmt [global options] remove-role [subcommand] <strong class="ph b">[subcommand options]</strong> [arguments...]</pre>
+
+    
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+        
+        
+        
+        <thead class="thead" align="left">
+          <tr class="row">
+            <th class="entry" valign="top" width="21.321961620469086%" id="d10819e3271">Options (with default input)</th>
+
+            <th class="entry" valign="top" width="45.41577825159915%" id="d10819e3274">Description</th>
+
+            <th class="entry" valign="top" width="33.262260127931775%" id="d10819e3277">Required</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody class="tbody">
+          <tr class="row">
+            <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--load</td>
+
+            <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">Load flags from the specified file</td>
+
+            <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">No</td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--save</td>
+
+            <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">Save flag values to the specified file</td>
+
+            <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">No</td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--cluster-prefix</td>
+
+            <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">Prefix to affix to cluster instance names.</td>
+
+            <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">Yes</td>
+
+          </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--keypair-name</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">The name of the key pair on instances</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--constructor-image-name</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">Name of the image of the constructor server.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">Required only if <samp class="ph codeph">constructor-node-image-id</samp> is undefined.
+                Optional if <samp class="ph codeph">constructor-node-image-id</samp> is defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--constructor-image-id</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">ID of the image of the constructor server.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">Required only if <samp class="ph codeph">constructor-node-image-name</samp> is undefined.
+                Optional if <samp class="ph codeph">constructor-node-image-name</samp> is defined.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--max-cluster-wait-duration '-1'</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">Maximum time to wait for addition of node or service to cluster; defaults to an
+                infinite wait.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--constructor-flavor</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">Flavor name reference to use when creating a constructor server</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">Yes</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--network-id</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">ID of the network for the created nodes</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--network-name </td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">Name of the network for the created nodes</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--external-network-name </td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">Name of the external network for the public created nodes.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--external-network-id</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">ID of the external network for the public created nodes.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--max-constructor-wait-duration '10m'</td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">Duration to wait for the constructor machine to come up. Default is 10
+                minutes.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--keep-constructor </td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">Keep the constructor VM up and running after command completion.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--private-key </td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">The private key file needed to connect to cluster nodes.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">No</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--delete-instance </td>
+
+              <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">Delete the server instance.</td>
+
+              <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">No</td>
+
+            </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--role-instance [--role-instance option --role-instance option</td>
+
+            <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">The instance number of the role to be removed from the cluster.</td>
+
+            <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">No</td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top" width="21.321961620469086%" headers="d10819e3271 ">--stack 'lucid64'</td>
+
+            <td class="entry" valign="top" width="45.41577825159915%" headers="d10819e3274 ">Stack indicates the platform to use when adding DEAs. Valid values are lucid64
+              or win2012r2. Default is lucid64</td>
+
+            <td class="entry" valign="top" width="33.262260127931775%" headers="d10819e3277 ">No</td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+</div>
+
+  </div>
+
+   </div>
+
+
+</body>
+</html>

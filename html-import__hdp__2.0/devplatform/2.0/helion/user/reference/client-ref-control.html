@@ -1,0 +1,213 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Command Reference: Control</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic3247" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/client-ref-control.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Command Reference: Control</h1>
+
+
+
+
+
+<div class="body">
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic3247__command-migrate">helion migrate</a>: Move the application to a different space.</li>
+
+<li class="li">
+<a class="xref" href="#topic3247__command-restage">helion restage</a>: Restage an application and regenerate its droplet.</li>
+
+</ul>
+
+<div class="section" id="topic3247__syntax"><h2 class="title sectiontitle">Syntax</h2> 
+<pre class="pre codeblock">helion [options] command [arguments] [command-options]</pre>
+
+<p class="p">For more information, use the <strong class="ph b">helion help</strong> or <strong class="ph b">helion help [<em class="ph i">command</em>]</strong> commands.</p>
+
+</div>
+
+<div class="section" id="topic3247__command-migrate"><h2 class="title sectiontitle">helion migrate &lt;<em class="ph i">application</em>&gt; &lt;<em class="ph i">destination</em>&gt;</h2> 
+<p class="p">Move the application to a different space.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="25.510204081632654%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="74.48979591836735%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25.510204081632654%">--destination-organization, --dest-org, -D</td>
+
+              <td class="entry" valign="top" width="74.48979591836735%">The organization of the destination space, if not the current org.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25.510204081632654%">--manifest</td>
+
+              <td class="entry" valign="top" width="74.48979591836735%">Path of the manifest file to use. If not specified, a search is
+                performed.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25.510204081632654%">--organization, -o</td>
+
+              <td class="entry" valign="top" width="74.48979591836735%">The organization to use. If not specified programmatically, the user is
+                prompted to choose an organization.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25.510204081632654%">--path</td>
+
+              <td class="entry" valign="top" width="74.48979591836735%">Path of the directory or file holding the application files to push. Defaults
+                to the current working directory.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25.510204081632654%">--space, -s</td>
+
+              <td class="entry" valign="top" width="74.48979591836735%">The once-off space to use for the current operation, specified by name. Cannot
+                be used together with <var class="keyword varname">--space-guid</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25.510204081632654%">--space-guid</td>
+
+              <td class="entry" valign="top" width="74.48979591836735%">The once-off space to use for the current operation, specified by GUID. Cannot
+                be used together with <var class="keyword varname">--space</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25.510204081632654%">--target</td>
+
+              <td class="entry" valign="top" width="74.48979591836735%">The once-off target to use for the current operation only.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25.510204081632654%">--token</td>
+
+              <td class="entry" valign="top" width="74.48979591836735%">The once-off authentication token to use for the current operation
+                only.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25.510204081632654%">--token-file</td>
+
+              <td class="entry" valign="top" width="74.48979591836735%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic3247__command-restage"><h2 class="title sectiontitle">helion restage &lt;<em class="ph i">application</em>&gt;</h2> 
+<p class="p">Restages an application and regenerates its droplet. </p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--manifest</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Path of the manifest file to use. If not specified, a search is
+                performed.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--no-tail</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Request the target to stop streaming the log.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--organization, -o</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The organization to use. If not specified programmatically, the user is
+                prompted to choose an organization.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--path</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Path of the directory or file holding the application files to push. Defaults
+                to the current working directory.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--space, -s</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off space to use for the current operation, specified by name. Cannot
+                be used together with <var class="keyword varname">--space-guid</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--space-guid</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off space to use for the current operation, specified by GUID. Cannot
+                be used together with <var class="keyword varname">--space</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--tail</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Request the target to start streaming the log.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

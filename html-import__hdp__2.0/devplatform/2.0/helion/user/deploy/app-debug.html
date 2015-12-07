@@ -1,0 +1,50 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Remote Debugging</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic1398" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/app-debug.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Remote Debugging</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">Different languages have different tools and protocols for remote
+debugging, but most require a connection between the running application
+code and the debugging tool or IDE on a port and protocol other than
+standard HTTP(S).</p>
+
+<p class="p">Application Lifecycle Service makes this possible through the <a class="xref" href="../services/port-service.html">Harbor port service</a>, and the
+  <a class="xref" href="../reference/client-ref-management.html#topic50918__command-push"><em class="ph i">push</em></a> command has
+a <samp class="ph codeph">-d</samp> option to set up port forwarding for a remote
+debugging session automatically.</p>
+
+<div class="section" id="topic1398__helion-debug-command"><h2 class="title sectiontitle">HELION_DEBUG_COMMAND</h2> 
+<p class="p">The command-line client can automatically start a local debugger client or IDE instance with connection information for a newly pushed application.</p>
+
+<p class="p">When the <samp class="ph codeph">-d</samp> debugging option is given to
+  <a class="xref" href="../reference/client-ref-management.html#topic50918__command-push">
+<em class="ph i">push</em>
+</a> command,
+the client looks for a HELION_DEBUG_COMMAND environment variable. If
+present, the command specified in that variable is run after the push
+completes as child process in the foreground (i.e. blocking the parent
+<samp class="ph codeph">helion</samp> process) in the local application source
+directory.</p>
+
+<p class="p">Special <samp class="ph codeph">%HOST%</samp> and <samp class="ph codeph">%PORT%</samp> variables can be used in this command, which
+are replaced with the hostname or IP address and port number of the new
+Harbor debugging service.</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

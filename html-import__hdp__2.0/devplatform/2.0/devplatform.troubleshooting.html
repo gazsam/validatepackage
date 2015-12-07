@@ -1,0 +1,248 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Installation Troubleshooting</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic4855" /> <meta name="html-import-file-path" content="devplatform/2.0/devplatform.troubleshooting.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Installation Troubleshooting</h1>
+
+
+
+
+
+<div class="body">
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic4855__installation">Installation</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic4855__download">Download</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic4855__horizon">Horizon</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic4855__dbaas">DBaaS</a> (database)</li>
+
+<li class="li">
+<a class="xref" href="#topic4855__ALS">ALS</a> (Application Lifecycle Service)</li>
+
+<li class="li">
+<a class="xref" href="#topic4855__instance-create">Creating Instances</a>
+</li>
+
+</ul>
+
+<div class="section" id="topic4855__installation"><h2 class="title sectiontitle">Installation</h2> 
+  
+  <dl class="dl">
+    <dt class="dt dlterm">When installing Messaging, the installer hangs and does not progress.</dt>
+
+    <dd class="dd"><p class="p"><strong class="ph b">Cause</strong>: User is uploading an image to Glance which already exists.</p>
+ 
+      <div class="p"><strong class="ph b">Resolution</strong>: Delete existing images and upload again. SSH into the HPE Helion
+              OpenStack lifecycle manager (deployer node) and
+                run:<pre class="pre codeblock">glance image-list | grep -iE '('"$PRODUCT"')' | cut -d '|' -f2 | tr -d ' ' | xargs -I {} -n1 glance image-delete {}</pre>
+<div class="cautiontitle">CAUTION:</div><div class="note caution">This will remove ALL MSGaaS images.</div>
+</div>
+</dd>
+
+  
+    <dt class="dt dlterm">When trying to communicate with Cue (API), <samp class="ph codeph">ERROR: openstack Unauthorized (HTTP 401)</samp> is received.</dt>
+
+    <dd class="dd">It is most likely that the Cue Keystone user has a different
+      password than what was configured in cue.conf. This is usually caused by not deleting
+      the Cue user and service from Keystone prior to re-deploying the Messaging Service.
+      Synchronize the values by doing the following:<ol class="ol" id="topic4855__ol_t5m_2hs_wt">
+        <li class="li"> SSH into one of the Cue controller nodes.</li>
+
+        <li class="li">Find the <samp class="ph codeph">/etc/cue/cue.conf</samp> file</li>
+
+        <li class="li">Copy the value of the <strong class="ph b">admin_password</strong> variable.</li>
+
+        <li class="li">Source <samp class="ph codeph">keystone.osrc</samp></li>
+
+        <li class="li">Update the Cue user password in
+          Keystone:<pre class="pre codeblock">openstack user set cue --password &lt;value of admin_password&gt;</pre>
+</li>
+
+      </ol>
+</dd>
+
+  
+    
+      <dt class="dt dlterm">After installation, the final output window is closed before you can make a note of the IP
+            address or other information.</dt>
+
+      <dd class="dd"> From the HPE Helion OpenStack lifecycle manager (deployer node), run
+            :<pre class="pre codeblock">openstack --os-cloud msgaas server list</pre>
+This command will list
+            the list of servers created by the user, including the control plane nodes clusters, if
+            created. </dd>
+
+    
+    
+      <dt class="dt dlterm"><a name="topic4855__command-line-installer-fails-to-install"><!-- --></a>Command line installer fails to install</dt>
+
+      <dd class="dd">Resolution: <strong class="ph b">Set</strong> https_proxy and <strong class="ph b">unset</strong> http_proxy values.</dd>
+
+    
+    
+      <dt class="dt dlterm"><a name="topic4855__command-line-installer-fails-to-install-with-authentication-error"><!-- --></a>Command line installer fails to install with Authentication Error</dt>
+
+      <dd class="dd"><p class="p">Even after fixing some errors and retrying, the command line installation fails.</p>
+
+        <p class="p">Resolution:</p>
+
+        <ol class="ol">
+          <li class="li">Locate and open the <em class="ph i">dev-platform-installer</em> folder. This folder is created by the
+            installation process. <ul class="ul">
+              <li class="li">Delete the <em class="ph i">.env</em> folder.</li>
+
+              <li class="li">Delete the <em class="ph i">dev-platform-installer.conf</em> file.</li>
+
+            </ul>
+</li>
+
+          <li class="li">Run the install command again with all command line options.</li>
+
+        </ol>
+</dd>
+
+    
+  </dl>
+
+</div>
+
+
+
+<div class="section" id="topic4855__download"><h2 class="title sectiontitle">Download</h2> 
+</div>
+
+<div class="section" id="topic4855__service-is-stuck-in-download"><h2 class="title sectiontitle">Service is stuck in download</h2> 
+<p class="p">The <em class="ph i">tmp</em> directory has run out of space. Mount the <em class="ph i">tmp</em> directory to a larger partition and try again. If it fails again, reset the download.</p>
+
+<ol class="ol">
+<li class="li">Log in to Horizon as an Admin user.</li>
+
+<li class="li">In the <strong class="ph b">Admin</strong> tenant, click <strong class="ph b">Project</strong> and then <strong class="ph b">Object Store</strong>.</li>
+
+<li class="li">Open the <strong class="ph b">sherpa-cache</strong> folder and delete the <strong class="ph b">wscatalog.&lt;id&gt;</strong> folder which contains the cached download.</li>
+
+<li class="li">Download the service again.</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic4855__download-terminates-and-remains-stuck-in-staging-status"><h2 class="title sectiontitle">Download terminates and remains stuck in "Staging" status</h2> 
+<p class="p">Only applies to Development Platform services. After the image download terminates for some reason, the download is reattempted. The status of the service in the Configure Services view remains stuck at "Staging" and does not progress to "Available".</p>
+
+<p class="p">Resolution: Completely delete the service before reattempting download.</p>
+
+<ol class="ol">
+<li class="li">Log in to Horizon as an Admin user.</li>
+
+<li class="li">Delete the images for that service.</li>
+
+<li class="li">In the Admin tenant, click <strong class="ph b">Project</strong> and then <strong class="ph b">Object Store</strong>.</li>
+
+<li class="li">Go to Containers and delete the heat-templates for the service.</li>
+
+<li class="li">Go to Containers &gt; Sherpa-cache and delete the wscatalog folder for that service.</li>
+
+</ol>
+
+<p class="p">If the status on the Configure Services view does not change to "Available", Sherpa is looking at the file cache. To clear this, remove the cache and restart Apache.</p>
+
+<ol class="ol">
+<li class="li">Log in to the controller management node.</li>
+
+<li class="li">Delete the directory <em class="ph i">/var/cache/sherpa/ws.xxxx</em>
+</li>
+
+<li class="li">Delete the contents of the <em class="ph i">/var/lib/Sherpa/data</em> folder.</li>
+
+<li class="li">Apache must be restarted before this change will take effect.
+          <pre class="pre codeblock">service apache2 restart </pre>
+</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic4855__horizon"><h2 class="title sectiontitle">Horizon</h2> 
+</div>
+
+<div class="section" id="topic4855__installed-development-platform-services-do-not-appear-in-horizon"><h2 class="title sectiontitle">Installed Development Platform services do not appear in Horizon</h2> 
+<p class="p">Even though the service was installed successfully, the service does not appear in the appropriate tab.</p>
+
+<p class="p">Resolution: After installing any Helion Development Platform service, log out of Horizon and then back in to refresh the UI.</p>
+
+</div>
+
+<div class="section" id="topic4855__deleted-service-still-appears-in-horizon"><h2 class="title sectiontitle">Deleted service still appears in Horizon</h2> 
+<p class="p">Even though the Development Platform stack has been deleted, the service still shows up in Horizon.</p>
+
+<p class="p">Resolution: Delete the service manually from the Keystone endpoint list. </p>
+
+<pre class="pre codeblock">keystone endpoint-delete $&lt;id&gt;</pre>
+
+</div>
+
+<div class="section" id="topic4855__dbaas"><h2 class="title sectiontitle">DBaaS</h2> 
+</div>
+
+<div class="section" id="topic4855__dbaas-configuration-fails"><h2 class="title sectiontitle">DbaaS configuration fails</h2> 
+<p class="p">Resolution: Make sure that you can create a volume and attach it to instances. HPE Helion OpenStack<sup>®</sup> supports VSA and 3PAR, but not LVM. Make sure your installation is configured to use either VSA or 3PAR.</p>
+
+</div>
+
+<div class="section" id="topic4855__dbaas-instance-fails-to-start"><h2 class="title sectiontitle">DbaaS instance fails to start</h2> 
+<p class="p">Resolution: Check if you can create and start a Nova instance with the same flavor and verify you can attach a volume to that Nova instance. Verify that the Nova flavors have not been updated to invalid values. Verify that the flavor's ID is correct, as flavor updates cause the flavor IDs to change.</p>
+
+</div>
+
+<div class="section" id="topic4855__ALS"><h2 class="title sectiontitle">ALS</h2> 
+<p class="p">
+  <strong class="ph b">ALS cluster creation fails after successful installation of ALS and DBaaS.</strong>
+</p>
+
+<p class="p">Resolution: Make sure DBaaS is functional and responsive by creating a new DBaaS instance. If DBaaS is installed in the environment, ALS expects DBaaS to respond to API requests.</p>
+
+<p class="p">
+  <strong class="ph b">ALS Constructor fails with "No valid host was found" Error</strong>
+</p>
+
+<p class="p">Resolution: Attempt to spin up a Nova instance with <strong class="ph b">Flavor</strong> set to <strong class="ph b">Tiny</strong>. Verify that the Nova flavors were NOT updated to invalid values. Verify the Flavor IDs, as updates cause flavor IDs to change.</p>
+
+</div>
+
+<div class="section" id="topic4855__instance-create"><h2 class="title sectiontitle">Creating Instances</h2> 
+</div>
+
+<div class="section" id="topic4855__dbaas-instances-als-clusters-marketplace-and-messaging-clusters-all-fail-to-start"><h2 class="title sectiontitle">DbaaS instances, ALS clusters, and Messaging clusters all fail to start.</h2> 
+<p class="p">Resolution: Nova and Neutron quotas have been exceeded. Increase quotas to support your desired configuration.</p>
+
+</div>
+
+<div class="section" id="topic4855__issue-no-valid-host-was-found-error-received-during-installation-of-the-development-platform-and-dnaas"><h2 class="title sectiontitle">Issue: "No valid host was found" Error Received During Installation of the Development Platform and DNaaS</h2> 
+<p class="p">Resolution: This Nova error could have multiple causes. Do not assume that  it is out of compute resources. Check the <em class="ph i">nova-scheduler</em> logs on the overcloud controllers to find the actual reason why Nova failed to schedule the instance; correct the issue; and then attempt the DNSaaS deployment again.</p>
+
+</div>
+
+  <div class="section" id="topic4855__entity-too-large"><h2 class="title sectiontitle">413 Request Entity Too Large</h2><p class="p">This error occurs when there isn't enough free quota in your tenant for the VM to be created. Check for free space and, if necessary, free up sufficient space for the VM you are attempting to create.</p>
+
+</div>
+</div>
+
+
+</body>
+</html>

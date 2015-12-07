@@ -1,0 +1,86 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Mojolicious</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic1228" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/languages/perl/mojo.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Mojolicious</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">Mojolicious is a web framework with a native PSGI interface which is
+easy to build and run on Application Lifecycle Service.</p>
+
+<p class="p">A simple app using the Mojolicious framework needs four files:</p>
+
+<ol class="ol">
+<li class="li">
+<em class="ph i">app.psgi</em>
+</li>
+
+<li class="li">
+<em class="ph i">app.pl</em>
+</li>
+
+<li class="li">
+<em class="ph i">requirements.txt</em>
+</li>
+
+<li class="li">
+<em class="ph i">manifest.yml</em>
+</li>
+
+</ol>
+
+<p class="p">In the <em class="ph i">requirements.txt</em> file, list any module requirements, with at
+least:</p>
+
+<pre class="pre codeblock">Mojolicious</pre>
+
+<p class="p">In the <em class="ph i">app.psgi</em> file, for a simple implementation:</p>
+
+<pre class="pre codeblock">$ENV{MOJO_MODE} = 'production';
+require 'app.pl';</pre>
+
+<p class="p">The <em class="ph i">app.pl</em> file contains the core functionality:</p>
+
+<pre class="pre codeblock">use Mojolicious::Lite;
+
+# Simple response to display Environment Variables.
+get '/' =&gt; sub {
+        my $self = shift;
+        $self-&gt;render_text(join("&lt;br /&gt;", map "$_=$ENV{$_}", sort keys %ENV));
+};
+
+app-&gt;start;</pre>
+
+<p class="p">The <em class="ph i">manifest.yml</em> file contains deployment instructions for Application Lifecycle Service.
+See complete details for this file in the <a class="xref" href="../../manifestyml.html">Configuration With
+manifest.yml</a> section.</p>
+
+<div class="section" id="topic1228__examples"><h2 class="title sectiontitle">Examples</h2> 
+<ul class="ul">
+<li class="li">
+<a class="xref" href="https://github.com/Stackato-Apps/mojo-helloworld" target="_blank">Mojo Hello
+World</a>: the
+simplest possible Mojolicious demo.</li>
+
+<li class="li">
+<a class="xref" href="https://github.com/Stackato-Apps/photobooth" target="_blank">Mojo Photobooth</a>:
+Mojolicious webapp to emulate public photobooths.</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

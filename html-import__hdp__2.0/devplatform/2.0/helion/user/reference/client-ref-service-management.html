@@ -1,0 +1,848 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Command Reference: Service Management</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic10567" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/client-ref-service-management.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Command Reference: Service Management</h1>
+
+
+
+
+
+<div class="body">
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic10567__command-bind-service">helion bind-service</a>: Bind the named service to the specified application.</li>
+
+<li class="li">
+<a class="xref" href="#topic10567__command-clone-services">helion clone-services</a>: Copy the service bindings of the source application to the destination application.</li>
+
+<li class="li">
+<a class="xref" href="#topic10567__command-create-service">helion create-service</a>: Create a new provisioned service and optionally bind it to an application.</li>
+
+<li class="li">
+<a class="xref" href="#topic10567__command-delete-service">helion delete-service</a>: Delete the named provisioned service.</li>
+
+<li class="li">
+<a class="xref" href="#topic10567__command-rename-service">helion rename-service</a>:  Rename the specified service instance.</li>
+
+<li class="li">
+<a class="xref" href="#topic10567__command-tunnel">helion tunnel</a>: Create a local tunnel to a service and optionally start a local client as well.</li>
+
+<li class="li">
+<a class="xref" href="#topic10567__command-unbind-service">helion unbind-service</a>: Disconnect the named service from the specified application.</li>
+
+<li class="li">
+<a class="xref" href="#topic10567__command-update-user-provided-service">helion update-user-provided-service</a>: Update the credentials of a user provided service.</li>
+
+</ul>
+
+<div class="section" id="topic10567__syntax"><h2 class="title sectiontitle">Syntax</h2> 
+<pre class="pre codeblock">helion [options] command [arguments] [command-options]</pre>
+
+<p class="p">For more information, use the <strong class="ph b">helion help</strong> or <strong class="ph b">helion help [<em class="ph i">command</em>]</strong> commands.</p>
+
+
+</div>
+
+<div class="section" id="topic10567__command-bind-service"><h2 class="title sectiontitle">helion bind-service &lt;<em class="ph i">service</em>&gt; &lt;<em class="ph i">application</em>&gt;</h2> 
+<p class="p">Bind the named service to the specified application.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="84%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--no-tail</td>
+
+              <td class="entry" valign="top" width="84%">Request target to stop streaming the log.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--organization, -o</td>
+
+              <td class="entry" valign="top" width="84%">The once-off organization to use for the current operation. </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--path</td>
+
+              <td class="entry" valign="top" width="84%">Path of the directory holding the application files to push. Defaults to the
+                current working directory.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--space</td>
+
+              <td class="entry" valign="top" width="84%">The once-off space to use for the current operation, specified by name. Cannot
+                be used together with <var class="keyword varname">--space-guid</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--space-guid</td>
+
+              <td class="entry" valign="top" width="84%">The once-off space to use for the current operation, specified by guid. Cannot
+                be used together with <var class="keyword varname">--space-guid</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--tail</td>
+
+              <td class="entry" valign="top" width="84%">Request target to stream the log.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--target</td>
+
+              <td class="entry" valign="top" width="84%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--timeout</td>
+
+              <td class="entry" valign="top" width="84%">The time the client waits for an application to start before giving up and
+                returning, in seconds. Note that this is measured from the last entry seen in the
+                log stream. While there is activity in the log the timeout is reset. The default is
+                2 minutes. Use the suffixes 'm', 'h', and 'd' for the convenient specification of
+                minutes, hours, and days. The optional suffix 's' stands for seconds.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--token</td>
+
+              <td class="entry" valign="top" width="84%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--token-file</td>
+
+              <td class="entry" valign="top" width="84%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic10567__command-clone-services"><h2 class="title sectiontitle">helion clone-services &lt;<em class="ph i">source</em>&gt; &lt;<em class="ph i">application</em>&gt;</h2> 
+<p class="p">Copy the service bindings of the source application to the destination application.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="14.992503748125937%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="85.00749625187406%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.992503748125937%">--organization. -o</td>
+
+              <td class="entry" valign="top" width="85.00749625187406%">The once-off organization to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.992503748125937%">--space</td>
+
+              <td class="entry" valign="top" width="85.00749625187406%">The once-off space to use for the current operation, specified by name. Cannot
+                be used together with <var class="keyword varname">--space-guid</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.992503748125937%">--space-guid</td>
+
+              <td class="entry" valign="top" width="85.00749625187406%">The once-off space to use for the current operation, specified by guid. Cannot
+                be used together with <var class="keyword varname">--space</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.992503748125937%">--tail</td>
+
+              <td class="entry" valign="top" width="85.00749625187406%">Request target to stream the log.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.992503748125937%">--target</td>
+
+              <td class="entry" valign="top" width="85.00749625187406%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.992503748125937%">--timeout</td>
+
+              <td class="entry" valign="top" width="85.00749625187406%">The time the client waits for an application to start before giving up and
+                returning, in seconds. Note that this is measured from the last entry seen in the
+                log stream. While there is activity in the log the timeout is reset. The default is
+                2 minutes. Use the suffixes 'm', 'h', and 'd' for the convenient specification of
+                minutes, hours, and days. The optional suffix 's' stands for seconds.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.992503748125937%">--token</td>
+
+              <td class="entry" valign="top" width="85.00749625187406%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="14.992503748125937%">--token-file</td>
+
+              <td class="entry" valign="top" width="85.00749625187406%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic10567__command-create-service"><h2 class="title sectiontitle">helion create-service &lt;<em class="ph i">vendor</em>&gt; &lt;<em class="ph i">name</em>&gt; &lt;<em class="ph i">application</em>&gt;</h2> 
+<p class="p">Create a new provisioned service and optionally bind it to an application.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="16.5016501650165%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="83.4983498349835%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16.5016501650165%">--no-tail</td>
+
+              <td class="entry" valign="top" width="83.4983498349835%">Request target to stop streaming the log.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16.5016501650165%">--organization, -o</td>
+
+              <td class="entry" valign="top" width="83.4983498349835%">The once-off organization to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16.5016501650165%">--plan</td>
+
+              <td class="entry" valign="top" width="83.4983498349835%">The service plan to use.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16.5016501650165%">--provider</td>
+
+              <td class="entry" valign="top" width="83.4983498349835%">The service provider. Use this to disambiguate between multiple providers of
+                the same vendor/type.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16.5016501650165%">--space</td>
+
+              <td class="entry" valign="top" width="83.4983498349835%">The once-off space to use for the current operation, specified by name. Cannot
+                be used together with <var class="keyword varname">--space-guid</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16.5016501650165%">--space-guid</td>
+
+              <td class="entry" valign="top" width="83.4983498349835%">The once-off space to use for the current operation, specified by guid. Cannot
+                be used together with <var class="keyword varname">--space</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16.5016501650165%">--tail</td>
+
+              <td class="entry" valign="top" width="83.4983498349835%">Request target to stream the log.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16.5016501650165%">--target</td>
+
+              <td class="entry" valign="top" width="83.4983498349835%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16.5016501650165%">--timeout</td>
+
+              <td class="entry" valign="top" width="83.4983498349835%">The time the client waits for an application to start before giving up and
+                returning, in seconds. Note that this is measured from the last entry seen in the
+                log stream. While there is activity in the log the timeout is reset. The default is
+                2 minutes. Use the suffixes 'm', 'h', and 'd' for the convenient specification of
+                minutes, hours, and days. The optional suffix 's' stands for seconds.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16.5016501650165%">--token</td>
+
+              <td class="entry" valign="top" width="83.4983498349835%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16.5016501650165%">--token-file</td>
+
+              <td class="entry" valign="top" width="83.4983498349835%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16.5016501650165%">--version</td>
+
+              <td class="entry" valign="top" width="83.4983498349835%">The service version. Use this to disambiguate between multiple versions of the
+                same vendor/type.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic10567__command-delete-service"><h2 class="title sectiontitle">helion delete-service &lt;<em class="ph i">service</em>&gt;</h2> 
+<p class="p">Delete the named provisioned service.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="17.98561151079137%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="82.01438848920863%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="17.98561151079137%">--all</td>
+
+              <td class="entry" valign="top" width="82.01438848920863%">Delete all services. Cannot be used together with named service
+                instances.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="17.98561151079137%">--organization, -o</td>
+
+              <td class="entry" valign="top" width="82.01438848920863%">The once-off organization to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="17.98561151079137%">--space</td>
+
+              <td class="entry" valign="top" width="82.01438848920863%">The once-off space to use for the current operation, specified by name. Cannot
+                be used together with <var class="keyword varname">--space-guid</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="17.98561151079137%">--space-guid</td>
+
+              <td class="entry" valign="top" width="82.01438848920863%">The once-off space to use for the current operation, specified by guid. Cannot
+                be used together with <var class="keyword varname">--space</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="17.98561151079137%">--target</td>
+
+              <td class="entry" valign="top" width="82.01438848920863%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="17.98561151079137%">--token</td>
+
+              <td class="entry" valign="top" width="82.01438848920863%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="17.98561151079137%">--token-file</td>
+
+              <td class="entry" valign="top" width="82.01438848920863%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="17.98561151079137%">--unbind</td>
+
+              <td class="entry" valign="top" width="82.01438848920863%">Unbind service from applications before deleting. By default bound services are
+                skipped and not deleted.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic10567__command-rename-service"><h2 class="title sectiontitle">helion rename-service &lt;<em class="ph i">service</em>&gt; &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Rename the specified service instance.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--organization, -o</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off organization to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--space</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off space to use for the current operation, specified by name. Cannot
+                be used together with <var class="keyword varname">--space-guid</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--space-guid</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off space to use for the current operation, specified by guid. Cannot
+                be used together with <var class="keyword varname">--space</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--target</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--token</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="15.503875968992247%">--token-file</td>
+
+              <td class="entry" valign="top" width="84.49612403100775%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic10567__command-tunnel"><h2 class="title sectiontitle">helion tunnel &lt;<em class="ph i">service</em>&gt; &lt;<em class="ph i">TunnelClient</em>&gt;</h2> 
+<p class="p">Create a local tunnel to a service and optionally start a local client as well.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="84%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--allow-http</td>
+
+              <td class="entry" valign="top" width="84%">Required to prevent the client from rejecting http urls.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--no-tail</td>
+
+              <td class="entry" valign="top" width="84%">Request target to stop streaming the log.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--organization, -o</td>
+
+              <td class="entry" valign="top" width="84%">The once-off organization to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--port</td>
+
+              <td class="entry" valign="top" width="84%">Port used for the tunnel.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--space</td>
+
+              <td class="entry" valign="top" width="84%">The once-off space to use for the current operation, specified by name. Cannot
+                be used together with <var class="keyword varname">--space-guid</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--space-guid</td>
+
+              <td class="entry" valign="top" width="84%">The once-off space to use for the current operation, specified by guid. Cannot
+                be used together with <var class="keyword varname">--space</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--tail</td>
+
+              <td class="entry" valign="top" width="84%">Request target to stream the log.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--target</td>
+
+              <td class="entry" valign="top" width="84%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--token</td>
+
+              <td class="entry" valign="top" width="84%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--token-file</td>
+
+              <td class="entry" valign="top" width="84%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="16%">--url</td>
+
+              <td class="entry" valign="top" width="84%">Url the tunnel helper application is mapped to and listens on. Relevant if and
+                only if the helper has to be pushed; for example, on first use of the
+                  <var class="keyword varname">tunnel</var> command.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic10567__command-unbind-service"><h2 class="title sectiontitle">helion unbind-service &lt;<em class="ph i">service</em>&gt; &lt;<em class="ph i">application</em>&gt;</h2> 
+<p class="p">Disconnect the named service from the specified application.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--manifest</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">Path of the manifest file to use. If not specified a search is done.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--no-tail</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">Request target to stop streaming the log.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--no-trace</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">Complementary alias of --trace.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--non-interactive</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">Alias of --no-prompt.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--noprompt</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">Alias of --no-prompt.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--organization, -o</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">The once-off organization to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--path</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">Path of the directory holding the application files to push. Defaults to the
+                current working directory.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--space</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">The once-off space to use for the current operation, specified by name. Cannot
+                be used together with <var class="keyword varname">--space-guid</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--space-guid</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">The once-off space to use for the current operation, specified by guid. Cannot
+                be used together with <var class="keyword varname">--space</var>.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--tail</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">Request target to stream the log.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--target</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--timeout</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">The time the client waits for an application to start before giving up and
+                returning, in seconds. Note that this is measured from the last entry seen in the
+                log stream. While there is activity in the log the timeout is reset. The default is
+                2 minutes. Use the suffixes 'm', 'h', and 'd' for the convenient specification of
+                minutes, hours, and days. The optional suffix 's' stands for seconds.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--token</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="19.493177387914233%">--token-file</td>
+
+              <td class="entry" valign="top" width="80.50682261208577%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+<div class="section" id="topic10567__command-update-user-provided-service"><h2 class="title sectiontitle">helion update-user-provided-service &lt;<em class="ph i">service</em>&gt;</h2> 
+<p class="p">Update the credentials of a user provided service.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">
+                <strong class="ph b">Option</strong>
+              </td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">
+                <strong class="ph b">Description</strong>
+              </td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--credentials</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">The new credentials to use. They entirely replace the old credentials. Each use
+                of the option declares a single element, using the form "key: value" for the
+                argument.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--notail</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Request target to stop streaming the log.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--tail</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Request target to stream the log.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--target</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">The once-off target to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--timeout</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">The time the client waits for an application to start before giving up and
+                returning, in seconds. Note that this is measured from the last entry seen in the
+                log stream. While there is activity in the log the timeout is reset. The default is
+                2 minutes. Use the suffixes 'm', 'h', and 'd' for the convenient specification of
+                minutes, hours, and days. The optional suffix 's' stands for seconds.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--token</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">The once-off authentication token to use for the current operation.</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="13.49527665317139%">--token-file</td>
+
+              <td class="entry" valign="top" width="86.5047233468286%">Path to an existing and readable file containing the targets and authorization
+                tokens.</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Using Messaging as a Service</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="using_messaging" /> <meta name="html-import-file-path" content="devplatform/2.0/messaging/devplatform.using-the-messaging-service.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Using Messaging as a Service</h1>
+
+
+
+
+<div class="body">
+
+  <p class="p">The Messaging Broker Service is a key aspect of applications architected for the cloud as it helps to create scalable and distributed applications. This is achieved by enabling your software applications and services to communicate with each other as sub-components of a larger-scale application while allowing you to incorporate data from users, devices, and data streams.</p>
+
+  <p class="p">The Messaging Broker Service provisions RabbitMQ clusters that can be used for robust messaging in
+      applications. For more information about RabbitMQ, see <a class="xref" href="https://www.rabbitmq.com/admin-guide.html" target="_blank">RabbitMQ
+        Server Documentation</a>.</p>
+
+  <p class="p">For information on managing the Messaging Broker Service via Rest API, see <a class="xref" href="http://cue.readthedocs.org/en/latest/rest.html" target="_blank">Cue
+        Rest API Documentation</a>.</p>
+
+  <p class="p">For information on managing the Messaging Broker Service via the Python client, see <a class="xref" href="https://github.com/openstack/python-cueclient" target="_blank">openstack/python-cueclient on GitHub</a>.</p>
+
+<p class="p">The following topics explain how to create and manage an instance:</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#using_messaging__create">Creating a cluster</a> </li>
+
+<li class="li">
+<a class="xref" href="#using_messaging__delete">Deleting a cluster</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#using_messaging__manage">Managing a cluster</a>
+</li>
+
+</ul>
+
+<div class="section" id="using_messaging__prerequisites"><h2 class="title sectiontitle">Prerequisites</h2> 
+<ol class="ol">
+<li class="li">Install the <a class="xref" href="../installation/devplatform_install_platform.html">HPE Helion Development Platform</a>and configure the services.</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="using_messaging__create"><h2 class="title sectiontitle">Creating a RabbitMQ Cluster</h2> 
+  <p class="p">The following guide will demonstrate how to deploy a multi-node RabbitMQ cluster using the Messaging Broker Service.</p>
+
+<ol class="ol">
+<li class="li">Log into Horizon and open the <strong class="ph b">Messaging</strong> panel under your project. Click on the
+            <strong class="ph b">RabbitMQ</strong> tab.</li>
+
+<li class="li">Click the <strong class="ph b">Create Cluster</strong> button.<br/><img class="image" src="../../../media/usingRMQ1.png"/><br/>
+</li>
+
+<li class="li">In the Create RabbitMQ dialog, specify the following information:<ul class="ul">
+            <li class="li">
+              <strong class="ph b">Cluster Name</strong> - A name for the cluster that will be created.</li>
+
+            <li class="li">
+              <strong class="ph b">Number of Cluster Instances</strong> - the number of instances of RabbitMQ to have in
+              the cluster. This can be 1, 3 or 5.</li>
+
+            <li class="li">
+              <strong class="ph b">Flavor of Cluster Instances</strong> - The flavor size to use when creating the RabbitMQ
+              instances in the cluster.</li>
+
+            <li class="li">
+              <strong class="ph b">Network</strong> - The network to join the cluster to. This should be the network that
+              your application will use to connect to the cluster.</li>
+
+            <li class="li">
+              <strong class="ph b">SSH Key Pair</strong> - A key pair to use when connecting to the cluster. You can choose
+              to create one if one does not already exist.</li>
+
+            <li class="li">
+              <strong class="ph b">Floating IP Pool</strong> - A pool to choose a floating IP from to assign to the
+              cluster.</li>
+
+            <li class="li">
+              <strong class="ph b">SSL Credentials</strong> - The certificate to use when interacting with RabbitMQ in the
+              cluster.</li>
+
+            <li class="li">
+              <strong class="ph b">Password for user</strong> - The password for the user that is currently logged in.</li>
+
+          </ul>
+</li>
+
+<li class="li">Click the <strong class="ph b">Launch</strong> button.</li>
+
+<li class="li">Open the <strong class="ph b">RabbitMQ</strong> tab under the <strong class="ph b">Messaging (Beta)</strong> panel and identify the
+            <strong class="ph b">RabbitMQ</strong> cluster from the list that was created in the previous step. Wait for
+          the cluster to go to the <strong class="ph b">Complete</strong>
+            state<br/><img class="image" id="using_messaging__image_tgt_mwy_yt" src="../../../media/usingRMQ2.png"/><br/>
+        </li>
+
+<li class="li">Your cluster is now ready to use.</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="using_messaging__delete"><h2 class="title sectiontitle">Deleting a RabbitMQ Cluster</h2> 
+<p class="p">The following guide will demonstrate how to delete an existing RabbitMQ cluster.</p>
+
+<ol class="ol">
+<li class="li">Log in to Horizon and open the <strong class="ph b">Messaging (Beta)</strong> panel under your project. Click on the <strong class="ph b">RabbitMQ</strong> tab.</li>
+
+<li class="li">Identify the <strong class="ph b">RabbitMQ</strong> cluster to delete from the list.</li>
+
+<li class="li">Click the <strong class="ph b">More</strong> button and then the <strong class="ph b">Delete Cluster</strong> button.</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="using_messaging__manage"><h2 class="title sectiontitle">Managing a RabbitMQ Cluster</h2> 
+<p class="p">RabbitMQ clusters have a built-in dashboard for managing the cluster; this allows you to view the current state and health of the cluster. The following steps will demonstrate how to manage an existing cluster.</p>
+
+<ol class="ol">
+<li class="li">Log in to Horizon and open the <strong class="ph b">Messaging (Beta)</strong> panel under you project. Click on the <strong class="ph b">RabbitMQ</strong> tab.</li>
+
+<li class="li">Identify the RabbitMQ cluster that you will manage from the clusters listed in the <strong class="ph b">Clusters</strong> table.</li>
+
+  <li class="li">Click on <strong class="ph b">Manage Cluster</strong> next to your cluster.<br/><img class="image" src="../../../media/usingRMQ3.png"/><br/>
+</li>
+
+  <li class="li">A new browser window will open with the log-in screen for the RabbitMQ cluster. Enter the same username and password you used to log in to HPE Helion OpenStack<sup>®</sup> when creating the RabbitMQ cluster and select <strong class="ph b">Login</strong>.<br/><img class="image" src="../../../media/usingRMQ4.png"/><br/>
+</li>
+
+  <li class="li">The management console for RabbitMQ will open. In the management console you can perform tasks such as monitor the queues and message rates, check resource usage on the instances, manage user accounts, and many others.  <br/><img class="image" src="../../../media/usingRMQ5.png"/><br/>
+</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="using_messaging__more-information"><h2 class="title sectiontitle">More Information</h2> 
+<ul class="ul">
+<li class="li">
+<p class="p">For more information on using RabbitMQ and managing the RabbitMQ cluster, visit the <a class="xref" href="https://www.rabbitmq.com/documentation.html" target="_blank">RabbitMQ documentation site</a>.</p>
+
+</li>
+
+<li class="li">
+  <p class="p">For more information using HPE Helion OpenStack visit the <a class="xref" href="http://docs.hpcloud.com/#helion/index.html">documentation</a>.</p>
+
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

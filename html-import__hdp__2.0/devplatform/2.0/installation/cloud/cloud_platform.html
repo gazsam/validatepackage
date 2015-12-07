@@ -1,0 +1,77 @@
+
+
+
+<html><head><title>Platform Configuration</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="cloudPlatform" /> <meta name="html-import-file-path" content="devplatform/2.0/installation/cloud/cloud_platform.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">Platform Configuration</h1>
+
+
+  
+
+  <div class="body">
+    <div class="section">
+      <p class="p">These sections in the clouds.yaml file are the absolute minimum required. Installing each
+        service will require adding sections to the file, which is documented in the installation
+        for that service. A complete clouds.yaml file is <a class="xref" href="fullFile.html#topic_mhg_f2n_vt">available here</a> for reference.</p>
+
+        
+        <div class="note note"><span class="notetitle">Note:</span> This basic information is also  the minimum required for listing the content from HDN,
+        which is used as a test to determine if the HDPI was installed correctly.</div>
+
+      
+      <pre class="pre codeblock">clouds:
+  mycloud:
+    codn_username: 
+    codn_password: 
+    region_name: region1
+    cacert: /home/stack/ca/cacert.pem
+    auth:
+      auth_url: &lt;identity url&gt;
+      project_name: &lt; admin project name&gt;
+      username: &lt; admin user name&gt;
+      password: &lt; admin password&gt;</pre>
+
+      
+      <dl class="dl">
+        
+          <dt class="dt dlterm">codn_username</dt>
+ <dd class="dd">The username for the HDN (Helion Download Network)
+          account. (The name of the download network used to be CODN.)</dd>
+
+        <dt class="dt dlterm">codn_password</dt>
+<dd class="dd"> The password for the HDN (Helion Download Network)
+          account. (The name of the download network used to be CODN.)</dd>
+
+        <dt class="dt dlterm">region_name</dt>
+<dd class="dd">Default value is <samp class="ph codeph">region1 </samp></dd>
+
+        <dt class="dt dlterm">cacert</dt>
+<dd class="dd">The location where the SSL certificates can be accessed.</dd>
+
+        <dt class="dt dlterm">auth_url</dt>
+<dd class="dd">This URL can be found in Horizon at: Project Compute &gt; Access &amp; Security &gt; API Access or  
+            Copy the Service Endpoint URL for the Identity Service. Note that this must be
+              <samp class="ph codeph">https</samp>, not simply <samp class="ph codeph">http</samp>.</dd>
+
+        <dt class="dt dlterm">project_name</dt>
+<dd class="dd">The Name of the admin project in Horizon. </dd>
+
+        <dt class="dt dlterm">username</dt>
+<dd class="dd">The Username of an account with installation privileges (administrator role). </dd>
+
+        <dt class="dt dlterm">password</dt>
+<dd class="dd">The Password for the same account with installation privileges (administrator role).</dd>
+ 
+      </dl>
+
+    </div>
+
+  </div>
+
+
+</body>
+</html>

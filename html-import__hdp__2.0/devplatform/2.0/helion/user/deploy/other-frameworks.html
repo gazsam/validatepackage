@@ -1,0 +1,93 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Generic and Standalone Frameworks</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic2413" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/other-frameworks.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Generic and Standalone Frameworks</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">The Generic and Standalone frameworks are for applications that might not fit any of the other frameworks available in Application Lifecycle Service.</p>
+
+<ul class="ul">
+<li class="li">
+<strong class="ph b">Generic</strong> is for web applications.</li>
+
+<li class="li">
+<strong class="ph b">Standalone</strong> is for background applications without an HTTP
+interface.</li>
+
+</ul>
+
+<p class="p">These two frameworks make no assumptions about the application type and
+can be customized to run a wide variety of non-standard applications.</p>
+
+<p class="p">Any language <a class="xref" href="manifestyml.html#topic20922__runtime"><em class="ph i">runtime</em></a> available
+      on the server can be specified in the config file. If a runtime is not specified, Python 2.7
+      is made available by default.</p>
+
+<div class="section" id="topic2413__generic"><h2 class="title sectiontitle">Generic</h2> 
+<p class="p">The Generic framework requires a custom <a class="xref" href="manifestyml.html#topic20922__processes"><em class="ph i">processes: web:</em></a> setting in <em class="ph i">manifest.yml</em> specifying a command to
+        start the web process (e.g. a custom web server).</p>
+
+<p class="p">The example below shows a web process that serves static files from the
+application directory using Python's
+  <a class="xref" href="http://docs.python.org/2/library/simplehttpserver.html" target="_blank">SimpleHTTPServer</a>:</p>
+
+<pre class="pre codeblock">framework:
+    type: generic
+processes:
+    web: python -m SimpleHTTPServer $PORT</pre>
+
+<p class="p">If you wish to run an application <em class="ph i">without</em> a web interface (i.e. a background "worker"
+        process), <a class="xref" href="manifestyml.html#topic20922__processes"><em class="ph i">set 'processes: web:' to
+            Null</em>
+        </a>or use the Standalone framework instead.</p>
+
+</div>
+
+<div class="section" id="topic2413__standalone"><h2 class="title sectiontitle">Standalone</h2>
+      
+      <p class="p">The Standalone framework uses a custom command specified in the <a class="xref" href="manifestyml.html#topic20922__command">
+          <em class="ph i">command:</em>
+        </a> key to start a background worker process.</p>
+
+      <p class="p">The example below shows <em class="ph i">manifest.yml</em> configuration for an application running a
+        simple Python worker script.</p>
+
+      <pre class="pre codeblock">name: worker
+framework:
+  type: standalone
+  runtime: python27
+command: python main.py</pre>
+
+      <p class="p">The <samp class="ph codeph">command</samp> must start a long-running child process. If this process exits
+        for any reason, the Health Manager will restart the application instance.</p>
+
+      <p class="p">Application Lifecycle Service will not assign URLs to apps deployed with the standalone
+        framework, as it is intended for background worker processes. The <samp class="ph codeph">helion</samp>
+        client includes a heuristic that will automatically suppress URL mapping for applications
+        using this framework.</p>
+
+      <div class="p">
+        <div class="note note"><span class="notetitle">Note:</span> If the application does not serve web requests, it may appear in the Management
+          Console or <samp class="ph codeph">helion apps</samp> command as not running. To verify a non-web
+          application is actually running, use <samp class="ph codeph">helion logs</samp> or <samp class="ph codeph">helion
+            ssh</samp>.</div>
+
+      </div>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

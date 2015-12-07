@@ -1,0 +1,376 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: ALS Command Reference: Buildpacks</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic3572" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/reference/client-ref-buildpacks.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: ALS Command Reference: Buildpacks</h1>
+
+
+
+
+
+<div class="body">
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic3572__command-buildpacks">helion buildpacks</a>: Show all buildpacks known to the target in the order they are checked in during auto-detection.</li>
+
+<li class="li">
+<a class="xref" href="#topic3572__command-create-buildpack">helion create-buildpack</a>: Add a buildpack to the target.</li>
+
+<li class="li">
+<a class="xref" href="#topic3572__command-delete-buildpack">helion delete-buildpack</a>: Remove the specified buildpack from the target.</li>
+
+<li class="li">
+<a class="xref" href="#topic3572__command-rename-buildpack">helion rename-buildpack</a>: Change the name of the specified buildpack.</li>
+
+<li class="li">
+<a class="xref" href="#topic3572__command-update-buildpack">helion update-buildpack</a>: Change the information known about the specified buildpack.</li>
+
+</ul>
+
+<div class="section" id="topic3572__syntax"><h2 class="title sectiontitle">Syntax</h2> 
+<pre class="pre codeblock">helion [options] command [arguments] [command-options]</pre>
+
+<p class="p">For more information, use the <strong class="ph b">helion help</strong> or <strong class="ph b">helion help [<em class="ph i">command</em>]</strong> commands.</p>
+
+
+</div>
+
+<div class="section" id="topic3572__command-buildpacks"><h2 class="title sectiontitle">helion buildpacks</h2> 
+<p class="p">Show all buildpacks known to the target in the order they are checked in during auto-detection.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--json</td>
+
+    <td class="entry" valign="top">Print raw json as output, not human-formatted data.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic3572__command-create-buildpack"><h2 class="title sectiontitle">helion create-buildpack &lt;<em class="ph i">name</em>&gt; &lt;<em class="ph i">zip</em>&gt;</h2> 
+<p class="p">Add a buildpack to the target.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--disable</td>
+
+    <td class="entry" valign="top">Disable the buildpack, preventing its use.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--enable</td>
+
+    <td class="entry" valign="top">Enable use of the buildpack.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--lock</td>
+
+    <td class="entry" valign="top">Lock the buildpack against modification.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--position, -p</td>
+
+    <td class="entry" valign="top">Location of the buildpack in the sequence used to check them during auto-detection.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--unlock</td>
+
+    <td class="entry" valign="top">Unlock the buildpack, allow changes again.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic3572__command-delete-buildpack"><h2 class="title sectiontitle">helion delete-buildpack &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Remove the specified buildpack from the target.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic3572__command-rename-buildpack"><h2 class="title sectiontitle">helion rename-buildpack &lt;<em class="ph i">name</em>&gt; &lt;<em class="ph i">newname</em>&gt;</h2> 
+<p class="p">Change the name of the specified buildpack.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+<div class="section" id="topic3572__command-update-buildpack"><h2 class="title sectiontitle">helion update-buildpack &lt;<em class="ph i">name</em>&gt;</h2> 
+<p class="p">Change the information known about the specified buildpack.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+
+
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" valign="top">
+<strong class="ph b">Option</strong>
+</td>
+
+<td class="entry" valign="top">
+<strong class="ph b">Description</strong>
+</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--disable</td>
+
+    <td class="entry" valign="top">Disable the buildpack, preventing its use.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--enable</td>
+
+    <td class="entry" valign="top">Enable use of the buildpack.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--lock</td>
+
+    <td class="entry" valign="top">Lock the buildpack against modification.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--position, -p</td>
+
+    <td class="entry" valign="top">Location of the buildpack in the sequence used to check them during auto-detection.</td>
+
+  </tr>
+
+<tr class="row">
+<td class="entry" valign="top">--target</td>
+
+<td class="entry" valign="top">The once-off target to use for the current operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token</td>
+
+<td class="entry" valign="top">The once-off authentication token to use for the current
+operation.</td>
+
+</tr>
+
+<tr class="row">
+<td class="entry" valign="top">--token-file</td>
+
+<td class="entry" valign="top">Path to an existing and readable file containing the targets and
+authorization tokens.</td>
+
+</tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--unlock</td>
+
+    <td class="entry" valign="top">Unlock the buildpack, allow changes again.</td>
+
+  </tr>
+
+<tr class="row">
+    <td class="entry" valign="top">--zip</td>
+
+    <td class="entry" valign="top">Path or url of the new zip file containing the implementation of the buildpack. Accepts the path to a local directory as well, which will become the zip file to upload.</td>
+
+  </tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

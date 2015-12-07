@@ -1,0 +1,161 @@
+
+
+
+<html><head><title>Monitoring a database from the Operations Console</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_database_manage_horizon" /> <meta name="html-import-file-path" content="devplatform/2.0/monitoring/devplatform.database-monitor.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">Monitoring a database from the Operations Console</h1>
+
+
+  
+
+  <div class="body">
+    <p class="p">This topic describes monitoring information available through the Operations Console. </p>
+
+    <div class="p">The monitoring console can generate the following alarms:
+      
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="topic_database_manage_horizon__table_cry_hwm_nt" class="table" frame="border" border="1" rules="all">
+          
+          
+          
+          
+          <thead class="thead" align="left">
+            <tr class="row">
+              <th class="entry" valign="top" width="25%" id="d136465e32">Alarm name</th>
+
+              <th class="entry" valign="top" width="25%" id="d136465e35">Metric</th>
+
+              <th class="entry" valign="top" width="25%" id="d136465e38">Alarm ID</th>
+
+              <th class="entry" valign="top" width="25%" id="d136465e41">Threshold</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d136465e32 ">CPU Usage</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e35 ">cpu.idle_perc</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e38 ">719a960f-30c7-4a7d-8bb8-8d3910353249</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e41 ">avg(cpu.idle_perc) &lt; 10 times 3</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d136465e32 ">Disk Inode Usage</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e35 ">disk.inode_used_perc</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e38 ">d71a4796-fe8c-4952-8592-bc1bc2e22503 </td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e41 ">disk.inode_used_perc &gt; 90</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d136465e32 ">Disk Usage</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e35 ">disk.space_used_perc</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e38 ">7c413fae-b885-4151-95e8-f5a434f84899 </td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e41 ">disk.space_used_perc &gt; 90</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d136465e32 ">Memory Usage</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e35 ">mem.usable_perc</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e38 ">59531adf-3c64-4d9e-8e06-428a926ed353 </td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e41 ">avg(mem.usable_perc) &lt; 10 times 3</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d136465e32 ">Monasca Agent Collection Time </td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e35 ">monasca.collection_time_sec </td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e38 ">ad8195ff-12e9-4907-978c-45627ea26e6b</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e41 ">avg(monasca.collection_time_sec) &gt; 5 times 3</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d136465e32 ">Monasca Agent Emit Time       </td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e35 ">monasca.emit_time_sec       </td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e38 ">b47de667-c325-4be0-be24-7a45b048bfdd </td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e41 ">avg(monasca.emit_time_sec) &gt; 2 times 3</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d136465e32 ">Network Errors (In)</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e35 ">net.in_errors_sec           </td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e38 ">464aec5f-4c16-4539-9c35-0f73ed82a074 </td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e41 ">net.in_errors_sec &gt; 5</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d136465e32 ">Network Errors (Out)</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e35 ">net.out_errors_sec</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e38 "> 464aec5f-4c16-4539-9c35-0f73ed82a074</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e41 ">net.out_errors_sec &gt; 5</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d136465e32 ">MySQL Slow Query Rate</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e35 "> </td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e38 ">74d459a0-724b-4937-8ef6-2f346b52d68d</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e41 ">avg(mysql.performance.slow_queries) &gt; 10 times 3</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="25%" headers="d136465e32 ">Process Check</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e35 "> </td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e38 ">4a47bf3e-90f1-43c4-a4cc-93b4ca2a12d4</td>
+
+              <td class="entry" valign="top" width="25%" headers="d136465e41 ">process.pid_count &lt; 1</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+</div>
+
+   
+  </div>
+
+
+</body>
+</html>

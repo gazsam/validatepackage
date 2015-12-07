@@ -1,0 +1,205 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Node MySQL Database Sample</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic5933" /> <meta name="html-import-file-path" content="devplatform/2.0/workbook/database/database.node.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Node MySQL Database Sample</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">This very simple Node.js app displays the text "Executed query "SELECT "Hello World!"".", and then the result of that query: "Hello World". This is a demonstration of the minimum requirements to build an application that can connect to a MySQL database provided by ALS and run queries against it. Use this sample to ensure that you have set up your environment for connecting to and working with MySQL on the Helion Development Platform.</p>
+
+<div class="section" id="topic5933__prerequisites"><h2 class="title sectiontitle">Prerequisites</h2> 
+<p class="p">If you are missing any of these items, you will need to <a class="xref" href="../../devplatform.appdev.html">install them</a>.</p>
+
+<ul class="ul">
+<li class="li">Access to an Application Lifecycle Service (ALS) <a class="xref" href="../../helion/admin/cluster/cluster_index.html">Cluster</a>
+</li>
+
+<li class="li">The  <a class="xref" href="../../helion/user/client/client_index.html">Helion command-line interface (CLI)</a> must be installed.</li>
+
+<li class="li">Access to the web-based <a class="xref" href="../../helion/user/console/console_index.html">Helion Management Console</a>.</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic5933__mysql"><h2 class="title sectiontitle">MySQL</h2> 
+<p class="p">If the MySQL service is not enabled on your cluster, or if you are not sure, follow these steps:</p>
+
+<ol class="ol">
+<li class="li">Go to the Administrative console for your ALS cluster. For example: <em class="ph i">https://api.xx.xx.xx.xx.xip.io</em>, substitute your own cluster's link.</li>
+
+<li class="li">On the <strong class="ph b">Admin</strong> tab, click <strong class="ph b">Cluster</strong>.</li>
+
+<li class="li">Click <strong class="ph b">Cluster Nodes</strong> on the left side of the page.</li>
+
+<li class="li">Click the <strong class="ph b">Settings</strong> icon (a gear icon in the upper right corner)</li>
+
+<li class="li">The <strong class="ph b">MySQL</strong> check box should be checked. If it is not, check it.</li>
+
+<li class="li">Click <strong class="ph b">Save</strong>.</li>
+
+</ol>
+
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span> If a more durable or scalable MySQL database service is needed, configure your ALS
+          cluster to use a database instance or master/slave pair provided by the Database Service.
+          For more information, refer to <a class="xref" href="../../database/devplatform.database-instance.html">Using the Database Service</a> and <a class="xref" href="../../database/devplatform.database-ALS.html">Connecting the Database Service with
+            ALS</a>.</div>
+
+      </div>
+
+</div>
+
+<div class="section" id="topic5933__download-the-application-files"><h2 class="title sectiontitle">Download the Application Files</h2> 
+<p class="p">
+<a class="xref" href="https://github.com/HelionDevPlatform/helion-mysql-node/" target="_blank">Click here to access the code repository</a>.</p>
+
+</div>
+
+<div class="section" id="topic5933__deploy-the-application"><h2 class="title sectiontitle">Deploy the Application</h2> 
+<p class="p">Application Lifecycle Service clusters that require an upstream HTTP proxy to access the internet
+        will need to be <a class="xref" href="../../helion/admin/server/https_and_ssl.html#topic_gwr_qgd_ws__staging-cache-app-http-proxy">made aware of the proxy</a>. The sample applications require access to the Internet in
+        order to download dependent packages.</p>
+
+<p class="p">Use the Helion client to deploy your app to Helion Development Platform.  If you have Eclipse installed, you have the option to use the <a class="xref" href="../../devplatform.eclipse.html">plugin</a>.</p>
+
+<ol class="ol">
+<li class="li">Open the <a class="xref" href="../../helion/user/reference/client-ref.html">Helion command-line interface (CLI)</a>
+</li>
+
+<li class="li"> Ensure that you are targeting your desired environment.
+           If you are not,
+          execute<pre class="pre codeblock">helion target https://api.xx.xx.xx.xx.xip.io    </pre>
+</li>
+
+<li class="li"> Ensure that you are logged in to your desired environment.
+          If you are not,
+          execute<pre class="pre codeblock">helion login</pre>
+</li>
+
+<li class="li"> If you are not already there, <samp class="ph codeph">cd</samp> to the root directory of the sample.</li>
+
+<li class="li"> Deploy the application by using the command:<pre class="pre codeblock">helion push</pre>
+</li>
+
+<li class="li"> Accept any default values that you may be prompted for.<div class="note note"><span class="notetitle">Note:</span> By default, ALS clusters are
+            configured with two domains (private and public). In some situations the Helion CLI may
+            prompt you to select a target domain. If prompted, select the <strong class="ph b">public</strong> domain from
+            the given list (i.e. <em class="ph i">&lt;app-name&gt;.xxx.xxx.xxx.xxx.xip.io</em>)</div>
+</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic5933__key-code-snippets"><h2 class="title sectiontitle">Key Code Snippets</h2> 
+<p class="p">The first line in this section of the Server.js file shows how to retrieve the connection information for the MySQL instance from the application's environment variables. The connection information is represented using JSON. The rest of the code shown here parses the JSON string that was retrieved, connects to the database, execute a query, and prints the response.</p>
+
+<pre class="pre codeblock">var services = process.env.VCAP_SERVICES;
+
+// Parse the JSON so that we can extract the individual components needed for
+ // using MySQL
+  services = JSON.parse(services);
+
+  // Since there's only one service, we grab the only node which is for MySQL.
+  var credentials = services.mysql[0].credentials;
+
+  // The credentials node has a lot of fields, but we are only concerned with
+  // the ones below for this MySQL sample.
+  var dbname = credentials.name;
+  var hostname = credentials.hostname;
+  var user = credentials.user;
+  var password = credentials.password;
+  var port = credentials.port;
+
+  response.write("\n Connecting to MySQL...");
+
+  // Create a connection to MySQL
+  var connection = mysql.createConnection({
+    database : dbname,
+    host : hostname,
+    port : port,
+    user : user,
+    password : password
+  });
+
+  connection.connect();
+
+  response.write("\n Connected to MySQL!");
+
+  // Create a query to be executed against a MySQL database.
+  var queryResult = '';
+  connection.query('SELECT \"Hello World\" AS result', function(err, rows, fields) {
+    if (err) {
+      throw err;
+    }
+
+    queryResult = rows[0].result;
+
+    response.write("\n Executed \'SELECT \"Hello World\" AS result\' ");
+    response.write("\n Result =  " + queryResult);
+
+    // Close the connection
+    connection.end(function(err){
+      console.log("\n Closing the MySQL connection");
+   });
+      }</pre>
+
+<p class="p">The <em class="ph i">manifest.yml</em> file is the configuration information used by ALS to set up the environment. The <strong class="ph b">services</strong> element instructs ALS how to bind to the MySQL service provided by the ALS cluster to the application.</p>
+
+<pre class="pre codeblock">---
+applications:
+- name: mysql-node
+  mem: 128M
+  services:
+    ${name}-db:
+      type: mysql</pre>
+
+</div>
+
+<div class="section" id="topic5933__run-the-application"><h2 class="title sectiontitle">Run the Application</h2> 
+<ol class="ol">
+<li class="li">Open the Helion Management Console.  The Management Console is the web-based administrative interface that can be reached by typing the ALS endpoint URL into a browser window.</li>
+
+<li class="li">Click <strong class="ph b">Applications</strong>.</li>
+
+<li class="li">If the file push was successful, you should see <strong class="ph b">mysql-node</strong> in the list of available applications.</li>
+
+<li class="li">The status of the application should be <strong class="ph b">Started</strong>. Click the name of the application to launch it. </li>
+
+<li class="li">In the upper right-hand corner, click <strong class="ph b">View App</strong>.</li>
+
+</ol>
+
+</div>
+
+<div class="section" id="topic5933__key-learnings"><h2 class="title sectiontitle">Key Learnings</h2> 
+<ul class="ul">
+<li class="li">You need to provide configuration information so that ALS can bind to a MySQL service. Configuration information is contained in the <em class="ph i">manifest.yml</em> file.</li>
+
+<li class="li">You need to retrieve connection information for MySQL from the application's environment variables, and parse the information into a JDBC compliant connection string.</li>
+
+<li class="li">You interact with and deploy your app using the <a class="xref" href="../../helion/user/reference/client-ref.html">ALS command line client</a> or the web-based <a class="xref" href="../../helion/user/console/console_index.html">ALS Management Console</a>.</li>
+
+</ul>
+
+<p class="p">
+<a class="xref" href="../../devplatform.appdev.html">Exit Samples</a> | <a class="xref" href="../helloworld/helloworld.node.html">Previous Sample</a> | <a class="xref" href="../messaging/messaging.node.html">Next Sample</a>
+</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,743 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Log Streams</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic11928" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/admin/server/logging.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Log Streams</h1>
+
+
+
+
+
+<div class="body">
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#topic11928__logyard">Logyard</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#topic11928__debugging-logyard">Debugging Logyard</a>
+</li>
+
+<li class="li">
+        <a class="xref" href="#topic11928__drains">Drains</a>
+        <ul class="ul">
+          <li class="li">
+            <a class="xref" href="#topic11928__system-drains">System Drains</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic11928__log-format">Log Format</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic11928__saving-custom-log-formats">Saving Custom Log
+              Formats</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic11928__custom-drains">Custom Drains</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic11928__application-drains">Application Drains</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic11928__drain-status">Drain Status</a>
+          </li>
+
+        </ul>
+</li>
+
+<li class="li">
+        <a class="xref" href="#topic11928__keys">Keys</a>
+        <ul class="ul">
+          <li class="li">
+            <a class="xref" href="#topic11928__apptail">apptail</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic11928__event">event</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic11928__systail">systail</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic11928__managing-the-systail-stream">Managing the systail
+              stream</a>
+          </li>
+
+        </ul>
+</li>
+
+<li class="li">
+        <a class="xref" href="#topic11928__configuration">Configuration</a>
+        <ul class="ul">
+          <li class="li">
+            <a class="xref" href="#topic11928__drain-timeouts">Drain Timeouts</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic11928__user-drain-limit">User Drain Limit</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#topic11928__apptail-limits">Apptail Limits</a>
+          </li>
+
+        </ul>
+</li>
+
+</ul>
+
+<p class="p">Application and system logs in Application Lifecycle Service are aggregated into streams
+which can be viewed, tailed, filtered, and/or sent via drains to other
+log aggregators for archiving or analysis. There are three general types
+of streams:</p>
+
+<ul class="ul">
+<li class="li">
+<strong class="ph b">Application log streams</strong>: application logs (plus relevant events)
+from all instances</li>
+
+<li class="li">
+<strong class="ph b">System log streams</strong>: Application Lifecycle Service and other system logs from all
+nodes (dmesg, dea.log, auth.log, etc.)</li>
+
+<li class="li">
+<strong class="ph b">Cloud event streams</strong>: cloud events from all nodes (see Cloud
+Events in the Management Console)</li>
+
+</ul>
+
+<p class="p">A <strong class="ph b">message</strong> is a single log line or event in a stream.</p>
+
+<p class="p">Each message has a <strong class="ph b">key</strong> which identifies <em class="ph i">which</em> stream it belongs to (see <em class="ph i"><a class="xref" href="#topic11928__keys">Keys</a></em> below).</p>
+
+<div class="section" id="topic11928__logyard"><h2 class="title sectiontitle">Logyard</h2> 
+<p class="p">Log streams are handled by three processes which run on all Application Lifecycle Service
+nodes:</p>
+
+<ul class="ul">
+<li class="li">
+<strong class="ph b">logyard</strong>: listens for incoming log messages and forwarding them
+to a configurable list of drains</li>
+
+<li class="li">
+<strong class="ph b">systail</strong>: sends system logs (/s/log/*, etc.) to <strong class="ph b">logyard</strong> to
+be in turn forwarded to drains</li>
+
+<li class="li">
+<strong class="ph b">logyard_sieve</strong>: listens for all system logs and extracts vital
+events back to <strong class="ph b">logyard</strong>
+</li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">apptail</strong> is an additional process which runs only on DEA nodes. It
+sends user application logs to <strong class="ph b">logyard</strong>, injecting relevant
+application-specific events from the <strong class="ph b">logyard_sieve</strong> stream.</p>
+
+</div>
+
+<div class="section" id="topic11928__drains"><h2 class="title sectiontitle">Drains</h2> 
+<p class="p">A "drain" is a receiver for a log stream. Logyard has four kinds:</p>
+
+<ul class="ul">
+<li class="li">TCP (e.g. &lt;tcp://10.0.11.101:12345&gt;)</li>
+
+<li class="li">UDP (e.g. udp://logs.papertrailapp.com:12345)</li>
+
+<li class="li">Redis (e.g. redis://192.168.1.157:5000/)</li>
+
+<li class="li">file (e.g. &lt;file:///s/logs/custom-drain-1.log&gt;)</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic11928__system-drains"><h2 class="title sectiontitle">System Drains</h2> 
+<p class="p">Drains for system log and cloud event streams can be added by admins
+  with the <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-log-drain-add">kato log
+drain</a>
+command. For example:</p>
+
+<pre class="pre codeblock">kato log drain add --prefix systail.kato mydrain udp://logs.papertrailapp.com:12345</pre>
+
+<p class="p">This creates a UDP drain that receives messages from <strong class="ph b">kato.log</strong> (on
+all nodes in the cluster) and forwards them to
+<a class="xref" href="https://papertrailapp.com/" target="_blank">Papertrail</a> on port 12345.</p>
+
+  <p class="p">The <samp class="ph codeph">--prefix</samp> flag takes a <a class="xref" href="#topic11928__keys">
+<em class="ph i">key</em>
+</a>
+prefix as its argument.</p>
+
+<p class="p">To delete the drain:</p>
+
+<pre class="pre codeblock">kato log drain delete mydrain</pre>
+
+  <p class="p">The <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-history"><em class="ph i">kato history</em></a> command
+uses a built-in drain which forwards to a Redis server on the Primary
+node.</p>
+
+<p class="p">The 'file' drain type will append to a local file. To overwrite the file
+instead, add the 'overwrite=1' option:</p>
+
+<pre class="pre codeblock">kato log drain add debug file:///s/logs/debug-1.log overwrite=1</pre>
+
+</div>
+
+<div class="section" id="topic11928__log-format"><h2 class="title sectiontitle">Log Format</h2> 
+<p class="p">Log drains can emit entries in a variety of formats:</p>
+
+<ul class="ul">
+<li class="li">verbatim (default): Log entries as they appear in the source log
+files (plain text).</li>
+
+<li class="li">json: Log entries wrapped as JSON objects, with keys identifying
+each part of the entry.</li>
+
+<li class="li">custom: Values of the specified JSON keys arranged in an arbitrary
+format.</li>
+
+</ul>
+
+<p class="p">For example, to add a drain with just the timestamp, application name
+and message:</p>
+
+<pre class="pre codeblock">kato log drain add -p apptail -f ' - : ' \
+&gt; all-apps file:///s/logs/apptail-short.log</pre>
+
+<p class="p">JSON keys are enclosed in double curly braces and prefixed with a
+period. The spaces, hyphen, and colon here are functioning as
+delimiters. The resulting entry might look like this:</p>
+
+<pre class="pre codeblock">2013-01-22T16:01:14-08:00 - myenv: Application 'myenv' is now running on DEA 27da51</pre>
+
+  <p class="p">Different JSON keys are available in different <a class="xref" href="#topic11928__keys">
+<em class="ph i">log
+streams</em>
+</a>:</p>
+
+<p class="p">
+<strong class="ph b">apptail.</strong>:</p>
+
+<ul class="ul">
+<li class="li">text: actual log line</li>
+
+<li class="li">unix_time: timestamp (seconds since 1 January 1970)</li>
+
+<li class="li">human_time: formatted time</li>
+
+<li class="li">node_id: DEA host IP of this app instance</li>
+
+<li class="li">filename: log file from which this line originated</li>
+
+<li class="li">source: e.g. app, staging, helion.dea, helion.stager, appstore</li>
+
+<li class="li">instance_index: instance number</li>
+
+<li class="li">app_guid: GUID of this app</li>
+
+<li class="li">app_name: application name</li>
+
+<li class="li">app_space: GUID of the space this app belongs to</li>
+
+<li class="li">syslog.priority: syslog priority</li>
+
+<li class="li">syslog.time: syslog formatted time</li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">event.</strong>:</p>
+
+<ul class="ul">
+<li class="li">text: event description</li>
+
+<li class="li">unix_time: timestamp</li>
+
+<li class="li">human_time: formatted time</li>
+
+<li class="li">node_id: Node IP from which this event originated</li>
+
+<li class="li">type: type of event (eg: process_stop)</li>
+
+<li class="li">severity: INFO, WARN, ERROR</li>
+
+<li class="li">process: the process generating the event</li>
+
+<li class="li">info: event-specific information as JSON</li>
+
+<li class="li">syslog.priority: syslog priority</li>
+
+<li class="li">syslog.time: syslog formatted time</li>
+
+</ul>
+
+<p class="p">
+<strong class="ph b">systail.</strong>:</p>
+
+<ul class="ul">
+<li class="li">text: actual log line</li>
+
+<li class="li">unix_time: timestamp</li>
+
+<li class="li">human_time: formatted time</li>
+
+<li class="li">node_id: Node IP from which this log line originated</li>
+
+<li class="li">name: name of the component (eg: redis_gateway)</li>
+
+<li class="li">syslog.priority: syslog priority</li>
+
+<li class="li">syslog.time: syslog formatted time</li>
+
+</ul>
+
+  <p class="p">You can see a list of the default drain formats using <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-config">
+<em class="ph i">kato config
+get</em>
+</a>:</p>
+
+<pre class="pre codeblock">kato config get logyard drainformats
+apptail: ! ' .: '
+event: ! '@:  -- via '
+systail: ! '@: '
+[...]</pre>
+
+<p class="p">These default log formats are used when the corresponding prefix is used
+and no format options ("-f") are specified. For example
+<samp class="ph codeph">kato drain add -p systail.dea ...</samp> would format the
+drain using the <em class="ph i">systail</em> drain format.</p>
+
+</div>
+
+<div class="section" id="topic11928__saving-custom-log-formats"><h2 class="title sectiontitle">Saving Custom Log Formats</h2> 
+<p class="p">Custom formats for drains can be saved as a named type in the Logyard
+configuration. To do this, add the formatting string to a new key in
+logyard/drainformats. For example, to save the log format used in the
+**all-apps **drain example above:</p>
+
+<pre class="pre codeblock">kato config set logyard drainformats/simplefmt " - : "</pre>
+
+<p class="p">You can use this named format when setting up new drains. For example, a
+shorter command for creating the <strong class="ph b">all-apps</strong> drain would be:</p>
+
+<pre class="pre codeblock">kato log drain add -p apptail -f simplefmt all-apps file:///s/logs/apptail-short.log</pre>
+
+<p class="p">A custom <em class="ph i">systail</em> log stream might look like this:</p>
+
+<pre class="pre codeblock">kato config set logyard drainformats/systail-papertrail ' - @ -- '</pre>
+
+<p class="p">This could be forwarded to the Papertrail log analysis service:</p>
+
+<pre class="pre codeblock">kato log drain add papertrail udp://logs.papertrailapp.com:45678 -f systail-papertrail</pre>
+
+<p class="p">You can also change the default apptail, event, and systail drain
+formats to modify the output of any drains using these prefixes (e.g.
+  <a class="xref" href="../../user/reference/client-ref-management.html#topic50918__command-drain-add">helion drain</a>, Cloud
+  Events in the Management Console, and <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-log-tail">kato log tail</a>
+respectively).</p>
+
+</div>
+
+<div class="section" id="topic11928__custom-drains"><h2 class="title sectiontitle">Custom Drains</h2> 
+<p class="p">You can add custom drains to Logyard to look for certain events or parse
+certain log messages (e.g. tracking application push requests or user
+logins). Examples of custom drains and more advanced usage of Logyard
+can be found in the <a class="xref" href="https://github.com/hpcloud/logyard-devguide/blob/master/README.md" target="_blank">Logyard Developer
+Guide</a>
+</p>
+
+</div>
+
+<div class="section" id="topic11928__application-drains"><h2 class="title sectiontitle">Application Drains</h2> 
+<p class="p">Drains for application log streams can be added by end users with the <a class="xref" href="../../user/reference/client-ref-management.html#topic50918__command-drain-add">
+          <em class="ph i">helion drain add</em>
+        </a> command. See the <a class="xref" href="../../user/deploy/app-logs.html#topic5165">Application Logs</a> section of the documentation for an example.</p>
+</div>
+
+<div class="section" id="topic11928__drain-status"><h2 class="title sectiontitle">Drain Status</h2> 
+<p class="p">You can check the status of all drains on Application Lifecycle Service with the
+<samp class="ph codeph">kato log drain status</samp> subcommand. For example:</p>
+
+<pre class="pre codeblock">kato log drain status
+appdrain.1.mine         192.168.68.5    RUNNING[53]
+appdrain.1.mydrain      192.168.68.5    RETRYING[75]  invalid port 3424252
+builtin.apptail         192.168.68.5    RUNNING[3]
+builtin.cloudevents     192.168.68.5    RUNNING[3]
+builtin.katohistory     192.168.68.5    RUNNING[3]</pre>
+
+<p class="p">If the RETRYING drain hits a <a class="xref" href="#topic11928__drain-timeouts"><em class="ph i">drain
+            timeout</em></a>, its status will change to FATAL.</p>
+
+</div>
+
+<div class="section" id="topic11928__keys"><h2 class="title sectiontitle">Keys</h2> 
+<p class="p">Each message in a log stream is prefixed with a key, identifying what type of message it is or to
+        which log stream it belongs. The following keys are available for use in defining drains
+        using the <samp class="ph codeph">--prefix</samp> flag for <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-log-drain-add"><em class="ph i">kato log
+            drain add</em></a> ).</p>
+
+<p class="p">Systail keys are <a class="xref" href="#topic11928__managing-the-systail-stream"><em class="ph i">configurable</em></a> .</p>
+
+</div>
+
+<div class="section" id="topic11928__apptail"><h2 class="title sectiontitle">apptail</h2> 
+<pre class="pre codeblock">apptail.\&lt;app.id\&gt;</pre>
+
+</div>
+
+<div class="section" id="topic11928__event"><h2 class="title sectiontitle">event</h2> 
+<ul class="ul">
+<li class="li">event.\&lt;eventname&gt; <ul class="ul">
+            <li class="li">process_stop</li>
+
+            <li class="li">process_exit</li>
+
+            <li class="li">kato_action</li>
+
+            <li class="li">timeline</li>
+
+            <li class="li">nginx_error</li>
+
+            <li class="li">vcap_error</li>
+
+            <li class="li">vcap_warning</li>
+
+            <li class="li">service_provision</li>
+
+          </ul>
+</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic11928__systail"><h2 class="title sectiontitle">systail</h2> 
+<ul class="ul">
+<li class="li">systail.\&lt;processname&gt;</li>
+
+<li class="li">systail.\&lt;processname&gt;.\&lt;nodeip&gt; <ul class="ul">
+            <li class="li">auth</li>
+
+            <li class="li">dmesg</li>
+
+            <li class="li">dpkg</li>
+
+            <li class="li">kato</li>
+
+            <li class="li">kernel</li>
+
+            <li class="li">nginx_error</li>
+
+            <li class="li">supervisord</li>
+
+            <li class="li">cc_nginx_error</li>
+
+            <li class="li">app_mdns</li>
+
+            <li class="li">app_store</li>
+
+            <li class="li">applog_redis</li>
+
+            <li class="li">apptail</li>
+
+            <li class="li">avahi_publisher</li>
+
+            <li class="li">cc_nginx</li>
+
+            <li class="li">cloud_controller_ng</li>
+
+            <li class="li">logyard_sieve</li>
+
+            <li class="li">dea_ng</li>
+
+            <li class="li">dockerd</li>
+
+            <li class="li">aok</li>
+
+            <li class="li">filesystem_gateway</li>
+
+            <li class="li">filesystem_node</li>
+
+            <li class="li">harbor_gateway</li>
+
+            <li class="li">harbor_node</li>
+
+            <li class="li">harbor_proxy_connector</li>
+
+            <li class="li">harbor_redis</li>
+
+            <li class="li">health_manager</li>
+
+            <li class="li">logyard</li>
+
+            <li class="li">memcached_gateway</li>
+
+            <li class="li">memcached_node</li>
+
+            <li class="li">mongodb_gateway</li>
+
+            <li class="li">mongodb_node</li>
+
+            <li class="li">mysql</li>
+
+            <li class="li">mysql_gateway</li>
+
+            <li class="li">mysql_node</li>
+
+            <li class="li">nats_server</li>
+
+            <li class="li">nginx</li>
+
+            <li class="li">postgresql</li>
+
+            <li class="li">postgresql_gateway</li>
+
+            <li class="li">postgresql_node</li>
+
+            <li class="li">prealloc</li>
+
+            <li class="li">rabbit_gateway</li>
+
+            <li class="li">rabbit_node</li>
+
+            <li class="li">redis_gateway</li>
+
+            <li class="li">redis_node</li>
+
+            <li class="li">redis_server</li>
+
+            <li class="li">router</li>
+
+            <li class="li">router2g</li>
+
+            <li class="li">stager</li>
+
+            <li class="li">systail</li>
+
+          </ul>
+</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic11928__managing-the-systail-stream"><h2 class="title sectiontitle">Managing the systail stream</h2> 
+<p class="p">The list above shows the default systail keys. These can keys can be
+  modified with the <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-config">
+<em class="ph i">kato
+config</em>
+</a> command to
+add arbitrary system log files to the stream or change the log file
+source for an existing key.</p>
+
+<ul class="ul">
+<li class="li">
+<p class="p">To retrieve the current list of log files being streamed:</p>
+
+
+<pre class="pre codeblock">kato config get systail log_files</pre>
+
+</li>
+
+<li class="li">
+<p class="p">To remove a log file from the stream:</p>
+
+
+<pre class="pre codeblock">kato config del systail log_files/dpkg</pre>
+
+</li>
+
+<li class="li">
+<p class="p">To add a new log file to the stream:</p>
+
+
+<pre class="pre codeblock">kato config set systail log_files/dpkg /var/log/dpkg.log</pre>
+
+</li>
+
+</ul>
+
+<p class="p">Restart the <samp class="ph codeph">systail</samp> process after adding or
+removing log files:</p>
+
+<pre class="pre codeblock">kato process restart systail</pre>
+
+      <div class="cautiontitle">CAUTION:</div><div class="note caution"> Do not remove the default Application Lifecycle Service log stream keys (i.e. anything
+        in the <em class="ph i"><a class="xref" href="#topic11928__systail">systail</a></em> list above) as
+        this would affect the output of <samp class="ph codeph">kato tail</samp>.</div>
+
+</div>
+
+<div class="section" id="topic11928__configuration"><h2 class="title sectiontitle">Configuration</h2> 
+<p class="p">Application Lifecycle Service has a number of configurable limits on application log drains
+to help prevent performance problems the logging subsystems. These
+settings can all be viewed and set with <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-config">
+<em class="ph i">kato
+config</em>
+</a> commands as
+described below:</p>
+
+</div>
+
+<div class="section" id="topic11928__drain-timeouts"><h2 class="title sectiontitle">Drain Timeouts</h2> 
+<ul class="ul">
+<li class="li">
+<p class="p">
+<strong class="ph b">logyard</strong> <strong class="ph b">retrylimits</strong>: If a drain gets disconnected (e.g. if
+the log aggregation service goes down), Logyard will retry the
+connection at the following intervals:</p>
+
+
+<ul class="ul">
+<li class="li">once every 5 seconds for 1 to 2 minutes</li>
+
+<li class="li">once every 30 seconds for 5 minutes</li>
+
+<li class="li">once every 1 minute for 10 minutes</li>
+
+<li class="li">once every 5 minutes until connect or destroyed</li>
+
+</ul>
+
+<p class="p">This ensures that once connectivity is restored, the drains will
+re-establish their connections within (at most) 5 minutes.</p>
+
+
+<p class="p">Application drains will retry for one day. Temporary drains (e.g.
+<samp class="ph codeph">kato tail</samp>) will retry for 25 minutes. All
+other drains will retry indefinitely.</p>
+
+
+<p class="p">These timeouts can be configured. To see a list of the configured
+  timeouts, use <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-config">
+<em class="ph i">kato config
+get</em>
+</a>. For
+example:</p>
+
+
+<pre class="pre codeblock">kato config get logyard retrylimits
+appdrain.: 24h
+tmp.: 25m</pre>
+
+
+  <p class="p">To set a time-out (minimum 21m), use <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-config">
+<em class="ph i">kato config
+set</em>
+</a>. For
+example, to set the timeout limit to 10 hours on all drains named
+with the prefix "papertrail":</p>
+
+
+<pre class="pre codeblock">kato config set logyard retrylimits/papertrail 10h</pre>
+
+
+<p class="p">These limits will take effect on new drains, deleted/re-created
+drains, or for all matching drains after
+<samp class="ph codeph">kato process restart logyard</samp> has been run on
+all nodes.</p>
+
+</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic11928__user-drain-limit"><h2 class="title sectiontitle">User Drain Limit</h2> 
+<ul class="ul">
+<li class="li">
+<p class="p">
+<strong class="ph b">cloud_controller_ng</strong> <strong class="ph b">max_drains_per_app</strong> (default 2):
+limits the number of drains an application can have. Once this limit
+is reached, users will see the following notification when trying to
+add a new drain:</p>
+
+
+<pre class="pre codeblock">Adding drain [fail] ... Error 123: Per-app drain limit (2) reached.</pre>
+
+
+<p class="p">To change the limit, set <samp class="ph codeph">max_drains_per_app</samp> in
+the cloud_controller_ng configuration. For example, to change this
+limit to 5 drains:</p>
+
+
+<pre class="pre codeblock">kato config set cloud_controller_ng max_drains_per_app 5</pre>
+
+</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic11928__apptail-limits"><h2 class="title sectiontitle">Apptail Limits</h2> 
+<ul class="ul">
+<li class="li">
+<p class="p">
+<strong class="ph b">apptail</strong> <strong class="ph b">read_limit</strong> (default 16MB): defines the maximum
+number of bytes to read from the end of application log files. This
+is done to prevent performance problems during restart of the
+<samp class="ph codeph">apptail</samp> process (or nodes running the process)
+if the log file sources have grown extremely large.</p>
+
+
+<p class="p">When this limit is reached, a warning such as the following will
+appear in both the Cloud Events stream and the application's log
+stream:</p>
+
+
+<pre class="pre codeblock">WARN -- [exampleapp] Skipping much of a large log file (stderr); size (26122040 bytes) &gt; read_limit (15728640 bytes)</pre>
+
+
+<p class="p">To change the read_limit to 100MB:</p>
+
+
+<p class="p">kato config set apptail read_limit 100</p>
+
+</li>
+
+<li class="li">
+<p class="p">
+<strong class="ph b">apptail</strong> <strong class="ph b">rate_limit</strong> (default 400): limits the number of log
+lines per second that can be read from an application log file. The
+<samp class="ph codeph">apptail</samp> process reads (at most) the specified
+number of log lines per second, after which it will wait for one
+second before resuming. A line similar to the <samp class="ph codeph">read_limit</samp> warning above is inserted in the stream to explain the
+missing data.</p>
+
+
+<p class="p">To change the rate_limit to 300 lines:</p>
+
+
+<pre class="pre codeblock">kato config set apptail rate_limit 300</pre>
+
+</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="topic11928__debugging-logyard"><h2 class="title sectiontitle">Debugging Logyard</h2> 
+<p class="p">Use <samp class="ph codeph">kato log stream debug</samp> to monitor
+Logyard-related log activity. The command tails the logyard, apptail,
+systail, and logyard_sieve streams.</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

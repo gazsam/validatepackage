@@ -1,0 +1,75 @@
+
+
+
+<html><head><title>Using HotPools</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic_hotpools" /> <meta name="html-import-file-path" content="devplatform/2.0/database/devplatform.database-hotpools.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">Using HotPools</h1>
+
+
+  
+
+  <div class="body">
+    <p class="p">HotPools are initialized, unconfigured MySql database instances used to speed up database creation. When a 
+      user creates a MySql database instance, if there is a HotPool instance available of the desired flavor, that 
+      instance is used and configured, instead of creating a new instance. Having an instance already initialized
+      saves 60 to 75 percent of the time needed to create a new instance.</p>
+
+    <p class="p">HotPools provide a resource vs. performance tradeoff; in order to speed instance creation, resources are allocated to keep instances running and available. HotPools
+    should only be used if speeding up instance creation is necessary.</p>
+
+    <div class="note note"><span class="notetitle">Note:</span> HotPools are only available for MySql instances; HotPools for Vertica Preview, MongoDB, and Redis
+    are not available.</div>
+
+    <div class="note note"><span class="notetitle">Note:</span> HotPools can only be configured when the Database Service is installed; there is currently no method for modifying HotPools configuration post-installation.</div>
+
+    <div class="section" id="topic_hotpools__enable"><h2 class="title sectiontitle">Enabling and configuring HotPools</h2>
+      <p class="p">HotPools are enabled and configured using <strong class="ph b">clouds.yaml</strong>. The following settings are
+        used to configure HotPools:</p>
+
+        <ul class="ul"><li class="li"><strong class="ph b">hotpools_enabled</strong>: Set to <strong class="ph b">True</strong> to enable HotPools.</li>
+
+        <li class="li"><strong class="ph b">hotpools_max_instances</strong>: The number of instances of each flavor to maintain.</li>
+
+        <li class="li"><strong class="ph b">hotpools_image_name</strong>: The image used to create the HotPool instances. The only valid value is <strong class="ph b">percona</strong>.</li>
+
+        <li class="li"><strong class="ph b">hotpools_flavor_names</strong>: A comma-delimited list of the flavors of HotPool instances to create.</li>
+</ul>
+
+      <p class="p"><strong class="ph b">Example 1:</strong> Create three instances of flavor <strong class="ph b">m1.medium</strong>:</p>
+
+      <pre class="pre codeblock">clouds:
+  mycloud:
+    database:
+      hotpools_enabled: True
+      hotpools_max_instances: 3
+      hotpools_image_name: percona
+      hotpools_flavor_names: 'm1.medium'
+</pre>
+
+    <p class="p"><strong class="ph b">Example 2:</strong> Create two instances each of flavor <strong class="ph b">m1.medium</strong> and <strong class="ph b">m1.large</strong>:</p>
+
+      <pre class="pre codeblock">clouds:
+  mycloud:
+    database:
+      hotpools_enabled: True
+      hotpools_max_instances: 2
+      hotpools_image_name: percona
+      hotpools_flavor_names: 'm1.medium,m1.large'</pre>
+
+    </div>
+
+    <div class="section" id="topic_hotpools__details"><h2 class="title sectiontitle">Details</h2>
+    <p class="p">When HotPools instances are created, they are assigned to one tenant. They will appear as instances named <samp class="ph codeph">hot_pools</samp> when listed using <samp class="ph codeph">nova list</samp>.
+    When an instance is created, and there is a HotPools instance available of the correct flavor, the HotPools instance will be renamed <samp class="ph codeph">hot_pools_&lt;yourinstance&gt;</samp> 
+      while it is being configured. A new HotPools instance will then start to spawn.</p>
+</div>
+
+  </div>
+
+
+</body>
+</html>

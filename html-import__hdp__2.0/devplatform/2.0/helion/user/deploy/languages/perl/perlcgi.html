@@ -1,0 +1,41 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Perl CGI</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="topic751" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/user/deploy/languages/perl/perlcgi.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Perl CGI</h1>
+
+
+
+
+
+<div class="body">
+<p class="p">The <em class="ph i">perlcgi</em> framework can be used to run any CGI script. Like the <a class="xref" href="perl_index.html#topic8895">perl</a> framework, it provides ActivePerl in the default
+      PATH and supports module installation via <a class="xref" href="perl_index.html#topic8895__cpan-modules-via-ppm">PPM</a> and <a class="xref" href="perl_index.html#topic8895__cpan-modules-via-cpanm">cpanm</a>. </p>
+
+    <p class="p">Unlike the perl framework, setting the <a class="xref" href="../../manifestyml.html#topic20922__start-file"><em class="ph i">start-file</em></a>
+      option has no effect, as there is no permanently running application. A new instance of a CGI
+      script is started for each request.</p>
+
+<p class="p">Perl scripts deployed with this framework should begin with: </p>
+
+<pre class="pre codeblock">#!/usr/bin/env perl</pre>
+
+<div class="section" id="topic751__example"><h2 class="title sectiontitle">Example</h2> 
+<ul class="ul">
+<li class="li">
+<a class="xref" href="https://github.com/Stackato-Apps/perlcgi-env" target="_blank">perlcgi-env</a>: A simple Perl CGI script that displays environment variables.</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

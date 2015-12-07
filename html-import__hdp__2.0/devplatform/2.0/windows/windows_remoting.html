@@ -1,0 +1,90 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Providing Remote Desktop Access to Windows DEA and Windows SQL Server Instances</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="windows_remoting" /> <meta name="html-import-file-path" content="devplatform/2.0/windows/windows_remoting.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Providing Remote Desktop Access to Windows DEA and Windows SQL Server Instances</h1>
+
+
+
+
+
+
+<div class="body">
+<p class="p">
+
+ 
+ </p>
+
+<p class="p">
+  <span class="ph">
+    <em class="ph i">Windows, .NET, SQL Server, and IIS are either registered trademarks or trademarks of Microsoft Corporation in the United States and/or other countries.</em>
+  </span>
+</p>
+
+<p class="p">This tutorial demonstrates how to set up Remote Desktop access to new Windows instances running in HPE Helion OpenStack<sup>®</sup> 
+  Since the instances are running full versions of Windows, you must connect to them using Remote Desktop rather than SSH.</p>
+
+<p class="p">The steps needed to do this are as follows:</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#windows_remoting__create_security">Create an RDP security group</a>
+</li>
+
+<li class="li">
+  <a class="xref" href="#windows_remoting__add_security">Add the RDP security group to the instance</a>
+</li>
+
+  <li class="li"><a class="xref" href="#windows_remoting__connect">Connect to the instance with Remote Desktop
+          Connection</a></li>
+
+
+</ul>
+
+<div class="section" id="windows_remoting__create_security"><h2 class="title sectiontitle">Create an RDP Security Group</h2> 
+  <ol class="ol">
+    <li class="li">In the Horizon console, select <strong class="ph b">Project</strong>, <strong class="ph b">Access &amp; Security</strong>.
+      <br/><img class="image" src="../../../media/windows_remoting_access.png"/><br/></li>
+
+    <li class="li">Select <strong class="ph b">Security Groups</strong> if it is not already selected.
+      <br/><img class="image" src="../../../media/windows_remoting_security.png"/><br/></li>
+
+    <li class="li">Click <strong class="ph b">+ Create Security Group</strong>.
+      <br/><img class="image" src="../../../media/windows_remoting_create_security.png"/><br/></li>
+
+    <li class="li">Give the security group an appropriate name (such as <strong class="ph b">cluster1-rdp</strong>), and an appropriate description (sucn as <strong class="ph b">Remote Desktop Access</strong>).
+      <br/><img class="image" src="../../../media/windows_remoting_create_security_2.png"/><br/></li>
+
+  </ol>
+
+</div>
+
+  <div class="section" id="windows_remoting__add_security"><h2 class="title sectiontitle">Add the RDP security group to the instance</h2>
+    <ol class="ol">
+      <li class="li">Select <strong class="ph b">Project</strong>, <strong class="ph b">Instances</strong>. In the Actions column for your instance, select <strong class="ph b">Edit Security Groups</strong> from the pull-down.
+        <br/><img class="image" src="../../../media/windows_remoting_add_security_1.png"/><br/></li>
+
+      <li class="li">Click the <strong class="ph b">+</strong> button next to the RDP security group you created to add it to the instance. Click <strong class="ph b">Save</strong>.
+        <br/><img class="image" src="../../../media/windows_remoting_add_security_2.png"/><br/></li>
+
+    </ol>
+
+  </div>
+
+  <div class="section" id="windows_remoting__connect"><h2 class="title sectiontitle">Connect to the instance with Remote Desktop Connection</h2></div>
+
+  <p class="p">To connect to the instance, open Remote Desktop Connection, and enter the external IP address for the instance. Enter the user name in the form
+        <strong class="ph b">&lt;InstanceName&gt;/Administrator</strong>, and password. To retrieve the Administrator
+      password, see <a class="xref" href="windows_password.html">Retrieving the Windows Password</a> 
+    </p>
+
+</div>
+
+
+</body>
+</html>

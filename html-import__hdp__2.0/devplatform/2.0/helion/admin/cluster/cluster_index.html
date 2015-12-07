@@ -1,0 +1,892 @@
+
+
+
+<html><head><title>HPE Helion 2.0 Development Platform: Cluster Setup</title> <meta name="html-import-package-key" content="hdp"/> <meta name="html-import-package-version" content="2.0" /><meta name="html-import-topic-id" content="admin_cluster_index" /> <meta name="html-import-file-path" content="devplatform/2.0/helion/admin/cluster/cluster_index.html" /></head>
+
+          
+
+          
+
+<body><h1 id="pagetitle">HPE Helion 2.0 Development Platform: Cluster Setup</h1>
+
+
+
+
+
+<div class="body">
+  <p class="p">This process begins with an installed <a class="xref" href="../../user/reference/glossary.html#topic6187__term-micro-cloud">micro cloud</a>, which must then be cloned across several <a class="xref" href="../../user/reference/glossary.html#topic6187__term-node">nodes</a>. You connect to each node in turn and tell it which <a class="xref" href="../../user/reference/glossary.html#topic6187__term-role">role</a>s it is to serve, thereby distributing the processing load for maximum performance.</p>
+
+<p class="p">In HPE Helion, the Clusters Panel in the <a class="xref" href="../../user/console/console_index.html">ALS management console</a> makes these tasks much easier to accomplish. If you prefer to use the command line, you can also use the <a class="xref" href="../../CLI/ALS_Client_Reference.html">Cluster Configuration tool</a> or <a class="xref" href="../reference/kato-ref.html">
+<em class="ph i">kato</em>
+</a> commands.</p>
+
+<ul class="ul">
+<li class="li">
+<a class="xref" href="#admin_cluster_index__roles">Node Roles</a>
+</li>
+
+<li class="li">
+        <a class="xref" href="#admin_cluster_index__preparing-the-core-node">Preparing the Core
+          Node</a>
+        <ul class="ul">
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__core-ip">CORE_IP</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__hostname">Hostname</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__wildcard-dns">Wildcard DNS</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__core-node">Core Node</a>
+          </li>
+
+        </ul>
+</li>
+
+<li class="li">
+        <a class="xref" href="#admin_cluster_index__attaching-nodes-and-enabling-roles">Attaching Nodes
+          and Enabling Roles</a>
+        <ul class="ul">
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__router-nodes">Router Nodes</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__data-services-nodes">Data Services Nodes</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__dea-nodes">DEA Nodes</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__verification">Verification</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__removing-nodes">Removing Nodes</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__role-configuration-using-the-management-console">Role Configuration using the Management Console</a>
+          </li>
+
+        </ul>
+</li>
+
+<li class="li">
+        <a class="xref" href="#admin_cluster_index__example-clusters">Sample Cluster Examples</a>
+        <ul class="ul">
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__single-node">Single-Node</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__three-node">Three-Node</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__five-node">Five-Node</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__node">20-Node</a>
+          </li>
+
+        </ul>
+</li>
+
+<li class="li">
+<a class="xref" href="#admin_cluster_index__roles-requiring-persistent-or-shared-storage">Roles Requiring Persistent or Shared Storage</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#admin_cluster_index__port-configuration">Port Configuration</a>
+</li>
+
+<li class="li">
+<a class="xref" href="#admin_cluster_index__multiple-controllers">Multiple Controllers</a>
+</li>
+
+  <li class="li"><a class="xref" href="#admin_cluster_index__utm">UTM (Unified Threat Management) or Gateway
+          Firewalls)</a></li>
+
+<li class="li">
+        <a class="xref" href="#admin_cluster_index__load-balancer-and-multiple-routers">Load Balancer and
+          Multiple Routers</a>
+        <ul class="ul">
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__rename-the-load-balancer">Rename the Load
+              Balancer</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__set-up-the-core-node">Set up the Core Node</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__set-up-supplemental-routers">Set up Supplemental
+              Routers</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__configure-the-helion-load-balancer">Configure the
+              Application Lifecycle Service Load Balancer</a>
+          </li>
+
+          <li class="li">
+            <a class="xref" href="#admin_cluster_index__load-balancer-ssl-certificates">Load Balancer SSL
+              Certificates</a>
+          </li>
+
+        </ul>
+</li>
+
+</ul>
+
+<div class="section" id="admin_cluster_index__roles"><h2 class="title sectiontitle">Node Roles</h2> 
+  <p class="p">An Application Lifecycle Service <a class="xref" href="../../user/reference/glossary.html#topic6187__term-node">node</a> can
+take on one or more of the following roles:</p>
+
+<ul class="ul">
+<li class="li">
+  <a class="xref" href="../reference/architecture.html#topic4407__architecture-primary">primary</a>
+</li>
+
+<li class="li">
+  <a class="xref" href="../reference/architecture.html#topic4407__architecture-cloud-controller">controller</a>
+</li>
+
+<li class="li">
+  <a class="xref" href="../reference/architecture.html#topic4407__architecture-router">router</a>
+</li>
+
+<li class="li">
+  <a class="xref" href="../reference/architecture.html#topic4407__architecture-droplet-execution-agents">dea</a>
+</li>
+
+<li class="li">mdns (intended for micro clouds)</li>
+
+<li class="li">
+  <a class="xref" href="../../user/services/filesystem.html#user_filesystem__creating-a-persistent-file-system">filesystem</a>
+</li>
+
+<li class="li">
+  <a class="xref" href="../../user/reference/glossary.html#topic6187__term-mysql">mysql</a>
+</li>
+
+<li class="li">
+  <a class="xref" href="../../user/reference/glossary.html#topic6187__term-postgresql">postgresql</a>
+</li>
+
+<li class="li">
+  <a class="xref" href="../../user/reference/glossary.html#topic6187__term-RabbitMQ">rabbit</a>
+</li>
+
+<li class="li">
+  <a class="xref" href="../../user/reference/glossary.html#topic6187__term-Redis">redis</a>
+</li>
+
+<li class="li">
+<a class="xref" href="../../user/services/memcached.html">memcached</a>
+</li>
+
+<li class="li">
+<a class="xref" href="harbor.html">Harbor</a> (TCP/UDP port service)</li>
+
+</ul>
+
+<p class="p">The command line tool used to configure Application Lifecycle Service servers is called
+  <a class="xref" href="../reference/kato-ref.html">kato</a>. You can see a
+list of the available roles at the command line by running the <a class="xref" href="../reference/kato-ref.html">kato
+info</a> command.</p>
+
+  <p class="p">Setup of cluster nodes is done using the <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-node-attach">kato
+node</a> setup,
+add, attach, and remove sub-commands.</p>
+
+  <p class="p">The <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-info">kato info</a>
+command will show:</p>
+
+<ul class="ul">
+<li class="li">
+<strong class="ph b">assigned roles</strong>: roles currently configured to run on the node</li>
+
+<li class="li">
+<strong class="ph b">available roles</strong>: roles which can be added with
+<samp class="ph codeph">kato role add</samp>
+</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="admin_cluster_index__preparing-the-core-node"><h2 class="title sectiontitle">Preparing the Core Node</h2> 
+<p class="p">In an Application Lifecycle Service cluster, one node is dedicated as the Core node. This node
+will have a
+  <a class="xref" href="../reference/architecture.html#topic4407__architecture-cloud-controller">controller</a>,
+  <a class="xref" href="../reference/architecture.html#topic4407__architecture-primary">primary</a>,
+  <a class="xref" href="../reference/architecture.html#topic4407__architecture-base">base</a>, and
+  <a class="xref" href="../reference/architecture.html#topic4407__architecture-router">router</a> role but
+can also include additional roles.</p>
+
+<p class="p">Boot an Application Lifecycle Service VM and set up the Core node as described below, then add
+the other nodes and assign roles.</p>
+
+</div>
+
+<div class="section" id="admin_cluster_index__core-ip"><h2 class="title sectiontitle">CORE_IP</h2> 
+  <p class="p">A <a class="xref" href="../server/configuration.html#topic31232__setting-a-static-ip">static IP address</a> is
+necessary to provide a consistent network interface for other nodes to connect to. This address is called the MBUS IP. If your IaaS or cloud orchestration software provides IP addresses which persist indefinitely and are not reset on reboot you may not have to set this explicitly.</p>
+
+<p class="p">Take note of the internal IP address of the Core node. It will be required in the following steps to configure additional nodes to attach to the Core node.</p>
+
+<p class="p">Make sure that the IP address of its <samp class="ph codeph">eth0</samp> interface is registering the correct address, which may not be the case if you have set a static IP and not yet rebooted or restarted
+networking. To check the IP address, run:</p>
+
+<pre class="pre codeblock">ifconfig eth0</pre>
+
+  <p class="p">If necessary, use the kato <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-op-static_ip">
+<em class="ph i">op static_ip</em>
+</a> command to set the static IP address:</p>
+
+<pre class="pre codeblock">kato op static_ip</pre>
+
+  <div class="note note"><span class="notetitle">Note:</span> If the IP address of the Core node changes, you must reconfigure the cluster to use the new MBUS IP address. Run <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-node-migrate">kato node migrate</a> on the Core node, then <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-node-attach">kato node attach</a> on all other cluster nodes.</div>
+
+</div>
+
+<div class="section" id="admin_cluster_index__hostname"><h2 class="title sectiontitle">Hostname</h2> 
+  <p class="p">Next, set the <strong class="ph b">fully qualified hostname</strong> of the Core node. This is required so that Application Lifecycle Service's internal configuration matches the <a class="xref" href="../server/configuration.html#topic31232__server-config-dns">DNS record</a> created for
+this system.</p>
+
+<p class="p">To set the hostname, run:</p>
+
+<pre class="pre codeblock">kato node rename hostname.example.com --no-restart</pre>
+
+<p class="p">This hostname will become the basename of the "API endpoint" address
+used by clients (e.g. "https://api.hostname.example.com").</p>
+
+      <div class="note note"><span class="notetitle">Note:</span>  If you are building a cluster with multiple Routers separate from the Core node, the load
+          balancer or gateway router must take on the API endpoint address. Consult the <a class="xref" href="#admin_cluster_index__load-balancer-and-multiple-routers">Load Balancer and
+            Multiple Routers</a> section below.</div>
+
+</div>
+
+<div class="section" id="admin_cluster_index__wildcard-dns"><h2 class="title sectiontitle">Wildcard DNS</h2> 
+<p class="p">A wildcard DNS record is necessary to resolve not only the API endpoint,
+but all applications which will subsequently be deployed on the PaaS.
+  <a class="xref" href="../server/configuration.html#topic31232__server-config-dns">Create a wildcard DNS record</a> for the <a class="xref" href="#admin_cluster_index__core-node">Core node</a> or <a class="xref" href="#admin_cluster_index__load-balancer-and-multiple-routers">Load Balancer/Router</a>.</p>
+
+</div>
+
+<div class="section" id="admin_cluster_index__core-node"><h2 class="title sectiontitle">Core Node</h2> 
+<p class="p">On the Core node, execute the following command:</p>
+
+<pre class="pre codeblock">kato node setup core api.hostname.example.com</pre>
+
+<p class="p">This sets up the Core node with just the implicit <strong class="ph b">controller</strong>,
+<strong class="ph b">primary</strong>, and <strong class="ph b">router</strong> roles. The <strong class="ph b">router</strong> role is <strong class="ph b">required</strong> on this node even if there are other routers in the cluster and even if the node is not exposed to the Internet.</p>
+
+<p class="p">If you intend to set up the rest of the cluster immediately, you would
+carry on to enable those roles you ultimately intend to run on the Core
+node. For example, to set up a Core node with the <strong class="ph b">controller</strong>,
+<strong class="ph b">primary</strong>, <strong class="ph b">router</strong>, and <strong class="ph b">dea</strong> roles:</p>
+
+<pre class="pre codeblock">kato node setup core api.hostname.example.com
+kato role add dea</pre>
+
+<p class="p">Then proceed to configure the other VMs by attaching them to the Core
+node and assigning their particular roles.</p>
+
+</div>
+
+<div class="section" id="admin_cluster_index__attaching-nodes-and-enabling-roles"><h2 class="title sectiontitle">Attaching Nodes and Enabling Roles</h2> 
+<p class="p">Adding nodes to the cluster involves attaching the new VMs to the Core
+  node's IP address using the <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-node-attach">kato node attach</a>
+command. This command will check that the new node has a version number
+compatible with the Core node before attaching it.</p>
+
+<p class="p">Roles can be added (or removed) on the new node after attaching using
+  the <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-role-add">kato role</a>
+command, but it is generally preferable to enable roles during the
+<samp class="ph codeph">kato attach</samp> step using the <samp class="ph codeph">-e</samp> (enable) option as described below for each of the node types.</p>
+
+</div>
+
+<div class="section" id="admin_cluster_index__router-nodes"><h2 class="title sectiontitle">Router Nodes</h2> 
+<p class="p">In smaller clusters, the Router role enabled on a Core node should be sufficient for the Core node to function as the gateway. To attach a node enabling just the router role:</p>
+
+<pre class="pre codeblock">kato node attach -e router CORE_IP</pre>
+
+  <p class="p">If a Router-only node is functioning as the gateway, the public DNS entry for the API endpoint must point to that node. For larger clusters requiring multiple gateway Routers, see the <a class="xref" href="#admin_cluster_index__load-balancer-and-multiple-routers">Load Balancer and Multiple Routers</a> section below.</p>
+
+</div>
+
+<div class="section" id="admin_cluster_index__data-services-nodes"><h2 class="title sectiontitle">Data Services Nodes</h2> 
+<p class="p">Data services can share a single node (small clusters) or run on
+separate nodes (recommended for production clusters). To set up all
+available data services on a single node and attach it to the Core node,
+run the following command on the data services node:</p>
+
+<pre class="pre codeblock">kato node attach -e data-services CORE_IP</pre>
+
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span> The <a class="xref" href="harbor.html">Harbor</a> port service needs a publicly
+          routable IP and exposed port range if you want to provide externally accessible TCP and
+          UDP ports for user applications. See the <a class="xref" href="harbor.html#topic4009__requirements-setup">Harbor Requirements &amp;
+            Setup</a> documentation for details.</div>
+
+      </div>
+
+</div>
+
+<div class="section" id="admin_cluster_index__dea-nodes"><h2 class="title sectiontitle">DEA Nodes</h2> 
+  <p class="p">Nodes which stage application code and run application containers are called Droplet Execution Agents (DEAs). Once the controller node is running, you can begin to add some of these nodes with the <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-node-attach">kato node attach</a> command. To turn a generic Application Lifecycle Service VM into a DEA and connect it to the Core node:</p>
+
+<pre class="pre codeblock">kato node attach -e dea CORE_IP</pre>
+
+<p class="p">Continue this process until you have added all the desired DEA nodes.</p>
+
+</div>
+
+<div class="section" id="admin_cluster_index__verification"><h2 class="title sectiontitle">Verification</h2> 
+<p class="p">To verify that all the cluster nodes are configured as expected, run the
+following command on the Core node:</p>
+
+<pre class="pre codeblock">kato status --all</pre>
+
+</div>
+
+<div class="section" id="admin_cluster_index__removing-nodes"><h2 class="title sectiontitle">Removing Nodes</h2> 
+  <p class="p">Use the <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-node-detach">kato
+          node detach</a> to remove a node from the cluster. Run the following command on the
+        core node.</p>
+
+<pre class="pre codeblock">kato node remove NODE_IP</pre>
+
+</div>
+
+<div class="section" id="admin_cluster_index__role-configuration-using-the-management-console"><h2 class="title sectiontitle">Role Configuration using the Management Console</h2> 
+<p class="p">Once cluster nodes are connected to the Core node, roles can be enabled
+  or disabled using the <a class="xref" href="../helion_admin_index.html#topic2276__cluster-configuration">manual cluster configuration</a> options in the Management
+Console.</p>
+
+</div>
+
+<div class="section" id="admin_cluster_index__example-clusters"><h2 class="title sectiontitle">Example Clusters</h2> 
+</div>
+
+<div class="section" id="admin_cluster_index__single-node"><h2 class="title sectiontitle">Single-Node</h2> 
+<p class="p">This is a configuration (not actually a cluster) which you would not
+generally deploy in production, but it helps to illustrate the role
+architecture in Application Lifecycle Service. A node in this configuration will function
+much like a micro cloud, but can be used as the starting point for
+building a cluster later.</p>
+
+<p class="p">All that is required here is to enable all roles except for <strong class="ph b">mdns</strong>
+(not used in a clustered or cloud-hosted environment):</p>
+
+<pre class="pre codeblock">kato node setup core api.hostname.example.com
+kato role add --all-but mdns</pre>
+
+</div>
+
+<div class="section" id="admin_cluster_index__three-node"><h2 class="title sectiontitle">Three-Node</h2> 
+<p class="p">This is the smallest viable cluster deployment, but it lacks the fault
+tolerance of larger configurations:</p>
+
+<ul class="ul">
+<li class="li">1 Core node consisting of primary, controller, and router (and
+supporting processes)</li>
+
+<li class="li">1 data-services node running the database, messaging and filesystem
+services</li>
+
+<li class="li">1 DEA (Droplet Execution Agent) node</li>
+
+</ul>
+
+<p class="p">This configuration can support more users and applications than a single
+node, but the failure of any single node will impact hosted
+applications.</p>
+
+</div>
+
+<div class="section" id="admin_cluster_index__five-node"><h2 class="title sectiontitle">Five-Node</h2> 
+<p class="p">A typical small Application Lifecycle Service cluster deployment might look like this:</p>
+
+<ul class="ul">
+<li class="li">1 Core node consisting of primary, controller, and router (and
+supporting processes)</li>
+
+<li class="li">1 data-services node running the database, messaging and filesystem
+services</li>
+
+<li class="li">3 DEA (Droplet Execution Agent) nodes</li>
+
+</ul>
+
+<p class="p">In this configuration, fault tolerance (and limited scalability) is
+introduced in the pool of DEA nodes. If any single DEA node fails,
+application instances will be automatically redeployed to the remaining
+DEA nodes with little or no application down time.</p>
+
+</div>
+
+<div class="section" id="admin_cluster_index__node"><h2 class="title sectiontitle">20-Node</h2> 
+<p class="p">A larger cluster requires more separation and duplication of roles for
+scalability and fault tolerance. For example:</p>
+
+<ul class="ul">
+<li class="li">1 Core node running the primary and controller roles (with
+supporting processes)</li>
+
+<li class="li">1 supplemental Controller node (sharing a filesystem and PostgreSQL
+database with the Core node)</li>
+
+<li class="li">1 Load Balancer (Application Lifecycle Service VM or hardware)</li>
+
+<li class="li">2 Router nodes</li>
+
+<li class="li">1 Filesystem service node</li>
+
+<li class="li">1 PostgreSQL + MySQL data service node</li>
+
+<li class="li">1 MongoDB, Redis, RabbitMQ + other data service node</li>
+
+<li class="li">12 DEA (Droplet Execution Agent) nodes</li>
+
+</ul>
+
+<p class="p">In this configuration:</p>
+
+<ul class="ul">
+<li class="li">application instances span a larger group of DEA nodes so
+applications can be easily scaled to meet increasing demand</li>
+
+<li class="li">web requests are evenly distributed between two Router nodes, either
+of which can fail without any interruption of service</li>
+
+<li class="li">any data service node failure will be localized, not affecting data
+services on other nodes</li>
+
+<li class="li">the auxiliary controller balances the load on the Management Console
+and system management tasks</li>
+
+</ul>
+
+</div>
+
+<div class="section" id="admin_cluster_index__roles-requiring-persistent-or-shared-storage"><h2 class="title sectiontitle">Roles Requiring Persistent or Shared Storage</h2> 
+<p class="p">Though all roles can run using the VM's default filesystem, in
+production clusters some roles should be backed by a persistent
+filesystem (block storage volumes) to provide scalable storage space
+and easy snapshotting. Nodes with the following roles should have their
+<em class="ph i">/var/helion/services</em> directory on persistent storage:</p>
+
+<ul class="ul">
+<li class="li">Data Services: MySQL, PostgreSQL, Redis</li>
+
+<li class="li">Filesystem Service</li>
+
+<li class="li">Memcache</li>
+
+<li class="li">RabbitMQ</li>
+
+<li class="li">Harbor</li>
+
+</ul>
+
+<p class="p">
+  <strong class="ph b">Note</strong>
+</p>
+
+<p class="p">Though Memcache and Redis are in-memory data stores, system service info
+data is stored on disk, so backing them with a persistent filesystem is
+recommended.</p>
+
+  <p class="p">In clusters with multiple Cloud Controllers, the nodes <strong class="ph b">must</strong> share a common <em class="ph i">/home/helion/helion/data</em> mount point as described <a class="xref" href="#admin_cluster_index__multiple-controllers">below</a> in order to work together properly.</p>
+
+  <p class="p">See the <a class="xref" href="../best-practices/best_practices_index.html#topic16169__bestpractices-persistent-storage">Persistent Storage</a> documentation for instructions on relocating service data, application
+droplets, and containers.</p>
+
+</div>
+
+<div class="section" id="admin_cluster_index__port-configuration"><h2 class="title sectiontitle">Port Configuration</h2> 
+  <p class="p">The Application Lifecycle Service <a class="xref" href="../../user/reference/glossary.html#topic6187__term-micro-cloud">micro cloud</a> runs with the following ports exposed:</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="99.75pt">Port</td>
+
+              <td class="entry" valign="top" width="93pt">Type</td>
+
+              <td class="entry" valign="top" width="83.25pt">Service</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="99.75pt">22</td>
+
+              <td class="entry" valign="top" width="93pt">tcp</td>
+
+              <td class="entry" valign="top" width="83.25pt">ssh</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="99.75pt">25</td>
+
+              <td class="entry" valign="top" width="93pt">tcp</td>
+
+              <td class="entry" valign="top" width="83.25pt">smtp</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="99.75pt">80</td>
+
+              <td class="entry" valign="top" width="93pt">tcp</td>
+
+              <td class="entry" valign="top" width="83.25pt">http</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+<p class="p">On a production cluster, or a micro-cloud running on a cloud hosting
+provider, only ports 22 (SSH), 80 (HTTPS) and 443 (HTTPS) need to be
+exposed externally (e.g. for the Router / Core node).</p>
+
+<p class="p">Within the cluster (i.e. behind the firewall), it is advisable to allow
+communication between the cluster nodes on all ports. This can be done
+safely by using the security group / security policy tools provided by
+your hypervisor.</p>
+
+<p class="p">If you wish to restrict ports between some nodes (e.g. if you do not
+have the option to use security groups), the following summary describes
+which ports are used by which components. <strong class="ph b">Source</strong> nodes initiate the
+communication, <strong class="ph b">Destination</strong> nodes need to listen on the specified
+port.</p>
+
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all">
+          
+          
+          
+          
+          
+          <tbody class="tbody">
+            <tr class="row">
+              <td class="entry" valign="top" width="91.5pt">Port Range</td>
+
+              <td class="entry" valign="top" width="100.25pt">Type</td>
+
+              <td class="entry" valign="top" width="111.75pt">Source</td>
+
+              <td class="entry" valign="top" width="110.25pt">Destination</td>
+
+              <td class="entry" valign="top" width="96pt">Required By</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="91.5pt">22</td>
+
+              <td class="entry" valign="top" width="100.25pt">tcp</td>
+
+              <td class="entry" valign="top" width="111.75pt">all nodes</td>
+
+              <td class="entry" valign="top" width="110.25pt">all nodes</td>
+
+              <td class="entry" valign="top" width="96pt">ssh/scp/sshfs</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="91.5pt">4222</td>
+
+              <td class="entry" valign="top" width="100.25pt">tcp</td>
+
+              <td class="entry" valign="top" width="111.75pt">all nodes</td>
+
+              <td class="entry" valign="top" width="110.25pt">controller</td>
+
+              <td class="entry" valign="top" width="96pt">NATS</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="91.5pt">3306</td>
+
+              <td class="entry" valign="top" width="100.25pt">tcp</td>
+
+              <td class="entry" valign="top" width="111.75pt">dea/controller</td>
+
+              <td class="entry" valign="top" width="110.25pt">MySQL nodes</td>
+
+              <td class="entry" valign="top" width="96pt">MySQL</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="91.5pt">5432</td>
+
+              <td class="entry" valign="top" width="100.25pt">tcp</td>
+
+              <td class="entry" valign="top" width="111.75pt">dea/controller</td>
+
+              <td class="entry" valign="top" width="110.25pt">postgresql nodes</td>
+
+              <td class="entry" valign="top" width="96pt">postgreSQL</td>
+
+            </tr>
+
+            <tr class="row">
+              <td class="entry" valign="top" width="91.5pt">5454</td>
+
+              <td class="entry" valign="top" width="100.25pt">tcp</td>
+
+              <td class="entry" valign="top" width="111.75pt">all nodes</td>
+
+              <td class="entry" valign="top" width="110.25pt">controller</td>
+
+              <td class="entry" valign="top" width="96pt">redis</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+</div>
+
+  <p class="p">More information about <a class="xref" href="../../user/reference/glossary.html#topic6187__term-NATS">NATS</a> is available in the Glossary.</p>
+
+<p class="p">Each node can be internally firewalled using
+  <a class="xref" href="http://manpages.ubuntu.com/manpages/utopic/en/man8/iptables.8.html" target="_blank">iptables</a> to
+apply the above rules.</p>
+
+<p class="p">
+<strong class="ph b">Comments</strong>:</p>
+
+<ul class="ul">
+<li class="li">Ports 80 and 443 need only be open to the world on router nodes.</li>
+
+<li class="li">Port 4222 should be open on all nodes for
+  <a class="xref" href="../../user/reference/glossary.html#topic6187__term-NATS">NATS</a> communication
+with the MBUS IP (core Cloud Controller)</li>
+
+<li class="li">Port 9022 should be open to allow transfer of droplets to and from
+the DEAs, and Cloud Controllers.</li>
+
+<li class="li">Port 7845 is required if you plan to stream logs from all nodes in a
+cluster using <samp class="ph codeph">kato log tail</samp> command.</li>
+
+<li class="li">External access on port 22 can be restricted if necessary to the
+subnet you expect to connect from. If you are providing the
+<samp class="ph codeph">helion ssh</samp> feature to your users
+(recommended), define a distinct security group for the
+public-facing Cloud Controller node that is the same as a generic
+Application Lifecycle Service group, but has the additional policy of allowing SSH (Port
+22) from hosts external to the cluster.</li>
+
+<li class="li">Within the cluster, port 22 should be open on all hosts to allow
+administrative access over SSH. Port 22 is also used to mount
+Filesystem service partitions in application containers on the DEA
+nodes (via SSHFS).</li>
+
+<li class="li">The optional Harbor port service has a configurable port range
+(default 41000 - 61000) which can be exposed externally if required.</li>
+
+</ul>
+
+<div class="note note"><span class="notetitle">Note:</span> The optional <a class="xref" href="harbor.html">Harbor</a> TCP/UDP port service must be
+set up on a node with a public network interface if you wish to enable
+port forwarding for user applications. The security group or firewall
+settings for this node should make the configured port range accessible
+publicly. See <a class="xref" href="harbor.html#topic4009__requirements-setup">Harbor Setup</a> for full
+configuration instructions.</div>
+
+</div>
+
+  <div class="section" id="admin_cluster_index__utm"><h2 class="title sectiontitle">UTM / Gateway Firewalls</h2>Upgrades, patches, and the staging of user
+      applications may require downloading packages from external sources. This is most often done
+      over HTTP (port 80) or HTTPS (port 443). If a UTM (unified threat management) device or other
+      network gateway software is inspecting traffic between the nodes and upstream package
+      repositories, then user application staging, patching, and upgrades can fail because of
+      timeouts or dropped packets. Gateway devices and software should be configured to whitelist
+      the upstream sources listed in the <a class="xref" href="../server/https_and_ssl.html#topic_gwr_qgd_ws__http-proxy">Proxy Settings</a> as well as any package repositories or
+      download sources required by buildpacks. If packet inspection of all inbound traffic is a
+      requirement in your network, consider setting up <a class="xref" href="../../user/deploy/adding-buildpack.html">offline buildpacks</a> or creating
+      internal package repository mirrors. </div>
+
+<div class="section" id="admin_cluster_index__multiple-controllers"><h2 class="title sectiontitle">Multiple Controllers</h2> 
+<p class="p">An Application Lifecycle Service cluster can have multiple controller nodes running on separate VMs to improve performance. To do this, all controller nodes must share the following two important data directories on a high-availability filesystem server:</p>
+
+<pre class="pre codeblock">/home/stackato/stackato/data
+/var/stackato/data/cloud_controller_ng/tmp/staged_droplet_uploads  </pre>
+
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span>  Although the <em class="ph i">router</em> role must be enabled on the Core node, it is not required
+          for additional Controller nodes. The type of filesystem, storage server, and network mount
+          method are left to the discretion of the Application Lifecycle Service
+          administrator.</div>
+
+        <div class="note warning"><span class="warningtitle">Warning:</span> These directories are <strong class="ph b">not</strong> empty. It is essential that the
+          contents of these directories are preserved and copied back into the new, shared
+          directories once symlinks have been created.</div>
+
+      </div>
+
+<ol class="ol">
+<li class="li">Create a shared filesystem on a Network Attached Storage device.</li>
+
+<li class="li"> Stop the controller process on the Core node before proceeding
+          further:<pre class="pre codeblock">kato stop controller</pre>
+</li>
+
+<li class="li"> On the Core node and on <strong class="ph b">each additional </strong>controller node:<ol class="ol" type="a" id="admin_cluster_index__ol_vj2_ypg_ms">
+            <li class="li">Create a mount point:<pre class="pre codeblock">sudo mkdir /mnt/controller</pre>
+</li>
+
+            <li class="li"> Mount the shared filesystem on the mount point.</li>
+
+            <li class="li"> Set aside the original
+              <samp class="ph codeph">/home/helion/helion/data</samp>:<pre class="pre codeblock">mv /home/helion/helion/data /home/helion/helion/data.old</pre>
+</li>
+
+            <li class="li">Create a symlink from <samp class="ph codeph">/home/helion/helion/data</samp> to the mount
+              point:<pre class="pre codeblock">ln -s /mnt/controller /home/helion/helion/data</pre>
+</li>
+
+          </ol>
+</li>
+
+<li class="li"> On the Core node, start the controller
+          process:<pre class="pre codeblock">kato start controller</pre>
+</li>
+
+<li class="li"> Run the following command on the additional Controller nodes to enable <em class="ph i">only</em> the
+          controller process:<pre class="pre codeblock">kato node attach -e controller *CORE_IP*</pre>
+</li>
+
+</ol>
+<div class="note note"><span class="notetitle">Note:</span> Though the <em class="ph i">Router</em> role <strong class="ph b">must</strong> be enabled on the Core node, it is not required for the additional Controller nodes.  
+</div>
+
+</div>
+
+<div class="section" id="admin_cluster_index__load-balancer-and-multiple-routers"><h2 class="title sectiontitle">Load Balancer and Multiple Routers</h2> 
+<p class="p">For large scale deployments requiring multiple Router nodes, a load
+balancer must be configured to distribute connections between the
+Routers. Though most users will prefer to use a hardware load balancer
+or elastic load balancing service provided by the cloud hosting
+provider, an Application Lifecycle Service VM can be configured to take on this role.</p>
+
+  <p class="p">The <a class="xref" href="../reference/kato-ref.html#topic39432__kato-command-ref-node-setup-load_balancer">kato node setup load_balancer</a>
+command retrieves IP addresses of every router in the cluster and
+configures an nginx process to distribute load (via round-robin) among a
+pool of Routers and handle SSL termination.</p>
+
+<p class="p">For example, to setup a cluster with an Application Lifecycle Service Load Balancer and
+multiple Routers:</p>
+
+</div>
+
+<div class="section" id="admin_cluster_index__rename-the-load-balancer"><h2 class="title sectiontitle">Rename the Load Balancer</h2> 
+<p class="p">The Load Balancer is the primary point of entry to the cluster. It must
+have a public-facing IP address and take on the primary hostname for the
+system as <a class="xref" href="../server/configuration.html#topic31232__server-config-dns">configured in DNS</a>. Run the following on Load Balancer node:</p>
+
+<pre class="pre codeblock">kato node rename *hostname.example.com*</pre>
+
+</div>
+
+<div class="section" id="admin_cluster_index__set-up-the-core-node"><h2 class="title sectiontitle">Set up the Core Node</h2> 
+<p class="p">The Core node will need to temporarily take on the API endpoint hostname
+of the Application Lifecycle Service system (i.e. the same name as the Load Balancer above).
+Run the following on the Core node:</p>
+
+<pre class="pre codeblock">kato node rename *hostname.example.com*</pre>
+
+<p class="p">If it is not already configured as the Core node, do so now:</p>
+
+<pre class="pre codeblock">kato node setup core api.\ *hostname.example.com*</pre>
+
+<p class="p">The <samp class="ph codeph">kato node rename</samp> command above is being used
+to set internal Application Lifecycle Service parameters, but all hosts on a network should
+ultimately have unique hostnames. After setup, rename the Core node
+<strong class="ph b">manually</strong> by editing <em class="ph i">/etc/hostname</em> and <em class="ph i">/etc/hosts</em>, then
+<samp class="ph codeph">sudo service hostname restart</samp>.</p>
+
+</div>
+
+<div class="section" id="admin_cluster_index__set-up-supplemental-routers"><h2 class="title sectiontitle">Set up Supplemental Routers</h2> 
+<p class="p">As with the Core node, you will need to run <samp class="ph codeph">kato node rename</samp>on each router with the same API endpoint hostname. Run the following on each Router:</p>
+
+<pre class="pre codeblock">kato node rename *hostname.example.com*</pre>
+
+<p class="p">Then enable the 'router' role and attach the node to the cluster:</p>
+
+<pre class="pre codeblock">kato node attach -e router &lt;MBUS_IP&gt;</pre>
+
+<p class="p">As above, rename each host manually after configuration to give them
+unique hostnames. The MBUS_IP is the network interface of the Core node
+(usually eth0).</p>
+
+</div>
+
+<div class="section" id="admin_cluster_index__configure-the-helion-load-balancer"><h2 class="title sectiontitle">Configure the Application Lifecycle Service Load Balancer</h2> 
+<div class="p">
+        <div class="note note"><span class="notetitle">Note:</span>  An Application Lifecycle Service node configured as a Load Balancer cannot have any
+          other roles enabled.</div>
+
+      </div>
+
+<p class="p">Attach the Application Lifecycle Service VM to the Core node:</p>
+
+<pre class="pre codeblock">kato node attach &lt;MBUS_IP&gt;</pre>
+
+<p class="p">To set up the node as a Load Balancer automatically:</p>
+
+<pre class="pre codeblock">kato node setup load_balancer --force</pre>
+
+<p class="p">This command fetches the IP addresses of all configured routers in the
+cluster.</p>
+
+<p class="p">To set up the Load Balancer manually, specify the IP addresses of the
+Router nodes. For example:</p>
+
+<pre class="pre codeblock">kato node setup load_balancer 10.5.31.140 10.5.31.145</pre>
+
+</div>
+
+<div class="section" id="admin_cluster_index__load-balancer-ssl-certificates"><h2 class="title sectiontitle">Load Balancer SSL Certificates</h2> 
+<p class="p">The load balancer terminates SSL connections, so SSL certificates must
+be set up and maintained on this node.</p>
+
+  <p class="p">See the <a class="xref" href="../server/https_and_ssl.html#topic_gwr_qgd_ws__using-your-own-ssl-certificate">Using your own SSL certificate</a> and <a class="xref" href="../server/https_and_ssl.html#topic_gwr_qgd_ws__ca-certificate-chaining">CA Certificate Chaining</a> sections for Application Lifecycle Service Load Balancer instructions.</p>
+
+<p class="p">For other load balancers, consult the documentation for your device or service on uploading/updating server certificates.</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>
